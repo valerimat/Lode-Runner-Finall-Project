@@ -1,0 +1,18 @@
+﻿target_include_directories (LodeRunner PRIVATE ${CMAKE_CURRENT_LIST_DIR})
+target_sources (LodeRunner PRIVATE   "Enemy.h"
+                                     "EndGame.h"
+                                     "EnemyController.h"
+                                     "Entity.h"
+                                     "Game.h"
+                                     "GameController.h"
+                                     "Hud.h"
+                                     "Lives.h"
+                                     "Macros.h"
+                                     "MainMenu.h"
+                                     "Map.h"
+                                     "MovementController.h"
+                                     "Player.h"
+                                     "PlayerController.h"
+                                     "Views.h"
+                                     "Algorithms.h"
+                                  )
