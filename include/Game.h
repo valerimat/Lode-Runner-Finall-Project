@@ -1,17 +1,15 @@
 #pragma once
-#include "Hud.h"
 #include "Map.h"
-#include "Player.h"
-#include "Enemy.h"
+#include "Hud.h"
+#include <SFML/Graphics.hpp>
 
 class Game
 {
-private:
-	void draw(sf::RenderWindow &window);
-
 public:
-	Hud * m_hud;
-	Map * m_map;
-	Player * m_player;
-	Enemy *enemy;
+	Game(Map &map, Hud &hud);
+	void Draw(sf::RenderWindow &window);
+
+private:
+	Map m_map;
+	Hud m_hud;
 };

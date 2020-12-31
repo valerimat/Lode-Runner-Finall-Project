@@ -1,8 +1,8 @@
 #pragma once
 #include "Macros.h"
+#include "Object.h"
 
-
-class Entity
+class DinamicObject : public Object
 {
 public:
 	Entity(sf::Texture& texture);

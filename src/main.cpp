@@ -1,10 +1,10 @@
 
-
+#include "GameController.h"
 #include <iostream>
 
 int main()
 {
-	std::cout << "hello world";
+	GameController::Run();
 
-	return;
+	return 1;
 }

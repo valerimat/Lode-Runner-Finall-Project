@@ -1,20 +1,12 @@
 #pragma once
-#include <vector>
-#include "Enemy.h"
-#include "Player.h"
-#include "Map.h"
-#include "Views.h"
+#include "Macros.h"
+#include "Screens.h"
 
-class GameController
+#include <SFML/Graphics.hpp>
+
+
+namespace GameController
 {
-public:
-
-
-
-
-private:
-	PlayerController m_player;
-	EnemyController m_enemy;
-	Views m_views;
+	void Run();
 
 };
