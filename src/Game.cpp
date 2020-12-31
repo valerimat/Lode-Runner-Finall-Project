@@ -1,6 +1,6 @@
 #include "Game.h"
 
-Game::Game(Map & map, Hud & hud):
+Game::Game(Map & map):
 m_map(map)
 //, m_hud(hud)
 {

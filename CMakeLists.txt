@@ -9,10 +9,11 @@ if (MSVC)
     add_compile_options (/permissive-)
 endif ()
 
-add_executable (LodeRunner WIN32 "")
+add_executable (LodeRunner "")
 
 add_subdirectory (include)
 add_subdirectory (src)
+add_subdirectory (resources)
 
 set (SFML_STATIC_LIBRARIES TRUE)
 set (SFML_DIR "C:/SFML/SFML-2.5.1/lib/cmake/SFML")

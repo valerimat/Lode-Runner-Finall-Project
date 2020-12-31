@@ -6,7 +6,7 @@
 class Game
 {
 public:
-	Game(Map &map, Hud &hud);
+	Game(Map &map);
 	void Draw(sf::RenderWindow &window);
 
 private:

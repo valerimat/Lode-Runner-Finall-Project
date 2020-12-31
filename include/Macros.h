@@ -14,7 +14,7 @@ enum class State
 	End,
 };
 
-const int OFFSET = 50;
+const int OFFSET = 50 * 0.8;
 
 const char PLAYER = char('@');
 const char COIN = char('*');

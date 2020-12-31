@@ -2,9 +2,11 @@
 #include <vector>
 #include <string>
 #include "StaticObject.h"
-#include "DinamicObject.h"
+#include "DynamicObject.h"
 #include "Macros.h"
 #include <SFML/Graphics.hpp>
+#include <fstream>
+#include <iostream>
 
 class Map
 {
@@ -18,11 +20,11 @@ public:
 private:
 	int m_width;
 	int m_height;
-
+	char get_char(int i, int j);
 	std::vector<std::shared_ptr<sf::Texture>> m_textures;
 	std::vector<std::vector<std::string>> m_maps;
 	std::vector <std::vector <std::string>> m_maps_clean;
 	std::vector<StaticObject> m_static;
-	std::vector<DinamicObject> m_dinamic;
+	std::vector<DynamicObject> m_dinamic;
 
 };

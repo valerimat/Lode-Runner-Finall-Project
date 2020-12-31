@@ -11,7 +11,7 @@ Map::Map()
 //Will hold all maps in a vector of vector of strings for level update
 void Map::load_maps()
 {
-	curr_level = 0;
+	int	curr_level = 0;
 
 	std::string   str; // temporary string which we push into the vector;
 	std::ifstream file;
@@ -78,6 +78,9 @@ void Map::load_maps()
 
 void Map::set_objects()
 {
+	DynamicObject d_obj;
+	StaticObject s_object;
+
 	for (int i = 0; i < m_height; ++i)
 	{
 		for (int j = 0; j < m_width; ++j)
@@ -85,38 +88,45 @@ void Map::set_objects()
 			switch(get_char(i,j))
 			{
 			case PLAYER:
-				m_dinamic.push_back(DinamicObject(PLAYER,sf::Vector2f( i, j)));
-				m_dinamic(m_dinamic.back() - 1).set_texture(*m_textures[PLAYER_TEXTURE]);
+				d_obj.init_object(PLAYER, sf::Vector2f(i, j));
+				d_obj.set_texture(m_textures[PLAYER_TEXTURE]);
+				m_dinamic.push_back(d_obj);
 				break;
 
 			case ENEMY:
-				m_dinamic.push_back(DinamicObject(ENEMY, sf::Vector2f(i, j)));
-				m_dinamic(m_dinamic.back() - 1).set_texture(*m_textures[ENEMY_TEXTURE]);
+				d_obj.init_object(ENEMY, sf::Vector2f(i, j));
+				d_obj.set_texture(m_textures[ENEMY_TEXTURE]);
+				m_dinamic.push_back(d_obj);
 				break;
 		
 			case NONE:
-				m_static.push_back(StaticObject(NONE,sf::Vector2f(i, j)));
-				m_static(m_static.back() - 1).set_texture(*m_textures[NONE_TEXTURE]);
+				s_object.init_object(NONE, sf::Vector2f(i, j));
+				s_object.set_texture(m_textures[NONE_TEXTURE]);
+				m_static.push_back(s_object);
 				break;
 
 			case GROUND:
-				m_static.push_back(StaticObject(GROUND, sf::Vector2f(i, j)));
-				m_static(m_static.back() - 1).set_texture(*m_textures[GROUND_TEXTURE]);
+				s_object.init_object(GROUND, sf::Vector2f(i, j));
+				s_object.set_texture(m_textures[GROUND_TEXTURE]);
+				m_static.push_back(s_object);
 				break;
 
 			case LADDER:
-				m_static.push_back(StaticObject(LADDER, sf::Vector2f(i, j)));
-				m_static(m_static.back() - 1).set_texture(*m_textures[LADDER_TEXTURE]);
+				s_object.init_object(LADDER, sf::Vector2f(i, j));
+				s_object.set_texture(m_textures[LADDER_TEXTURE]);
+				m_static.push_back(s_object);
 				break;
 
 			case COIN:
-				m_static.push_back(StaticObject(COIN,sf::Vector2f(i, j)));
-				m_static(m_static.back() - 1).set_texture(*m_textures[COIN_TEXTURE]);
+				s_object.init_object(COIN, sf::Vector2f(i, j));
+				s_object.set_texture(m_textures[COIN_TEXTURE]);
+				m_static.push_back(s_object);
 				break;
 
 			case POLE:
-				m_static.push_back(StaticObject(POLE, sf::Vector2f(i, j)));
-				m_static(m_static.back() - 1).set_texture(*m_textures[POLE_TEXTURE]);
+				s_object.init_object(POLE, sf::Vector2f(i, j));
+				s_object.set_texture(m_textures[POLE_TEXTURE]);
+				m_static.push_back(s_object);
 				break;
 			}
 		}
@@ -164,4 +174,10 @@ void Map::load_textures()
 	texture_ptr->loadFromFile("wall.png");
 	m_textures.push_back(texture_ptr);
 
+}
+
+
+char Map::get_char(int i,int j)
+{
+	return m_maps[0][i][j];
 }

@@ -2,8 +2,9 @@
 #include "Macros.h"
 #include "Object.h"
 #include <SFML/Graphics.hpp>
+#include "MovementController.h"
 
-class StaticObject : public Object
+class DynamicObject : public Object
 {
 public:
 	using Object::Object;
@@ -14,5 +15,6 @@ public:
 protected:
 	std::shared_ptr<sf::Texture> m_texture;
 	sf::Sprite m_sprite;
+	MovementController *m_controller = nullptr;
 
 };

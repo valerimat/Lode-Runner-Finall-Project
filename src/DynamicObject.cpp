@@ -1,12 +1,12 @@
-#include "StaticObject.h"
+#include "DynamicObject.h"
 
-
-void StaticObject::set_texture(std::shared_ptr<sf::Texture> texture)
+void DynamicObject::set_texture(std::shared_ptr<sf::Texture> texture)
 {
 	m_texture = texture;
 	set_sprite();
 }
-void StaticObject::set_sprite()
+
+void DynamicObject::set_sprite()
 {
 	sf::Sprite sprite;
 	sprite.setTexture(*m_texture);
@@ -14,7 +14,8 @@ void StaticObject::set_sprite()
 	sprite.setScale(sf::Vector2f(0.8, 0.8));
 	m_sprite = sprite;
 }
-void StaticObject::Draw(sf::RenderWindow & main_window)
+
+void DynamicObject::Draw(sf::RenderWindow &main_window)
 {
 	main_window.draw(m_sprite);
 }
