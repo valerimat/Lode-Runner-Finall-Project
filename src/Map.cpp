@@ -77,9 +77,9 @@ void Map::load_maps()
 
 void Map::set_objects()
 {
-	DynamicObject * d_obj;
-	StaticObject s_object;
-	Enemy * enemy;
+	DynamicObject *player = NULL; // later to be changed Player player for proper use
+	StaticObject static_object;
+	//Enemy * enemy;
 
 	for (int i = 0; i < m_height; ++i)
 	{
@@ -87,13 +87,14 @@ void Map::set_objects()
 		{
 			switch(get_char(i,j))
 			{
-			case PLAYER:
-				d_obj = new DynamicObject;
-				d_obj->init_object(PLAYER, sf::Vector2f(i, j));
-				d_obj->set_texture(m_textures[PLAYER_TEXTURE]);
-				m_dinamic.push_back(d_obj);
-				break;
+			case PLAYER: 
+				player = new (DynamicObject);
+				player->init_object(PLAYER, sf::Vector2f(i, j));
+				player->set_texture(m_textures[PLAYER_TEXTURE]);
+				m_dynamic.push_back(*player);
 
+				break;
+	
 			case ENEMY:
 				enemy = new Enemy;
 				enemy->init_object(ENEMY, sf::Vector2f(i, j));
@@ -102,35 +103,35 @@ void Map::set_objects()
 				d_obj = enemy;
 				m_dinamic.push_back(d_obj);
 				break;
-		
+	
 			case NONE:
-				s_object.init_object(NONE, sf::Vector2f(i, j));
-				s_object.set_texture(m_textures[NONE_TEXTURE]);
-				m_static.push_back(s_object);
+				static_object.init_object(NONE, sf::Vector2f(i, j));
+				static_object.set_texture(m_textures[NONE_TEXTURE]);
+				m_static.push_back(static_object);
 				break;
 
 			case GROUND:
-				s_object.init_object(GROUND, sf::Vector2f(i, j));
-				s_object.set_texture(m_textures[GROUND_TEXTURE]);
-				m_static.push_back(s_object);
+				static_object.init_object(GROUND, sf::Vector2f(i, j));
+				static_object.set_texture(m_textures[GROUND_TEXTURE]);
+				m_static.push_back(static_object);
 				break;
 
 			case LADDER:
-				s_object.init_object(LADDER, sf::Vector2f(i, j));
-				s_object.set_texture(m_textures[LADDER_TEXTURE]);
-				m_static.push_back(s_object);
+				static_object.init_object(LADDER, sf::Vector2f(i, j));
+				static_object.set_texture(m_textures[LADDER_TEXTURE]);
+				m_static.push_back(static_object);
 				break;
 
 			case COIN:
-				s_object.init_object(COIN, sf::Vector2f(i, j));
-				s_object.set_texture(m_textures[COIN_TEXTURE]);
-				m_static.push_back(s_object);
+				static_object.init_object(COIN, sf::Vector2f(i, j));
+				static_object.set_texture(m_textures[COIN_TEXTURE]);
+				m_static.push_back(static_object);
 				break;
 
 			case POLE:
-				s_object.init_object(POLE, sf::Vector2f(i, j));
-				s_object.set_texture(m_textures[POLE_TEXTURE]);
-				m_static.push_back(s_object);
+				static_object.init_object(POLE, sf::Vector2f(i, j));
+				static_object.set_texture(m_textures[POLE_TEXTURE]);
+				m_static.push_back(static_object);
 				break;
 			}
 		}
@@ -155,9 +156,12 @@ void Map::Draw(sf::RenderWindow &main_window)
 	for (int i = 0; i < m_static.size(); ++i)
 		m_static[i].Draw(main_window);
 
-	for (int i = 0; i < m_dinamic.size(); ++i)
-		m_dinamic[i]->Draw(main_window);
-
+	for (int i = 0; i < m_dynamic.size(); ++i)
+	{
+		m_dynamic[i].Draw(main_window);
+		//std::cout << "X - " << m_dynamic[i].get_location().x << 
+			//" Y - " << m_dynamic[i].get_location().y << std::endl;
+	}
 }
 
 void Map::load_textures()
@@ -201,6 +205,17 @@ char Map::get_char(int i,int j)
 	return m_maps[0][i][j];
 }
 
+DynamicObject * Map::get_player() // later change to Player as a return value
+{
+	for (int i = 0; i < m_dynamic.size(); i++)
+	{
+		if (m_dynamic[i].get_name() == PLAYER)
+			return &m_dynamic[i];
+	}
+	return NULL;
+}
+
+
 std::vector<Enemy *> Map::get_enemies()
 {
 	int index = 0;
@@ -218,7 +233,8 @@ std::vector<Enemy *> Map::get_enemies()
 		++index;
 	}
 	return temp;
-}
+
+
 
 
 char Map::what_is_there_bellow(sf::Vector2f & location)
@@ -257,3 +273,4 @@ char Map::what_is_there_on_the_side(sf::Vector2f& location)
 
 	return NONE;
 }
+
