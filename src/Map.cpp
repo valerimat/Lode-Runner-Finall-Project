@@ -135,6 +135,19 @@ void Map::set_objects()
 
 void Map::Draw(sf::RenderWindow &main_window)
 {
+	// Background
+	StaticObject background;
+
+	float scale_height = float(m_height) * float(50) / float(HEIGHT),
+		  scale_width  = float(m_width)  * float(50) / float(WIDTH);
+
+	background.init_object(NULL, sf::Vector2f(0, 0));
+	background.set_texture(m_textures[BACKGROUND_TEXTURE]);
+	background.get_sprite().scale(scale_width, scale_height);
+
+	background.Draw(main_window);
+
+	// All the other objects
 	for (int i = 0; i < m_static.size(); ++i)
 		m_static[i].Draw(main_window);
 
@@ -148,7 +161,6 @@ void Map::load_textures()
 	auto texture_ptr = std::make_shared<sf::Texture>();
 	texture_ptr->loadFromFile("ladder.png");
 	m_textures.push_back(texture_ptr);
-
 
 	texture_ptr = std::make_shared<sf::Texture>();
 	texture_ptr->loadFromFile("ground.png");
@@ -174,6 +186,9 @@ void Map::load_textures()
 	texture_ptr->loadFromFile("wall.png");
 	m_textures.push_back(texture_ptr);
 
+	texture_ptr = std::make_shared<sf::Texture>();
+	texture_ptr->loadFromFile("background.png");
+	m_textures.push_back(texture_ptr);
 }
 
 
