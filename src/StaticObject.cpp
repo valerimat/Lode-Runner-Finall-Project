@@ -24,3 +24,12 @@ void StaticObject::Draw(sf::RenderWindow & main_window)
 {
 	main_window.draw(m_sprite);
 }
+
+
+bool StaticObject::in_bounds(sf::Vector2f &location)
+{
+	if (m_sprite.getGlobalBounds().contains(location))
+		return true;
+
+	return false;
+}

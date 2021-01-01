@@ -14,6 +14,14 @@ enum class State
 	End,
 };
 
+enum class NextStep
+{
+	UP,
+	DOWN,
+	LEFT,
+	RIGHT,
+};
+
 const int OFFSET = 50 * 0.8;
 
 const char PLAYER = char('@');

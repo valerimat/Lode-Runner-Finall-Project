@@ -8,6 +8,7 @@ class PlayerController:public MovementController
 {
 public:
 	Move(int key);
+
 private:
 	Player * m_player;
 

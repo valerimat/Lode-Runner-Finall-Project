@@ -2,9 +2,11 @@
                                      "GameController.cpp"
                                      "Screens.cpp"
                                      "Map.cpp"
-
+                                     "Enemy.cpp"
+                                     "EnemyContorller.cpp"
                                      "Game.cpp"
                                      "Object.cpp"
+                                     "VeryStupid.cpp"
                                      "StaticObject.cpp"
                                      "DynamicObject.cpp"
                                   )
