@@ -15,6 +15,7 @@ public:
 	void load_maps();
 	void load_textures();
 	void Draw(sf::RenderWindow &main_window);
+	DynamicObject * get_player();
 	void set_objects();
 
 private:
@@ -24,7 +25,6 @@ private:
 	std::vector<std::shared_ptr<sf::Texture>> m_textures;
 	std::vector<std::vector<std::string>> m_maps;
 	std::vector <std::vector <std::string>> m_maps_clean;
-	std::vector<StaticObject> m_static;
-	std::vector<DynamicObject> m_dinamic;
-
+	std::vector<StaticObject>  m_static;
+	std::vector<DynamicObject> m_dynamic;
 };

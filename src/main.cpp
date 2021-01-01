@@ -6,5 +6,5 @@ int main()
 {
 	GameController::Run();
 
-	return 1;
+	return 0;
 }
