@@ -4,7 +4,7 @@
 #include "Map.h"
 #include "Game.h"
 #include <SFML/Graphics.hpp>
-
+#include "EnemyController.h"
 
 namespace GameController
 {

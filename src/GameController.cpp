@@ -10,11 +10,15 @@ void GameController::Run()
 	Map map;
 	Game game(map);
 	Screens screen(game);
+	EnemyController enemy_cont(map);
 
 	while (main_window.isOpen())
 	{
 
 		main_window.clear(sf::Color::Black);
+
+		//need switch case
+		enemy_cont.move_enemies(map);
 
 		screen.Draw(main_window);
 

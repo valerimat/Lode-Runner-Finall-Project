@@ -1,20 +1,19 @@
 #pragma once
-#include "Entity.h"
-#include "EnemyController.h"
+#include "DynamicObject.h"
 #include "Macros.h"
 
 
-class Monster : public Entity
+class Enemy : public DynamicObject
 {
 public:
-
-	using Entity::Entity;
-
-	EnemyController * get_controller();
-
-
+	using DynamicObject::DynamicObject;
+	IQ get_iq();
+	virtual void set_smartness();
+	void set_path(std::vector<NextStep> steps);
+	void move();
+	
 private:
-	Algorithms m_algorithms;
+	std::vector<NextStep> m_path;
 	IQ m_iq;
 
 };

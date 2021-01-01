@@ -8,9 +8,11 @@ class Object
 public:
 
 	virtual ~Object() = default;
+
 	Object();
 	Object(char m_name, sf::Vector2f m_location);
-	void init_object(char  m_name, sf::Vector2f   m_location);
+	virtual void init_object(char  m_name, sf::Vector2f   m_location);
+
 
 	char get_name();
 	sf::Vector2f get_location();

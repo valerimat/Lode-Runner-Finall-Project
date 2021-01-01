@@ -1,6 +1,5 @@
 #include "Map.h"
 
-
 Map::Map()
 {
 	load_maps();
@@ -89,16 +88,19 @@ void Map::set_objects()
 			switch(get_char(i,j))
 			{
 			case PLAYER:
+				d_obj = new DynamicObject;
 				d_obj->init_object(PLAYER, sf::Vector2f(i, j));
 				d_obj->set_texture(m_textures[PLAYER_TEXTURE]);
 				m_dinamic.push_back(d_obj);
 				break;
 
 			case ENEMY:
+				enemy = new Enemy;
 				enemy->init_object(ENEMY, sf::Vector2f(i, j));
 				enemy->set_texture(m_textures[ENEMY_TEXTURE]);
 				enemy->set_smartness();
-				m_dinamic.push_back(enemy);
+				d_obj = enemy;
+				m_dinamic.push_back(d_obj);
 				break;
 		
 			case NONE:
@@ -208,11 +210,50 @@ std::vector<Enemy *> Map::get_enemies()
 
 	while (index < m_dinamic.size())
 	{
-		if (m_dinamic[index]->get_name == ENEMY)
+		if (m_dinamic[index]->get_name() == ENEMY)
 		{
 			temp.push_back(dynamic_cast<Enemy *>(m_dinamic[index]));
 		}
 			
+		++index;
 	}
 	return temp;
+}
+
+
+char Map::what_is_there_bellow(sf::Vector2f & location)
+{
+	sf::Vector2f loc = location;
+	loc.y -= 80;
+
+	for (int i = 0; i < m_static.size(); ++i)
+	{
+		if (m_static[i].in_bounds(loc))
+			return m_static[i].get_name();
+	}
+	for (int i = 0; i < m_dinamic.size(); ++i)
+	{
+		if (m_dinamic[i]->in_bounds(loc))
+			return m_static[i].get_name();
+	}
+
+	return NONE;
+}
+
+
+char Map::what_is_there_on_the_side(sf::Vector2f& location)
+{
+
+	for (int i = 0; i < m_static.size(); ++i)
+	{
+		if (m_static[i].in_bounds(location))
+			return m_static[i].get_name();
+	}
+	for (int i = 0; i < m_dinamic.size(); ++i)
+	{
+		if (m_dinamic[i]->in_bounds(location))
+			return m_static[i].get_name();
+	}
+
+	return NONE;
 }
