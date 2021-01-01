@@ -224,7 +224,7 @@ std::vector<Enemy *> Map::get_enemies()
 char Map::what_is_there_bellow(sf::Vector2f & location)
 {
 	sf::Vector2f loc = location;
-	loc.y -= 80;
+	loc.y += 55;
 
 	for (int i = 0; i < m_static.size(); ++i)
 	{
@@ -234,7 +234,7 @@ char Map::what_is_there_bellow(sf::Vector2f & location)
 	for (int i = 0; i < m_dinamic.size(); ++i)
 	{
 		if (m_dinamic[i]->in_bounds(loc))
-			return m_static[i].get_name();
+			return m_dinamic[i]->get_name();
 	}
 
 	return NONE;
@@ -252,7 +252,7 @@ char Map::what_is_there_on_the_side(sf::Vector2f& location)
 	for (int i = 0; i < m_dinamic.size(); ++i)
 	{
 		if (m_dinamic[i]->in_bounds(location))
-			return m_static[i].get_name();
+			return m_dinamic[i]->get_name();
 	}
 
 	return NONE;

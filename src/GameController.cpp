@@ -14,7 +14,7 @@ void GameController::Run()
 
 	while (main_window.isOpen())
 	{
-
+		
 		main_window.clear(sf::Color::Black);
 
 		//need switch case

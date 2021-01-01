@@ -33,7 +33,7 @@ std::vector<NextStep> VeryStupid::calc_path(Map map, sf::Vector2f curr_location)
 
 		steps.push_back(next);
 
-		if (steps.size() == 20)
+		if (steps.size() == 40)
 			return steps;
 
 		update_curr_location(curr_location_with_steps, next);
@@ -45,19 +45,29 @@ std::vector<NextStep> VeryStupid::calc_path(Map map, sf::Vector2f curr_location)
 bool VeryStupid::next_step_is_valid(Map map,NextStep next, sf::Vector2f curr_location_with_steps)
 {
 	char bellow = map.what_is_there_bellow(curr_location_with_steps);
-	char side = map.what_is_there_on_the_side(curr_location_with_steps);
+	char side;
+	if (next == NextStep::RIGHT)
+	{
+		sf::Vector2f loc = curr_location_with_steps;
+		loc.x += 50;
+		side = map.what_is_there_on_the_side(loc);
+	}
+	else
+	{
+		side = map.what_is_there_on_the_side(curr_location_with_steps);
+	}
 
-	if (bellow == NONE || bellow == POLE)
+	if (bellow == NONE)
 		return false;
 	if (side == GROUND)
 		return false;
 	return true;
 }
 
-void VeryStupid::update_curr_location(sf::Vector2f curr_location_with_steps, NextStep next)
+void VeryStupid::update_curr_location(sf::Vector2f & curr_location_with_steps, NextStep next)
 {
 	if (next == NextStep::LEFT)
-		curr_location_with_steps.x -= 2;
+		curr_location_with_steps.x -= 10;
 	else
-		curr_location_with_steps.x += 2;
+		curr_location_with_steps.x += 10;
 }

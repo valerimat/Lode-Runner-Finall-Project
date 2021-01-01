@@ -9,8 +9,8 @@ EnemyController::EnemyController(Map & map)
 	//
 	//insert Algorithms
 	//how many iteriations should pass untill we calc path again
-	m_loop_counter = 15;
-	m_curr_counter = 15;
+	m_loop_counter = 35;
+	m_curr_counter = 35;
 	m_enemies = map.get_enemies();
 	
 }
@@ -23,9 +23,10 @@ void EnemyController::move_enemies(Map &map)
 	VeryStupid verystupid;
 	if (m_curr_counter == m_loop_counter)
 		recalc_path = true;
-
+	m_curr_counter++;
 	while (i < m_enemies.size())
 	{
+		
 		switch (m_enemies[i]->get_iq())
 		{
 		case IQ::Smart:
@@ -38,7 +39,7 @@ void EnemyController::move_enemies(Map &map)
 			else
 			{
 				m_enemies[i]->move();
-				m_curr_counter++;
+				
 			}
 
 		case IQ::Stupid:
@@ -51,7 +52,7 @@ void EnemyController::move_enemies(Map &map)
 			else
 			{
 				m_enemies[i]->move();
-				++m_curr_counter;
+				
 			}
 
 			break;
@@ -66,7 +67,7 @@ void EnemyController::move_enemies(Map &map)
 			else
 			{
 				m_enemies[i]->move();
-				++m_curr_counter;
+			
 			}
 
 			break;
