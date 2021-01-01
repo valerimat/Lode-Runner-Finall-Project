@@ -10,9 +10,10 @@ public:
 	void Draw(sf::RenderWindow &window);
 	void set_texture(std::shared_ptr<sf::Texture> texture);
 	void set_sprite();
+	sf::Sprite& get_sprite();
 
 protected:
+
 	std::shared_ptr<sf::Texture> m_texture;
 	sf::Sprite m_sprite;
-
 };

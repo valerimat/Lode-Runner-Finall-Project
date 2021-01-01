@@ -14,6 +14,12 @@ void StaticObject::set_sprite()
 	sprite.setScale(sf::Vector2f(0.8, 0.8));
 	m_sprite = sprite;
 }
+
+sf::Sprite& StaticObject::get_sprite()
+{
+	return m_sprite;
+}
+
 void StaticObject::Draw(sf::RenderWindow & main_window)
 {
 	main_window.draw(m_sprite);

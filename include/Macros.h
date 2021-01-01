@@ -33,3 +33,4 @@ const char NONE = char(' ');
 #define ENEMY_TEXTURE 4
 #define COIN_TEXTURE 5
 #define NONE_TEXTURE 6
+#define BACKGROUND_TEXTURE 7

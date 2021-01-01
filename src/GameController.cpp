@@ -6,9 +6,9 @@ void GameController::Run()
 {
 	sf::Event event;
 	sf::RenderWindow main_window(sf::VideoMode (WIDTH, HEIGHT),"Lode Runner");
+
 	Map map;
 	Game game(map);
-
 	Screens screen(game);
 
 	while (main_window.isOpen())
