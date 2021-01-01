@@ -21,6 +21,7 @@ public:
 	std::vector<Enemy *> get_enemies();
 	char what_is_there_bellow(sf::Vector2f & location);
 	char what_is_there_on_the_side(sf::Vector2f& location);
+
 private:
 	int m_width;
 	int m_height;
@@ -29,6 +30,6 @@ private:
 	std::vector<std::vector<std::string>> m_maps;
 	std::vector <std::vector <std::string>> m_maps_clean;
 	std::vector<StaticObject> m_static;
-	std::vector<DynamicObject *> m_dinamic;
+	std::vector<DynamicObject *> m_dynamic;
 
 };

@@ -77,9 +77,10 @@ void Map::load_maps()
 
 void Map::set_objects()
 {
-	DynamicObject *player = NULL; // later to be changed Player player for proper use
+	DynamicObject * d_obj; // later to be changed Player player for proper use
+	DynamicObject* player;
 	StaticObject static_object;
-	//Enemy * enemy;
+	Enemy * enemy;
 
 	for (int i = 0; i < m_height; ++i)
 	{
@@ -91,7 +92,7 @@ void Map::set_objects()
 				player = new (DynamicObject);
 				player->init_object(PLAYER, sf::Vector2f(i, j));
 				player->set_texture(m_textures[PLAYER_TEXTURE]);
-				m_dynamic.push_back(*player);
+				m_dynamic.push_back(player);
 
 				break;
 	
@@ -101,7 +102,7 @@ void Map::set_objects()
 				enemy->set_texture(m_textures[ENEMY_TEXTURE]);
 				enemy->set_smartness();
 				d_obj = enemy;
-				m_dinamic.push_back(d_obj);
+				m_dynamic.push_back(d_obj);
 				break;
 	
 			case NONE:
@@ -158,7 +159,7 @@ void Map::Draw(sf::RenderWindow &main_window)
 
 	for (int i = 0; i < m_dynamic.size(); ++i)
 	{
-		m_dynamic[i].Draw(main_window);
+		m_dynamic[i]->Draw(main_window);
 		//std::cout << "X - " << m_dynamic[i].get_location().x << 
 			//" Y - " << m_dynamic[i].get_location().y << std::endl;
 	}
@@ -209,32 +210,32 @@ DynamicObject * Map::get_player() // later change to Player as a return value
 {
 	for (int i = 0; i < m_dynamic.size(); i++)
 	{
-		if (m_dynamic[i].get_name() == PLAYER)
-			return &m_dynamic[i];
+		if (m_dynamic[i]->get_name() == PLAYER)
+			return m_dynamic[i];
 	}
 	return NULL;
 }
 
 
-std::vector<Enemy *> Map::get_enemies()
+std::vector<Enemy*> Map::get_enemies()
 {
 	int index = 0;
-	std::vector<Enemy *> temp;
-	DynamicObject *DinamicPtr;
+	std::vector<Enemy*> temp;
+	DynamicObject* DinamicPtr;
 	std::shared_ptr< DynamicObject> d_ptr;
 
-	while (index < m_dinamic.size())
+	while (index < m_dynamic.size())
 	{
-		if (m_dinamic[index]->get_name() == ENEMY)
+		if (m_dynamic[index]->get_name() == ENEMY)
 		{
-			temp.push_back(dynamic_cast<Enemy *>(m_dinamic[index]));
+			temp.push_back(dynamic_cast<Enemy*>(m_dynamic[index]));
 		}
-			
+
 		++index;
 	}
 	return temp;
 
-
+}
 
 
 char Map::what_is_there_bellow(sf::Vector2f & location)
@@ -247,10 +248,10 @@ char Map::what_is_there_bellow(sf::Vector2f & location)
 		if (m_static[i].in_bounds(loc))
 			return m_static[i].get_name();
 	}
-	for (int i = 0; i < m_dinamic.size(); ++i)
+	for (int i = 0; i < m_dynamic.size(); ++i)
 	{
-		if (m_dinamic[i]->in_bounds(loc))
-			return m_dinamic[i]->get_name();
+		if (m_dynamic[i]->in_bounds(loc))
+			return m_dynamic[i]->get_name();
 	}
 
 	return NONE;
@@ -265,10 +266,10 @@ char Map::what_is_there_on_the_side(sf::Vector2f& location)
 		if (m_static[i].in_bounds(location))
 			return m_static[i].get_name();
 	}
-	for (int i = 0; i < m_dinamic.size(); ++i)
+	for (int i = 0; i < m_dynamic.size(); ++i)
 	{
-		if (m_dinamic[i]->in_bounds(location))
-			return m_dinamic[i]->get_name();
+		if (m_dynamic[i]->in_bounds(location))
+			return m_dynamic[i]->get_name();
 	}
 
 	return NONE;
