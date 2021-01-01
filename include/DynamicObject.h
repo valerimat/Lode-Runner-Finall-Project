@@ -7,6 +7,7 @@
 class DynamicObject : public Object
 {
 public:
+	virtual ~DynamicObject()= default;
 	using Object::Object;
 	void Draw(sf::RenderWindow &window);
 	void set_texture(std::shared_ptr<sf::Texture> texture);

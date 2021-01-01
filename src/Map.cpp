@@ -78,8 +78,9 @@ void Map::load_maps()
 
 void Map::set_objects()
 {
-	DynamicObject d_obj;
+	DynamicObject * d_obj;
 	StaticObject s_object;
+	Enemy * enemy;
 
 	for (int i = 0; i < m_height; ++i)
 	{
@@ -88,15 +89,16 @@ void Map::set_objects()
 			switch(get_char(i,j))
 			{
 			case PLAYER:
-				d_obj.init_object(PLAYER, sf::Vector2f(i, j));
-				d_obj.set_texture(m_textures[PLAYER_TEXTURE]);
+				d_obj->init_object(PLAYER, sf::Vector2f(i, j));
+				d_obj->set_texture(m_textures[PLAYER_TEXTURE]);
 				m_dinamic.push_back(d_obj);
 				break;
 
 			case ENEMY:
-				d_obj.init_object(ENEMY, sf::Vector2f(i, j));
-				d_obj.set_texture(m_textures[ENEMY_TEXTURE]);
-				m_dinamic.push_back(d_obj);
+				enemy->init_object(ENEMY, sf::Vector2f(i, j));
+				enemy->set_texture(m_textures[ENEMY_TEXTURE]);
+				enemy->set_smartness();
+				m_dinamic.push_back(enemy);
 				break;
 		
 			case NONE:
@@ -152,7 +154,7 @@ void Map::Draw(sf::RenderWindow &main_window)
 		m_static[i].Draw(main_window);
 
 	for (int i = 0; i < m_dinamic.size(); ++i)
-		m_dinamic[i].Draw(main_window);
+		m_dinamic[i]->Draw(main_window);
 
 }
 
@@ -195,4 +197,22 @@ void Map::load_textures()
 char Map::get_char(int i,int j)
 {
 	return m_maps[0][i][j];
+}
+
+std::vector<Enemy *> Map::get_enemies()
+{
+	int index = 0;
+	std::vector<Enemy *> temp;
+	DynamicObject *DinamicPtr;
+	std::shared_ptr< DynamicObject> d_ptr;
+
+	while (index < m_dinamic.size())
+	{
+		if (m_dinamic[index]->get_name == ENEMY)
+		{
+			temp.push_back(dynamic_cast<Enemy *>(m_dinamic[index]));
+		}
+			
+	}
+	return temp;
 }
