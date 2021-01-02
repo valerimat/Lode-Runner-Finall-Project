@@ -11,6 +11,7 @@ void GameController::Run()
 	Game game(map);
 	Screens screen(game);
 	EnemyController enemy_cont(map);
+	PlayerController player_controller(map);
 
 	while (main_window.isOpen())
 	{
@@ -32,18 +33,12 @@ void GameController::Run()
 				main_window.close();
 				break;
 			case(sf::Event::KeyPressed):
-				if (event.key.code == sf::Keyboard::Up)
+				if (event.key.code == sf::Keyboard::Up   ||
+					event.key.code == sf::Keyboard::Down ||
+					event.key.code == sf::Keyboard::Left ||
+					event.key.code == sf::Keyboard::Right)
 				{
-					std::cout << "Up was pressed\n";
-					std::cout << "X - " << map.get_player()->get_location().x <<
-						        " Y - " << map.get_player()->get_location().y << std::endl;
-					sf::Vector2f test;
-					test.x = 2;
-					test.y = 3;
-					map.get_player()->set_location(test);
-
-					std::cout << "X - " << map.get_player()->get_location().x <<
-						        " Y - " << map.get_player()->get_location().y << std::endl;
+					player_controller.move_player(event.key.code);
 				}
 			}
 		}
