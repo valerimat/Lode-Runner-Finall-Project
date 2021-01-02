@@ -44,18 +44,28 @@ void DynamicObject::update_location(NextStep step)
 	switch (step)
 	{
 	case NextStep::LEFT:
-		m_location.x -= 10;
+		m_location.x -= 5;
 		break;
 	case NextStep::RIGHT:
-		m_location.x += 10;
+		m_location.x += 5;
 		break;
 	case NextStep::UP:
-		m_location.y += 10;
+		m_location.y -= 5;
 		break;
 	case NextStep::DOWN:
-		m_location.y -= 10;
+		m_location.y += 5;
 		break;
 	default:
 		break;
 	}
+}
+
+
+float DynamicObject::get_width()
+{
+	return m_sprite.getGlobalBounds().width;
+}
+float DynamicObject::get_height()
+{
+	return m_sprite.getGlobalBounds().height;
 }

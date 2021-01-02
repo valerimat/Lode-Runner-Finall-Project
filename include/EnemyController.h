@@ -5,6 +5,8 @@
 #include "Enemy.h"
 #include "Algorithms.h"
 #include "VeryStupid.h"
+#include "RandomPath.h"
+
 
 class EnemyController :public MovementController
 {

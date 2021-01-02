@@ -16,6 +16,8 @@ public:
 	bool in_bounds(sf::Vector2f &location);
 	sf::Vector2f get_location();
 	void update_location(NextStep step);
+	float get_width();
+	float get_height();
 
 protected:
 	std::shared_ptr<sf::Texture> m_texture;
