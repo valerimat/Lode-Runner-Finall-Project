@@ -1,15 +1,16 @@
 #pragma once
+#include <SFML/Graphics.hpp>
 #include "MovementController.h"
-#include "Player.h"
 
+class Player;
+class Map;
 
-
-class PlayerController:public MovementController
+class PlayerController :public MovementController
 {
 public:
-	Move(int key);
+	PlayerController(Map &map);
+	void move_player(sf::Keyboard::Key key);
 
 private:
-	Player * m_player;
-
-}
+	Player* m_player;
+};

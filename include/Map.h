@@ -4,6 +4,7 @@
 #include "StaticObject.h"
 #include "DynamicObject.h"
 #include "Macros.h"
+#include "Player.h"
 #include "Enemy.h"
 #include <SFML/Graphics.hpp>
 #include <fstream>
@@ -16,7 +17,7 @@ public:
 	void load_maps();
 	void load_textures();
 	void Draw(sf::RenderWindow &main_window);
-	DynamicObject * get_player();
+	Player* get_player();
 	void set_objects();
 	std::vector<Enemy *> get_enemies();
 	char what_is_there_bellow(sf::Vector2f & location);

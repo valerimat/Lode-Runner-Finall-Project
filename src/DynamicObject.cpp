@@ -50,10 +50,10 @@ void DynamicObject::update_location(NextStep step)
 		m_location.x += 10;
 		break;
 	case NextStep::UP:
-		m_location.y += 10;
+		m_location.y -= 10;
 		break;
 	case NextStep::DOWN:
-		m_location.y -= 10;
+		m_location.y += 10;
 		break;
 	default:
 		break;

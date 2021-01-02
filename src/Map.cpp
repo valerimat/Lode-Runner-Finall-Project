@@ -78,8 +78,8 @@ void Map::load_maps()
 void Map::set_objects()
 {
 	DynamicObject * d_obj; // later to be changed Player player for proper use
-	DynamicObject* player;
 	StaticObject static_object;
+	Player* player;
 	Enemy * enemy;
 
 	for (int i = 0; i < m_height; ++i)
@@ -89,10 +89,11 @@ void Map::set_objects()
 			switch(get_char(i,j))
 			{
 			case PLAYER: 
-				player = new (DynamicObject);
+				player = new Player;
 				player->init_object(PLAYER, sf::Vector2f(i, j));
 				player->set_texture(m_textures[PLAYER_TEXTURE]);
-				m_dynamic.push_back(player);
+				d_obj = player;
+				m_dynamic.push_back(d_obj);
 
 				break;
 	
@@ -206,12 +207,12 @@ char Map::get_char(int i,int j)
 	return m_maps[0][i][j];
 }
 
-DynamicObject * Map::get_player() // later change to Player as a return value
+Player* Map::get_player() // later change to Player as a return value
 {
 	for (int i = 0; i < m_dynamic.size(); i++)
 	{
 		if (m_dynamic[i]->get_name() == PLAYER)
-			return m_dynamic[i];
+			return dynamic_cast<Player*>(m_dynamic[i]);
 	}
 	return NULL;
 }
