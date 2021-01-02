@@ -4,6 +4,8 @@
 #include <SFML/Graphics.hpp>
 #include "MovementController.h"
 
+class Map;
+
 class DynamicObject : public Object
 {
 public:
@@ -14,6 +16,9 @@ public:
 	void set_texture(std::shared_ptr<sf::Texture> texture);
 	void set_sprite();
 	bool in_bounds(sf::Vector2f &location);
+
+	bool is_on_ground(Map& map);
+
 	sf::Vector2f get_location();
 	void update_location(NextStep step);
 	float get_width();
@@ -23,5 +28,4 @@ protected:
 	std::shared_ptr<sf::Texture> m_texture;
 	sf::Sprite m_sprite;
 	MovementController *m_controller = nullptr;
-
 };

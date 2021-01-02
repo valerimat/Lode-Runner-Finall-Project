@@ -52,7 +52,7 @@ void GameController::Run()
 					event.key.code == sf::Keyboard::Left ||
 					event.key.code == sf::Keyboard::Right)
 				{
-					player_controller.move_player(event.key.code);
+					player_controller.move_player(event.key.code, map);
 				}
 			}
 		}

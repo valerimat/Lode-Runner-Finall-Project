@@ -48,7 +48,7 @@ void EnemyController::move_enemies(Map &map)
 			{
 			
 				m_enemies[i]->set_path(rndpath.calc_path(map, m_enemies[i]->get_location(), m_enemies[i]->get_width(), m_enemies[i]->get_height()));
-				std::cout << m_enemies[i]->get_location().x << " " << m_enemies[i]->get_location().y << std::endl;
+				//std::cout << m_enemies[i]->get_location().x << " " << m_enemies[i]->get_location().y << std::endl;
 				m_enemies[i]->move();
 				m_curr_counter = 0;
 			}

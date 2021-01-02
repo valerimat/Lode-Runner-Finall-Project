@@ -1,4 +1,5 @@
 #include "DynamicObject.h"
+#include "Map.h"
 
 void DynamicObject::set_texture(std::shared_ptr<sf::Texture> texture)
 {
@@ -39,6 +40,8 @@ bool DynamicObject::in_bounds(sf::Vector2f & location)
 	return false;
 }
 
+
+
 void DynamicObject::update_location(NextStep step)
 {
 	switch (step)
@@ -68,4 +71,25 @@ float DynamicObject::get_width()
 float DynamicObject::get_height()
 {
 	return m_sprite.getGlobalBounds().height;
+}
+
+bool DynamicObject::is_on_ground(Map& map)
+{
+
+	sf::Vector2f location = m_location;
+
+	location.y += 40;
+
+	for (int i = 0; i < map.get_static().size(); i++)
+	{
+		if (map.get_static()[i].get_name() == GROUND && map.get_static()[i].in_bounds(location))
+		{
+			std::cout << "x - " << map.get_static()[i].get_location().x <<
+				         " y - " << map.get_static()[i].get_location().y << std::endl;
+			return true;
+		}
+
+	}
+
+	return false;
 }

@@ -161,7 +161,7 @@ void Map::Draw(sf::RenderWindow &main_window)
 		sf::Vector2f vec(400, 750);
 		if (m_static[i].in_bounds(vec))
 		{
-			std::cout << i << ' ' << m_static[i].get_name() << ' ' << std::endl;
+			//std::cout << i << ' ' << m_static[i].get_name() << ' ' << std::endl;
 		}
 	}
 	for (int i = 0; i < m_dynamic.size(); ++i)
@@ -295,4 +295,9 @@ char Map::collision_top_right(sf::Vector2f& location)
 	}
 
 	return NONE;
+}
+
+std::vector<StaticObject> Map::get_static()
+{
+	return m_static;
 }

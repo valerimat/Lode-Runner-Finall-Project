@@ -8,8 +8,12 @@ PlayerController::PlayerController(Map& map)
 }
 
 
-void PlayerController::move_player(sf::Keyboard::Key key)
+void PlayerController::move_player(sf::Keyboard::Key key, Map& map)
 {
 	// later we add if statments
 	m_player->move(key);
+
+	if (m_player->is_on_ground(map))
+		std::cout << "GROUND\n";
+
 }
