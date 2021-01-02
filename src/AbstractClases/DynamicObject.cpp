@@ -83,13 +83,68 @@ bool DynamicObject::is_on_ground(Map& map)
 	for (int i = 0; i < map.get_static().size(); i++)
 	{
 		if (map.get_static()[i].get_name() == GROUND && map.get_static()[i].in_bounds(location))
-		{
-			std::cout << "x - " << map.get_static()[i].get_location().x <<
-				         " y - " << map.get_static()[i].get_location().y << std::endl;
 			return true;
-		}
-
 	}
+	return false;
+}
 
+bool DynamicObject::is_on_ladder(Map& map)
+{
+
+	sf::Vector2f location = m_location;
+
+	for (int i = 0; i < map.get_static().size(); i++)
+	{
+		if (map.get_static()[i].get_name() == LADDER && map.get_static()[i].in_bounds(location))
+			return true;
+	}
+	return false;
+}
+
+bool DynamicObject::is_on_pole(Map& map)
+{
+
+	sf::Vector2f location = m_location;
+
+	for (int i = 0; i < map.get_static().size(); i++)
+	{
+		if (map.get_static()[i].get_name() == POLE && map.get_static()[i].in_bounds(location))
+			return true;
+	}
+	return false;
+}
+
+bool DynamicObject::is_on_wall(Map& map)
+{
+	sf::Vector2f location_right, location_left;
+
+	location_left = location_right = m_location;
+
+	location_left.x += 35;
+
+	for (int i = 0; i < map.get_static().size(); i++)
+	{
+		if ((map.get_static()[i].get_name() == GROUND && map.get_static()[i].in_bounds(location_left)) ||
+			(map.get_static()[i].get_name() == GROUND && map.get_static()[i].in_bounds(location_right))) 
+			return true;
+	}
+	return false;
+}
+
+bool DynamicObject::is_on_air(Map& map)
+{
+	if (!is_on_ground(map) && !is_on_ladder(map) && !is_on_pole(map))
+		return true;
+	return false;
+}
+
+bool DynamicObject::is_on_coin(Map& map)
+{
+	sf::Vector2f location = m_location;
+	for (int i = 0; i < map.get_static().size(); i++)
+	{
+		if (map.get_static()[i].get_name() == COIN && map.get_static()[i].in_bounds(location))
+			return true;
+	}
 	return false;
 }
