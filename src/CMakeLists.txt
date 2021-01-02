@@ -11,6 +11,7 @@
                                      "VeryStupid.cpp"
                                      "StaticObject.cpp"
                                      "DynamicObject.cpp"
+                                     "RandomPath.cpp"
                                   )
                                    
                                    

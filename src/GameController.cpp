@@ -4,6 +4,8 @@
 
 void GameController::Run()
 {
+	using clock = std::chrono::high_resolution_clock;
+
 	sf::Event event;
 	sf::RenderWindow main_window(sf::VideoMode (WIDTH, HEIGHT),"Lode Runner");
 
@@ -13,17 +15,29 @@ void GameController::Run()
 	EnemyController enemy_cont(map);
 	PlayerController player_controller(map);
 
+	auto last = clock::now();
+
 	while (main_window.isOpen())
 	{
+		auto now = clock::now();
 
-		main_window.clear(sf::Color::Black);
+		auto dt = std::chrono::duration_cast<std::chrono::milliseconds>(now - last);
 
-		//need switch case
-		enemy_cont.move_enemies(map);
 
-		screen.Draw(main_window);
+		
 
-		main_window.display();
+			main_window.clear(sf::Color::Black);
+			if (dt.count() >= (long long)30)
+			{
+				last = now;
+				//need switch case
+				enemy_cont.move_enemies(map);
+			}
+			screen.Draw(main_window);
+
+			main_window.display();
+		
+		
 
 		while (main_window.pollEvent(event))
 		{

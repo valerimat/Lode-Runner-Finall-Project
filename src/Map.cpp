@@ -156,8 +156,14 @@ void Map::Draw(sf::RenderWindow &main_window)
 
 	// All the other objects
 	for (int i = 0; i < m_static.size(); ++i)
+	{
 		m_static[i].Draw(main_window);
-
+		sf::Vector2f vec(400, 750);
+		if (m_static[i].in_bounds(vec))
+		{
+			std::cout << i << ' ' << m_static[i].get_name() << ' ' << std::endl;
+		}
+	}
 	for (int i = 0; i < m_dynamic.size(); ++i)
 	{
 		m_dynamic[i]->Draw(main_window);
@@ -276,3 +282,17 @@ char Map::what_is_there_on_the_side(sf::Vector2f& location)
 	return NONE;
 }
 
+//checks if there is a collision based on the top right corner
+//used mostly for ladders
+char Map::collision_top_right(sf::Vector2f& location)
+{
+
+	for (int i = 0; i < m_static.size(); ++i)
+	{
+		//if the x is the same x and its somewhere on the y
+		if (m_static[i].get_location().x == location.x && m_static[i].in_bounds(location))
+			return m_static[i].get_name();
+	}
+
+	return NONE;
+}

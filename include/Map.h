@@ -22,7 +22,7 @@ public:
 	std::vector<Enemy *> get_enemies();
 	char what_is_there_bellow(sf::Vector2f & location);
 	char what_is_there_on_the_side(sf::Vector2f& location);
-
+	char collision_top_right(sf::Vector2f& location);
 private:
 	int m_width;
 	int m_height;

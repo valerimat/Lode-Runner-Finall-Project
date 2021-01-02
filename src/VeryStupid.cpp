@@ -67,7 +67,7 @@ bool VeryStupid::next_step_is_valid(Map map,NextStep next, sf::Vector2f curr_loc
 void VeryStupid::update_curr_location(sf::Vector2f & curr_location_with_steps, NextStep next)
 {
 	if (next == NextStep::LEFT)
-		curr_location_with_steps.x -= 10;
+		curr_location_with_steps.x -= 5;
 	else
-		curr_location_with_steps.x += 10;
+		curr_location_with_steps.x += 5;
 }
