@@ -1,7 +1,6 @@
 #include "EnemyController.h"
 #include <iostream>
 
-
 EnemyController::EnemyController(Map & map)
 {
 	//

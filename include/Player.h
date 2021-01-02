@@ -1,22 +1,22 @@
 #pragma once
-#include "Entity.h"
+#include <SFML/Graphics.hpp>
+#include "DynamicObject.h"
 #include "Lives.h"
 #include "PlayerController.h"
 
-class Player : public Entity
+class Player : public DynamicObject
 {
 public:
 
-	using Entity::Entity();
+	using DynamicObject::DynamicObject;
 
-	Lives* get_lives();
+	//Lives* get_lives();
 
-	PlayerController * get_controller();
-	
+	//PlayerController * get_controller();
+
+	void move(sf::Keyboard::Key key);
 
 private:
 	Lives m_lives;
-
-
-
+	//PlayerController * get_controller();
 };
