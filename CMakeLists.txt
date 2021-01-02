@@ -12,7 +12,21 @@ endif ()
 add_executable (LodeRunner "")
 
 add_subdirectory (include)
+add_subdirectory (include/Enemy/)
+add_subdirectory (include/AbstractClases/)
+add_subdirectory (include/EndGame/)
+add_subdirectory (include/Game/)
+add_subdirectory (include/MainMenu/)
+add_subdirectory (include/Player/)
+
 add_subdirectory (src)
+add_subdirectory (src/AbstractClases/)
+add_subdirectory (src/Enemy/)
+add_subdirectory (src/EndGame/)
+add_subdirectory (src/Game/)
+add_subdirectory (src/MainMenu/)
+add_subdirectory (src/Player/)
+
 add_subdirectory (resources)
 
 set (SFML_STATIC_LIBRARIES TRUE)
