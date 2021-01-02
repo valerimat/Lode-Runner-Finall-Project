@@ -1,6 +1,7 @@
 #include "RandomPath.h"
 #include "Map.h"
 #include "time.h"
+
 std::vector<NextStep> RandomPath::calc_path(Map map, sf::Vector2f curr_location, float height, float width)
 {
 	srand((unsigned)time(NULL));
