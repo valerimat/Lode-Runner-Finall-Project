@@ -10,9 +10,11 @@ PlayerController::PlayerController(Map& map)
 
 void PlayerController::move_player(sf::Keyboard::Key key, Map& map)
 {
-	// later we add if statments
+	
 
+	// later we add if statments
 	std::vector<char> collision = m_player->is_on_something(map, key);
+	
 
 	for (int i = 0; i < collision.size(); i++)
 	{

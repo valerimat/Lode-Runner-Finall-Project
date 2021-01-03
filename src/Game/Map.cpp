@@ -297,7 +297,7 @@ char Map::collision_top_right(sf::Vector2f& location)
 	return NONE;
 }
 
-std::vector<StaticObject> Map::get_static()
+std::vector<StaticObject> * Map::get_static()
 {
-	return m_static;
+	return  &m_static;
 }

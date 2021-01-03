@@ -23,37 +23,36 @@ void GameController::Run()
 
 		auto dt = std::chrono::duration_cast<std::chrono::milliseconds>(now - last);
 
-
-
-
 		main_window.clear(sf::Color::Black);
 		if (dt.count() >= (long long)30)
 		{
-			last = now;
+			
 			//need switch case
 			enemy_cont.move_enemies(map);
-		}
 
-		screen.Draw(main_window);
 
-		main_window.display();
-	
-		while (main_window.pollEvent(event))
-		{
-			switch (event.type)
+			screen.Draw(main_window);
+
+			main_window.display();
+
+			while (main_window.pollEvent(event))
 			{
-			case(sf::Event::Closed):
-				main_window.close();
-				break;
-			}		
-		}
+				switch (event.type)
+				{
+				case(sf::Event::Closed):
+					main_window.close();
+					break;
+				}
+			}
 
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)   ||
-			sf::Keyboard::isKeyPressed(sf::Keyboard::Down) ||
-			sf::Keyboard::isKeyPressed(sf::Keyboard::Left) ||
-			sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-		{
-			player_controller.move_player(event.key.code, map);
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) ||
+				sf::Keyboard::isKeyPressed(sf::Keyboard::Down) ||
+				sf::Keyboard::isKeyPressed(sf::Keyboard::Left) ||
+				sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+			{
+				player_controller.move_player(event.key.code, map);
+			}
+			last = now;
 		}
 	}
 }

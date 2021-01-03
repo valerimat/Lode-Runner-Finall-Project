@@ -20,7 +20,7 @@ public:
 	void load_textures();
 	void Draw(sf::RenderWindow &main_window);
 	Player* get_player();
-	std::vector<StaticObject> get_static();
+	std::vector<StaticObject> * get_static();
 	void set_objects();
 	std::vector<Enemy *> get_enemies();
 	char what_is_there_bellow(sf::Vector2f & location);
