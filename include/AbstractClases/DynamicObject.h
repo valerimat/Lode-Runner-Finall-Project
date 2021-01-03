@@ -24,7 +24,10 @@ public:
 	bool is_on_air(Map& map);
 	bool is_on_coin(Map& map);
 
+	std::vector<char> is_on_something(Map& map, sf::Keyboard::Key key);
+
 	sf::Vector2f get_location();
+	sf::Vector2f get_next_location(sf::Keyboard::Key key);
 	void update_location(NextStep step);
 	float get_width();
 	float get_height();
