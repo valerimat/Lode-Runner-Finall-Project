@@ -106,11 +106,11 @@ void Map::set_objects()
 				m_dynamic.push_back(d_obj);
 				break;
 	
-			case NONE:
-				static_object.init_object(NONE, sf::Vector2f(i, j));
-				static_object.set_texture(m_textures[NONE_TEXTURE]);
-				m_static.push_back(static_object);
-				break;
+			//case NONE:
+			//	static_object.init_object(NONE, sf::Vector2f(i, j));
+			//	static_object.set_texture(m_textures[NONE_TEXTURE]);
+			//	m_static.push_back(static_object);
+			//	break;
 
 			case GROUND:
 				static_object.init_object(GROUND, sf::Vector2f(i, j));
