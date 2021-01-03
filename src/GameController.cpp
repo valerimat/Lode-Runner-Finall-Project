@@ -33,12 +33,11 @@ void GameController::Run()
 			//need switch case
 			enemy_cont.move_enemies(map);
 		}
+
 		screen.Draw(main_window);
 
 		main_window.display();
-
-
-
+	
 		while (main_window.pollEvent(event))
 		{
 			switch (event.type)
@@ -46,7 +45,6 @@ void GameController::Run()
 			case(sf::Event::Closed):
 				main_window.close();
 				break;
-
 			}		
 		}
 
