@@ -148,3 +148,59 @@ bool DynamicObject::is_on_coin(Map& map)
 	}
 	return false;
 }
+
+sf::Vector2f DynamicObject::get_next_location(sf::Keyboard::Key key)
+{
+	sf::Vector2f temp = m_location;
+
+	switch (key)
+	{
+	case sf::Keyboard::Up:
+		temp.x -= 5;
+		break;
+	case sf::Keyboard::Down:
+		temp.x += 5;
+		break;
+	case sf::Keyboard::Left:
+		temp.y -= 5;
+		break;
+	case sf::Keyboard::Right:
+		temp.y += 5;
+		break;
+	}
+
+	return temp;
+}
+
+// returns a vector of the specific objects the dynamic object collides with
+std::vector<char> DynamicObject::is_on_something(Map& map, sf::Keyboard::Key key)
+{
+	int size = map.get_static().size();
+	sf::Vector2f location = get_next_location(key);
+	std::vector<char> collision;
+
+	for (int i = 0; i < size; i++)
+	{
+		if (map.get_static()[i].get_name() == COIN && map.get_static()[i].in_bounds(location))
+			collision.push_back(COIN);
+		if (map.get_static()[i].get_name() == POLE && map.get_static()[i].in_bounds(location))
+			collision.push_back(POLE);
+		// later fix ladder collision
+		if (map.get_static()[i].get_name() == LADDER && map.get_static()[i].in_bounds(location))
+			collision.push_back(LADDER);
+
+		sf::Vector2f location_right, location_left;
+		location_left = location_right = location;
+		location_left.x += 40;
+
+		if ((map.get_static()[i].get_name() == GROUND && map.get_static()[i].in_bounds(location_left)) ||
+			(map.get_static()[i].get_name() == GROUND && map.get_static()[i].in_bounds(location_right)))
+			collision.push_back('W'); // means wall = cannot move forward
+
+		location.y += 40;
+		if (map.get_static()[i].get_name() == GROUND && map.get_static()[i].in_bounds(location))
+			collision.push_back(GROUND);
+		location.y -= 40;
+	}
+	return collision;
+}
