@@ -31,6 +31,7 @@ const char POLE = char('-');
 const char GROUND = char('#');
 const char LADDER = char('H');
 const char NONE = char(' ');
+const char WALL = char('w');
 
 #define HEIGHT 900
 #define WIDTH 1200
