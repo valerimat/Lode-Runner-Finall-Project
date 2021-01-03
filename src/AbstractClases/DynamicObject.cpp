@@ -175,8 +175,9 @@ sf::Vector2f DynamicObject::get_next_location(sf::Keyboard::Key key)
 	case sf::Keyboard::Right:
 		temp.y += 2;
 		break;
+	default:
+		break;
 	}
-
 	return temp;
 }
 
@@ -206,7 +207,7 @@ std::vector<char> DynamicObject::is_on_something(Map& map, sf::Keyboard::Key key
 
 		if (((*static_arr)[i].get_name() == GROUND && (*static_arr)[i].in_bounds(location_left)) ||
 			((*static_arr)[i].get_name() == GROUND && (*static_arr)[i].in_bounds(location_right)))
-			collision.push_back('W'); // means wall = cannot move forward
+			collision.push_back(WALL);
 
 		location.y += 40;
 		if ((*static_arr)[i].get_name() == GROUND && (*static_arr)[i].in_bounds(location))
