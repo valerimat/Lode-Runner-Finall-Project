@@ -13,11 +13,12 @@ void EnemyController::move_enemies(Map * map)
 {
 	int i = 0;
 
-	
+	/*
 	if (reached_player(map))
 	{
 		std::cout << "got to player" << std::endl;
 	}
+	*/
 
 	while (i < m_enemies.size())
 	{

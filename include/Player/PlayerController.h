@@ -1,5 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include <chrono>
+#include <thread>
 #include "MovementController.h"
 
 class Player;
