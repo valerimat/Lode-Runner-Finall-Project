@@ -47,20 +47,20 @@ void DynamicObject::update_location(NextStep step)
 	switch (step)
 	{
 	case NextStep::LEFT:
-		m_sprite.move(sf::Vector2f(-5, 0));
-		m_location.x -= 5;
+		m_sprite.move(sf::Vector2f(-pixels_to_move, 0));
+		m_location.x -= pixels_to_move;
 		break;
 	case NextStep::RIGHT:
-		m_sprite.move(sf::Vector2f(5, 0));
-		m_location.x += 5;
+		m_sprite.move(sf::Vector2f(pixels_to_move, 0));
+		m_location.x += pixels_to_move;
 		break;
 	case NextStep::UP:
-		m_sprite.move(sf::Vector2f(0,- 5));
-		m_location.y -= 5;
+		m_sprite.move(sf::Vector2f(0,-pixels_to_move));
+		m_location.y -= pixels_to_move;
 		break;
 	case NextStep::DOWN:
-		m_sprite.move(sf::Vector2f(0, 2));
-		m_location.y += 5;
+		m_sprite.move(sf::Vector2f(0, pixels_to_move));
+		m_location.y += pixels_to_move;
 		break;
 	default:
 		break;
@@ -77,26 +77,13 @@ float DynamicObject::get_height()
 	return m_sprite.getGlobalBounds().height;
 }
 
-bool DynamicObject::is_on_ground(Map& map)
-{
 
-	sf::Vector2f location = m_location;
-
-	location.y += 40;
-
-	for (int i = 0; i < (*map.get_static()).size(); i++)
-	{
-		if ((*map.get_static())[i].get_name() == GROUND && (*map.get_static())[i].in_bounds(location))
-			return true;
-	}
-	return false;
-}
 
 bool DynamicObject::is_on_ladder(Map& map)
 {
 
 	sf::Vector2f location = m_location;
-
+	
 	for (int i = 0; i < (*map.get_static()).size(); i++)
 	{
 		if ((*map.get_static())[i].get_name() == LADDER && (*map.get_static())[i].in_bounds(location))
@@ -137,13 +124,6 @@ bool DynamicObject::is_on_wall(Map& map)
 	return false;
 }
 
-bool DynamicObject::is_on_air(Map& map)
-{
-	if (!is_on_ground(map) && !is_on_ladder(map) && !is_on_pole(map))
-		return true;
-	return false;
-}
-
 bool DynamicObject::is_on_coin(Map& map)
 {
 	std::vector<StaticObject>* static_arr = map.get_static();
@@ -164,16 +144,16 @@ sf::Vector2f DynamicObject::get_next_location(sf::Keyboard::Key key)
 	switch (key)
 	{
 	case sf::Keyboard::Up:
-		temp.x -= 2;
+		temp.x -= pixels_to_move;
 		break;
 	case sf::Keyboard::Down:
-		temp.x += 2;
+		temp.x += pixels_to_move;
 		break;
 	case sf::Keyboard::Left:
-		temp.y -= 2;
+		temp.y -= pixels_to_move;
 		break;
 	case sf::Keyboard::Right:
-		temp.y += 2;
+		temp.y += pixels_to_move;
 		break;
 	default:
 		break;
@@ -215,4 +195,10 @@ std::vector<char> DynamicObject::is_on_something(Map& map, sf::Keyboard::Key key
 		location.y -= 40;
 	}
 	return collision;
+}
+
+
+sf::Sprite DynamicObject::get_sprite()
+{
+	return m_sprite;
 }

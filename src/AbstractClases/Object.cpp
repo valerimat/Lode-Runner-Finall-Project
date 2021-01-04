@@ -20,6 +20,11 @@ sf::Vector2f Object::get_location()
 
 	return location;
 }
+sf::Vector2f Object::get_location_x_y()
+{
+	return m_location;
+}
+
 void Object::init_object(char m_name, sf::Vector2f  m_location)
 {
 	set_name(m_name);
