@@ -10,11 +10,7 @@ PlayerController::PlayerController(Map& map)
 
 void PlayerController::move_player(sf::Keyboard::Key key, Map& map)
 {
-	
-
-	// later we add if statments
 	std::vector<char> collision = m_player->is_on_something(map, key);
-	
 
 	for (int i = 0; i < collision.size(); i++)
 	{
@@ -68,11 +64,12 @@ void PlayerController::physics_player(sf::Keyboard::Key key, Map& map, std::vect
 	{
 		m_player->move(sf::Keyboard::Down);
 		std::vector<char> collision = m_player->is_on_something(map, sf::Keyboard::Down);
+		//std::this_thread::sleep_for(std::chrono::milliseconds(30));
 		physics_player(key, map, collision);
 	}
 
 	// on ground
-	if(ground && !wall &&(key == sf::Keyboard::Left || key == sf::Keyboard::Right))
+	if(ground && !wall && (key == sf::Keyboard::Left || key == sf::Keyboard::Right))
 		m_player->move(key);
 
 	// on ladder
@@ -81,16 +78,18 @@ void PlayerController::physics_player(sf::Keyboard::Key key, Map& map, std::vect
 		if (ground && sf::Keyboard::Down)
 			return;
 		m_player->move(key);
+		std::cout << "ladder\n";
 	}
 
 	// on pole
 	if (pole && !wall && (key == sf::Keyboard::Left || key == sf::Keyboard::Right ||
-				 key == sf::Keyboard::Down))
+		key == sf::Keyboard::Down))
 		m_player->move(key);
 
 	// wall = no movement forward
 	if (wall)
 	{
+		std::cout << "wall\n";
 		return;
-	}	
+	}
 }

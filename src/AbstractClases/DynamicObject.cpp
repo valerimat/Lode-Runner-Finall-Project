@@ -145,6 +145,7 @@ sf::Vector2f DynamicObject::get_next_location(sf::Keyboard::Key key)
 	// STEP is a const in Marcros.h
 	switch (key)
 	{
+	case sf::Keyboard::Up:
 		temp.y -= STEP;
 		break;
 	case sf::Keyboard::Down:

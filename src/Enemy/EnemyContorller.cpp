@@ -26,6 +26,7 @@ void EnemyController::move_enemies(Map * map)
 
 	}
 	*/
+
 	while (i < m_enemies.size())
 	{
 		switch (m_enemies[i]->get_iq())
