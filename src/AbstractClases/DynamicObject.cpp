@@ -47,20 +47,20 @@ void DynamicObject::update_location(NextStep step)
 	switch (step)
 	{
 	case NextStep::LEFT:
-		m_sprite.move(sf::Vector2f(-pixels_to_move, 0));
-		m_location.x -= pixels_to_move;
+		m_sprite.move(sf::Vector2f(-STEP, 0));
+		m_location.x -= STEP;
 		break;
 	case NextStep::RIGHT:
-		m_sprite.move(sf::Vector2f(pixels_to_move, 0));
-		m_location.x += pixels_to_move;
+		m_sprite.move(sf::Vector2f(STEP, 0));
+		m_location.x += STEP;
 		break;
 	case NextStep::UP:
-		m_sprite.move(sf::Vector2f(0,-pixels_to_move));
-		m_location.y -= pixels_to_move;
+		m_sprite.move(sf::Vector2f(0,-STEP));
+		m_location.y -= STEP;
 		break;
 	case NextStep::DOWN:
-		m_sprite.move(sf::Vector2f(0, pixels_to_move));
-		m_location.y += pixels_to_move;
+		m_sprite.move(sf::Vector2f(0, STEP));
+		m_location.y += STEP;
 		break;
 	default:
 		break;

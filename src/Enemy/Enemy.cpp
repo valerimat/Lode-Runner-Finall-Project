@@ -62,10 +62,10 @@ std::vector<NextStep> Enemy::get_avaliable_steps(Map* map,sf::Vector2f location)
 	sf::Vector2f bottom_left(top_left.x, top_left.y +get_height());
 	sf::Vector2f bottom_right(bottom_left.x + get_width(), bottom_left.y);
 
-	sf::Vector2f offset_left(-pixels_to_move, 0);
-	sf::Vector2f offset_right(pixels_to_move, 0);
-	sf::Vector2f offset_up(0, -pixels_to_move);
-	sf::Vector2f offset_down(0, pixels_to_move);
+	sf::Vector2f offset_left(-STEP, 0);
+	sf::Vector2f offset_right(STEP, 0);
+	sf::Vector2f offset_up(0, -STEP);
+	sf::Vector2f offset_down(0, STEP);
 	
 	char state = get_curr_state(map, location);
 
@@ -154,8 +154,8 @@ char Enemy::get_curr_state(Map* map, sf::Vector2f   location)
 	char top_right_char = (*map).what_is_there(top_right);
 
 
-	char bottom_left_char_ground = (*map).what_is_there(sf::Vector2f(bottom_left.x, bottom_left.y + pixels_to_move));
-	char bottom_right_char_ground = (*map).what_is_there(sf::Vector2f(bottom_right.x, bottom_right.y + pixels_to_move));
+	char bottom_left_char_ground = (*map).what_is_there(sf::Vector2f(bottom_left.x, bottom_left.y + STEP));
+	char bottom_right_char_ground = (*map).what_is_there(sf::Vector2f(bottom_right.x, bottom_right.y + STEP));
 
 	if(bottom_left_char_ground == GROUND || bottom_right_char_ground == GROUND)
 		return GROUND;

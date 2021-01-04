@@ -156,7 +156,7 @@ bool OneSide::is_opposide_avaliable(NextStep next, std::vector<NextStep> avaliab
 void OneSide::update_curr_location(sf::Vector2f & curr_location_with_steps, NextStep next)
 {
 	if (next == NextStep::LEFT)
-		curr_location_with_steps.x -= pixels_to_move;
+		curr_location_with_steps.x -= STEP;
 	else
-		curr_location_with_steps.x += pixels_to_move;
+		curr_location_with_steps.x += STEP;
 }

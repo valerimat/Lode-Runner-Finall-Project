@@ -121,10 +121,10 @@ void Astar::get_around(Tile& curr_tile,
 {
 	sf::Vector2f curr_location = curr_tile.m_location;
 
-	sf::Vector2f above(curr_location.x, curr_location.y - pixels_to_move),
-		below(curr_location.x, curr_location.y + pixels_to_move),
-		right_l(curr_location.x + pixels_to_move, curr_location.y),
-		left_l(curr_location.x - pixels_to_move, curr_location.y);
+	sf::Vector2f above(curr_location.x, curr_location.y - STEP),
+		below(curr_location.x, curr_location.y + STEP),
+		right_l(curr_location.x + STEP, curr_location.y),
+		left_l(curr_location.x - STEP, curr_location.y);
 
 	std::vector<NextStep> avaliavle_steps = enemy->get_avaliable_steps(map, curr_location);
 

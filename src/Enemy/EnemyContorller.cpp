@@ -5,13 +5,6 @@
 
 EnemyController::EnemyController(Map & map)
 {
-	//
-	//
-	//
-	//insert Algorithms
-	//how many iteriations should pass untill we calc path again
-	m_loop_counter = 35;
-	m_curr_counter = 35;
 	m_enemies = map.get_enemies();
 }
 
@@ -20,12 +13,12 @@ void EnemyController::move_enemies(Map * map)
 {
 	int i = 0;
 
-	/*
-	if (enemy_reached_player)
+	
+	if (reached_player(map))
 	{
-
+		std::cout << "got to player" << std::endl;
 	}
-	*/
+
 	while (i < m_enemies.size())
 	{
 		switch (m_enemies[i]->get_iq())
@@ -58,4 +51,16 @@ void EnemyController::move_enemies(Map * map)
 
 		++i;
 	}
+}
+
+bool EnemyController::reached_player(Map * map)
+{
+	sf::Vector2f player_loc = map->get_player()->get_location();
+
+	for (int i = 0; i < m_enemies.size(); i++)
+	{
+		if (m_enemies[i]->get_sprite().getGlobalBounds().contains(player_loc))
+			return true;
+	}
+	return false;
 }

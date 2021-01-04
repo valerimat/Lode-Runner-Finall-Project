@@ -63,19 +63,19 @@ void RandomPath::update_curr_location(sf::Vector2f & curr_location_with_steps, N
 	switch (next)
 	{
 	case NextStep::UP:
-		offset.y -= pixels_to_move;
+		offset.y -= STEP;
 		break;
 
 	case NextStep::DOWN:
-		offset.y += pixels_to_move;
+		offset.y += STEP;
 		break;
 
 	case NextStep::LEFT:
-		offset.x -= pixels_to_move;
+		offset.x -= STEP;
 		break;
 
 	case NextStep::RIGHT:
-		offset.x += pixels_to_move;
+		offset.x += STEP;
 		break;
 	}	
 
