@@ -1,5 +1,4 @@
 #pragma once
-
 //======include section======
 #include <SFML/Graphics.hpp>
 #include "Macros.h"
@@ -10,7 +9,7 @@ class Tile
 public:
 
 	// c-tors
-	Tile(sf::Vector2f& location, char value, int index_of_father, NextStep move, int h_value);
+	Tile(sf::Vector2f location,int index_of_father, NextStep move, int h_value);
 	Tile();
 
 	// operator functions
@@ -18,8 +17,7 @@ public:
 	bool operator!=(Tile& tile) const;
 
 	// members
-
-	char m_value;
+	float m_size = SIZE_OF_TILE;
 	int f_value;
 	int g_value;
 	int h_value;

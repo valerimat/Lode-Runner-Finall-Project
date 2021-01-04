@@ -11,9 +11,13 @@ void GameController::Run()
 
 	MapData map_data;
 	Game game(map_data);
+
 	//loads level
 	game.Load_level();
+
+	//will hold curr map
 	Map curr_map = game.get_curr_map();
+
 	Screens screen(game);
 	EnemyController enemy_cont(curr_map);
 	PlayerController player_controller(curr_map);
@@ -31,7 +35,7 @@ void GameController::Run()
 		{
 			
 			//need switch case
-			enemy_cont.move_enemies(curr_map);
+			enemy_cont.move_enemies(&curr_map);
 
 
 			screen.Draw(main_window);

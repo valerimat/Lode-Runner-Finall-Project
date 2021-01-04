@@ -150,6 +150,11 @@ char Map::get_char(int i,int j)
 	return m_map[i][j];
 }
 
+char Map::get_char(sf::Vector2f & location)
+{
+	return m_map[location.y][location.x];
+}
+
 Player* Map::get_player() // later change to Player as a return value
 {
 	for (int i = 0; i < m_dynamic.size(); i++)
@@ -158,6 +163,15 @@ Player* Map::get_player() // later change to Player as a return value
 			return dynamic_cast<Player*>(m_dynamic[i]);
 	}
 	return NULL;
+}
+
+
+bool Map::in_player(sf::Vector2f & location)
+{
+	if (get_player()->get_sprite().getGlobalBounds().contains(location))
+		return true;
+	else
+		return false;
 }
 
 
@@ -182,7 +196,7 @@ std::vector<Enemy*> Map::get_enemies()
 }
 
 
-char Map::what_is_there_bellow(sf::Vector2f & location)
+char Map::what_is_there_bellow(sf::Vector2f& location)
 {
 	sf::Vector2f loc = location;
 	loc.y += 55;
@@ -202,7 +216,7 @@ char Map::what_is_there_bellow(sf::Vector2f & location)
 }
 
 
-char Map::what_is_there_on_the_side(sf::Vector2f& location)
+char Map::what_is_there(sf::Vector2f location)
 {
 
 	for (int i = 0; i < m_static.size(); ++i)
@@ -234,7 +248,94 @@ char Map::collision_top_right(sf::Vector2f& location)
 	return NONE;
 }
 
+bool Map::we_are_hanging_on_rope(sf::Vector2f& location_l, sf::Vector2f& location_r)
+{
+
+	for (int i = 0; i < m_static.size(); ++i)
+	{
+		//if the x is the same x and its somewhere on the y
+		if ((m_static[i].get_location().y == location_l.y && m_static[i].in_bounds(location_l))
+			|| (m_static[i].get_location().y == location_r.y && m_static[i].in_bounds(location_r)))
+			return true;
+	}
+	return false;
+}
+
 std::vector<StaticObject> * Map::get_static()
 {
 	return  &m_static;
+}
+
+int Map::get_width()
+{
+	return m_width;
+}
+
+int Map::get_height()
+{
+	return m_height;
+}
+
+
+bool Map::out_of_boundrie(sf::Vector2f& location) {
+	if (location.x <= 0)
+		return true;
+	else if (location.y > get_width())
+		return true;
+	else if (location.y < 0)
+		return true;
+	else if (location.x >= get_width())
+		return true;
+
+	return false;
+}
+
+sf::Vector2f Map::get_bounding_sprt_loc(sf::Vector2f location)
+{
+	for (int i = 0; i < m_static.size(); ++i)
+	{
+		if (m_static[i].in_bounds(location))
+			return m_static[i].get_location_x_y();
+	}
+}
+
+bool Map::we_are_centerd(sf::Vector2f& location)
+{
+	//need to change to number based on tile size
+	for (int i = 0; i < m_static.size(); ++i)
+	{
+		if (m_static[i].get_location() == location)
+			return true;
+	}
+	return false;
+}
+
+
+
+
+//location checks:
+bool Map::is_ground(sf::Vector2f& location)
+{
+	for (int i = 0; i < m_static.size(); ++i)
+	{
+		if (m_static[i].in_bounds(location))
+			if (m_static[i].get_name() == GROUND)
+				return true;
+			else
+				return false;
+	}
+	return false;
+}
+bool Map::is_ladder(sf::Vector2f& location)
+{
+	for (int i = 0; i < m_static.size(); ++i)
+	{
+		if (m_static[i].in_bounds(location))
+			if (m_static[i].get_name() == LADDER && m_static[i].get_location().x == location.x)
+				return true;
+			else
+				return false;
+	}
+	return false;
+
 }

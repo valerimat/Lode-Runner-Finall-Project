@@ -1,21 +1,13 @@
 #include "Astar.h"
+#include "Map.h"
+#include "Enemy.h"
+#include "Tile.h"
 
-
-//====================================================================================
-//This function
-//Input:
-//Output:
-std::vector<int> CalculatePath(sf::Vector2f& from,
-	sf::Vector2f& to,
-	Map & map)
+std::vector<NextStep> Astar::calc_path(Map * map, Enemy * enemy)
 {
+	float size = enemy->get_height();
 
-	//if we are in player location 
-	if (from == to) {
-		std::vector<int> path(1);
-		path[0] = NONE;
-		return path;
-	}
+	sf::Vector2f player_location = map->get_player()->get_location();
 
 	// will store open list of tiles
 	std::vector<Tile> open_list;
@@ -24,17 +16,17 @@ std::vector<int> CalculatePath(sf::Vector2f& from,
 	std::vector<Tile> closed_list;
 
 	// will store the path
-	std::vector<int> path;
+	std::vector<NextStep> path;
 
 	//will store the tiles around our tile
 	std::vector<Tile> arround;
 
 	//starting tile
-	Tile from_where(from, board.get_char(from), 0, (enum Moves)NONE, 0);
+	Tile from_where(enemy->get_location(), 0,NextStep::NONE, 0);
 
 
 	//end tile
-	Tile to_where(to, board.get_char(from), 0, (enum Moves)NONE, 0);
+	Tile to_where(player_location, 0, NextStep::NONE, 0);
 
 	//iterator
 	std::vector<Tile>::iterator tile_to_add;
@@ -48,16 +40,18 @@ std::vector<int> CalculatePath(sf::Vector2f& from,
 	int index_of_wanted_tile = 0;
 
 	int index_of_father = 0;
+
 	while (true) {
 		//fail safe
 		if (open_list.size() == 0) {
-			std::vector<int> path(1);
-			path[0] = NONE;
+			std::vector<NextStep> path(1);
+			path[0] = NextStep::NONE;
 			return path;
 		}
 
 		//reset arround list
 		arround.clear();
+
 		//get the index of the tile if the loweest score from the open list
 		index_of_wanted_tile = find_the_best_score(open_list);
 
@@ -71,7 +65,7 @@ std::vector<int> CalculatePath(sf::Vector2f& from,
 		open_list.erase(tile_to_add);
 
 		//gets all posible tiles around
-		get_around(*(closed_list.end() - 1), arround, closed_list, board, closed_list.size() - 1);
+		get_around(*(closed_list.end() - 1), arround, closed_list, map, closed_list.size() - 1, enemy);
 
 		//calculates theyr score
 		calculate_score(arround, to_where.m_location, h_score);
@@ -101,14 +95,13 @@ std::vector<int> CalculatePath(sf::Vector2f& from,
 		}
 
 
-		int ending_tile = check_if_tile_in_vector(to_where, open_list);
-		if (ending_tile > -1) {
-			closed_list.push_back(open_list[ending_tile]);
+		
+		int index_of_player_tile = found_player(open_list, player_location);
+		if(index_of_player_tile != -1)
+		{
+			closed_list.push_back(open_list[index_of_player_tile]);
 			break;
-			std::cout << "reached here";
 		}
-
-
 		index_of_father++;
 	}
 
@@ -119,148 +112,64 @@ std::vector<int> CalculatePath(sf::Vector2f& from,
 
 //====================================================================================
 //getting the tiles arround our tile based on the alogrithm
-void get_around(const Tile& curr_tile,
+void Astar::get_around(Tile& curr_tile,
 	std::vector<Tile>& arround,
 	const std::vector<Tile> closed_list,
-	Map & board,
-	int index_of_father)
+	Map * map,
+	int index_of_father,
+	Enemy* enemy)
 {
+	sf::Vector2f curr_location = curr_tile.m_location;
 
-	//getting all 
-	init_arround(arround, curr_tile.m_location, board, closed_list, index_of_father);
+	sf::Vector2f above(curr_location.x, curr_location.y - pixels_to_move),
+		below(curr_location.x, curr_location.y + pixels_to_move),
+		right_l(curr_location.x + pixels_to_move, curr_location.y),
+		left_l(curr_location.x - pixels_to_move, curr_location.y);
 
-}
-//====================================================================================
+	std::vector<NextStep> avaliavle_steps = enemy->get_avaliable_steps(map, curr_location);
 
-//====================================================================================
-//Initialising the arround list
-void init_arround(std::vector<Tile>& arround,
-	sf::Vector2f& curr_location,
-	Map & board,
-	const std::vector<Tile>& closed_list,
-	int index_of_father) {
-
-	//get the locations
-	Location above(curr_location.row - 1, curr_location.col),
-		below(curr_location.row + 1, curr_location.col),
-		right_l(curr_location.row, curr_location.col + 1),
-		left_l(curr_location.row, curr_location.col - 1);
-
-	if (!board.out_of_boundrie(above)) {
-		char top = board.get_char(above);
-		arround.push_back(Tile(above, top, index_of_father, (enum Moves)UP, closed_list[index_of_father].h_value + 1));
-
-		if (!check_validity(*(arround.end() - 1), closed_list, board, UP))
-			arround.erase(arround.end() - 1);
-
-	}
-	if (!board.out_of_boundrie(below)) {
-		char bottom = board.get_char(below);
-		arround.push_back(Tile(below, bottom, index_of_father, (enum Moves)DOWN, closed_list[index_of_father].h_value + 1));
-
-		if (!check_validity(*(arround.end() - 1), closed_list, board, DOWN))
-			arround.erase(arround.end() - 1);
-
-	}
-	if (!board.out_of_boundrie(right_l)) {
-		char right = board.get_char(right_l);
-		arround.push_back(Tile(right_l, right, index_of_father, (enum Moves)RIGHT, closed_list[index_of_father].h_value + 1));
-
-		if (!check_validity(*(arround.end() - 1), closed_list, board, RIGHT))
-			arround.erase(arround.end() - 1);
-	}
-	if (!board.out_of_boundrie(left_l)) {
-		char left = board.get_char(left_l);
-		arround.push_back(Tile(left_l, left, index_of_father, (enum Moves)LEFT, closed_list[index_of_father].h_value + 1));
-
-		if (!check_validity(*(arround.end() - 1), closed_list, board, LEFT))
-			arround.erase(arround.end() - 1);
+	for (int i = 0; i < avaliavle_steps.size(); ++i)
+	{
+		Tile new_tile;
+		switch (avaliavle_steps[i])
+		{
+		case NextStep::UP:
+			new_tile= Tile(above, index_of_father, NextStep::UP, curr_tile.h_value + 1);
+			arround.push_back(new_tile);
+			break;
+		case NextStep::DOWN:
+			new_tile = Tile(below, index_of_father, NextStep::DOWN, curr_tile.h_value + 1);
+			arround.push_back(new_tile);
+			break;
+		case NextStep::LEFT:
+			new_tile = Tile(left_l, index_of_father, NextStep::LEFT, curr_tile.h_value + 1);
+			arround.push_back(new_tile);
+			break;
+		case NextStep::RIGHT:
+			new_tile = Tile(right_l, index_of_father, NextStep::RIGHT, curr_tile.h_value + 1);
+			arround.push_back(new_tile);
+			break;
+		case NextStep::NONE:
+			break;
+		default:
+			break;
+		}
 	}
 
+	for (int i = 0; i < arround.size(); i++)
+	{
+		int index = check_if_tile_in_vector(arround[i], closed_list);
 
-}
-//====================================================================================
-
-//check validity of a specific move
-bool check_validity(Tile curr_tile,
-	std::vector<Tile> closed_list,
-	Map & board,
-	enum Moves move)
-{
-
-	//if we found the tile in the closed list already
-	int tile_in_closed = check_if_tile_in_vector(curr_tile, closed_list);
-
-	if (tile_in_closed != -1)
-		return false;
-
-	///if we reached player
-	if (curr_tile.m_value == '@' || curr_tile.m_value == 'S')
-		return true;
-
-	//if we are in a wall no need to check
-	if (curr_tile.m_value == '#')
-		return false;
-
-	//will need later
-	char below = board.get_char(curr_tile.m_location.row + 1, curr_tile.m_location.col);
-	char above = board.get_char(curr_tile.m_location.row - 1, curr_tile.m_location.col);
-
-
-	switch (move) {
-	case LEFT:
-		if (below == '-')
-			return false;
-		else if (curr_tile.m_value == '#')
-			return false;
-		else if (below == ' ' && curr_tile.m_value == '-')
-			return true;
-		else if (below == '-')
-			return false;
-		if (below == ' ')
-			return false;
-		return true;
-		break;
-
-	case RIGHT:
-		if (below == '-')
-			return false;
-		else if (curr_tile.m_value == '#')
-			return false;
-		else if (below == ' ' && curr_tile.m_value == '-')
-			return true;
-		else if (below == '-')
-			return false;
-		if (below == ' ')
-			return false;
-		return true;
-		break;
-
-	case UP:
-		if (below == '-')
-			return false;
-		if (curr_tile.m_value == 'H' || (below == 'H' && curr_tile.m_value == ' '))
-			return true;
-
-		return false;
-		break;
-
-	case DOWN:
-		if (curr_tile.m_value == '#')
-			return false;
-
-		return true;
-		break;
+		if (index >= 0)
+			arround.erase(arround.begin() + i);
 	}
 
-	//if we passed all checks
-	return true;
 }
 //====================================================================================
 
 
 //calculates the f score based on g and h
-void calculate_score(std::vector<Tile>& arround,
+void Astar::calculate_score(std::vector<Tile>& arround,
 	sf::Vector2f & to,
 	int h_score)
 {
@@ -278,14 +187,14 @@ void calculate_score(std::vector<Tile>& arround,
 //====================================================================================
 
 //calculating g value based on manhattan algorithm
-int calculate_g_value(sf::Vector2f& from, sf::Vector2f& to)
+int Astar::calculate_g_value(sf::Vector2f& from, sf::Vector2f& to)
 {
-	return abs((from.row - to.row)) + abs(from.col - to.col);
+	return abs((from.y - to.y)) + abs(from.x - to.x);
 }
 //====================================================================================
 
 //cehck if a specific tile in a vector BASED ON LOCATION
-int check_if_tile_in_vector(Tile tile, std::vector<Tile> open_list) {
+int Astar::check_if_tile_in_vector(Tile tile, std::vector<Tile> open_list) {
 	int size = open_list.size();
 
 	int index = 0;
@@ -303,7 +212,7 @@ int check_if_tile_in_vector(Tile tile, std::vector<Tile> open_list) {
 }
 //====================================================================================
 //find the tile with the best score
-int find_the_best_score(std::vector<Tile> open_list) {
+int Astar::find_the_best_score(std::vector<Tile> open_list) {
 	Tile new_tile;
 	size_t end_of_open = open_list.size();
 	new_tile = open_list[end_of_open - 1];
@@ -327,12 +236,28 @@ int find_the_best_score(std::vector<Tile> open_list) {
 
 }
 
+int Astar::found_player(std::vector<Tile> & tiles, sf::Vector2f location)
+{
+
+	for (int i = 0; i < tiles.size(); ++i)
+	{
+		sf::RectangleShape rect;
+		rect.setPosition(tiles[i].m_location);
+		rect.setSize(sf::Vector2f(tiles[i].m_size, tiles[i].m_size));
+
+		if (rect.getGlobalBounds().contains(location))
+			return i;
+	}
+	return -1;
+}
+
+
 
 //====================================================================================
 //makes path out of a closed list
-std::vector <int> make_path(std::vector < Tile> closed, Tile to) {
+std::vector <NextStep> Astar::make_path(std::vector < Tile> closed, Tile to) {
 	int index = 0;
-	std::vector <int> path;
+	std::vector <NextStep> path;
 	Tile curr_tile = *(closed.end() - 1);
 	int index_of_father = curr_tile.m_father;
 
@@ -350,4 +275,5 @@ std::vector <int> make_path(std::vector < Tile> closed, Tile to) {
 
 	return path;
 }
+
 

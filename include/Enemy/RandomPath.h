@@ -1,18 +1,16 @@
 #pragma once
 #include <vector>
 class Map;
+class Enemy;
 #include "Macros.h"
 #include <SFML/Graphics.hpp>
 
 
-class RandomPath
+namespace RandomPath
 {
-public:
-	RandomPath() = default;
-	std::vector<NextStep> calc_path(Map map, sf::Vector2f curr_location,float height, float width);
-	std::vector<NextStep> get_avaliable_steps(Map map, sf::Vector2f curr_location, sf::Vector2f bottomRight, sf::Vector2f bottomLeft);
-	void advance_location(NextStep step, sf::Vector2f& curr_location, sf::Vector2f& bottomLeft, sf::Vector2f& bottomRight);
-	int in_avaliable(NextStep step, std::vector<NextStep> vec);
+	std::vector<NextStep> calc_path(Map * map, Enemy * m_enemie);
+	void update_curr_location(sf::Vector2f& curr_location_with_steps, NextStep next);
+	bool is_dir_avaliable(NextStep next, std::vector<NextStep> avaliable);
 };
 
 

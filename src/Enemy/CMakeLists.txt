@@ -1,8 +1,8 @@
 ﻿target_sources (LodeRunner PRIVATE
                                      "Enemy.cpp"
                                      "EnemyContorller.cpp"
+                                      "OneSide.cpp"
                                      "RandomPath.cpp"
-                                     "VeryStupid.cpp"
-                                     #"Astar.cpp"
-                                     #"Tile.cpp"
+                                     "Astar.cpp"
+                                     "Tile.cpp"
                                   )

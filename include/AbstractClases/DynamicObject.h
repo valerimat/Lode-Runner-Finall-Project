@@ -17,11 +17,10 @@ public:
 	void set_sprite();
 	bool in_bounds(sf::Vector2f &location);
 
-	bool is_on_ground(Map& map);
+
 	bool is_on_ladder(Map& map);
 	bool is_on_pole(Map& map);
 	bool is_on_wall(Map& map);
-	bool is_on_air(Map& map);
 	bool is_on_coin(Map& map);
 
 	std::vector<char> is_on_something(Map& map, sf::Keyboard::Key key);
@@ -31,6 +30,7 @@ public:
 	void update_location(NextStep step);
 	float get_width();
 	float get_height();
+	sf::Sprite get_sprite();
 
 protected:
 	std::shared_ptr<sf::Texture> m_texture;
