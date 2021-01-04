@@ -3,5 +3,6 @@
                                      "EnemyContorller.cpp"
                                      "RandomPath.cpp"
                                      "VeryStupid.cpp"
-                     
+                                     #"Astar.cpp"
+                                     #"Tile.cpp"
                                   )

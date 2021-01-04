@@ -15,8 +15,8 @@ class DynamicObject;
 class Map
 {
 public:
-	Map();
-	void load_maps();
+	Map() = default;
+	Map(std::vector<std::string>* map, int height,int width);
 	void load_textures();
 	void Draw(sf::RenderWindow &main_window);
 	Player* get_player();
@@ -31,9 +31,8 @@ private:
 	int m_width;
 	int m_height;
 	char get_char(int i, int j);
+	std::vector<std::string> m_map;
 	std::vector<std::shared_ptr<sf::Texture>> m_textures;
-	std::vector<std::vector<std::string>> m_maps;
-	std::vector <std::vector <std::string>> m_maps_clean;
 	std::vector<StaticObject> m_static;
 	std::vector<DynamicObject *> m_dynamic;
 };
