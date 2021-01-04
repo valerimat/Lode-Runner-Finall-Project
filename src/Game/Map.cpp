@@ -224,12 +224,13 @@ char Map::what_is_there(sf::Vector2f location)
 		if (m_static[i].in_bounds(location))
 			return m_static[i].get_name();
 	}
+	/*
 	for (int i = 0; i < m_dynamic.size(); ++i)
 	{
 		if (m_dynamic[i]->in_bounds(location))
 			return m_dynamic[i]->get_name();
 	}
-
+	*/
 	return NONE;
 }
 
@@ -254,9 +255,27 @@ bool Map::we_are_hanging_on_rope(sf::Vector2f& location_l, sf::Vector2f& locatio
 	for (int i = 0; i < m_static.size(); ++i)
 	{
 		//if the x is the same x and its somewhere on the y
-		if ((m_static[i].get_location().y == location_l.y && m_static[i].in_bounds(location_l))
-			|| (m_static[i].get_location().y == location_r.y && m_static[i].in_bounds(location_r)))
-			return true;
+		if (m_static[i].in_bounds(location_l)){
+
+			if (m_static[i].get_name() == POLE)
+			{
+				if ((m_static[i].get_location().y == location_l.y))
+					return true;
+			}
+			else
+				return false;
+		}
+		else if (m_static[i].in_bounds(location_r))
+		{
+			if (m_static[i].get_name() == POLE)
+			{
+				if ((m_static[i].get_location().y == location_r.y))
+					return true;
+			}
+			else
+				return false;
+
+		}
 	}
 	return false;
 }
@@ -331,10 +350,12 @@ bool Map::is_ladder(sf::Vector2f& location)
 	for (int i = 0; i < m_static.size(); ++i)
 	{
 		if (m_static[i].in_bounds(location))
+		{
 			if (m_static[i].get_name() == LADDER && m_static[i].get_location().x == location.x)
 				return true;
 			else
 				return false;
+		}
 	}
 	return false;
 
