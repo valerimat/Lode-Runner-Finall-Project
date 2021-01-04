@@ -9,11 +9,14 @@ void GameController::Run()
 	sf::Event event;
 	sf::RenderWindow main_window(sf::VideoMode(WIDTH, HEIGHT), "Lode Runner");
 
-	Map map;
-	Game game(map);
+	MapData map_data;
+	Game game(map_data);
+	//loads level
+	game.Load_level();
+	Map curr_map = game.get_curr_map();
 	Screens screen(game);
-	EnemyController enemy_cont(map);
-	PlayerController player_controller(map);
+	EnemyController enemy_cont(curr_map);
+	PlayerController player_controller(curr_map);
 
 	auto last = clock::now();
 
@@ -28,7 +31,7 @@ void GameController::Run()
 		{
 			
 			//need switch case
-			enemy_cont.move_enemies(map);
+			enemy_cont.move_enemies(curr_map);
 
 
 			screen.Draw(main_window);
@@ -50,7 +53,7 @@ void GameController::Run()
 				sf::Keyboard::isKeyPressed(sf::Keyboard::Left) ||
 				sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 			{
-				player_controller.move_player(event.key.code, map);
+				player_controller.move_player(event.key.code, curr_map);
 			}
 			last = now;
 		}

@@ -1,78 +1,15 @@
 #include "Map.h"
 
-Map::Map()
+Map::Map(std::vector<std::string>* map,int height, int width):
+	m_map(*map),
+	m_height(height),
+	m_width(width)
 {
-	load_maps();
 	load_textures();
 	set_objects();
 }
 
-//Will hold all maps in a vector of vector of strings for level update
-void Map::load_maps()
-{
-	int	curr_level = 0;
 
-	std::string   str; // temporary string which we push into the vector;
-	std::ifstream file;
-
-
-	file.open("Board.txt"); // Board.txt has the all levels 
-
-	if (!file)
-	{
-		std::cout << "File didn't open\n";
-		exit(EXIT_FAILURE);
-	}
-	char N;
-
-	int idex_of_levle = 0;
-
-	while (file.peek() != EOF)
-	{
-		std::vector<std::string> m_vector_of_strings; // will hold 2D array of the map and its content
-		std::vector<std::string> m_clean_vector_of_strings;
-
-		file >> m_height;
-		file >> m_width;
-
-		int index = 0;
-		do
-		{
-			//reads each line from the Board.txt
-			getline(file, str);
-
-			// Line contains string of length > 0 then save it in vector
-			if (str.size() > 0)
-			{
-				m_vector_of_strings.push_back(str);
-				m_clean_vector_of_strings.push_back(str);
-			}
-			index++;
-		}
-		// Read the next line from File untill it reaches empty row.
-		while (index <= m_height);
-
-		m_maps.push_back(m_vector_of_strings);
-		m_maps.push_back(m_vector_of_strings);
-
-		for (int i = 0; i < m_vector_of_strings.size(); i++)
-		{
-
-			for (int j = 0; j < m_vector_of_strings[i].size(); j++)
-			{
-				if (m_vector_of_strings[i][j] == '@' ||
-					m_vector_of_strings[i][j] == '%' ||
-					m_vector_of_strings[i][j] == '*')
-
-					m_clean_vector_of_strings[i][j] = ' ';
-			}
-		}
-		m_maps_clean.push_back(m_clean_vector_of_strings);
-
-		m_vector_of_strings.clear();
-		m_clean_vector_of_strings.clear();
-	}
-}
 
 
 void Map::set_objects()
@@ -210,7 +147,7 @@ void Map::load_textures()
 
 char Map::get_char(int i,int j)
 {
-	return m_maps[0][i][j];
+	return m_map[i][j];
 }
 
 Player* Map::get_player() // later change to Player as a return value

@@ -20,6 +20,7 @@ enum class NextStep
 	DOWN,
 	LEFT,
 	RIGHT,
+	NONE,
 };
 
 const int OFFSET = 50 * 0.8;
