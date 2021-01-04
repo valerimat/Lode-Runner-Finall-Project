@@ -35,7 +35,6 @@ const char LADDER = char('H');
 const char NONE = char(' ');
 const char WALL = char('w');
 const int SIZE_OF_TILE = 40;
-const int pixels_to_move = 5;
 
 #define HEIGHT 900
 #define WIDTH 1200
