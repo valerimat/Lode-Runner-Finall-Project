@@ -55,11 +55,11 @@ void DynamicObject::update_location(NextStep step)
 		m_location.x += 5;
 		break;
 	case NextStep::UP:
-		m_sprite.move(sf::Vector2f(0,- 5));
+		m_sprite.move(sf::Vector2f(0,-5));
 		m_location.y -= 5;
 		break;
 	case NextStep::DOWN:
-		m_sprite.move(sf::Vector2f(0, 2));
+		m_sprite.move(sf::Vector2f(0, 5));
 		m_location.y += 5;
 		break;
 	default:
@@ -157,23 +157,25 @@ bool DynamicObject::is_on_coin(Map& map)
 	return false;
 }
 
+// gets a axis vector of the next location which is helpful to know whats a head
 sf::Vector2f DynamicObject::get_next_location(sf::Keyboard::Key key)
 {
 	sf::Vector2f temp = m_location;
 
+	// STEP is a const in Marcros.h
 	switch (key)
 	{
 	case sf::Keyboard::Up:
-		temp.x -= 2;
+		temp.y -= STEP;
 		break;
 	case sf::Keyboard::Down:
-		temp.x += 2;
+		temp.y += STEP;
 		break;
 	case sf::Keyboard::Left:
-		temp.y -= 2;
+		temp.x -= STEP;
 		break;
 	case sf::Keyboard::Right:
-		temp.y += 2;
+		temp.x += STEP;
 		break;
 	default:
 		break;
@@ -181,7 +183,7 @@ sf::Vector2f DynamicObject::get_next_location(sf::Keyboard::Key key)
 	return temp;
 }
 
-// returns a vector of the specific objects the dynamic object collides with
+// returns a vector of the specific objects, which the dynamic object collides with
 std::vector<char> DynamicObject::is_on_something(Map& map, sf::Keyboard::Key key)
 {
 	std::vector<StaticObject>* static_arr = map.get_static();
@@ -189,26 +191,46 @@ std::vector<char> DynamicObject::is_on_something(Map& map, sf::Keyboard::Key key
 	int size = (*static_arr).size();
 
 	sf::Vector2f location = get_next_location(key);
+
+	sf::Vector2f location_right, location_left;
+	location_left = location_right = location;
+
 	std::vector<char> collision;
 
 	for (int i = 0; i < size; i++)
 	{
+		// coin signal
 		if ((*static_arr)[i].get_name() == COIN && (*static_arr)[i].in_bounds(location))
 			collision.push_back(COIN);
-		else if ((*static_arr)[i].get_name() == POLE && (*static_arr)[i].in_bounds(location))
+
+		// pole signal
+		location.y += 5;
+		if ((*static_arr)[i].get_name() == POLE && (*static_arr)[i].in_bounds(location))
 			collision.push_back(POLE);
-		// later fix ladder collision
-		else if ((*static_arr)[i].get_name() == LADDER && (*static_arr)[i].in_bounds(location))
+		location.y -= 5;
+		
+		// ladder signal
+		location_left.x += 20;
+		if (((*static_arr)[i].get_name() == LADDER && (*static_arr)[i].in_bounds(location_left)) ||
+			((*static_arr)[i].get_name() == LADDER && (*static_arr)[i].in_bounds(location_right)))
 			collision.push_back(LADDER);
+		location_left.x -= 20;
 
-		sf::Vector2f location_right, location_left;
-		location_left = location_right = location;
-		location_left.x += 40;
+		// specific case where the playe can stand on the ladder
+		location_left.y += 40;
+		if (((*static_arr)[i].get_name() == LADDER && (*static_arr)[i].in_bounds(location_left)) ||
+			((*static_arr)[i].get_name() == LADDER && (*static_arr)[i].in_bounds(location_right)))
+			collision.push_back(LADDER);
+		location_left.y -= 40;
 
+		// wall signal
+		location_left.x += 35;
 		if (((*static_arr)[i].get_name() == GROUND && (*static_arr)[i].in_bounds(location_left)) ||
 			((*static_arr)[i].get_name() == GROUND && (*static_arr)[i].in_bounds(location_right)))
 			collision.push_back(WALL);
+		location_left.x -= 35;
 
+		// ground signal
 		location.y += 40;
 		if ((*static_arr)[i].get_name() == GROUND && (*static_arr)[i].in_bounds(location))
 			collision.push_back(GROUND);

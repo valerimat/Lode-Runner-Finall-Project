@@ -25,6 +25,7 @@ void PlayerController::move_player(sf::Keyboard::Key key, Map& map)
 
 	physics_player(key, map, collision);
 
+	//m_player->move(key);
 
 	//if (m_player->is_on_ground(map))
 		//std::cout << "GROUND\n";
@@ -45,6 +46,7 @@ void PlayerController::physics_player(sf::Keyboard::Key key, Map& map, std::vect
 	bool ground = false, wall = false, ladder = false,
 		 pole = false, coin = false, enemy = false;
 
+	// lets us work will boolean values and be on track more easily
 	for (int i = 0; i < collision.size(); i++)
 	{
 		if (collision[i] == GROUND)
@@ -62,7 +64,7 @@ void PlayerController::physics_player(sf::Keyboard::Key key, Map& map, std::vect
 	}
 
 	// free fall
-	if (!ground && !ladder && !pole)
+	if (!ground && !ladder && !pole && key != sf::Keyboard::Up)
 	{
 		m_player->move(sf::Keyboard::Down);
 		std::vector<char> collision = m_player->is_on_something(map, sf::Keyboard::Down);
@@ -74,15 +76,21 @@ void PlayerController::physics_player(sf::Keyboard::Key key, Map& map, std::vect
 		m_player->move(key);
 
 	// on ladder
-	if(ladder && !wall)
+	if (ladder && !wall)
+	{
+		if (ground && sf::Keyboard::Down)
+			return;
 		m_player->move(key);
+	}
 
 	// on pole
-	if (pole && (key == sf::Keyboard::Left || key == sf::Keyboard::Right ||
+	if (pole && !wall && (key == sf::Keyboard::Left || key == sf::Keyboard::Right ||
 				 key == sf::Keyboard::Down))
 		m_player->move(key);
 
+	// wall = no movement forward
 	if (wall)
 	{
+		return;
 	}	
 }
