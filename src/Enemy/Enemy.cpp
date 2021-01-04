@@ -62,10 +62,10 @@ std::vector<NextStep> Enemy::get_avaliable_steps(Map* map,sf::Vector2f location)
 	sf::Vector2f bottom_left(top_left.x, top_left.y +get_height());
 	sf::Vector2f bottom_right(bottom_left.x + get_width(), bottom_left.y);
 
-	sf::Vector2f offset_left(-STEP, 0);
-	sf::Vector2f offset_right(STEP, 0);
-	sf::Vector2f offset_up(0, -STEP);
-	sf::Vector2f offset_down(0, STEP);
+	sf::Vector2f offset_left(-5, 0);
+	sf::Vector2f offset_right(5, 0);
+	sf::Vector2f offset_up(0, -5);
+	sf::Vector2f offset_down(0, 5);
 	
 	char state = get_curr_state(map, location);
 
@@ -109,11 +109,12 @@ std::vector<NextStep> Enemy::get_avaliable_steps(Map* map,sf::Vector2f location)
 			}
 
 			if ((*map).what_is_there(top_left + offset_up) != GROUND &&
-				(*map).what_is_there(top_right + offset_up))
+				(*map).what_is_there(top_right + offset_up)!= GROUND )
 			{
 				avaliable_steps.push_back(NextStep::UP);
 			}
 		}
+		avaliable_steps.push_back(NextStep::UP);
 		if ((*map).what_is_there(top_left + offset_left) != GROUND)
 			avaliable_steps.push_back(NextStep::LEFT);
 		if ((*map).what_is_there(top_right + offset_right) != GROUND)
@@ -127,6 +128,15 @@ std::vector<NextStep> Enemy::get_avaliable_steps(Map* map,sf::Vector2f location)
 		break;
 
 	}
+	/*
+	if ((*map).we_are_hanging_on_rope(top_left, top_right))
+	{
+		if ((*map).what_is_there(top_left + offset_left) != GROUND)
+			avaliable_steps.push_back(NextStep::LEFT);
+		if ((*map).what_is_there(top_right + offset_right) != GROUND)
+			avaliable_steps.push_back(NextStep::RIGHT);
+	}
+	*/
 
 	return avaliable_steps;
 }
@@ -154,8 +164,8 @@ char Enemy::get_curr_state(Map* map, sf::Vector2f   location)
 	char top_right_char = (*map).what_is_there(top_right);
 
 
-	char bottom_left_char_ground = (*map).what_is_there(sf::Vector2f(bottom_left.x, bottom_left.y + STEP));
-	char bottom_right_char_ground = (*map).what_is_there(sf::Vector2f(bottom_right.x, bottom_right.y + STEP));
+	char bottom_left_char_ground = (*map).what_is_there(sf::Vector2f(bottom_left.x, bottom_left.y + 1));
+	char bottom_right_char_ground = (*map).what_is_there(sf::Vector2f(bottom_right.x, bottom_right.y + 1));
 
 	if(bottom_left_char_ground == GROUND || bottom_right_char_ground == GROUND)
 		return GROUND;
@@ -164,8 +174,7 @@ char Enemy::get_curr_state(Map* map, sf::Vector2f   location)
 		||bottom_left_char == LADDER || bottom_right_char == LADDER)
 		return LADDER;
 
-	if ((top_left_char == POLE && bottom_left_char ==POLE ) ||
-		(top_right_char == POLE && bottom_right_char == POLE))
+	if ((top_left_char == POLE || top_right_char == POLE ))
 		return POLE;
 	
 

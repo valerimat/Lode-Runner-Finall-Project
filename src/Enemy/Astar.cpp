@@ -103,6 +103,8 @@ std::vector<NextStep> Astar::calc_path(Map * map, Enemy * enemy)
 			break;
 		}
 		index_of_father++;
+		if (closed_list.size() > 1000)
+			break;
 	}
 
 	path = make_path(closed_list, from_where);
@@ -238,7 +240,9 @@ int Astar::find_the_best_score(std::vector<Tile> open_list) {
 
 int Astar::found_player(std::vector<Tile> & tiles, sf::Vector2f location)
 {
-
+	sf::Vector2f offset_r(SIZE_OF_TILE, 0);
+	sf::Vector2f offset_d(0, SIZE_OF_TILE);
+	sf::Vector2f offset_d_r(SIZE_OF_TILE, SIZE_OF_TILE);
 	for (int i = 0; i < tiles.size(); ++i)
 	{
 		sf::RectangleShape rect;
@@ -247,7 +251,13 @@ int Astar::found_player(std::vector<Tile> & tiles, sf::Vector2f location)
 
 		if (rect.getGlobalBounds().contains(location))
 			return i;
-	}
+		else if (rect.getGlobalBounds().contains(location + offset_r))
+			return i;
+		else if (rect.getGlobalBounds().contains(location + offset_d_r))
+			return i;
+		else if (rect.getGlobalBounds().contains(location + offset_d))
+			return i;
+	}	
 	return -1;
 }
 
@@ -261,7 +271,8 @@ std::vector <NextStep> Astar::make_path(std::vector < Tile> closed, Tile to) {
 	Tile curr_tile = *(closed.end() - 1);
 	int index_of_father = curr_tile.m_father;
 
-	while (closed[index_of_father].m_location != (*(closed.begin())).m_location) {
+	while (closed[index_of_father].m_location != (*(closed.begin())).m_location ||
+		 path.size() > 999) {
 
 		path.insert(path.begin(), closed[index_of_father].m_move);
 
