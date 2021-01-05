@@ -41,7 +41,7 @@ void EnemyController::move_enemies(Map * map)
 		case IQ::OneSide:
 			if (m_enemies[i]->path_is_empty())
 			{
-				m_enemies[i]->set_path(Astar::calc_path(map, m_enemies[i]));
+				m_enemies[i]->set_path(RandomPath::calc_path(map, m_enemies[i]));
 				m_enemies[i]->move();
 			}
 			else
