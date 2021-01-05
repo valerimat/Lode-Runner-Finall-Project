@@ -16,6 +16,7 @@ void Map::set_objects()
 {
 	DynamicObject * d_obj; // later to be changed Player player for proper use
 	StaticObject * static_object;
+	std::shared_ptr<StaticObject> st_ptr;
 	Player* player;
 	Enemy * enemy;
 
@@ -46,31 +47,28 @@ void Map::set_objects()
 				break;
 
 			case GROUND:
-				m_static.push_back(
-				std::make_shared<StaticObject>(GROUND, location, m_textures[GROUND_TEXTURE]));
-				m_ground.push_back(
-					std::make_shared<StaticObject>(GROUND, location, m_textures[GROUND_TEXTURE]));
+				st_ptr = std::make_shared<StaticObject>(GROUND, location, m_textures[GROUND_TEXTURE]);
+				m_static.push_back(st_ptr);
+				m_ground.push_back(st_ptr);
 				break;
 
 			case LADDER:
-				m_static.push_back(
-					std::make_shared<StaticObject>(LADDER, location, m_textures[LADDER_TEXTURE]));
-				m_ladders.push_back(
-					std::make_shared<StaticObject>(GROUND, location, m_textures[GROUND_TEXTURE]));
+				st_ptr = std::make_shared<StaticObject>(LADDER, location, m_textures[LADDER_TEXTURE]);
+				m_static.push_back(st_ptr);
+				m_ladders.push_back(st_ptr);
+					
 				break;
 
 			case COIN:
-				m_coins.push_back(
-					std::make_shared<StaticObject>(GROUND, location, m_textures[GROUND_TEXTURE]));
-				m_coins.push_back(
-					std::make_shared<StaticObject>(COIN, location, m_textures[COIN_TEXTURE]));
+				st_ptr = std::make_shared<StaticObject>(COIN, location, m_textures[COIN_TEXTURE]);
+				m_static.push_back(st_ptr);
+				m_coins.push_back(st_ptr);
 				break;
 
 			case POLE:
-				m_poles.push_back(
-					std::make_shared<StaticObject>(GROUND, location, m_textures[GROUND_TEXTURE]));
-				m_static.push_back(
-					std::make_shared<StaticObject>(POLE, location, m_textures[POLE_TEXTURE]));
+				st_ptr = std::make_shared<StaticObject>(POLE, location, m_textures[POLE_TEXTURE]);
+				m_static.push_back(st_ptr);
+				m_poles.push_back(st_ptr);
 				break;
 			}
 		}
