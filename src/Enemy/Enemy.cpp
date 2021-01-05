@@ -36,7 +36,8 @@ void Enemy::move()
 	case NextStep::DOWN:
 		update_location(NextStep::DOWN);
 		break;
-
+	case NextStep::NONE:
+		break;
 	default:
 		break;
 	}
@@ -58,87 +59,24 @@ std::vector<NextStep> Enemy::get_avaliable_steps(Map* map,sf::Vector2f location)
 	//getting all 4 bounding corners
 	std::vector<NextStep> avaliable_steps;
 	sf::Vector2f top_left = location;
-	sf::Vector2f top_right(top_left.x + get_width(), top_left.y);
-	sf::Vector2f bottom_left(top_left.x, top_left.y +get_height());
-	sf::Vector2f bottom_right(bottom_left.x + get_width(), bottom_left.y);
 
-	sf::Vector2f offset_left(-5, 0);
-	sf::Vector2f offset_right(5, 0);
-	sf::Vector2f offset_up(0, -5);
-	sf::Vector2f offset_down(0, 5);
 	
-	char state = get_curr_state(map, location);
-
-	switch (state)
-	{
-	case GROUND:
-
-		if (we_are_on_ladder(*map, top_left))
-		{
-			avaliable_steps.push_back(NextStep::UP);
-
-			if((*map).what_is_there(top_left + offset_left) != GROUND)
-				avaliable_steps.push_back(NextStep::LEFT);
-			if ((*map).what_is_there(top_right + offset_right) != GROUND)
-				avaliable_steps.push_back(NextStep::RIGHT);
-		}
-		if ((*map).what_is_there(top_left + offset_left) != GROUND)
-			avaliable_steps.push_back(NextStep::LEFT);
-		if ((*map).what_is_there(top_right + offset_right) != GROUND)
-			avaliable_steps.push_back(NextStep::RIGHT);
-		break;
-
-	case POLE:
-		if ((*map).we_are_hanging_on_rope(top_left, top_right))
-		{
-			if ((*map).what_is_there(top_left + offset_left) != GROUND)
-				avaliable_steps.push_back(NextStep::LEFT);
-			if ((*map).what_is_there(top_right + offset_right) != GROUND)
-				avaliable_steps.push_back(NextStep::RIGHT);
-		}
-		avaliable_steps.push_back(NextStep::DOWN);
-		break;
-
-	case LADDER:
-		if ((*map).is_ladder(top_left) == LADDER)
-		{
-			if ((*map).what_is_there(bottom_left + offset_down) != GROUND &&
-				(*map).what_is_there(bottom_right + offset_down))
-			{
-				avaliable_steps.push_back(NextStep::DOWN);
-			}
-
-			if ((*map).what_is_there(top_left + offset_up) != GROUND &&
-				(*map).what_is_there(top_right + offset_up)!= GROUND )
-			{
-				avaliable_steps.push_back(NextStep::UP);
-			}
-		}
+	bool can_move_up = able_to_move_up(top_left,40,*map);
+	bool can_move_left = able_to_move_side(NextStep::LEFT, top_left, map);
+	bool can_move_right = able_to_move_side(NextStep::RIGHT, top_left, map);
+	bool can_move_down = able_to_move_down(top_left, map);
+	
+	if (can_move_up)
 		avaliable_steps.push_back(NextStep::UP);
-		if ((*map).what_is_there(top_left + offset_left) != GROUND)
-			avaliable_steps.push_back(NextStep::LEFT);
-		if ((*map).what_is_there(top_right + offset_right) != GROUND)
-			avaliable_steps.push_back(NextStep::RIGHT);
-		break;
-
-	//nothing bellow we can only fall
-	case NONE:
+	if (can_move_left)
+		avaliable_steps.push_back(NextStep::LEFT);
+	if (can_move_right)
+		avaliable_steps.push_back(NextStep::RIGHT);
+	if (can_move_down)
 		avaliable_steps.push_back(NextStep::DOWN);
-
-		break;
-
-	}
-	/*
-	if ((*map).we_are_hanging_on_rope(top_left, top_right))
-	{
-		if ((*map).what_is_there(top_left + offset_left) != GROUND)
-			avaliable_steps.push_back(NextStep::LEFT);
-		if ((*map).what_is_there(top_right + offset_right) != GROUND)
-			avaliable_steps.push_back(NextStep::RIGHT);
-	}
-	*/
 
 	return avaliable_steps;
+	
 }
 
 
@@ -151,41 +89,88 @@ bool Enemy::path_is_empty()
 }
 
 
-char Enemy::get_curr_state(Map* map, sf::Vector2f   location)
-{
-	sf::Vector2f top_left = location;
-	sf::Vector2f top_right(top_left.x + get_width(), top_left.y);
-	sf::Vector2f bottom_left(top_left.x, top_left.y + get_height());
-	sf::Vector2f bottom_right(bottom_left.x + get_width(), bottom_left.y);
-
-	char bottom_left_char = (*map).what_is_there(bottom_left);
-	char bottom_right_char = (*map).what_is_there(bottom_right);
-	char top_left_char = (*map).what_is_there(top_left);
-	char top_right_char = (*map).what_is_there(top_right);
-
-
-	char bottom_left_char_ground = (*map).what_is_there(sf::Vector2f(bottom_left.x, bottom_left.y + 1));
-	char bottom_right_char_ground = (*map).what_is_there(sf::Vector2f(bottom_right.x, bottom_right.y + 1));
-
-	if(bottom_left_char_ground == GROUND || bottom_right_char_ground == GROUND)
-		return GROUND;
-
-	if (top_left_char == LADDER || top_right_char == LADDER
-		||bottom_left_char == LADDER || bottom_right_char == LADDER)
-		return LADDER;
-
-	if ((top_left_char == POLE || top_right_char == POLE ))
-		return POLE;
-	
-
-		return NONE;
-}
-
 bool Enemy::we_are_on_ladder(Map& map, sf::Vector2f location)
 {
-	if (map.collision_top_right(location) == LADDER)
+	if (map.we_are_on_ladder(location))
 		return true;
 
 	else
 		return false;
+}
+
+bool Enemy::able_to_move_up(sf::Vector2f topLeft, float size, Map & map)
+{
+	if (we_are_on_ladder(map, topLeft)) {
+		if (there_is_no_wall_above(topLeft, map))
+			return true;
+	}
+	return false;
+}
+
+bool Enemy::there_is_no_wall_above(sf::Vector2f topLeft, Map& map)
+{
+	//need to convert to check only for ground
+	if (!map.is_there_ground(topLeft + sf::Vector2f(1, -1))
+		&& !map.is_there_ground(topLeft + sf::Vector2f(39, -1)))
+		return true;
+
+	return false;
+}
+
+
+bool  Enemy::able_to_move_side(NextStep side, sf::Vector2f topLeft, Map *map)
+{
+	sf::Vector2f offset;
+	sf::Vector2f bottom_left(topLeft.x, topLeft.y + 39);
+
+	if (topLeft.x - 5 < 0)
+		return false;
+	//later add variable
+	else if (topLeft.x + 5 > 800)
+		return false;
+
+	if (side == NextStep::LEFT)
+		offset = sf::Vector2f(-1, 0);
+	else
+		offset = sf::Vector2f(41, 0);
+
+	
+	if (map->is_there_ground(topLeft + offset))
+		return false;
+	if (map->is_there_ground(bottom_left + offset))
+		return false;
+	
+	if (we_are_on_rope(topLeft, map))
+		return true;
+
+	if (map->we_are_on_ladder(topLeft))
+		return true;
+
+	if (map->is_there_ground(topLeft + sf::Vector2f(0, 41))
+		|| map->is_there_ground(topLeft + sf::Vector2f(40, 41)))
+			return true ;
+
+
+	
+	return false;
+}
+
+bool Enemy::we_are_on_rope(sf::Vector2f topLeft, Map* map)
+{
+	//move it from the map
+	if (map->we_are_hanging_on_rope(topLeft, topLeft + sf::Vector2f(40, 0)))
+	{
+		return true;
+	}
+	return false;
+}
+
+bool  Enemy::able_to_move_down( sf::Vector2f topLeft, Map* map)
+{
+
+	if (map->is_there_ground(topLeft + sf::Vector2f(0, 41))
+		|| map->is_there_ground(topLeft + sf::Vector2f(40, 41)))
+		return false;
+
+	return true;
 }

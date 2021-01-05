@@ -13,7 +13,13 @@ public:
 	std::vector<NextStep> get_avaliable_steps(Map * map, sf::Vector2f location);
 	void move();
 	bool path_is_empty();
-	char get_curr_state(Map * map, sf::Vector2f location);
+	
+	bool there_is_no_wall_above(sf::Vector2f topLeft, Map& map);
+	bool  able_to_move_up(sf::Vector2f topLeft, float size, Map& map);
+	bool  able_to_move_side(NextStep side, sf::Vector2f topLeft, Map* map);
+	bool  able_to_move_down(sf::Vector2f topLeft, Map* map);
+	bool we_are_on_rope(sf::Vector2f topLeft, Map* map);
+
 
 private:
 	bool we_are_on_ladder(Map& map, sf::Vector2f location);

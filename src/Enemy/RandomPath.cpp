@@ -24,6 +24,12 @@ std::vector<NextStep> RandomPath::calc_path(Map* map, Enemy* enemy)
 
 		modulo = avaliable_steps.size();
 
+		if (avaliable_steps.size() == 0)
+		{
+			avaliable_steps.push_back(NextStep::NONE);
+			return avaliable_steps;
+		}
+
 		random = rand() % modulo;
 
 		

@@ -1,5 +1,10 @@
 #include "StaticObject.h"
 
+StaticObject::StaticObject(char name, sf::Vector2f locaiton, std::shared_ptr<sf::Texture> texture):
+Object(name,locaiton), m_texture(texture)
+{
+	set_sprite();
+}
 
 void StaticObject::set_texture(std::shared_ptr<sf::Texture> texture)
 {
@@ -34,6 +39,15 @@ bool StaticObject::in_bounds(sf::Vector2f &location)
 		return true;
 	}
 		
+
+	return false;
+}
+
+bool StaticObject::in_bounds(sf::RectangleShape& rect)
+{
+	if (m_sprite.getGlobalBounds().intersects(rect.getGlobalBounds()))
+		return true;
+
 
 	return false;
 }
