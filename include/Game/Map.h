@@ -45,7 +45,7 @@ private:
 	char get_char(int i, int j);
 	std::vector<std::string> m_map;
 
-	std::vector<std::shared_ptr<sf::Texture>> m_textures;
+	std::vector<std::shared_ptr <sf::Texture>> m_textures;
 	std::vector<std::shared_ptr <StaticObject>> m_static;
 	std::vector<std::shared_ptr <StaticObject>> m_ground;
 	std::vector<std::shared_ptr <StaticObject>> m_ladders;

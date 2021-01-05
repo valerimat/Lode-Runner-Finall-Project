@@ -180,8 +180,11 @@ std::vector<char> DynamicObject::is_on_something(Map& map, sf::Keyboard::Key key
 	{
 		// coin signal
 		if ((*static_arr)[i]->get_name() == COIN && (*static_arr)[i]->in_bounds(location))
+		{
+			(*static_arr)[i]->set_sprite();
+			std::cout << "ey\n";
 			collision.push_back(COIN);
-
+		}
 		// pole signal
 		location.y += 5;
 		if ((*static_arr)[i]->get_name() == POLE && (*static_arr)[i]->in_bounds(location))

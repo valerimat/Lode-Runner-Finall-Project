@@ -52,6 +52,12 @@ void Map::set_objects()
 				m_ground.push_back(st_ptr);
 				break;
 
+			case 'G':
+				st_ptr = std::make_shared<StaticObject>(GROUND, location, m_textures[GROUND_W_SIGNS_TEXTURE]);
+				m_static.push_back(st_ptr);
+				m_ground.push_back(st_ptr);
+				break;
+
 			case LADDER:
 				st_ptr = std::make_shared<StaticObject>(LADDER, location, m_textures[LADDER_TEXTURE]);
 				m_static.push_back(st_ptr);
@@ -139,6 +145,10 @@ void Map::load_textures()
 
 	texture_ptr = std::make_shared<sf::Texture>();
 	texture_ptr->loadFromFile("background.png");
+	m_textures.push_back(texture_ptr);
+
+	texture_ptr = std::make_shared<sf::Texture>();
+	texture_ptr->loadFromFile("ground with signs.png");
 	m_textures.push_back(texture_ptr);
 }
 
