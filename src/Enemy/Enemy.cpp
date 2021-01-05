@@ -168,8 +168,8 @@ bool Enemy::we_are_on_rope(sf::Vector2f topLeft, Map* map)
 bool  Enemy::able_to_move_down( sf::Vector2f topLeft, Map* map)
 {
 
-	if (map->is_there_ground(topLeft + sf::Vector2f(0, 41))
-		|| map->is_there_ground(topLeft + sf::Vector2f(40, 41)))
+	if (map->is_there_ground(topLeft + sf::Vector2f(1, 41))
+		|| map->is_there_ground(topLeft + sf::Vector2f(39, 41)))
 		return false;
 
 	return true;
