@@ -44,8 +44,13 @@ std::vector<NextStep> Astar::calc_path(Map * map, Enemy * enemy)
 	while (true) {
 		//fail safe
 		if (open_list.size() == 0) {
-			std::vector<NextStep> path(1);
-			path[0] = NextStep::NONE;
+			std::vector<NextStep> path;
+			int i = 0;
+			while (i < 10)
+			{
+				path[i] = NextStep::NONE;
+				++i;
+			}
 			return path;
 		}
 
@@ -66,10 +71,9 @@ std::vector<NextStep> Astar::calc_path(Map * map, Enemy * enemy)
 
 		//gets all posible tiles around
 		get_around(*(closed_list.end() - 1), arround, closed_list, map, closed_list.size() - 1, enemy);
-
+		
 		//calculates theyr score
 		calculate_score(arround, to_where.m_location, h_score);
-
 
 
 		int index = 0;
@@ -80,7 +84,7 @@ std::vector<NextStep> Astar::calc_path(Map * map, Enemy * enemy)
 
 			//check if they are in open
 			tile_in_open = check_if_tile_in_vector(arround[index], open_list);
-
+			
 			//if there is no such tile
 			if (tile_in_open == -1)
 				open_list.push_back(arround[index]);
@@ -93,8 +97,6 @@ std::vector<NextStep> Astar::calc_path(Map * map, Enemy * enemy)
 					open_list[tile_in_open] = arround[index];
 			index++;
 		}
-
-
 		
 		int index_of_player_tile = found_player(open_list, player_location);
 		if(index_of_player_tile != -1)
@@ -103,9 +105,12 @@ std::vector<NextStep> Astar::calc_path(Map * map, Enemy * enemy)
 			break;
 		}
 		index_of_father++;
-		if (closed_list.size() > 1000)
+
+		if (closed_list.size() > 150)
 			break;
 	}
+
+	
 
 	path = make_path(closed_list, from_where);
 
@@ -129,6 +134,7 @@ void Astar::get_around(Tile& curr_tile,
 		left_l(curr_location.x - STEP, curr_location.y);
 
 	std::vector<NextStep> avaliavle_steps = enemy->get_avaliable_steps(map, curr_location);
+	
 
 	for (int i = 0; i < avaliavle_steps.size(); ++i)
 	{
@@ -240,9 +246,9 @@ int Astar::find_the_best_score(std::vector<Tile> open_list) {
 
 int Astar::found_player(std::vector<Tile> & tiles, sf::Vector2f location)
 {
-	sf::Vector2f offset_r(SIZE_OF_TILE, 0);
-	sf::Vector2f offset_d(0, SIZE_OF_TILE);
-	sf::Vector2f offset_d_r(SIZE_OF_TILE, SIZE_OF_TILE);
+	sf::Vector2f offset_r(SIZE_OF_TILE -1, -1);
+	sf::Vector2f offset_d(0, SIZE_OF_TILE -1);
+	sf::Vector2f offset_d_r(SIZE_OF_TILE +1, SIZE_OF_TILE-1);
 	for (int i = 0; i < tiles.size(); ++i)
 	{
 		sf::RectangleShape rect;

@@ -79,14 +79,13 @@ float DynamicObject::get_height()
 
 
 
-bool DynamicObject::is_on_ladder(Map& map)
+bool DynamicObject::is_on_ladder(Map& map,sf::Vector2f location)
 {
 
-	sf::Vector2f location = m_location;
 	
 	for (int i = 0; i < (*map.get_static()).size(); i++)
 	{
-		if ((*map.get_static())[i].get_name() == LADDER && (*map.get_static())[i].in_bounds(location))
+		if ((*map.get_static())[i]->get_name() == LADDER && (*map.get_static())[i]->in_bounds(location))
 			return true;
 	}
 	return false;
@@ -99,7 +98,7 @@ bool DynamicObject::is_on_pole(Map& map)
 
 	for (int i = 0; i < (*map.get_static()).size(); i++)
 	{
-		if ((*map.get_static())[i].get_name() == POLE && (*map.get_static())[i].in_bounds(location))
+		if ((*map.get_static())[i]->get_name() == POLE && (*map.get_static())[i]->in_bounds(location))
 			return true;
 	}
 	return false;
@@ -113,12 +112,12 @@ bool DynamicObject::is_on_wall(Map& map)
 
 	location_left.x += 35;
 
-	std::vector<StaticObject>* static_arr = map.get_static();
+	std::vector<std::shared_ptr<StaticObject>>* static_arr = map.get_static();
 
 	for (int i = 0; i < (*static_arr).size(); i++)
 	{
-		if (((*static_arr)[i].get_name() == GROUND && (*static_arr)[i].in_bounds(location_left)) ||
-			((*static_arr)[i].get_name() == GROUND && (*static_arr)[i].in_bounds(location_right)))
+		if (((*static_arr)[i]->get_name() == GROUND && (*static_arr)[i]->in_bounds(location_left)) ||
+			((*static_arr)[i]->get_name() == GROUND && (*static_arr)[i]->in_bounds(location_right)))
 			return true;
 	}
 	return false;
@@ -126,12 +125,12 @@ bool DynamicObject::is_on_wall(Map& map)
 
 bool DynamicObject::is_on_coin(Map& map)
 {
-	std::vector<StaticObject>* static_arr = map.get_static();
+	std::vector<std::shared_ptr<StaticObject>>* static_arr = map.get_static();
 
 	sf::Vector2f location = m_location;
 	for (int i = 0; i < (*static_arr).size(); i++)
 	{
-		if (((*static_arr))[i].get_name() == COIN && ((*static_arr))[i].in_bounds(location))
+		if (((*static_arr))[i]->get_name() == COIN && ((*static_arr))[i]->in_bounds(location))
 			return true;
 	}
 	return false;
@@ -166,9 +165,9 @@ sf::Vector2f DynamicObject::get_next_location(sf::Keyboard::Key key)
 // returns a vector of the specific objects, which the dynamic object collides with
 std::vector<char> DynamicObject::is_on_something(Map& map, sf::Keyboard::Key key)
 {
-	std::vector<StaticObject>* static_arr = map.get_static();
+	std::vector<std::shared_ptr<StaticObject>> * static_arr = map.get_static();
 
-	int size = (*static_arr).size();
+	int size = static_arr->size();
 
 	sf::Vector2f location = get_next_location(key);
 
@@ -180,39 +179,39 @@ std::vector<char> DynamicObject::is_on_something(Map& map, sf::Keyboard::Key key
 	for (int i = 0; i < size; i++)
 	{
 		// coin signal
-		if ((*static_arr)[i].get_name() == COIN && (*static_arr)[i].in_bounds(location))
+		if ((*static_arr)[i]->get_name() == COIN && (*static_arr)[i]->in_bounds(location))
 			collision.push_back(COIN);
 
 		// pole signal
 		location.y += 5;
-		if ((*static_arr)[i].get_name() == POLE && (*static_arr)[i].in_bounds(location))
+		if ((*static_arr)[i]->get_name() == POLE && (*static_arr)[i]->in_bounds(location))
 			collision.push_back(POLE);
 		location.y -= 5;
 		
 		// ladder signal
 		location_left.x += 20;
-		if (((*static_arr)[i].get_name() == LADDER && (*static_arr)[i].in_bounds(location_left)) ||
-			((*static_arr)[i].get_name() == LADDER && (*static_arr)[i].in_bounds(location_right)))
+		if (((*static_arr)[i]->get_name() == LADDER && (*static_arr)[i]->in_bounds(location_left)) ||
+			((*static_arr)[i]->get_name() == LADDER && (*static_arr)[i]->in_bounds(location_right)))
 			collision.push_back(LADDER);
 		location_left.x -= 20;
 
 		// specific case where the playe can stand on the ladder
 		location_left.y += 40;
-		if (((*static_arr)[i].get_name() == LADDER && (*static_arr)[i].in_bounds(location_left)) ||
-			((*static_arr)[i].get_name() == LADDER && (*static_arr)[i].in_bounds(location_right)))
+		if (((*static_arr)[i]->get_name() == LADDER && (*static_arr)[i]->in_bounds(location_left)) ||
+			((*static_arr)[i]->get_name() == LADDER && (*static_arr)[i]->in_bounds(location_right)))
 			collision.push_back(LADDER);
 		location_left.y -= 40;
 
 		// wall signal
 		location_left.x += 35;
-		if (((*static_arr)[i].get_name() == GROUND && (*static_arr)[i].in_bounds(location_left)) ||
-			((*static_arr)[i].get_name() == GROUND && (*static_arr)[i].in_bounds(location_right)))
+		if (((*static_arr)[i]->get_name() == GROUND && (*static_arr)[i]->in_bounds(location_left)) ||
+			((*static_arr)[i]->get_name() == GROUND && (*static_arr)[i]->in_bounds(location_right)))
 			collision.push_back(WALL);
 		location_left.x -= 35;
 
 		// ground signal
 		location.y += 40;
-		if ((*static_arr)[i].get_name() == GROUND && (*static_arr)[i].in_bounds(location))
+		if ((*static_arr)[i]->get_name() == GROUND && (*static_arr)[i]->in_bounds(location))
 			collision.push_back(GROUND);
 		location.y -= 40;
 	}

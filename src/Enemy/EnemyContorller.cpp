@@ -27,7 +27,7 @@ void EnemyController::move_enemies(Map * map)
 		case IQ::Smart:
 			 if(m_enemies[i]->path_is_empty())
 				m_enemies[i]->set_path(Astar::calc_path(map, m_enemies[i]));
-			else
+			//else
 				m_enemies[i]->move();
 			break;
 
