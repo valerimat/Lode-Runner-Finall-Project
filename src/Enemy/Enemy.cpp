@@ -94,8 +94,7 @@ bool Enemy::we_are_on_ladder(Map& map, sf::Vector2f location)
 	if (map.we_are_on_ladder(location))
 		return true;
 
-	else
-		return false;
+	return false;
 }
 
 bool Enemy::able_to_move_up(sf::Vector2f topLeft, float size, Map & map)

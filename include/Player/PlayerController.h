@@ -3,14 +3,19 @@
 #include <chrono>
 #include <thread>
 #include "MovementController.h"
-
 class Player;
 class Map;
 
-class PlayerController :public MovementController
+class PlayerController
+	: public MovementController
 {
 public:
-	PlayerController(Map &map);
+
+	//
+	using MovementController::MovementController;
+	//
+	void init_player();
+	//PlayerController(Map &map);
 	void move_player(sf::Keyboard::Key key, Map& map);
 	void physics_player(sf::Keyboard::Key key, Map& map, std::vector<char> &collision);
 

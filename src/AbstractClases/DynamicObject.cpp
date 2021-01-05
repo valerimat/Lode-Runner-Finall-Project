@@ -79,63 +79,6 @@ float DynamicObject::get_height()
 
 
 
-bool DynamicObject::is_on_ladder(Map& map,sf::Vector2f location)
-{
-
-	
-	for (int i = 0; i < (*map.get_static()).size(); i++)
-	{
-		if ((*map.get_static())[i]->get_name() == LADDER && (*map.get_static())[i]->in_bounds(location))
-			return true;
-	}
-	return false;
-}
-
-bool DynamicObject::is_on_pole(Map& map)
-{
-
-	sf::Vector2f location = m_location;
-
-	for (int i = 0; i < (*map.get_static()).size(); i++)
-	{
-		if ((*map.get_static())[i]->get_name() == POLE && (*map.get_static())[i]->in_bounds(location))
-			return true;
-	}
-	return false;
-}
-
-bool DynamicObject::is_on_wall(Map& map)
-{
-	sf::Vector2f location_right, location_left;
-
-	location_left = location_right = m_location;
-
-	location_left.x += 35;
-
-	std::vector<std::shared_ptr<StaticObject>>* static_arr = map.get_static();
-
-	for (int i = 0; i < (*static_arr).size(); i++)
-	{
-		if (((*static_arr)[i]->get_name() == GROUND && (*static_arr)[i]->in_bounds(location_left)) ||
-			((*static_arr)[i]->get_name() == GROUND && (*static_arr)[i]->in_bounds(location_right)))
-			return true;
-	}
-	return false;
-}
-
-bool DynamicObject::is_on_coin(Map& map)
-{
-	std::vector<std::shared_ptr<StaticObject>>* static_arr = map.get_static();
-
-	sf::Vector2f location = m_location;
-	for (int i = 0; i < (*static_arr).size(); i++)
-	{
-		if (((*static_arr))[i]->get_name() == COIN && ((*static_arr))[i]->in_bounds(location))
-			return true;
-	}
-	return false;
-}
-
 // gets a axis vector of the next location which is helpful to know whats a head
 sf::Vector2f DynamicObject::get_next_location(sf::Keyboard::Key key)
 {
@@ -181,7 +124,7 @@ std::vector<char> DynamicObject::is_on_something(Map& map, sf::Keyboard::Key key
 		// coin signal
 		if ((*static_arr)[i]->get_name() == COIN && (*static_arr)[i]->in_bounds(location))
 		{
-			(*static_arr)[i]->set_sprite();
+			//(*static_arr)[i]->set_sprite();
 			std::cout << "ey\n";
 			collision.push_back(COIN);
 		}

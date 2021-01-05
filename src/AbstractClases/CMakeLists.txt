@@ -3,5 +3,6 @@
                                      "Object.cpp"
                                      "StaticObject.cpp"
                                      "DynamicObject.cpp"
-                     
+                                     "MovementController.cpp"
+                
                                   )

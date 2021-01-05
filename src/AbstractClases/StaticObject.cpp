@@ -1,20 +1,15 @@
 #include "StaticObject.h"
 
 StaticObject::StaticObject(char name, sf::Vector2f locaiton, std::shared_ptr<sf::Texture> texture):
-Object(name,locaiton), m_texture(texture)
+Object(name,locaiton)
 {
-	set_sprite();
+	set_sprite(texture);
 }
 
-void StaticObject::set_texture(std::shared_ptr<sf::Texture> texture)
-{
-	m_texture = texture;
-	set_sprite();
-}
-void StaticObject::set_sprite()
+void StaticObject::set_sprite(std::shared_ptr<sf::Texture> texture)
 {
 	sf::Sprite sprite;
-	sprite.setTexture(*m_texture);
+	sprite.setTexture(*texture);
 	sprite.setPosition(get_location());
 	sprite.setScale(sf::Vector2f(0.8, 0.8));
 	m_sprite = sprite;
@@ -39,7 +34,6 @@ bool StaticObject::in_bounds(sf::Vector2f &location)
 		return true;
 	}
 		
-
 	return false;
 }
 

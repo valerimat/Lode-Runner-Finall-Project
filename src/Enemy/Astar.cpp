@@ -2,10 +2,10 @@
 #include "Map.h"
 #include "Enemy.h"
 #include "Tile.h"
+#include "EnemyController.h"
 
-std::vector<NextStep> Astar::calc_path(Map * map, Enemy * enemy)
+std::vector<NextStep> Astar::calc_path(Map* map, EnemyController& controller, sf::Vector2f&& location)
 {
-	float size = enemy->get_height();
 
 	sf::Vector2f player_location = map->get_player()->get_location();
 
@@ -22,7 +22,7 @@ std::vector<NextStep> Astar::calc_path(Map * map, Enemy * enemy)
 	std::vector<Tile> arround;
 
 	//starting tile
-	Tile from_where(enemy->get_location(), 0,NextStep::NONE, 0);
+	Tile from_where(location, 0,NextStep::NONE, 0);
 
 
 	//end tile
@@ -70,7 +70,7 @@ std::vector<NextStep> Astar::calc_path(Map * map, Enemy * enemy)
 		open_list.erase(tile_to_add);
 
 		//gets all posible tiles around
-		get_around(*(closed_list.end() - 1), arround, closed_list, map, closed_list.size() - 1, enemy);
+		get_around(*(closed_list.end() - 1), arround, closed_list,closed_list.size() - 1, controller);
 
 		//calculates theyr score
 		calculate_score(arround, to_where.m_location, h_score);
@@ -132,9 +132,8 @@ std::vector<NextStep> Astar::calc_path(Map * map, Enemy * enemy)
 void Astar::get_around(Tile& curr_tile,
 	std::vector<Tile>& arround,
 	const std::vector<Tile> closed_list,
-	Map * map,
 	int index_of_father,
-	Enemy* enemy)
+	EnemyController & controller)
 {
 	sf::Vector2f curr_location = curr_tile.m_location;
 
@@ -143,7 +142,7 @@ void Astar::get_around(Tile& curr_tile,
 		right_l(curr_location.x + STEP, curr_location.y),
 		left_l(curr_location.x - STEP, curr_location.y);
 
-	std::vector<NextStep> avaliavle_steps = enemy->get_avaliable_steps(map, curr_location);
+	std::vector<NextStep> avaliavle_steps = controller.get_avaliable_steps(curr_location);
 	
 
 	for (int i = 0; i < avaliavle_steps.size(); ++i)

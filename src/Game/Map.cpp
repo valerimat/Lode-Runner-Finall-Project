@@ -9,9 +9,6 @@ Map::Map(std::vector<std::string>* map,int height, int width):
 	set_objects();
 }
 
-
-
-
 void Map::set_objects()
 {
 	DynamicObject * d_obj; // later to be changed Player player for proper use
@@ -84,13 +81,12 @@ void Map::set_objects()
 void Map::Draw(sf::RenderWindow &main_window)
 {
 	// Background
-	StaticObject background;
+	
 
 	float scale_height = float(m_height) * float(50) / float(HEIGHT),
 		  scale_width  = float(m_width)  * float(50) / float(WIDTH);
 
-	background.init_object(NULL, sf::Vector2f(0, 0));
-	background.set_texture(m_textures[BACKGROUND_TEXTURE]);
+	StaticObject background(NULL, sf::Vector2f(0, 0), m_textures[BACKGROUND_TEXTURE]);
 	background.get_sprite().scale(scale_width, scale_height);
 
 	background.Draw(main_window);
@@ -99,19 +95,13 @@ void Map::Draw(sf::RenderWindow &main_window)
 	for (int i = 0; i < m_static.size(); ++i)
 	{
 		m_static[i]->Draw(main_window);
-		sf::Vector2f vec(400, 750);
-		if (m_static[i]->in_bounds(vec))
-		{
-			//std::cout << i << ' ' << m_static[i].get_name() << ' ' << std::endl;
-		}
 	}
 	for (int i = 0; i < m_dynamic.size(); ++i)
 	{
 		m_dynamic[i]->Draw(main_window);
-		//std::cout << "X - " << m_dynamic[i].get_location().x << 
-			//" Y - " << m_dynamic[i].get_location().y << std::endl;
 	}
 }
+
 
 void Map::load_textures()
 {
@@ -158,11 +148,6 @@ char Map::get_char(int i,int j)
 	return m_map[i][j];
 }
 
-char Map::get_char(sf::Vector2f & location)
-{
-	return m_map[location.y][location.x];
-}
-
 Player* Map::get_player() // later change to Player as a return value
 {
 	for (int i = 0; i < m_dynamic.size(); i++)
@@ -182,7 +167,6 @@ bool Map::in_player(sf::Vector2f & location)
 		return false;
 }
 
-
 std::vector<Enemy*> Map::get_enemies()
 {
 	int index = 0;
@@ -196,11 +180,9 @@ std::vector<Enemy*> Map::get_enemies()
 		{
 			temp.push_back(dynamic_cast<Enemy*>(m_dynamic[index]));
 		}
-
 		++index;
 	}
 	return temp;
-
 }
 
 
@@ -212,13 +194,6 @@ char Map::what_is_there(sf::Vector2f location)
 		if (m_static[i]->in_bounds(location))
 			return m_static[i]->get_name();
 	}
-	/*
-	for (int i = 0; i < m_dynamic.size(); ++i)
-	{
-		if (m_dynamic[i]->in_bounds(location))
-			return m_dynamic[i]->get_name();
-	}
-	*/
 	return NONE;
 }
 
@@ -299,57 +274,7 @@ bool Map::out_of_boundrie(sf::Vector2f location) {
 	return false;
 }
 
-sf::Vector2f Map::get_bounding_sprt_loc(sf::Vector2f location)
-{
-	for (int i = 0; i < m_static.size(); ++i)
-	{
-		if (m_static[i]->in_bounds(location))
-			return m_static[i]->get_location_x_y();
-	}
-}
-
-bool Map::we_are_centerd(sf::Vector2f location)
-{
-	//need to change to number based on tile size
-	for (int i = 0; i < m_static.size(); ++i)
-	{
-		if (m_static[i]->get_location() == location)
-			return true;
-	}
-	return false;
-}
-
-//location checks:
-bool Map::is_ground(sf::Vector2f location)
-{
-	for (int i = 0; i < m_static.size(); ++i)
-	{
-		if (m_static[i]->in_bounds(location))
-			if (m_static[i]->get_name() == GROUND)
-				return true;
-			else
-				return false;
-	}
-	return false;
-}
 
 
 
-bool Map::is_ladder(sf::Vector2f location)
-{
-	sf::Vector2f m_loc(location.x + 1, location.y + 1);
-	for (int i = 0; i < m_static.size(); ++i)
-	{
-		if (m_static[i]->in_bounds(m_loc))
-		{
-			if (m_static[i]->get_name() == LADDER)
-				return true;
-			else
-				return false;
-		}
-		else
-		return false;
-	}
-	return false;
 
-}

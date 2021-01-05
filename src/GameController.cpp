@@ -19,8 +19,9 @@ void GameController::Run()
 	Map curr_map = game.get_curr_map();
 
 	Screens screen(game);
-	EnemyController enemy_cont(curr_map);
-	PlayerController player_controller(curr_map);
+	EnemyController enemy_cont(&curr_map);
+	PlayerController player_controller(&curr_map);
+	player_controller.init_player();
 
 	auto last = clock::now();
 
@@ -29,6 +30,7 @@ void GameController::Run()
 		auto now = clock::now();
 
 		auto dt = std::chrono::duration_cast<std::chrono::milliseconds>(now - last);
+		player_controller.move_player(sf::Keyboard::End, curr_map);
 
 		main_window.clear(sf::Color::Black);
 		if (dt.count() >= (long long)30)

@@ -2,7 +2,9 @@
 #include "Map.h"
 #include "Enemy.h"
 #include <iostream>
-std::vector<NextStep> OneSide::calc_path(Map * map, Enemy & enemy)
+#include "EnemyController.h"
+
+std::vector<NextStep> OneSide::calc_path(Map * map,EnemyController & controller,sf::Vector2f  & curr_loc)
 {
 	
 
@@ -10,9 +12,9 @@ std::vector<NextStep> OneSide::calc_path(Map * map, Enemy & enemy)
 
 	std::vector<NextStep> steps;
 
-	sf::Vector2f curr_location = enemy.get_location();
+	sf::Vector2f curr_location = curr_loc;
 
-	std::vector<NextStep> next_avaliable = enemy.get_avaliable_steps(map,curr_location);
+	std::vector<NextStep> next_avaliable = controller.get_avaliable_steps(curr_location);
 
 	sf::Vector2f curr_location_with_steps = curr_location;
 
@@ -55,10 +57,10 @@ std::vector<NextStep> OneSide::calc_path(Map * map, Enemy & enemy)
 	
 		update_curr_location(curr_location_with_steps, dir);
 		
-		next_avaliable = enemy.get_avaliable_steps(map, curr_location_with_steps);
+		next_avaliable = controller.get_avaliable_steps(curr_location_with_steps);
 		if (is_dir_avaliable(dir, next_avaliable))
 		{
-			if (is_there_still_floor(dir, map, curr_location_with_steps, enemy.get_height()))
+			if (is_there_still_floor(dir, map, curr_location_with_steps, 40))
 			steps.push_back(dir);
 			else
 			{

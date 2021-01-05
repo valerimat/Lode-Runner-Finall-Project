@@ -2,16 +2,17 @@
 #include "Map.h"
 #include "time.h"
 #include "Enemy.h"
+#include "EnemyController.h"
 
-std::vector<NextStep> RandomPath::calc_path(Map* map, Enemy* enemy)
+std::vector<NextStep> RandomPath::calc_path(Map* map, EnemyController& contorller,sf::Vector2f location)
 {
 	srand((unsigned)time(NULL));
 
-	sf::Vector2f starting_loc = enemy->get_location();
+	sf::Vector2f starting_loc = location;
 
 	std::vector<NextStep> steps;
 
-	std::vector<NextStep> avaliable_steps = enemy->get_avaliable_steps(map, starting_loc);
+	std::vector<NextStep> avaliable_steps = contorller.get_avaliable_steps(starting_loc);
 
 	int random = 0;
 	int modulo = 0;
@@ -43,7 +44,7 @@ std::vector<NextStep> RandomPath::calc_path(Map* map, Enemy* enemy)
 
 		avaliable_steps.clear();
 
-		avaliable_steps = enemy->get_avaliable_steps(map, starting_loc);
+		avaliable_steps = contorller.get_avaliable_steps(starting_loc);
 		i = 0;
 		while (i < 5)
 		{
@@ -56,7 +57,7 @@ std::vector<NextStep> RandomPath::calc_path(Map* map, Enemy* enemy)
 			else
 				break;
 			avaliable_steps.clear();
-			avaliable_steps = enemy->get_avaliable_steps(map, starting_loc);
+			avaliable_steps = contorller.get_avaliable_steps(starting_loc);
 			++i;
 		}
 	}

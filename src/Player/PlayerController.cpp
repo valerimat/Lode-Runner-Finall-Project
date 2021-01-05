@@ -2,25 +2,70 @@
 #include "Player.h"
 #include "Map.h"
 
+/*
 PlayerController::PlayerController(Map& map)
 {
 	m_player = map.get_player();
+}
+*/
+
+void PlayerController::init_player()
+{
+	m_player = m_map->get_player();
 }
 
 
 void PlayerController::move_player(sf::Keyboard::Key key, Map& map)
 {
+	/*
 	std::vector<char> collision = m_player->is_on_something(map, key);
 
 	for (int i = 0; i < collision.size(); i++)
 	{
 		std::cout << collision[i] << " ";
 	}
-
-	std::cout << std::endl;
+	
 
 	physics_player(key, map, collision);
+	*/
+	NextStep next_wanted = NextStep::NONE;
 
+	switch (key)
+	{
+    case sf::Keyboard::Left:
+		next_wanted = NextStep::LEFT;
+        break;
+    case sf::Keyboard::Right:
+		next_wanted = NextStep::RIGHT;
+        break;
+    case sf::Keyboard::Up:
+		next_wanted = NextStep::UP;
+        break;
+    case sf::Keyboard::Down:
+		next_wanted = NextStep::DOWN;
+        break;
+	case sf::Keyboard::End:
+		next_wanted = NextStep::DOWN;
+		break;
+  
+	}
+	std::vector<NextStep> avaliable_steps = get_avaliable_steps(m_player->get_location());
+	
+	if (avaliable_steps.size() == 1) 
+	{
+		avaliable_steps[0] = NextStep::DOWN;
+		sf::Keyboard::Key key = sf::Keyboard::Down;
+		m_player->move(key);
+		return;
+	}
+		
+
+	for (int i = 0; i < avaliable_steps.size(); ++i)
+	{
+		if (avaliable_steps[i] == next_wanted)
+			m_player->move(key);
+	}
+	
 	//m_player->move(key);
 
 	//if (m_player->is_on_ground(map))

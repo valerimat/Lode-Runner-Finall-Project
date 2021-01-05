@@ -7,6 +7,7 @@
 class Tile;
 class Map;
 class Enemy;
+class EnemyController;
 #include <math.h>
 
 //==============================================================================
@@ -27,15 +28,15 @@ Algorithm for calcluating shortest path for monsters
 namespace Astar
 {
 	// send locations and your board
-	std::vector<NextStep> calc_path(Map* map, Enemy* enemy);
+	std::vector<NextStep> calc_path(Map* map, EnemyController& controller, sf::Vector2f && location);
 
 	//helper functions - for full documentation visit cpp
 	void get_around(Tile& curr_tile,
 		std::vector<Tile>& arround,
 		const std::vector<Tile> closed_list,
-		Map* map,
 		int index_of_father,
-		Enemy* enemy);
+		EnemyController& cont
+		);
 
 	int found_player(std::vector<Tile>& tiles, sf::Vector2f location);
 

@@ -18,11 +18,6 @@ public:
 	bool in_bounds(sf::Vector2f &location);
 
 
-	bool is_on_ladder(Map& map,sf::Vector2f location);
-	bool is_on_pole(Map& map);
-	bool is_on_wall(Map& map);
-	bool is_on_coin(Map& map);
-
 	std::vector<char> is_on_something(Map& map, sf::Keyboard::Key key);
 
 	sf::Vector2f get_location();

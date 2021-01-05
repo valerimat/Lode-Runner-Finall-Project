@@ -3,11 +3,6 @@
 #include "OneSide.h"
 
 
-EnemyController::EnemyController(Map & map)
-{
-	m_enemies = map.get_enemies();
-}
-
 
 void EnemyController::move_enemies(Map * map)
 {
@@ -19,6 +14,7 @@ void EnemyController::move_enemies(Map * map)
 		std::cout << "got to player" << std::endl;
 	}
 	*/
+	m_enemies = map->get_enemies();
 
 	while (i < m_enemies.size())
 	{
@@ -26,14 +22,14 @@ void EnemyController::move_enemies(Map * map)
 		{
 		case IQ::Smart:
 			 if(m_enemies[i]->path_is_empty())
-				m_enemies[i]->set_path(Astar::calc_path(map, m_enemies[i]));
+				m_enemies[i]->set_path(Astar::calc_path(map, *this, m_enemies[i]->get_location()));
 			//else
 				m_enemies[i]->move();
 			break;
 
 		case IQ::Random:
 			if (m_enemies[i]->path_is_empty())
-				m_enemies[i]->set_path(Astar::calc_path(map, m_enemies[i]));
+				m_enemies[i]->set_path(Astar::calc_path(map, *this , m_enemies[i]->get_location()));
 			else
 				m_enemies[i]->move();
 
@@ -41,7 +37,7 @@ void EnemyController::move_enemies(Map * map)
 		case IQ::OneSide:
 			if (m_enemies[i]->path_is_empty())
 			{
-				m_enemies[i]->set_path(RandomPath::calc_path(map, m_enemies[i]));
+				m_enemies[i]->set_path(RandomPath::calc_path(map, *this, m_enemies[i]->get_location()));
 				m_enemies[i]->move();
 			}
 			else
