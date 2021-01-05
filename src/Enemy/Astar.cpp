@@ -48,7 +48,7 @@ std::vector<NextStep> Astar::calc_path(Map * map, Enemy * enemy)
 			int i = 0;
 			while (i < 10)
 			{
-				path[i] = NextStep::NONE;
+				path.push_back(NextStep::NONE);
 				++i;
 			}
 			return path;
@@ -71,7 +71,7 @@ std::vector<NextStep> Astar::calc_path(Map * map, Enemy * enemy)
 
 		//gets all posible tiles around
 		get_around(*(closed_list.end() - 1), arround, closed_list, map, closed_list.size() - 1, enemy);
-		
+
 		//calculates theyr score
 		calculate_score(arround, to_where.m_location, h_score);
 
@@ -84,7 +84,7 @@ std::vector<NextStep> Astar::calc_path(Map * map, Enemy * enemy)
 
 			//check if they are in open
 			tile_in_open = check_if_tile_in_vector(arround[index], open_list);
-			
+
 			//if there is no such tile
 			if (tile_in_open == -1)
 				open_list.push_back(arround[index]);
@@ -97,17 +97,27 @@ std::vector<NextStep> Astar::calc_path(Map * map, Enemy * enemy)
 					open_list[tile_in_open] = arround[index];
 			index++;
 		}
-		
+
 		int index_of_player_tile = found_player(open_list, player_location);
-		if(index_of_player_tile != -1)
+		if (index_of_player_tile != -1)
 		{
 			closed_list.push_back(open_list[index_of_player_tile]);
 			break;
 		}
 		index_of_father++;
 
-		if (closed_list.size() > 150)
-			break;
+		if (closed_list.size() > 1500)
+		{
+			std::vector<NextStep> path;
+			int i = 0;
+			while (i < 20)
+			{
+				path.push_back(NextStep::NONE);
+				++i;
+			}
+			return path;
+		}
+			
 	}
 
 	
