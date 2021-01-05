@@ -16,7 +16,7 @@ sf::Vector2f Object::get_location()
 {
 	sf::Vector2f location;
 	location.x = m_location.y * OFFSET;
-	location.y = m_location.x * OFFSET;
+	location.y = m_location.x * OFFSET+ 50;
 
 	return location;
 }
