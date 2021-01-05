@@ -1,6 +1,7 @@
 ﻿configure_file ("arial.ttf"${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("./skins/enemy.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("./skins/ground.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("./skins/ground with signs.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("./skins/ladder.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("./skins/player.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("./skins/rope.png" ${CMAKE_BINARY_DIR} COPYONLY)

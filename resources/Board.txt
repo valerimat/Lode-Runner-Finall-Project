@@ -3,20 +3,20 @@
 #   H--------------#
 #   H              #
 #   H-------   * % #
-#   H      H########
-####       H       #
+#   H      HGGGGGGG#
+#GGGG      H       #
 #        * H       #
-#    H#####H       #
-#H####     H       #
+#    HGGGGGH       #
+#HGGGG     H       #
 #H         H   %   #
-#H         #######H#
+#H         GGGGGGGH#
 #H                H#
 #H----------------H#
 #H *              H#
-####      H-------H#
+#GGG      H-------H#
 #      *  H     * H#
-#     ####H    #####
+#     GGGGH    GGGG#
 #         H        #
 #      @  H      % #
-####################
+#GGGGGGGGGGGGGGGGGG#
 
