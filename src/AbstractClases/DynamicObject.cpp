@@ -110,7 +110,7 @@ sf::Vector2f DynamicObject::get_next_location(sf::Keyboard::Key key)
 // returns a vector of the specific objects, which the dynamic object collides with
 std::vector<char> DynamicObject::is_on_something(Map& map, sf::Keyboard::Key key)
 {
-	std::vector<std::shared_ptr<StaticObject>> * static_arr = map.get_static();
+	std::vector<std::shared_ptr<StaticObject>> * static_arr = map.GetStatic();
 
 	int size = static_arr->size();
 

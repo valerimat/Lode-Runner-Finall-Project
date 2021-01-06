@@ -9,8 +9,8 @@ class Game
 public:
 	Game(MapData &map);
 	void Draw(sf::RenderWindow &window);
-	void Load_level();
-	Map * get_curr_map();
+	void LoadLevel();
+	Map * GetCurrMap();
 	void InitHud();
 private:
 	int level = 0;

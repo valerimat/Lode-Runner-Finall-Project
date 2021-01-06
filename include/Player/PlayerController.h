@@ -14,11 +14,11 @@ public:
 	//
 	using MovementController::MovementController;
 	//
-	void init_player();
+	void InitPlayer();
 	//PlayerController(Map &map);
-	void move_player(sf::Keyboard::Key key, float dt);
+	void MovePlayer(sf::Keyboard::Key key, float dt);
 	//void physics_player(sf::Keyboard::Key key, Map& map, std::vector<char> &collision);
-	void set_paths();
+	void SetPaths();
 
 private:
 	Player* m_player;
