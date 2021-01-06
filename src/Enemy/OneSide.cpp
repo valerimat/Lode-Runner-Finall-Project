@@ -100,11 +100,14 @@ std::vector<NextStep> OneSide::calc_path(Map * map,EnemyController & controller,
 		if (steps.size() == 40)
 			break;
 	}
-
 	return steps;
 }
+//-----------------------------------------------------------------------------
 
-bool OneSide::is_there_still_floor(NextStep next, Map * map,sf::Vector2f &curr_location_with_steps, float height)
+bool OneSide::is_there_still_floor(NextStep next,
+								   Map * map,
+	                               sf::Vector2f &curr_location_with_steps,
+	                               float height)
 {
 	sf::Vector2f loc = curr_location_with_steps;
 	update_curr_location(loc, next);
@@ -124,6 +127,7 @@ bool OneSide::is_there_still_floor(NextStep next, Map * map,sf::Vector2f &curr_l
 	}
 	return false;
 }
+//-----------------------------------------------------------------------------
 
 bool OneSide::is_dir_avaliable(NextStep next, std::vector<NextStep> avaliable)
 {
@@ -135,6 +139,7 @@ bool OneSide::is_dir_avaliable(NextStep next, std::vector<NextStep> avaliable)
 
 	return false;
 }
+//-----------------------------------------------------------------------------
 
 bool OneSide::is_opposide_avaliable(NextStep next, std::vector<NextStep> avaliable)
 {
@@ -152,6 +157,7 @@ bool OneSide::is_opposide_avaliable(NextStep next, std::vector<NextStep> avaliab
 
 	return false;
 }
+//-----------------------------------------------------------------------------
 
 
 
