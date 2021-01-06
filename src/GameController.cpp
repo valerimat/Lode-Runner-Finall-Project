@@ -37,7 +37,7 @@ void GameController::Run()
 
 		main_window.clear(sf::Color::Black);
 	
-		screen.Draw(main_window);
+		game.Draw(main_window);
 
 		main_window.display();
 
