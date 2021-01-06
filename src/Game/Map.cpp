@@ -1,15 +1,18 @@
 #include "Map.h"
 
+// c-tor of map
 Map::Map(std::vector<std::string>* map,int height, int width):
 	m_map(*map),
 	m_height(height),
 	m_width(width)
 {
-	load_textures();
-	set_objects();
+	LoadTextures();
+	SetObjects();
 }
+//-----------------------------------------------------------------------------
 
-void Map::set_objects()
+// sets all the objects
+void Map::SetObjects()
 {
 	DynamicObject * d_obj;
 	StaticObject * static_object;
@@ -26,7 +29,7 @@ void Map::set_objects()
 		{
 			sf::Vector2f location(i, j);
 
-			switch(get_char(i,j))
+			switch(GetChar(i,j))
 			{
 			case PLAYER: 
 				player = new Player;
@@ -80,7 +83,9 @@ void Map::set_objects()
 		}
 	}
 }
+//-----------------------------------------------------------------------------
 
+// draws on window all the sprites
 void Map::Draw(sf::RenderWindow &main_window)
 {
 	// Background
@@ -110,9 +115,10 @@ void Map::Draw(sf::RenderWindow &main_window)
 		m_dynamic[i]->Draw(main_window);
 	}
 }
+//-----------------------------------------------------------------------------
 
-
-void Map::load_textures()
+// loads all the textures on shared ptr
+void Map::LoadTextures()
 {
 	auto texture_ptr = std::make_shared<sf::Texture>();
 	texture_ptr->loadFromFile("ladder.png");
@@ -150,14 +156,17 @@ void Map::load_textures()
 	texture_ptr->loadFromFile("ground with signs.png");
 	m_textures.push_back(texture_ptr);
 }
+//-----------------------------------------------------------------------------
 
-
-char Map::get_char(int i,int j)
+// gets char from the board
+char Map::GetChar(int i,int j)
 {
 	return m_map[i][j];
 }
+//-----------------------------------------------------------------------------
 
-Player* Map::get_player() // later change to Player as a return value
+// gets us the player ptr
+Player* Map::GetPlayer() // later change to Player as a return value
 {
 	for (int i = 0; i < m_dynamic.size(); i++)
 	{
@@ -166,17 +175,10 @@ Player* Map::get_player() // later change to Player as a return value
 	}
 	return NULL;
 }
+//-----------------------------------------------------------------------------
 
-
-bool Map::in_player(sf::Vector2f & location)
-{
-	if (get_player()->get_sprite().getGlobalBounds().contains(location))
-		return true;
-	else
-		return false;
-}
-
-std::vector<Enemy*> Map::get_enemies()
+// gets us vector of enemies ptr
+std::vector<Enemy*> Map::GetEnemies()
 {
 	int index = 0;
 	std::vector<Enemy*> temp;
@@ -193,9 +195,38 @@ std::vector<Enemy*> Map::get_enemies()
 	}
 	return temp;
 }
+//-----------------------------------------------------------------------------
 
+std::vector<std::shared_ptr<StaticObject>>* Map::GetStatic()
+{
+	return  &m_static;
+}
+//-----------------------------------------------------------------------------
 
-char Map::what_is_there(sf::Vector2f location)
+int Map::GetWidth()
+{
+	return m_width;
+}
+//-----------------------------------------------------------------------------
+
+int Map::GetHeight()
+{
+	return m_height;
+}
+//-----------------------------------------------------------------------------
+
+// asks if it touches the player
+bool Map::IsOnPlayer(sf::Vector2f & location)
+{
+	if (GetPlayer()->get_sprite().getGlobalBounds().contains(location))
+		return true;
+	else
+		return false;
+}
+//-----------------------------------------------------------------------------
+
+// whats next basiclly 
+char Map::WhatIsThere(sf::Vector2f location)
 {
 
 	for (int i = 0; i < m_static.size(); ++i)
@@ -205,9 +236,10 @@ char Map::what_is_there(sf::Vector2f location)
 	}
 	return NONE;
 }
+//-----------------------------------------------------------------------------
 
-
-bool Map::is_there_ground(sf::Vector2f location)
+// asks if it touches the ground
+bool Map::IsOnGround(sf::Vector2f location)
 {
 	for (int i = 0; i < m_ground.size(); ++i)
 	{
@@ -216,8 +248,10 @@ bool Map::is_there_ground(sf::Vector2f location)
 	}
 	return false;
 }
+//-----------------------------------------------------------------------------
 
-int Map::is_on_coin(sf::Vector2f location)
+// asks if it touches the coin
+int Map::IsOnCoin(sf::Vector2f location)
 {
 	location.y += 1;
 
@@ -228,15 +262,10 @@ int Map::is_on_coin(sf::Vector2f location)
 	}
 	return -1;
 }
+//-----------------------------------------------------------------------------
 
-void Map::delete_coin(int i)
-{
-	m_coins.erase(m_coins.begin() + i);
-}
-
-
-
-bool Map::we_are_hanging_on_rope(sf::Vector2f location_l, sf::Vector2f location_r)
+// asks if it touches the rope
+bool Map::IsOnRope(sf::Vector2f location_l, sf::Vector2f location_r)
 {
 	for (int i = 0; i < m_poles.size(); ++i)
 	{
@@ -256,9 +285,10 @@ bool Map::we_are_hanging_on_rope(sf::Vector2f location_l, sf::Vector2f location_
 	}
 	return false;
 }
+//-----------------------------------------------------------------------------
 
-
-bool Map::we_are_on_ladder(sf::Vector2f location)
+// asks if it touches the ladder
+bool Map::IsOnLadder(sf::Vector2f location)
 {
 	sf::RectangleShape rect;
 	rect.setPosition(location);
@@ -267,43 +297,16 @@ bool Map::we_are_on_ladder(sf::Vector2f location)
 	for (int i = 0; i < m_ladders.size(); ++i)
 	{
 		if (m_ladders[i]->in_bounds(rect))
-				return true;
+			return true;
 	}
 	return false;
 }
-std::vector<std::shared_ptr<StaticObject>>* Map::get_static()
+//-----------------------------------------------------------------------------
+
+// deletes the coin
+void Map::DeleteCoin(int i)
 {
-	return  &m_static;
+	m_coins.erase(m_coins.begin() + i);
 }
-
-int Map::get_width()
-{
-	return m_width;
-}
-
-int Map::get_height()
-{
-	return m_height;
-}
-
-
-bool Map::out_of_boundrie(sf::Vector2f location) {
-	if (location.x <= 0)
-		return true;
-	else if (location.y > get_width())
-		return true;
-	else if (location.y < 0)
-		return true;
-	else if (location.x >= get_width())
-		return true;
-
-	return false;
-}
-
-int Map::get_coin_size()
-{
-	return m_coins.size();
-}
-
-
+//-----------------------------------------------------------------------------
 

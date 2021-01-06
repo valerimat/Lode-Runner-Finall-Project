@@ -38,7 +38,7 @@ std::vector<NextStep> MovementController::get_avaliable_steps(sf::Vector2f locat
 
 bool MovementController::we_are_on_ladder( sf::Vector2f location)
 {
-	if (m_map->we_are_on_ladder(location))
+	if (m_map->IsOnLadder(location))
 		return true;
 
 	return false;
@@ -56,8 +56,8 @@ bool MovementController::able_to_move_up(sf::Vector2f topLeft, float size)
 bool MovementController::there_is_no_wall_above(sf::Vector2f topLeft)
 {
 	//need to convert to check only for ground
-	if (!m_map->is_there_ground(topLeft + sf::Vector2f(1, -1))
-		&& !m_map->is_there_ground(topLeft + sf::Vector2f(39, -1)))
+	if (!m_map->IsOnGround(topLeft + sf::Vector2f(1, -1))
+		&& !m_map->IsOnGround(topLeft + sf::Vector2f(39, -1)))
 		return true;
 
 	return false;
@@ -81,19 +81,19 @@ bool  MovementController::able_to_move_side(NextStep side, sf::Vector2f topLeft)
 		offset = sf::Vector2f(41, 0);
 
 
-	if (m_map->is_there_ground(topLeft + offset))
+	if (m_map->IsOnGround(topLeft + offset))
 		return false;
-	if (m_map->is_there_ground(bottom_left + offset))
+	if (m_map->IsOnGround(bottom_left + offset))
 		return false;
 
 	if (we_are_on_rope(topLeft))
 		return true;
 
-	if (m_map->we_are_on_ladder(topLeft))
+	if (m_map->IsOnLadder(topLeft))
 		return true;
 
-	if (m_map->is_there_ground(topLeft + sf::Vector2f(0, 41))
-		|| m_map->is_there_ground(topLeft + sf::Vector2f(40, 41)))
+	if (m_map->IsOnGround(topLeft + sf::Vector2f(0, 41))
+		|| m_map->IsOnGround(topLeft + sf::Vector2f(40, 41)))
 		return true;
 
 
@@ -103,7 +103,7 @@ bool  MovementController::able_to_move_side(NextStep side, sf::Vector2f topLeft)
 bool MovementController::we_are_on_rope(sf::Vector2f topLeft)
 {
 	//move it from the map
-	if (m_map->we_are_hanging_on_rope(topLeft, topLeft + sf::Vector2f(40, 0)))
+	if (m_map->IsOnRope(topLeft, topLeft + sf::Vector2f(40, 0)))
 	{
 		return true;
 	}
@@ -113,8 +113,8 @@ bool MovementController::we_are_on_rope(sf::Vector2f topLeft)
 bool  MovementController::able_to_move_down(sf::Vector2f topLeft)
 {
 
-	if (m_map->is_there_ground(topLeft + sf::Vector2f(1, 41))
-		|| m_map->is_there_ground(topLeft + sf::Vector2f(39, 41)))
+	if (m_map->IsOnGround(topLeft + sf::Vector2f(1, 41))
+		|| m_map->IsOnGround(topLeft + sf::Vector2f(39, 41)))
 		return false;
 
 	return true;

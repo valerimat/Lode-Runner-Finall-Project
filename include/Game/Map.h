@@ -3,7 +3,6 @@
 #include <string>
 #include "StaticObject.h"
 #include "Consumables.h"
-//#include "DynamicObject.h"
 #include "Macros.h"
 #include "Player.h"
 #include "Enemy.h"
@@ -21,35 +20,35 @@ public:
 	Map(std::vector<std::string>* map, int height,int width);
 
 	// map functions
-	void load_textures();
+	void LoadTextures();
 	void Draw(sf::RenderWindow& main_window);
 
 	// getters
-	Player* get_player();
-	std::vector<Enemy*> get_enemies();
-	std::vector<std::shared_ptr<StaticObject>>* get_static();
-	int get_height();
-	int get_width();
-	int get_coin_size();
+	Player* GetPlayer();
+	std::vector<Enemy*> GetEnemies();
+	std::vector<std::shared_ptr<StaticObject>>* GetStatic();
+	int GetHeight();
+	int GetWidth();
 
 	// setters
-	void set_objects();
+	void SetObjects();
 
 	// info
-	bool is_there_ground(sf::Vector2f location);
-	bool we_are_hanging_on_rope(sf::Vector2f location_l, sf::Vector2f location_r);
-	char what_is_there(sf::Vector2f location);
-	bool in_player(sf::Vector2f& location);
-	bool out_of_boundrie(sf::Vector2f location);
-	bool we_are_on_ladder(sf::Vector2f location);
-	int is_on_coin(sf::Vector2f location);
-	void delete_coin(int i);
+	char WhatIsThere(sf::Vector2f location);
+	bool IsOnGround(sf::Vector2f location);
+	bool IsOnRope(sf::Vector2f location_l, sf::Vector2f location_r);
+	bool IsOnPlayer(sf::Vector2f& location);
+	bool IsOnLadder(sf::Vector2f location);
+	int  IsOnCoin(sf::Vector2f location);
+
+	// action
+	void DeleteCoin(int i);
 	
 private:
 	int m_width;
 	int m_height;
 
-	char get_char(int i, int j);
+	char GetChar(int i, int j);
 
 	std::vector<std::string> m_map;
 

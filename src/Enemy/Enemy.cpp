@@ -93,7 +93,7 @@ bool Enemy::path_is_empty()
 
 bool Enemy::we_are_on_ladder(Map& map, sf::Vector2f location)
 {
-	if (map.we_are_on_ladder(location))
+	if (map.IsOnLadder(location))
 		return true;
 
 	return false;
@@ -111,8 +111,8 @@ bool Enemy::able_to_move_up(sf::Vector2f topLeft, float size, Map & map)
 bool Enemy::there_is_no_wall_above(sf::Vector2f topLeft, Map& map)
 {
 	//need to convert to check only for ground
-	if (!map.is_there_ground(topLeft + sf::Vector2f(1, -1))
-		&& !map.is_there_ground(topLeft + sf::Vector2f(39, -1)))
+	if (!map.IsOnGround(topLeft + sf::Vector2f(1, -1))
+		&& !map.IsOnGround(topLeft + sf::Vector2f(39, -1)))
 		return true;
 
 	return false;
@@ -136,19 +136,19 @@ bool  Enemy::able_to_move_side(NextStep side, sf::Vector2f topLeft, Map *map)
 		offset = sf::Vector2f(41, 0);
 
 	
-	if (map->is_there_ground(topLeft + offset))
+	if (map->IsOnGround(topLeft + offset))
 		return false;
-	if (map->is_there_ground(bottom_left + offset))
+	if (map->IsOnGround(bottom_left + offset))
 		return false;
 	
 	if (we_are_on_rope(topLeft, map))
 		return true;
 
-	if (map->we_are_on_ladder(topLeft))
+	if (map->IsOnLadder(topLeft))
 		return true;
 
-	if (map->is_there_ground(topLeft + sf::Vector2f(0, 41))
-		|| map->is_there_ground(topLeft + sf::Vector2f(40, 41)))
+	if (map->IsOnGround(topLeft + sf::Vector2f(0, 41))
+		|| map->IsOnGround(topLeft + sf::Vector2f(40, 41)))
 			return true ;
 
 
@@ -159,7 +159,7 @@ bool  Enemy::able_to_move_side(NextStep side, sf::Vector2f topLeft, Map *map)
 bool Enemy::we_are_on_rope(sf::Vector2f topLeft, Map* map)
 {
 	//move it from the map
-	if (map->we_are_hanging_on_rope(topLeft, topLeft + sf::Vector2f(40, 0)))
+	if (map->IsOnRope(topLeft, topLeft + sf::Vector2f(40, 0)))
 	{
 		return true;
 	}
@@ -169,8 +169,8 @@ bool Enemy::we_are_on_rope(sf::Vector2f topLeft, Map* map)
 bool  Enemy::able_to_move_down( sf::Vector2f topLeft, Map* map)
 {
 
-	if (map->is_there_ground(topLeft + sf::Vector2f(1, 41))
-		|| map->is_there_ground(topLeft + sf::Vector2f(39, 41)))
+	if (map->IsOnGround(topLeft + sf::Vector2f(1, 41))
+		|| map->IsOnGround(topLeft + sf::Vector2f(39, 41)))
 		return false;
 
 	return true;

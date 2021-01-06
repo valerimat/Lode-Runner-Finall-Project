@@ -1,6 +1,6 @@
 #include "Player.h"
 
-void Player::move(sf::Keyboard::Key key,float dt)
+void Player::Move(sf::Keyboard::Key key,float dt)
 {
 	switch (key)
 	{
@@ -22,18 +22,19 @@ void Player::move(sf::Keyboard::Key key,float dt)
 
 	m_sprite.setPosition(m_location);
 }
+//-----------------------------------------------------------------------------
 
-
-void Player::set_valid(std::vector <NextStep> valid_steps)
+void Player::SetValid(std::vector <NextStep> valid_steps)
 {
 	m_valid_steps = valid_steps;
 
 	if (m_valid_steps.size() == 0)
 		m_valid_steps.push_back(NextStep::NONE);
 }
+//-----------------------------------------------------------------------------
 
-
-std::vector <NextStep> Player::get_valid()
+std::vector <NextStep> Player::GetValid()
 {
 	return m_valid_steps;
 }
+//-----------------------------------------------------------------------------

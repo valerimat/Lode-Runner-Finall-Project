@@ -9,25 +9,14 @@ PlayerController::PlayerController(Map& map)
 }
 */
 
-void PlayerController::init_player()
+void PlayerController::InitPlayer()
 {
-	m_player = m_map->get_player();
+	m_player = m_map->GetPlayer();
 }
+//-----------------------------------------------------------------------------
 
-
-void PlayerController::move_player(sf::Keyboard::Key key, float dt)
+void PlayerController::MovePlayer(sf::Keyboard::Key key, float dt)
 {
-	/*
-	std::vector<char> collision = m_player->is_on_something(map, key);
-
-	for (int i = 0; i < collision.size(); i++)
-	{
-		std::cout << collision[i] << " ";
-	}
-	
-
-	physics_player(key, map, collision);
-	*/
 	NextStep next_wanted = NextStep::NONE;
 
 	switch (key)
@@ -47,111 +36,35 @@ void PlayerController::move_player(sf::Keyboard::Key key, float dt)
 	case sf::Keyboard::End:
 		next_wanted = NextStep::DOWN;
 		break;
-  
 	}
 	
-	std::vector <NextStep> avaliable_steps = m_player->get_valid();
+	std::vector <NextStep> avaliable_steps = m_player->GetValid();
 	
 	if (avaliable_steps.size() == 1) 
 	{
 		if (avaliable_steps[0] == NextStep::DOWN)
 		{
 			sf::Keyboard::Key key = sf::Keyboard::Down;
-			m_player->move(key, dt);
+			m_player->Move(key, dt);
 			return;
 		}
 	}
 		
-
 	for (int i = 0; i < avaliable_steps.size(); ++i)
 	{
 		if (avaliable_steps[i] == next_wanted)
-			m_player->move(key,dt);
+			m_player->Move(key,dt);
 	}
 
-	if (m_map->is_on_coin(m_player->get_location()) != -1)
+	if (m_map->IsOnCoin(m_player->get_location()) != -1)
 	{
-		m_map->delete_coin(m_map->is_on_coin(m_player->get_location()));
-		std::cout << "deleted\n";
-		std::cout << m_map->get_coin_size();
+		m_map->DeleteCoin(m_map->IsOnCoin(m_player->get_location()));
 	}
-	
-	//m_player->move(key);
-
-	//if (m_player->is_on_ground(map))
-		//std::cout << "GROUND\n";
-	//if (m_player->is_on_ladder(map))
-		//std::cout << "LADDER\n";
-	//if (m_player->is_on_pole(map))
-	//	std::cout << "POLE\n";
-	//if (m_player->is_on_wall(map))
-	//	std::cout << "WALL\n";
-	//if (m_player->is_on_air(map))
-	//	std::cout << "AIR\n";
-	//if (m_player->is_on_coin(map))
-	//	std::cout << "COIN\n";
 }
+//-----------------------------------------------------------------------------
 
-/*
-void PlayerController::physics_player(sf::Keyboard::Key key, Map& map, std::vector<char>& collision)
+void PlayerController::SetPaths()
 {
-	bool ground = false, wall = false, ladder = false,
-		 pole = false, coin = false, enemy = false;
-
-	// lets us work will boolean values and be on track more easily
-	for (int i = 0; i < collision.size(); i++)
-	{
-		if (collision[i] == GROUND)
-			ground = true;
-		if (collision[i] == WALL)
-			wall = true;
-		if (collision[i] == LADDER)
-			ladder = true;
-		if (collision[i] == POLE)
-			pole = true;
-		if (collision[i] == COIN)
-			coin = true;
-		if (collision[i] == ENEMY)
-			enemy = true;
-	}
-
-	// free fall
-	if (!ground && !ladder && !pole && key != sf::Keyboard::Up)
-	{
-		m_player->move(sf::Keyboard::Down);
-		std::vector<char> collision = m_player->is_on_something(map, sf::Keyboard::Down);
-		//std::this_thread::sleep_for(std::chrono::milliseconds(30));
-		physics_player(key, map, collision);
-	}
-
-	// on ground
-	if(ground && !wall && (key == sf::Keyboard::Left || key == sf::Keyboard::Right))
-		m_player->move(key);
-
-	// on ladder
-	if (ladder && !wall)
-	{
-		if (ground && sf::Keyboard::Down)
-			return;
-		m_player->move(key);
-		std::cout << "ladder\n";
-	}
-
-	// on pole
-	if (pole && !wall && (key == sf::Keyboard::Left || key == sf::Keyboard::Right ||
-		key == sf::Keyboard::Down))
-		m_player->move(key);
-
-	// wall = no movement forward
-	if (wall)
-	{
-		std::cout << "wall\n";
-		return;
-	}
+	m_player->SetValid(get_avaliable_steps(m_player->get_location()));
 }
-*/
-
-void PlayerController::set_paths()
-{
-	m_player->set_valid(get_avaliable_steps(m_player->get_location()));
-}
+//-----------------------------------------------------------------------------

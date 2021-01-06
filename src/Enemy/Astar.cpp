@@ -7,7 +7,7 @@
 std::vector<NextStep> Astar::calc_path(Map* map, EnemyController& controller, sf::Vector2f&& location)
 {
 
-	sf::Vector2f player_location = map->get_player()->get_location();
+	sf::Vector2f player_location = map->GetPlayer()->get_location();
 
 	// will store open list of tiles
 	std::vector<Tile> open_list;

@@ -9,10 +9,10 @@ class MapData
 {
 public:
 	MapData();
-	std::vector<std::string> * get_map(int number_of_level);
-	std::vector<std::string> * get_map_clean(int number_of_levle);
-	int get_curr_height(int lvl);
-	int get_curr_width(int lvl);
+	std::vector<std::string> * GetMap(int number_of_level);
+	std::vector<std::string> * GetCleanMap(int number_of_levle);
+	int GetCurrHeight(int lvl);
+	int GetCurrWidth(int lvl);
 private:
 	void LoadMaps();
 	std::vector <std::vector <std::string>> m_maps_clean;
