@@ -4,7 +4,7 @@
 #include <iostream>
 #include "EnemyController.h"
 
-std::vector<NextStep> OneSide::calc_path(Map * map,EnemyController & controller,sf::Vector2f  & curr_loc)
+std::vector<NextStep> OneSide::calc_path(Map * map,EnemyController & controller,sf::Vector2f  curr_loc)
 {
 	
 

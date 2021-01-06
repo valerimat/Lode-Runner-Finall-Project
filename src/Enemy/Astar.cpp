@@ -281,6 +281,7 @@ int Astar::found_player(std::vector<Tile> & tiles, sf::Vector2f location)
 //====================================================================================
 //makes path out of a closed list
 std::vector <NextStep> Astar::make_path(std::vector < Tile> closed, Tile to) {
+
 	int index = 0;
 	std::vector <NextStep> path;
 	std::vector <NextStep> path_finall;

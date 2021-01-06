@@ -18,6 +18,7 @@ void Map::set_objects()
 	std::shared_ptr<Consumables> coin_ptr;
 	Player* player;
 	Enemy * enemy;
+	int smrt = 0;
 
 	for (int i = 0; i < m_height; ++i)
 	{
@@ -39,10 +40,11 @@ void Map::set_objects()
 			case ENEMY:
 				enemy = new Enemy;
 				enemy->init_object(ENEMY, sf::Vector2f(i, j));
+				enemy->set_smartness(smrt);
 				enemy->set_texture(m_textures[ENEMY_TEXTURE]);
-				enemy->set_smartness();
 				d_obj = enemy;
 				m_dynamic.push_back(d_obj);
+				smrt++;
 				break;
 
 			case GROUND:
@@ -65,12 +67,8 @@ void Map::set_objects()
 				break;
 
 			case COIN:
-				coins = new Consumables;
-				coins->init_object(PLAYER, sf::Vector2f(i, j));
-				coins->set_sprite(m_textures[COIN_TEXTURE]);
-				//coin_ptr = std::make_shared<Consumables>(COIN, location, m_textures[COIN_TEXTURE]);
-				//m_static.push_back(st_ptr);
-				m_coins.push_back(coins);
+				st_ptr = std::make_shared<StaticObject>(LADDER, location, m_textures[COIN_TEXTURE]);
+				m_coins.push_back(st_ptr);
 				break;
 
 			case POLE:

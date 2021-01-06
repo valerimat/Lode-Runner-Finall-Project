@@ -46,11 +46,13 @@ void Enemy::move(float dt)
 }
 
 
-void Enemy::set_smartness()
+void Enemy::set_smartness(int i )
 {
-	int random = rand() % 3;
+	//srand(time(NULL));
 
-	m_iq = IQ(random);
+	//int random = rand() % 3;
+
+	m_iq = IQ(i);
 }
 
 

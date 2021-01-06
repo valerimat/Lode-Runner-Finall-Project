@@ -16,6 +16,7 @@ void DynamicObject::set_sprite()
 	sprite.setScale(sf::Vector2f(0.8, 0.8));
 	m_sprite = sprite;
 }
+
 sf::Vector2f DynamicObject::get_location()
 {
 	return m_sprite.getPosition();
@@ -53,7 +54,7 @@ void DynamicObject::update_location(NextStep step,float dt)
 		break;
 	case NextStep::RIGHT:
 		m_sprite.move(dt *sf::Vector2f(STEP, 0));
-		m_location.x +=  STEP;
+		m_location.x += STEP;
 		break;
 	case NextStep::UP:
 		m_sprite.move(dt *sf::Vector2f(0,-STEP));

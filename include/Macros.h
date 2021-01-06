@@ -24,7 +24,7 @@ enum class NextStep
 };
 
 const int OFFSET = 50 * 0.8;
-const int STEP = 1;
+const float STEP = 1;
 
 const char PLAYER = char('@');
 const char COIN = char('*');
@@ -36,8 +36,9 @@ const char NONE = char(' ');
 const char WALL = char('w');
 const int SIZE_OF_TILE = 40;
 
-#define HEIGHT 900
-#define WIDTH 1200
+#define HEIGHT 850
+#define WIDTH  800
+
 #define LADDER_TEXTURE 0
 #define GROUND_TEXTURE 1
 #define PLAYER_TEXTURE 2

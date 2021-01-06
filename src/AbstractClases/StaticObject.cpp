@@ -10,7 +10,7 @@ void StaticObject::set_sprite(std::shared_ptr<sf::Texture> texture)
 {
 	sf::Sprite sprite;
 	sprite.setTexture(*texture);
-	sprite.setPosition(get_location());
+	sprite.setPosition(m_location);
 	sprite.setScale(sf::Vector2f(0.8, 0.8));
 	m_sprite = sprite;
 }

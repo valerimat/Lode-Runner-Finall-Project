@@ -16,7 +16,6 @@ public:
 
 	char get_name();
 	sf::Vector2f get_location();
-	sf::Vector2f get_location_x_y();
 
 	void set_name(char & name);
 	void set_location(sf::Vector2f & location);

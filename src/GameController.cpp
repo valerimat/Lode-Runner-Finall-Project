@@ -31,17 +31,11 @@ void GameController::Run()
 		
 		keypress = sf::Keyboard::Key::End;
 
-		auto now = clock::now();
-
-		
-
 		main_window.clear(sf::Color::Black);
 	
 		game.Draw(main_window);
 
 		main_window.display();
-
-		
 
 		while (main_window.pollEvent(event))
 		{
@@ -60,20 +54,22 @@ void GameController::Run()
 		{
 			keypress = event.key.code;
 		}
-		
+			
+			auto now = clock::now();
 			auto dt = std::chrono::duration_cast<std::chrono::milliseconds>(now - last);
+
 			if (dt.count() > 5)
 			{
 				//need to setup function screen->on_update();
 				calculate_valid_steps(enemy_cont, player_cont);
 				//need to setup function for this one to or check type
-
 				float dt_long = dt.count();
 
 				move_g(enemy_cont, player_cont, dt_long, keypress);
 
 				last = now;
 			}
+			
 	}
 }
 

@@ -8,7 +8,7 @@ class Enemy : public DynamicObject
 public:
 	using DynamicObject::DynamicObject;
 	IQ get_iq();
-	virtual void set_smartness();
+	virtual void set_smartness(int i);
 	void set_path(std::vector<NextStep> steps);
 	std::vector<NextStep> get_avaliable_steps(Map * map, sf::Vector2f location);
 	void move(float dt);

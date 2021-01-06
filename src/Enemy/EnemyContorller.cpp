@@ -28,7 +28,6 @@ void EnemyController::move_enemies(float dt)
 		{
 		case IQ::Smart:
 			m_enemies[i]->move(dt);
-
 			break;
 
 		case IQ::Random:
@@ -71,12 +70,12 @@ void EnemyController::set_paths()
 
 		case IQ::Random:
 			if (m_enemies[i]->path_is_empty())
-				m_enemies[i]->set_path(Astar::calc_path(m_map, *this, m_enemies[i]->get_location()));
+				m_enemies[i]->set_path(RandomPath::calc_path(m_map, *this, m_enemies[i]->get_location()));
 			break;
 
 		case IQ::OneSide:
 			if (m_enemies[i]->path_is_empty())
-				m_enemies[i]->set_path(RandomPath::calc_path(m_map, *this, m_enemies[i]->get_location()));
+				m_enemies[i]->set_path(OneSide::calc_path(m_map, *this, m_enemies[i]->get_location()));
 			break;
 
 		}
