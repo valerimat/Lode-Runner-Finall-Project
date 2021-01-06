@@ -11,7 +11,7 @@ public:
 	virtual void set_smartness();
 	void set_path(std::vector<NextStep> steps);
 	std::vector<NextStep> get_avaliable_steps(Map * map, sf::Vector2f location);
-	void move();
+	void move(float dt);
 	bool path_is_empty();
 	
 	bool there_is_no_wall_above(sf::Vector2f topLeft, Map& map);

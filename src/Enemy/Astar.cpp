@@ -137,10 +137,10 @@ void Astar::get_around(Tile& curr_tile,
 {
 	sf::Vector2f curr_location = curr_tile.m_location;
 
-	sf::Vector2f above(curr_location.x, curr_location.y - STEP),
-		below(curr_location.x, curr_location.y + STEP),
-		right_l(curr_location.x + STEP, curr_location.y),
-		left_l(curr_location.x - STEP, curr_location.y);
+	sf::Vector2f above(curr_location.x, curr_location.y - 10),
+		below(curr_location.x, curr_location.y + 10),
+		right_l(curr_location.x + 10, curr_location.y),
+		left_l(curr_location.x - 10, curr_location.y);
 
 	std::vector<NextStep> avaliavle_steps = controller.get_avaliable_steps(curr_location);
 	
@@ -283,6 +283,7 @@ int Astar::found_player(std::vector<Tile> & tiles, sf::Vector2f location)
 std::vector <NextStep> Astar::make_path(std::vector < Tile> closed, Tile to) {
 	int index = 0;
 	std::vector <NextStep> path;
+	std::vector <NextStep> path_finall;
 	Tile curr_tile = *(closed.end() - 1);
 	int index_of_father = curr_tile.m_father;
 
@@ -298,8 +299,12 @@ std::vector <NextStep> Astar::make_path(std::vector < Tile> closed, Tile to) {
 		path.insert(path.begin(), closed[1].m_move);
 
 	//path.insert(path.begin(), closed[index_of_father].m_move);
-
-	return path;
+	for (int i = 0; i < path.size(); ++i)
+	{
+		for (int j = 0; j < 10; ++j)
+			path_finall.push_back(path[i]);
+	}
+	return path_finall;
 }
 
 

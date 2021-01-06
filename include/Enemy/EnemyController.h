@@ -12,9 +12,10 @@ class EnemyController :public MovementController
 {
 public:
 	using MovementController::MovementController;
-	void move_enemies(Map * map);
+	void move_enemies(float dt);
 	bool reached_player(Map* map);
-
+	void init_controller();
+	void set_paths();
 private:
 	int m_num_of_enemies;
 	int m_loop_counter;

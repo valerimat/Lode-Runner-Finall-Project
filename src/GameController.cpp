@@ -20,60 +20,72 @@ void GameController::Run()
 
 	Screens screen(game);
 	EnemyController enemy_cont(&curr_map);
-	PlayerController player_controller(&curr_map);
-	player_controller.init_player();
-
+	PlayerController player_cont(&curr_map);
+	player_cont.init_player();
+	enemy_cont.init_controller();
+	sf::Keyboard::Key keypress;
 	auto last = clock::now();
 
 	while (main_window.isOpen())
 	{
+		
+		keypress = sf::Keyboard::Key::End;
+
 		auto now = clock::now();
 
-		auto dt = std::chrono::duration_cast<std::chrono::milliseconds>(now - last);
-		player_controller.move_player(sf::Keyboard::End, curr_map);
+		
 
 		main_window.clear(sf::Color::Black);
-		if (dt.count() >= (long long)30)
+	
+		screen.Draw(main_window);
+
+		main_window.display();
+
+		
+
+		while (main_window.pollEvent(event))
 		{
-			
-			//need switch case
-			enemy_cont.move_enemies(&curr_map);
-
-
-			screen.Draw(main_window);
-
-			main_window.display();
-
-			while (main_window.pollEvent(event))
+			switch (event.type)
 			{
-				switch (event.type)
-				{
-				case(sf::Event::Closed):
-					main_window.close();
-					break;
-				}
+			case(sf::Event::Closed):
+				main_window.close();
+				break;
 			}
-
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) ||
-				sf::Keyboard::isKeyPressed(sf::Keyboard::Down) ||
-				sf::Keyboard::isKeyPressed(sf::Keyboard::Left) ||
-				sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-			{
-				player_controller.move_player(event.key.code, curr_map);
-			}
-			last = now;
 		}
+
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) ||
+			sf::Keyboard::isKeyPressed(sf::Keyboard::Down) ||
+			sf::Keyboard::isKeyPressed(sf::Keyboard::Left) ||
+			sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+		{
+			keypress = event.key.code;
+		}
+		
+			auto dt = std::chrono::duration_cast<std::chrono::milliseconds>(now - last);
+			if (dt.count() > 5)
+			{
+				//need to setup function screen->on_update();
+				calculate_valid_steps(enemy_cont, player_cont);
+				//need to setup function for this one to or check type
+
+				float dt_long = dt.count();
+
+				move_g(enemy_cont, player_cont, dt_long, keypress);
+
+				last = now;
+			}
 	}
 }
 
-	/*
-	case(sf::Event::KeyPressed):
-				if (event.key.code == sf::Keyboard::Up ||
-					event.key.code == sf::Keyboard::Down ||
-					event.key.code == sf::Keyboard::Left ||
-					event.key.code == sf::Keyboard::Right)
-				{
-					player_controller.move_player(event.key.code, map);
-				}
-			}
-			*/
+
+void GameController::calculate_valid_steps(EnemyController & enemy_cont, PlayerController & player_cont)
+{
+	enemy_cont.set_paths();
+	player_cont.set_paths();
+}
+
+void GameController::move_g(EnemyController & enemy_cont, PlayerController & player_cont, float dt, sf::Keyboard::Key keypress)
+{
+	enemy_cont.move_enemies(dt);
+	player_cont.move_player(keypress, dt);
+}

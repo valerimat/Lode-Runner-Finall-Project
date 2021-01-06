@@ -22,7 +22,7 @@ public:
 
 	sf::Vector2f get_location();
 	sf::Vector2f get_next_location(sf::Keyboard::Key key);
-	void update_location(NextStep step);
+	void update_location(NextStep step,float dt);
 	float get_width();
 	float get_height();
 	sf::Sprite get_sprite();
