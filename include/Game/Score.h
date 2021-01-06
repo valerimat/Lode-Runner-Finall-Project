@@ -3,5 +3,6 @@
 
 class Score
 {
-
+public:
+	Score();
 };

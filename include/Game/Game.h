@@ -17,5 +17,5 @@ private:
 	Score m_score;
 	MapData m_maps;
 	Map m_curr_map;
-	Hud m_hud;
+	Hud  m_hud;
 };

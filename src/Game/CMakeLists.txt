@@ -2,6 +2,7 @@
 				                     "Map.cpp"
                                      "MapData.cpp"
                                      "Score.cpp"
+                                     "Hud.cpp"
                                   )
                                    
                                    
