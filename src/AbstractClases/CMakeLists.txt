@@ -4,5 +4,6 @@
                                      "StaticObject.cpp"
                                      "DynamicObject.cpp"
                                      "MovementController.cpp"
-                
+                                     "Consumables.cpp"
+
                                   )

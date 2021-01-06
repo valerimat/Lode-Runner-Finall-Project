@@ -68,6 +68,13 @@ void PlayerController::move_player(sf::Keyboard::Key key, float dt)
 		if (avaliable_steps[i] == next_wanted)
 			m_player->move(key,dt);
 	}
+
+	if (m_map->is_on_coin(m_player->get_location()) != -1)
+	{
+		m_map->delete_coin(m_map->is_on_coin(m_player->get_location()));
+		std::cout << "deleted\n";
+		std::cout << m_map->get_coin_size();
+	}
 	
 	//m_player->move(key);
 
