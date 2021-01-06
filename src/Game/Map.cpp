@@ -11,9 +11,11 @@ Map::Map(std::vector<std::string>* map,int height, int width):
 
 void Map::set_objects()
 {
-	DynamicObject * d_obj; // later to be changed Player player for proper use
+	DynamicObject * d_obj;
 	StaticObject * static_object;
+	Consumables * coins;
 	std::shared_ptr<StaticObject> st_ptr;
+	std::shared_ptr<Consumables> coin_ptr;
 	Player* player;
 	Enemy * enemy;
 
@@ -63,9 +65,12 @@ void Map::set_objects()
 				break;
 
 			case COIN:
-				st_ptr = std::make_shared<StaticObject>(COIN, location, m_textures[COIN_TEXTURE]);
-				m_static.push_back(st_ptr);
-				m_coins.push_back(st_ptr);
+				coins = new Consumables;
+				coins->init_object(PLAYER, sf::Vector2f(i, j));
+				coins->set_sprite(m_textures[COIN_TEXTURE]);
+				//coin_ptr = std::make_shared<Consumables>(COIN, location, m_textures[COIN_TEXTURE]);
+				//m_static.push_back(st_ptr);
+				m_coins.push_back(coins);
 				break;
 
 			case POLE:
@@ -93,9 +98,15 @@ void Map::Draw(sf::RenderWindow &main_window)
 
 	// All the other objects
 	for (int i = 0; i < m_static.size(); ++i)
-	{
+	{	
 		m_static[i]->Draw(main_window);
 	}
+
+	for (int i = 0; i < m_coins.size(); ++i)
+	{
+		m_coins[i]->Draw(main_window);
+	}
+
 	for (int i = 0; i < m_dynamic.size(); ++i)
 	{
 		m_dynamic[i]->Draw(main_window);
@@ -208,6 +219,23 @@ bool Map::is_there_ground(sf::Vector2f location)
 	return false;
 }
 
+int Map::is_on_coin(sf::Vector2f location)
+{
+	location.y += 1;
+
+	for (int i = 0; i < m_coins.size(); ++i)
+	{
+		if (m_coins[i]->in_bounds(location))
+			return i;
+	}
+	return -1;
+}
+
+void Map::delete_coin(int i)
+{
+	m_coins.erase(m_coins.begin() + i);
+}
+
 
 
 bool Map::we_are_hanging_on_rope(sf::Vector2f location_l, sf::Vector2f location_r)
@@ -274,7 +302,10 @@ bool Map::out_of_boundrie(sf::Vector2f location) {
 	return false;
 }
 
-
+int Map::get_coin_size()
+{
+	return m_coins.size();
+}
 
 
 
