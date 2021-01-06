@@ -11,6 +11,7 @@ void DynamicObject::set_sprite()
 {
 	sf::Sprite sprite;
 	sprite.setTexture(*m_texture);
+	m_location.y += 50;
 	sprite.setPosition(m_location);
 	sprite.setScale(sf::Vector2f(0.8, 0.8));
 	m_sprite = sprite;

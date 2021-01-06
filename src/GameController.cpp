@@ -16,11 +16,11 @@ void GameController::Run()
 	game.Load_level();
 
 	//will hold curr map
-	Map curr_map = game.get_curr_map();
+	Map  * curr_map = game.get_curr_map();
 
 	Screens screen(game);
-	EnemyController enemy_cont(&curr_map);
-	PlayerController player_cont(&curr_map);
+	EnemyController enemy_cont(curr_map);
+	PlayerController player_cont(curr_map);
 	player_cont.init_player();
 	enemy_cont.init_controller();
 	sf::Keyboard::Key keypress;

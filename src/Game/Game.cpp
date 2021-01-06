@@ -23,7 +23,7 @@ void Game::Draw(sf::RenderWindow &window)
 	//m_hud.Draw();
 }
 
-Map Game::get_curr_map()
+Map * Game::get_curr_map()
 {
-	return m_curr_map;
+	return & m_curr_map;
 }

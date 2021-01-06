@@ -10,7 +10,7 @@ public:
 	Game(MapData &map);
 	void Draw(sf::RenderWindow &window);
 	void Load_level();
-	Map get_curr_map();
+	Map * get_curr_map();
 	void InitHud();
 private:
 	int level = 0;
