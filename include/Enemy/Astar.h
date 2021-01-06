@@ -10,33 +10,21 @@ class Enemy;
 class EnemyController;
 #include <math.h>
 
-//==============================================================================
-//   ______            ______   ________  ______   _______  
-//  /      \          /      \ /        |/      \ /       \ 
-// /$$$$$$  |        /$$$$$$  |$$$$$$$$//$$$$$$  |$$$$$$$  |
-// $$ |__$$ | ______ $$ \__$$/    $$ |  $$ |__$$ |$$ |__$$ |
-// $$    $$ |/      |$$      \    $$ |  $$    $$ |$$    $$< 
-// $$$$$$$$ |$$$$$$/  $$$$$$  |   $$ |  $$$$$$$$ |$$$$$$$  |
-// $$ |  $$ |        /  \__$$ |   $$ |  $$ |  $$ |$$ |  $$ |
-// $$ |  $$ |        $$    $$/    $$ |  $$ |  $$ |$$ |  $$ |
-// $$/   $$/          $$$$$$/     $$/   $$/   $$/ $$/   $$/
-//==============================================================================
-
 /*
-Algorithm for calcluating shortest path for monsters
+Algorithm for calcluating shortest path for enemies
 */
 namespace Astar
 {
-	// send locations and your board
-	std::vector<NextStep> calc_path(Map* map, EnemyController& controller, sf::Vector2f && location);
+	//main function to call
+	std::vector<NextStep> calc_path(Map* map,
+								    EnemyController& controller,
+		                            sf::Vector2f && location);
 
-	//helper functions - for full documentation visit cpp
 	void get_around(Tile& curr_tile,
-		std::vector<Tile>& arround,
-		const std::vector<Tile> closed_list,
-		int index_of_father,
-		EnemyController& cont
-		);
+					std::vector<Tile>& arround,
+					const std::vector<Tile> closed_list,
+		            int index_of_father,
+		            EnemyController& cont);
 
 	int found_player(std::vector<Tile>& tiles, sf::Vector2f location);
 
@@ -49,8 +37,5 @@ namespace Astar
 	int find_the_best_score(std::vector<Tile>);
 
 	std::vector <NextStep> make_path(std::vector<Tile>, Tile);
-
-
-
 }
 
