@@ -5,7 +5,7 @@
 
 void EnemyController::init_controller()
 {
-	m_enemies = m_map->get_enemies();
+	m_enemies = m_map->GetEnemies();
 }
 //-----------------------------------------------------------------------------
 
@@ -38,7 +38,7 @@ void EnemyController::move_enemies(float dt)
 
 bool EnemyController::reached_player(Map * map)
 {
-	sf::Vector2f player_loc = map->get_player()->get_location();
+	sf::Vector2f player_loc = map->GetPlayer()->get_location();
 
 	for (int i = 0; i < m_enemies.size(); i++)
 	{

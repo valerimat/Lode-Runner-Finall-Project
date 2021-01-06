@@ -114,13 +114,13 @@ bool OneSide::is_there_still_floor(NextStep next,
 
 	if (next == NextStep::LEFT)
 	{
-		if ((*map).what_is_there(sf::Vector2f(loc.x, loc.y + height +1)) == GROUND)
+		if ((*map).WhatIsThere(sf::Vector2f(loc.x, loc.y + height +1)) == GROUND)
 			return true;
 		return false;
 	}
 	else
 	{
-		if ((*map).what_is_there(sf::Vector2f(loc.x + height, loc.y + height + 1)) == GROUND)
+		if ((*map).WhatIsThere(sf::Vector2f(loc.x + height, loc.y + height + 1)) == GROUND)
 			return true;
 
 		return false;

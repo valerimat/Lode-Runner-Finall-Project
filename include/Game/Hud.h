@@ -9,13 +9,13 @@ public:
 	Hud();
 	Hud(Score* score, Player* player, int num_of_level);
 	void Draw(sf::RenderWindow& window);
-	void set_score();
-	void set_live();
-	void load_textures();
-	void Draw_score(sf::RenderWindow& window);
-	void Draw_lives(sf::RenderWindow& window);
-	void Draw_level(sf::RenderWindow& window);
-	void Draw_time(sf::RenderWindow& window);
+	void SetScore();
+	void SetLives();
+	void LoadTextures();
+	void DrawScore(sf::RenderWindow& window);
+	void DrawLives(sf::RenderWindow& window);
+	void DrawLevel(sf::RenderWindow& window);
+	void DrawTime(sf::RenderWindow& window);
 private:
 	std::vector<std::shared_ptr <sf::Texture>> m_textures;
 	int m_number_of_level;

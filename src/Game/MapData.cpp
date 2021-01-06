@@ -1,13 +1,13 @@
 #include "MapData.h"
 
-
-
+// c-tor
 MapData::MapData()
 {
 	LoadMaps();
 }
+//-----------------------------------------------------------------------------
 
-
+// loads maps
 void MapData::LoadMaps()
 {
 	int	curr_level = 0;
@@ -76,10 +76,10 @@ void MapData::LoadMaps()
 	m_number_of_levels = m_maps.size();
 
 }
+//-----------------------------------------------------------------------------
 
-
-
-std::vector<std::string> * MapData::get_map(int number_of_level)
+// gets the map
+std::vector<std::string> * MapData::GetMap(int number_of_level)
 {
 	if (number_of_level < m_number_of_levels)
 		return  &m_maps[number_of_level];
@@ -87,8 +87,10 @@ std::vector<std::string> * MapData::get_map(int number_of_level)
 	else
 		return NULL;
 }
+//-----------------------------------------------------------------------------
 
-std::vector<std::string> * MapData::get_map_clean(int number_of_level)
+// gets a clean map
+std::vector<std::string> * MapData::GetCleanMap(int number_of_level)
 {
 	if (number_of_level < m_number_of_levels)
 		return  &m_maps_clean[number_of_level];
@@ -96,14 +98,18 @@ std::vector<std::string> * MapData::get_map_clean(int number_of_level)
 	else
 		return NULL;
 }
+//-----------------------------------------------------------------------------
 
-
-int MapData::get_curr_height(int lvl)
+// gets the current height
+int MapData::GetCurrHeight(int lvl)
 {
 	return m_maps[lvl].size();
-};
+}
+//-----------------------------------------------------------------------------
 
-int MapData::get_curr_width(int lvl)
+// gets the current width
+int MapData::GetCurrWidth(int lvl)
 {
 	return m_maps[lvl][0].size();
-};
+}
+//-----------------------------------------------------------------------------
