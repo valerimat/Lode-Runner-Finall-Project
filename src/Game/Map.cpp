@@ -81,6 +81,7 @@ void Map::set_objects()
 	}
 }
 
+
 void Map::Draw(sf::RenderWindow &main_window)
 {
 	// Background
