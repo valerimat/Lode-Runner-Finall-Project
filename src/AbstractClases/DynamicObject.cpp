@@ -17,7 +17,7 @@ void DynamicObject::set_sprite()
 }
 sf::Vector2f DynamicObject::get_location()
 {
-	return m_location;
+	return m_sprite.getPosition();
 }
 
 void DynamicObject::init_object(char  m_name, sf::Vector2f  m_location)
@@ -42,25 +42,25 @@ bool DynamicObject::in_bounds(sf::Vector2f & location)
 
 
 
-void DynamicObject::update_location(NextStep step)
+void DynamicObject::update_location(NextStep step,float dt)
 {
 	switch (step)
 	{
 	case NextStep::LEFT:
-		m_sprite.move(sf::Vector2f(-STEP, 0));
+		m_sprite.move(dt *sf::Vector2f(-STEP, 0));
 		m_location.x -= STEP;
 		break;
 	case NextStep::RIGHT:
-		m_sprite.move(sf::Vector2f(STEP, 0));
-		m_location.x += STEP;
+		m_sprite.move(dt *sf::Vector2f(STEP, 0));
+		m_location.x +=  STEP;
 		break;
 	case NextStep::UP:
-		m_sprite.move(sf::Vector2f(0,-STEP));
+		m_sprite.move(dt *sf::Vector2f(0,-STEP));
 		m_location.y -= STEP;
 		break;
 	case NextStep::DOWN:
-		m_sprite.move(sf::Vector2f(0, STEP));
-		m_location.y += STEP;
+		m_sprite.move(dt * sf::Vector2f(0, STEP));
+		m_location.y +=  STEP;
 		break;
 	default:
 		break;

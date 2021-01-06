@@ -67,7 +67,7 @@ bool MovementController::there_is_no_wall_above(sf::Vector2f topLeft)
 bool  MovementController::able_to_move_side(NextStep side, sf::Vector2f topLeft)
 {
 	sf::Vector2f offset;
-	sf::Vector2f bottom_left(topLeft.x, topLeft.y + 39);
+	sf::Vector2f bottom_left(topLeft.x, topLeft.y + 37);
 
 	if (topLeft.x - 5 < 0)
 		return false;
@@ -95,7 +95,6 @@ bool  MovementController::able_to_move_side(NextStep side, sf::Vector2f topLeft)
 	if (m_map->is_there_ground(topLeft + sf::Vector2f(0, 41))
 		|| m_map->is_there_ground(topLeft + sf::Vector2f(40, 41)))
 		return true;
-
 
 
 	return false;

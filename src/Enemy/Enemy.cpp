@@ -13,7 +13,7 @@ void Enemy::set_path(std::vector<NextStep> steps)
 	m_path = steps;
 }
 
-void Enemy::move()
+void Enemy::move(float dt)
 {
 	NextStep step = m_path[0];
 
@@ -25,16 +25,16 @@ void Enemy::move()
 	switch (step)
 	{
 	case NextStep::LEFT:
-		update_location(NextStep::LEFT);
+		update_location(NextStep::LEFT,dt);
 		break;
 	case NextStep::RIGHT:
-		update_location(NextStep::RIGHT);
+		update_location(NextStep::RIGHT,dt);
 		break;
 	case NextStep::UP:
-		update_location(NextStep::UP);
+		update_location(NextStep::UP,dt);
 		break;
 	case NextStep::DOWN:
-		update_location(NextStep::DOWN);
+		update_location(NextStep::DOWN,dt);
 		break;
 	case NextStep::NONE:
 		break;

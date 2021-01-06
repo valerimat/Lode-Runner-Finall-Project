@@ -15,7 +15,7 @@ void PlayerController::init_player()
 }
 
 
-void PlayerController::move_player(sf::Keyboard::Key key, Map& map)
+void PlayerController::move_player(sf::Keyboard::Key key, float dt)
 {
 	/*
 	std::vector<char> collision = m_player->is_on_something(map, key);
@@ -49,21 +49,24 @@ void PlayerController::move_player(sf::Keyboard::Key key, Map& map)
 		break;
   
 	}
-	std::vector<NextStep> avaliable_steps = get_avaliable_steps(m_player->get_location());
+	
+	std::vector <NextStep> avaliable_steps = m_player->get_valid();
 	
 	if (avaliable_steps.size() == 1) 
 	{
-		avaliable_steps[0] = NextStep::DOWN;
-		sf::Keyboard::Key key = sf::Keyboard::Down;
-		m_player->move(key);
-		return;
+		if (avaliable_steps[0] == NextStep::DOWN)
+		{
+			sf::Keyboard::Key key = sf::Keyboard::Down;
+			m_player->move(key, dt);
+			return;
+		}
 	}
 		
 
 	for (int i = 0; i < avaliable_steps.size(); ++i)
 	{
 		if (avaliable_steps[i] == next_wanted)
-			m_player->move(key);
+			m_player->move(key,dt);
 	}
 	
 	//m_player->move(key);
@@ -82,6 +85,7 @@ void PlayerController::move_player(sf::Keyboard::Key key, Map& map)
 	//	std::cout << "COIN\n";
 }
 
+/*
 void PlayerController::physics_player(sf::Keyboard::Key key, Map& map, std::vector<char>& collision)
 {
 	bool ground = false, wall = false, ladder = false,
@@ -137,4 +141,10 @@ void PlayerController::physics_player(sf::Keyboard::Key key, Map& map, std::vect
 		std::cout << "wall\n";
 		return;
 	}
+}
+*/
+
+void PlayerController::set_paths()
+{
+	m_player->set_valid(get_avaliable_steps(m_player->get_location()));
 }
