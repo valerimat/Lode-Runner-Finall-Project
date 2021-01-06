@@ -1,26 +1,17 @@
 #include "EnemyController.h"
-#include <iostream>
 #include "OneSide.h"
-
-
+#include "Map.h"
+#include "Enemy.h"
 
 void EnemyController::init_controller()
 {
 	m_enemies = m_map->GetEnemies();
 }
-
+//-----------------------------------------------------------------------------
 
 void EnemyController::move_enemies(float dt)
 {
 	int i = 0;
-
-	/*
-	if (reached_player(map))
-	{
-		std::cout << "got to player" << std::endl;
-	}
-	*/
-	
 
 	while (i < m_enemies.size())
 	{
@@ -43,6 +34,7 @@ void EnemyController::move_enemies(float dt)
 		++i;
 	}
 }
+//-----------------------------------------------------------------------------
 
 bool EnemyController::reached_player(Map * map)
 {
@@ -55,6 +47,7 @@ bool EnemyController::reached_player(Map * map)
 	}
 	return false;
 }
+//-----------------------------------------------------------------------------
 
 void EnemyController::set_paths()
 {
@@ -82,3 +75,4 @@ void EnemyController::set_paths()
 		++i;
 	}
 }
+//-----------------------------------------------------------------------------

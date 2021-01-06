@@ -12,6 +12,7 @@ public:
 	void LoadLevel();
 	Map * GetCurrMap();
 	void InitHud();
+
 private:
 	int level = 0;
 	Score m_score;
