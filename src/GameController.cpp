@@ -11,10 +11,10 @@ void GameController::Run()
 	Game game(map_data);
 
 	//loads level
-	game.Load_level();
+	game.LoadLevel();
 
 	//will hold curr map
-	Map  * curr_map = game.get_curr_map();
+	Map  * curr_map = game.GetCurrMap();
 
 	Screens screen(game);
 	EnemyController enemy_cont(curr_map);
