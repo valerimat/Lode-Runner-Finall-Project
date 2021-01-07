@@ -14,13 +14,11 @@ Map::Map(std::vector<std::string>* map,int height, int width):
 // sets all the objects
 void Map::SetObjects()
 {
-	DynamicObject * d_obj;
-	StaticObject * static_object;
-	Consumables * coins;
+
 	std::shared_ptr<StaticObject> st_ptr;
+	std::shared_ptr<DynamicObject> dn_ptr;
 	std::shared_ptr<Consumables> coin_ptr;
-	Player* player;
-	Enemy * enemy;
+	
 	int smrt = 0;
 
 	for (int i = 0; i < m_height; ++i)
@@ -32,21 +30,13 @@ void Map::SetObjects()
 			switch(GetChar(i,j))
 			{
 			case PLAYER: 
-				player = new Player;
-				player->init_object(PLAYER, sf::Vector2f(i, j));
-				player->set_texture(m_textures[PLAYER_TEXTURE]);
-				d_obj = player;
-				m_dynamic.push_back(d_obj);
-
+				dn_ptr = std::make_shared<Player>(PLAYER, location, m_textures[PLAYER_TEXTURE]);
+				m_dynamic.push_back(dn_ptr);
 				break;
 	
 			case ENEMY:
-				enemy = new Enemy;
-				enemy->init_object(ENEMY, sf::Vector2f(i, j));
-				enemy->set_smartness(smrt);
-				enemy->set_texture(m_textures[ENEMY_TEXTURE]);
-				d_obj = enemy;
-				m_dynamic.push_back(d_obj);
+				dn_ptr = std::make_shared<Enemy>(ENEMY, location, m_textures[ENEMY_TEXTURE],smrt);
+				m_dynamic.push_back(dn_ptr);
 				smrt++;
 				break;
 
@@ -171,7 +161,7 @@ Player* Map::GetPlayer() // later change to Player as a return value
 	for (int i = 0; i < m_dynamic.size(); i++)
 	{
 		if (m_dynamic[i]->get_name() == PLAYER)
-			return dynamic_cast<Player*>(m_dynamic[i]);
+			return dynamic_cast<Player*>(&(*m_dynamic[i]));
 	}
 	return NULL;
 }
@@ -189,7 +179,7 @@ std::vector<Enemy*> Map::GetEnemies()
 	{
 		if (m_dynamic[index]->get_name() == ENEMY)
 		{
-			temp.push_back(dynamic_cast<Enemy*>(m_dynamic[index]));
+			temp.push_back(dynamic_cast<Enemy*>(&(*m_dynamic[index])));
 		}
 		++index;
 	}

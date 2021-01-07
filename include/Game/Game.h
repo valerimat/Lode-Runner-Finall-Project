@@ -7,6 +7,7 @@
 class Game
 {
 public:
+
 	Game(MapData &map);
 	void Draw(sf::RenderWindow &window);
 	void LoadLevel();
