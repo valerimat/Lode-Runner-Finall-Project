@@ -7,12 +7,20 @@
 class Game
 {
 public:
+	// c-tors
 	Game(MapData &map);
-	void Draw(sf::RenderWindow &window);
+
+	// getters
+	Map* GetCurrMap();
+
+	// Game functions
 	void LoadLevel();
-	Map * GetCurrMap();
 	void InitHud();
+	void Draw(sf::RenderWindow& window);
+
 private:
+
+	//members
 	int level = 0;
 	Score m_score;
 	MapData m_maps;
