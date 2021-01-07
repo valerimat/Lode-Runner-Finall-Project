@@ -18,6 +18,7 @@ public:
 	void InitHud();
 	void Draw(sf::RenderWindow& window);
 
+
 private:
 
 	//members

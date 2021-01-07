@@ -63,6 +63,7 @@ std::vector<NextStep> RandomPath::calc_path(Map* map, EnemyController& contorlle
 	}
 	return steps;
 }
+//-----------------------------------------------------------------------------
 
 void RandomPath::update_curr_location(sf::Vector2f & curr_location_with_steps, NextStep next)
 {
@@ -88,6 +89,7 @@ void RandomPath::update_curr_location(sf::Vector2f & curr_location_with_steps, N
 
 	curr_location_with_steps += offset;
 }
+//-----------------------------------------------------------------------------
 
 bool RandomPath::is_dir_avaliable(NextStep next, std::vector<NextStep> avaliable)
 {
@@ -99,3 +101,4 @@ bool RandomPath::is_dir_avaliable(NextStep next, std::vector<NextStep> avaliable
 
 	return false;
 }
+//-----------------------------------------------------------------------------
