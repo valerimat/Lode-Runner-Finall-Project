@@ -1,5 +1,12 @@
 #include "Enemy.h"
 
+//Ctors
+Enemy::Enemy(char name, sf::Vector2f locaiton, std::shared_ptr<sf::Texture> texture, int smart) :
+	DynamicObject(name, locaiton, texture)
+{
+	set_smartness(smart);
+}
+
 //Getter:
 IQ Enemy::get_iq()
 {

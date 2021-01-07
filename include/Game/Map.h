@@ -59,6 +59,5 @@ private:
 	std::vector<std::shared_ptr <StaticObject>> m_ladders;
 	std::vector<std::shared_ptr <StaticObject>> m_poles;
 	std::vector<std::shared_ptr <StaticObject>> m_coins;
-
-	std::vector<DynamicObject *> m_dynamic;
+	std::vector<std::shared_ptr <DynamicObject>> m_dynamic;
 };

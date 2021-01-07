@@ -14,10 +14,14 @@ public:
 	//C-tors:
 	using MovementController::MovementController;
 
+	//Setters:
+	void set_paths();
+
+	//Helpers:
 	void move_enemies(float dt);
 	bool reached_player(Map* map);
 	void init_controller();
-	void set_paths();
 private:
+
 	std::vector<Enemy *> m_enemies;
 };

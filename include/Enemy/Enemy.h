@@ -7,7 +7,7 @@ class Enemy : public DynamicObject
 public:
 	//C-tors:
 	using DynamicObject::DynamicObject;
-
+	Enemy(char name, sf::Vector2f locaiton, std::shared_ptr<sf::Texture> texture, int smart);
 	//Setters:
 	virtual void set_smartness(int i);
 	void set_path(std::vector<NextStep> steps);
