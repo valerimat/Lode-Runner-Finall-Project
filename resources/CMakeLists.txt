@@ -27,3 +27,6 @@ configure_file ("./hud pngs/score.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("./hud pngs/hert.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("./hud pngs/time.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("./hud pngs/lvl.png" ${CMAKE_BINARY_DIR} COPYONLY)
+
+
+configure_file ("./buttons/play_button.png" ${CMAKE_BINARY_DIR} COPYONLY)

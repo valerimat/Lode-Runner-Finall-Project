@@ -4,7 +4,8 @@
 //Ctors
 MovementController::MovementController(Map* map) :
 	m_map(map)
-{};
+{
+};
 //-----------------------------------------------------------------------------
 
 std::vector<NextStep> MovementController::get_avaliable_steps(sf::Vector2f location)

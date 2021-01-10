@@ -7,21 +7,13 @@ void GameController::Run()
 	sf::Event event;
 	sf::RenderWindow main_window(sf::VideoMode(WIDTH, HEIGHT), "Lode Runner");
 
-	MapData map_data;
-	Game game(map_data);
-
-	//loads level
-	game.LoadLevel();
-
-	//will hold curr map
-	Map  * curr_map = game.GetCurrMap();
-
-	Screens screen(game);
-	EnemyController enemy_cont(curr_map);
-	PlayerController player_cont(curr_map);
-	player_cont.InitPlayer();
-	enemy_cont.init_controller();
 	sf::Keyboard::Key keypress;
+
+	
+	Screens* screen = new Game;
+
+	//Screens* screen = new MainMenu;
+
 	auto last = clock::now();
 
 	while (main_window.isOpen())
@@ -30,8 +22,8 @@ void GameController::Run()
 		keypress = sf::Keyboard::Key::End;
 
 		main_window.clear(sf::Color::Black);
-	
-		game.Draw(main_window);
+
+		screen->Draw(main_window);
 
 		main_window.display();
 
@@ -59,12 +51,12 @@ void GameController::Run()
 			if (dt.count() > 5)
 			{
 				//need to setup function screen->on_update();
-				calculate_valid_steps(enemy_cont, player_cont);
+				screen->on_update();
 				//need to setup function for this one to or check type
 				float dt_long = dt.count();
 
-				move_g(enemy_cont, player_cont, dt_long, keypress);
-
+				screen->handle_event(keypress, dt_long);
+				
 				last = now;
 			}
 			
@@ -72,16 +64,3 @@ void GameController::Run()
 }
 //-----------------------------------------------------------------------------
 
-void GameController::calculate_valid_steps(EnemyController & enemy_cont, PlayerController & player_cont)
-{
-	enemy_cont.set_paths();
-	player_cont.SetPaths();
-}
-//-----------------------------------------------------------------------------
-
-void GameController::move_g(EnemyController & enemy_cont, PlayerController & player_cont, float dt, sf::Keyboard::Key keypress)
-{
-	enemy_cont.move_enemies(dt);
-	player_cont.MovePlayer(keypress, dt);
-}
-//-----------------------------------------------------------------------------
