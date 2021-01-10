@@ -9,7 +9,7 @@ PlayerController::PlayerController(Map& map)
 }
 */
 
-void PlayerController::InitPlayer()
+void PlayerController::init_controller()
 {
 	m_player = m_map->GetPlayer();
 }
@@ -63,7 +63,7 @@ void PlayerController::MovePlayer(sf::Keyboard::Key key, float dt)
 }
 //-----------------------------------------------------------------------------
 
-void PlayerController::SetPaths()
+void PlayerController::set_paths()
 {
 	m_player->SetValid(get_avaliable_steps(m_player->get_location()));
 }

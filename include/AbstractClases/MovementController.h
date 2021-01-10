@@ -12,6 +12,7 @@ public:
 	MovementController(Map* map);
 
 	std::vector<NextStep> get_avaliable_steps(sf::Vector2f location);
+
 	
 protected:
 	//used to check next steps

@@ -1,24 +1,30 @@
 #pragma once
 #include "Map.h"
 #include "MapData.h"
+#include "EnemyController.h"
+#include "PlayerController.h"
 #include "Hud.h"
 #include <SFML/Graphics.hpp>
 #include "Score.h"
-class Game
+#include "Screens.h"
+
+class Game : public Screens
 {
 public:
 
 	// c-tors
-	Game(MapData &map);
+	Game();
+	void init_controllers();
+	
 
 	// getters
-	Map* GetCurrMap();
-
+	Map* get_curr_map();
+	
 	// Game functions
-	void LoadLevel();
-	void InitHud();
-	void Draw(sf::RenderWindow& window);
-
+	void Load() override;
+	void Draw(sf::RenderWindow& window) override;
+	void on_update() override;
+	void handle_event(sf::Keyboard::Key, float dt)override;
 
 private:
 
@@ -28,4 +34,6 @@ private:
 	MapData m_maps;
 	Map m_curr_map;
 	Hud  m_hud;
+	std::shared_ptr <EnemyController> m_enemy_cont;
+	std::shared_ptr <PlayerController> m_player_cont;
 };

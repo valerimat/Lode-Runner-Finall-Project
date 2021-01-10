@@ -7,10 +7,9 @@
 #include "PlayerController.h"
 #include "EnemyController.h"
 #include <chrono>
+#include "MainMenu.h"
 
 namespace GameController
 {
 	void Run();
-	void calculate_valid_steps(EnemyController & enemy_cont, PlayerController & player_cont);
-	void move_g(EnemyController & enemy_cont, PlayerController & player_cont, float dt, sf::Keyboard::Key keypress);
 };
