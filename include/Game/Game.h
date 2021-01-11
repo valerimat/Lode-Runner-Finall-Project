@@ -24,8 +24,10 @@ public:
 	void Load() override;
 	void Draw(sf::RenderWindow& window) override;
 	void on_update() override;
-	void handle_event(sf::Keyboard::Key, float dt)override;
-
+	void handle_event( float dt)override;
+	Screens* get_next_state()override { return NULL; };
+	void set_next_state(State next) override {};
+	bool satate_changed() { return false; };
 private:
 
 	//members

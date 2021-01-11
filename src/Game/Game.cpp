@@ -47,8 +47,8 @@ void Game::on_update()
 	m_player_cont->set_paths();
 }
 
-void Game::handle_event(sf::Keyboard::Key keypress, float dt)
+void Game::handle_event(float dt)
 {
 	m_enemy_cont->move_enemies(dt);
-	m_player_cont->MovePlayer(keypress, dt);
+	m_player_cont->MovePlayer(dt);
 }
