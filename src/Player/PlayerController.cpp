@@ -70,6 +70,11 @@ void PlayerController::MovePlayer( float dt)
 	{
 		m_map->DeleteCoin(m_map->IsOnCoin(m_player->get_location()));
 	}
+
+	if (m_map->IsOnPresent(m_player->get_location()) != -1)
+	{
+		m_map->DeletePresent(m_map->IsOnPresent(m_player->get_location()));
+	}
 }
 //-----------------------------------------------------------------------------
 

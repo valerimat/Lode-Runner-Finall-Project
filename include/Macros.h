@@ -28,6 +28,7 @@ const float STEP = 1;
 
 const char PLAYER = char('@');
 const char COIN = char('*');
+const char PRESENT = char('P');
 const char ENEMY = char('%');
 const char POLE = char('-');
 const char GROUND = char('#');

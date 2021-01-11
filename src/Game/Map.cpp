@@ -64,16 +64,16 @@ void Map::SetObjects()
 				m_poles.push_back(st_ptr);
 				break;
 
+			case PRESENT:
+				st_ptr = std::make_shared<StaticObject>(PRESENT, location, m_textures[PRESENT_TEXTURE]);
+				m_presents.push_back(st_ptr);
+				break;
+
 			// the cases below represent decorations
 			case 'G':
 				st_ptr = std::make_shared<StaticObject>(GROUND, location, m_textures[GROUND_W_SIGNS_TEXTURE]);
 				m_static.push_back(st_ptr);
 				m_ground.push_back(st_ptr);
-				break;
-
-			case 'P':
-				st_ptr = std::make_shared<StaticObject>('P', location, m_textures[PRESENT_TEXTURE]);
-				m_static.push_back(st_ptr);
 				break;
 			
 			case 'M':
@@ -118,6 +118,11 @@ void Map::Draw(sf::RenderWindow &main_window)
 	for (int i = 0; i < m_coins.size(); ++i)
 	{
 		m_coins[i]->Draw(main_window);
+	}
+
+	for (int i = 0; i < m_presents.size(); ++i)
+	{
+		m_presents[i]->Draw(main_window);
 	}
 
 	for (int i = 0; i < m_dynamic.size(); ++i)
@@ -175,7 +180,7 @@ void Map::LoadTextures()
 	m_textures.push_back(texture_ptr);
 
 	texture_ptr = std::make_shared<sf::Texture>();
-	texture_ptr->loadFromFile("garbage.png");
+	texture_ptr->loadFromFile("zevel.png");
 	m_textures.push_back(texture_ptr);
 
 	texture_ptr = std::make_shared<sf::Texture>();
@@ -290,6 +295,23 @@ int Map::IsOnCoin(sf::Vector2f location)
 }
 //-----------------------------------------------------------------------------
 
+// asks if it touches the coin
+int Map::IsOnPresent(sf::Vector2f location)
+{
+	location.y -= 1;
+
+	for (int i = 0; i < m_presents.size(); ++i)
+	{
+		if (m_presents[i]->in_bounds(location))
+		{
+			return i;
+			std::cout << "yes\n";
+		}
+	}
+	return -1;
+}
+//-----------------------------------------------------------------------------
+
 // asks if it touches the rope
 bool Map::IsOnRope(sf::Vector2f location_l, sf::Vector2f location_r)
 {
@@ -335,6 +357,17 @@ void Map::DeleteCoin(int i)
 	m_coins.erase(m_coins.begin() + i);
 
 	m_music->EaitngSound();
+}
+//-----------------------------------------------------------------------------
+
+// deletes the present
+void Map::DeletePresent(int i)
+{
+	m_presents.erase(m_presents.begin() + i);
+	
+	std::cout << "check\n";
+
+	m_music->DrinkingSound();
 }
 //-----------------------------------------------------------------------------
 
