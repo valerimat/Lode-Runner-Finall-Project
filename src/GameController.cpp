@@ -6,11 +6,15 @@ void GameController::Run()
 
 	sf::Event event;
 	sf::RenderWindow main_window(sf::VideoMode(WIDTH, HEIGHT), "Lode Runner");
-
+	sf::Music music;
 	sf::Keyboard::Key keypress;
 
-	
 	Screens* screen = new Game;
+
+	// music theme song 
+	music.openFromFile("game theme.OGG");
+	music.setVolume(1);
+	music.play();
 
 	//Screens* screen = new MainMenu;
 
@@ -58,8 +62,7 @@ void GameController::Run()
 				screen->handle_event(keypress, dt_long);
 				
 				last = now;
-			}
-			
+			}	
 	}
 }
 //-----------------------------------------------------------------------------
