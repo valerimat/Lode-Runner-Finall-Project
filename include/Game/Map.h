@@ -6,7 +6,9 @@
 #include "Macros.h"
 #include "Player.h"
 #include "Enemy.h"
+#include "Music.h"
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include <fstream>
 #include <iostream>
 
@@ -49,6 +51,8 @@ private:
 	int m_height;
 
 	char GetChar(int i, int j);
+
+	Music *m_music = new Music;
 
 	std::vector<std::string> m_map;
 

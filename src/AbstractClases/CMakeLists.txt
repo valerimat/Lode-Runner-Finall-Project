@@ -6,4 +6,5 @@
                                      "MovementController.cpp"
                                      "Consumables.cpp"
                                      "Button.cpp"
+                                     "Music.cpp"
                                   )

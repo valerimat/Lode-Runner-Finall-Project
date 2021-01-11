@@ -297,6 +297,8 @@ bool Map::IsOnLadder(sf::Vector2f location)
 void Map::DeleteCoin(int i)
 {
 	m_coins.erase(m_coins.begin() + i);
+
+	m_music->EaitngSound();
 }
 //-----------------------------------------------------------------------------
 
