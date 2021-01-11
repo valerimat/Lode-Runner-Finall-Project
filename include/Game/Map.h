@@ -42,9 +42,11 @@ public:
 	bool IsOnPlayer(sf::Vector2f& location);
 	bool IsOnLadder(sf::Vector2f location);
 	int  IsOnCoin(sf::Vector2f location);
+	int IsOnPresent(sf::Vector2f location);
 
 	// action
 	void DeleteCoin(int i);
+	void DeletePresent(int i);
 	
 private:
 	int m_width;
@@ -58,10 +60,11 @@ private:
 
 	std::vector<std::shared_ptr <sf::Texture>>  m_textures;
 
-	std::vector<std::shared_ptr <StaticObject>> m_static;
-	std::vector<std::shared_ptr <StaticObject>> m_ground;
-	std::vector<std::shared_ptr <StaticObject>> m_ladders;
-	std::vector<std::shared_ptr <StaticObject>> m_poles;
-	std::vector<std::shared_ptr <StaticObject>> m_coins;
+	std::vector<std::shared_ptr <StaticObject>>  m_static;
+	std::vector<std::shared_ptr <StaticObject>>  m_ground;
+	std::vector<std::shared_ptr <StaticObject>>  m_ladders;
+	std::vector<std::shared_ptr <StaticObject>>  m_poles;
+	std::vector<std::shared_ptr <StaticObject>>  m_coins;
+	std::vector<std::shared_ptr <StaticObject>>  m_presents;
 	std::vector<std::shared_ptr <DynamicObject>> m_dynamic;
 };
