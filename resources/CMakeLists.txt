@@ -30,3 +30,5 @@ configure_file ("./hud pngs/lvl.png" ${CMAKE_BINARY_DIR} COPYONLY)
 
 
 configure_file ("./buttons/play_button.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("./buttons/arrow.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("./buttons/setting_button.png" ${CMAKE_BINARY_DIR} COPYONLY)

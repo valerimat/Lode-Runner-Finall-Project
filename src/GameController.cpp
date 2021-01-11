@@ -9,7 +9,7 @@ void GameController::Run()
 
 
 	
-	Screens* screen = new MainMenu;
+	State* screen = new MainMenu;
 
 	//Screens* screen = new MainMenu;
 
