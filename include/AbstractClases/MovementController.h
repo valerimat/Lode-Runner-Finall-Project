@@ -2,6 +2,7 @@
 #include <vector>
 #include <SFML/Graphics.hpp>
 #include "Macros.h"
+#include "Music.h"
 class Map;
 
 
@@ -22,6 +23,8 @@ protected:
 	bool able_to_move_side(NextStep side, sf::Vector2f topLeft);
 	bool we_are_on_rope(sf::Vector2f topLeft);
 	bool able_to_move_down(sf::Vector2f topLeft);
+
+	Music* m_music = new Music;
 
 	Map* m_map = nullptr;
 };

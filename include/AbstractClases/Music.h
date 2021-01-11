@@ -16,8 +16,9 @@ public:
 	Music();
 	void LoadBuffers();
 	void EaitngSound();
+	void RunningSound();
 private:
 
-	sf::Sound* m_sound = nullptr;
+	sf::Sound* m_sound = new sf::Sound;
 	std::vector<std::shared_ptr<sf::SoundBuffer>>  m_buffers;
 };

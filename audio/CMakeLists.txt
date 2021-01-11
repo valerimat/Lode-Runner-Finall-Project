@@ -1,2 +1,3 @@
 configure_file ("game theme.OGG"${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("eating laffa.OGG"${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("running.OGG"${CMAKE_BINARY_DIR} COPYONLY)

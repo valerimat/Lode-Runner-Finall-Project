@@ -3,6 +3,8 @@
 #include <chrono>
 #include <thread>
 #include "MovementController.h"
+#include "Music.h"
+
 class Player;
 class Map;
 
@@ -21,5 +23,7 @@ public:
 	void set_paths();
 
 private:
+
+	Music* m_music = new Music;
 	Player* m_player;
 };
