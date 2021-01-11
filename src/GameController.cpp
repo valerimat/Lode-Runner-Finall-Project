@@ -6,10 +6,17 @@ void GameController::Run()
 
 	sf::Event event;
 	sf::RenderWindow main_window(sf::VideoMode(WIDTH, HEIGHT), "Lode Runner");
+
 	sf::Music music;
 	sf::Keyboard::Key keypress;
 
-	Screens* screen = new Game;
+	//Screens* screen = new Game;
+
+
+
+	
+	Screens* screen = new MainMenu;
+
 
 	// music theme song 
 	music.openFromFile("game theme.OGG");
@@ -22,8 +29,7 @@ void GameController::Run()
 
 	while (main_window.isOpen())
 	{
-		
-		keypress = sf::Keyboard::Key::End;
+	
 
 		main_window.clear(sf::Color::Black);
 
@@ -40,29 +46,29 @@ void GameController::Run()
 				break;
 			}
 		}
-
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) ||
-			sf::Keyboard::isKeyPressed(sf::Keyboard::Down) ||
-			sf::Keyboard::isKeyPressed(sf::Keyboard::Left) ||
-			sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-		{
-			keypress = event.key.code;
-		}
 			
 			auto now = clock::now();
 			auto dt = std::chrono::duration_cast<std::chrono::milliseconds>(now - last);
 
 			if (dt.count() > 5)
 			{
-				//need to setup function screen->on_update();
-				screen->on_update();
-				//need to setup function for this one to or check type
-				float dt_long = dt.count();
 
-				screen->handle_event(keypress, dt_long);
-				
-				last = now;
-			}	
+				if (!screen->satate_changed())
+				{
+					//need to setup function screen->on_update();
+					screen->on_update();
+					//need to setup function for this one to or check type
+					float dt_long = dt.count();
+
+					screen->handle_event(dt_long);
+
+					last = now;
+				}
+				else
+				{
+					screen = screen->get_next_state();
+				}
+			}			
 	}
 }
 //-----------------------------------------------------------------------------

@@ -1,4 +1,5 @@
 #include "MainMenu.h"
+#include "Game.h"	
 
 MainMenu::MainMenu()
 {
@@ -19,12 +20,42 @@ void MainMenu::on_update()
 {
 
 };
-void MainMenu::handle_event(sf::Keyboard::Key, float dt)
+void MainMenu::handle_event(float dt)
 {
-
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
+		//need to do it based on selected button
+		set_next_state(State::Game);
 }
 
+Screens* MainMenu::get_next_state()
+{
+	return next_screen;
+}
 
+void  MainMenu::set_next_state(State next)
+{
+	next_state = next;
+
+	switch (next)
+	{
+	case State::Main:
+		break;
+	case State::Game:
+		next_screen = new Game;
+		break;
+	case State::End:
+		break;
+	default:
+		break;
+	}
+}
+bool MainMenu::satate_changed()
+{
+	if (next_state != base_sate)
+		return true;
+
+	return false;
+}
 void MainMenu::load_textures()
 {
 	auto texture = std::make_shared<sf::Texture>();
