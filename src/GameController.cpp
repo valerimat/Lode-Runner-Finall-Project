@@ -15,9 +15,8 @@ void GameController::Run()
 
 
 	
-	//Screens* screen = new MainMenu;
 
-
+	State* screen = new MainMenu;
 	// music theme song 
 	music.openFromFile("game theme.OGG");
 	music.setVolume(1);

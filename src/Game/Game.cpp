@@ -1,13 +1,20 @@
 #include "Game.h"
+#include "MainMenu.h"
+#include "InGameMenu.h"
 
 Game::Game():
 	m_maps(MapData())
 {
 	Load();
 	init_controllers();
+	set_prev_state(nullptr);
 }
 //-----------------------------------------------------------------------------
 
+void Game::set_prev_state(State* state)
+{
+	m_previouse_screen = state;
+}
 void Game::Load()
 {
 	Map temp(m_maps.GetMap(level), m_maps.GetCurrHeight(level), m_maps.GetCurrWidth(level));
@@ -16,7 +23,11 @@ void Game::Load()
 	m_hud = hud;
 }
 //-----------------------------------------------------------------------------
-
+State* Game::get_next_state()
+{
+	sate_changed = false;
+	return next_screen;
+}
 
 void Game::Draw(sf::RenderWindow &window)
 {
@@ -49,6 +60,32 @@ void Game::on_update()
 
 void Game::handle_event(float dt)
 {
-	m_enemy_cont->move_enemies(dt);
-	m_player_cont->MovePlayer(dt);
+	if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+	{
+		m_enemy_cont->move_enemies(dt);
+		m_player_cont->MovePlayer(dt);
+	}
+	else
+	{
+		set_next_state(ButtonNames::InGameMenu);
+	}
+}
+
+void  Game::set_next_state(ButtonNames next_state)
+{
+	State * next;
+	switch (next_state)
+	{
+	case ButtonNames::InGameMenu:
+		next = new InGameMenu;
+		next->set_prev_state(this);
+		sate_changed  = true;
+		next_screen = next;
+		break;
+	}
+}
+
+bool Game::satate_changed()
+{
+	return sate_changed;
 }

@@ -6,9 +6,9 @@
 #include "Hud.h"
 #include <SFML/Graphics.hpp>
 #include "Score.h"
-#include "Screens.h"
+#include "State.h"
 
-class Game : public Screens
+class Game : public State
 {
 public:
 
@@ -19,15 +19,17 @@ public:
 
 	// getters
 	Map* get_curr_map();
-	
+	void set_prev_state(State* state);
 	// Game functions
 	void Load() override;
 	void Draw(sf::RenderWindow& window) override;
 	void on_update() override;
 	void handle_event( float dt)override;
-	Screens* get_next_state()override { return NULL; };
-	void set_next_state(State next) override {};
-	bool satate_changed() { return false; };
+	State* get_next_state()override;
+	void set_next_state(ButtonNames  screen) override;
+	bool satate_changed();
+	StateEnum get_state() { return StateEnum::Game; };
+
 private:
 
 	//members

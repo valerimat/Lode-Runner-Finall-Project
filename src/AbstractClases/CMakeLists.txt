@@ -1,4 +1,5 @@
 ﻿target_sources (LodeRunner PRIVATE
+                                     "State.cpp"
                                      "Music.cpp"
                                      "Screens.cpp"
                                      "Object.cpp"
@@ -6,5 +7,5 @@
                                      "DynamicObject.cpp"
                                      "MovementController.cpp"
                                      "Consumables.cpp"
-                                     "Button.cpp"
+                               
                                   )

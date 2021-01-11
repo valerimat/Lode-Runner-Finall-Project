@@ -7,13 +7,26 @@ enum class IQ
 	OneSide,
 };
 
-enum class State
+enum class StateEnum
 {
+	None,
 	Main,
+	Settings,
+	ScoreBoard,
 	Game,
 	End,
 };
 
+enum class ButtonNames
+{
+	InGameMenu,
+	Back,
+	Play,
+	Menu,
+	Continue,
+	Settings,
+	Scoreboard,
+};
 enum class NextStep
 {
 	UP,
