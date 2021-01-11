@@ -10,12 +10,12 @@ void GameController::Run()
 	sf::Music music;
 	sf::Keyboard::Key keypress;
 
-	//Screens* screen = new Game;
+	Screens* screen = new Game;
 
 
 
 	
-	Screens* screen = new MainMenu;
+	//Screens* screen = new MainMenu;
 
 
 	// music theme song 
