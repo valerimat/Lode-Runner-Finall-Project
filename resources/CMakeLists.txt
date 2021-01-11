@@ -8,6 +8,10 @@ configure_file ("./skins/rope.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("./skins/wall.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("./skins/coin.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("./skins/background.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("./skins/present.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("./skins/maake.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("./skins/zevel.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("./skins/shop.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("Board.txt" ${CMAKE_BINARY_DIR} COPYONLY)
 
 

@@ -19,6 +19,8 @@ void PlayerController::MovePlayer( float dt)
 {
 	NextStep next_wanted = NextStep::NONE;
 
+	int x = m_player->get_location().x;
+
 	sf::Keyboard::Key key;
 
 	check_key_press(key);
@@ -27,9 +29,13 @@ void PlayerController::MovePlayer( float dt)
 	{
     case sf::Keyboard::Left:
 		next_wanted = NextStep::LEFT;
+		if(x % 60 == 0)
+			m_music->RunningSound();
         break;
     case sf::Keyboard::Right:
 		next_wanted = NextStep::RIGHT;
+		if (x % 60 == 0)
+			m_music->RunningSound();
         break;
     case sf::Keyboard::Up:
 		next_wanted = NextStep::UP;
@@ -63,6 +69,11 @@ void PlayerController::MovePlayer( float dt)
 	if (m_map->IsOnCoin(m_player->get_location()) != -1)
 	{
 		m_map->DeleteCoin(m_map->IsOnCoin(m_player->get_location()));
+	}
+
+	if (m_map->IsOnPresent(m_player->get_location()) != -1)
+	{
+		m_map->DeletePresent(m_map->IsOnPresent(m_player->get_location()));
 	}
 }
 //-----------------------------------------------------------------------------

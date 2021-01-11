@@ -1,22 +1,22 @@
 20 20
 ####################
 #   H--------------#
-#   H              #
-#   H-------   * % #
-#   H      HGGGGGGG#
+#   H    P         #
+#   H------- M * % #
+# P H      HGGGGGGG#
 #GGGG      H       #
-#        * H       #
+#      M * H       #
 #    HGGGGGH       #
-#HGGGG     H       #
-#H         H   %   #
+#HGGGG     H  Z    #
+#H         H   % M #
 #H         GGGGGGGH#
 #H                H#
 #H----------------H#
-#H *              H#
+#H *      P       H#
 #GGG      H-------H#
 #      *  H     * H#
-#     GGGGH    GGGG#
+#  S  GGGGH    GGGG#
 #         H        #
-#      @  H      % #
+#      @  H  M M % #
 #GGGGGGGGGGGGGGGGGG#
 

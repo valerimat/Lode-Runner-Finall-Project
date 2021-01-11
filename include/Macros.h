@@ -41,6 +41,7 @@ const float STEP = 1;
 
 const char PLAYER = char('@');
 const char COIN = char('*');
+const char PRESENT = char('P');
 const char ENEMY = char('%');
 const char POLE = char('-');
 const char GROUND = char('#');
@@ -61,3 +62,7 @@ const int SIZE_OF_TILE = 40;
 #define NONE_TEXTURE 6
 #define BACKGROUND_TEXTURE 7
 #define GROUND_W_SIGNS_TEXTURE 8
+#define PRESENT_TEXTURE 9
+#define MAAKE_TEXTURE 10
+#define ZEVEL_TEXTURE 11
+#define SHOP_TEXTURE 12

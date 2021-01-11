@@ -46,12 +46,6 @@ void Map::SetObjects()
 				m_ground.push_back(st_ptr);
 				break;
 
-			case 'G':
-				st_ptr = std::make_shared<StaticObject>(GROUND, location, m_textures[GROUND_W_SIGNS_TEXTURE]);
-				m_static.push_back(st_ptr);
-				m_ground.push_back(st_ptr);
-				break;
-
 			case LADDER:
 				st_ptr = std::make_shared<StaticObject>(LADDER, location, m_textures[LADDER_TEXTURE]);
 				m_static.push_back(st_ptr);
@@ -68,6 +62,32 @@ void Map::SetObjects()
 				st_ptr = std::make_shared<StaticObject>(POLE, location, m_textures[POLE_TEXTURE]);
 				m_static.push_back(st_ptr);
 				m_poles.push_back(st_ptr);
+				break;
+
+			case PRESENT:
+				st_ptr = std::make_shared<StaticObject>(PRESENT, location, m_textures[PRESENT_TEXTURE]);
+				m_presents.push_back(st_ptr);
+				break;
+
+			// the cases below represent decorations
+			case 'G':
+				st_ptr = std::make_shared<StaticObject>(GROUND, location, m_textures[GROUND_W_SIGNS_TEXTURE]);
+				m_static.push_back(st_ptr);
+				m_ground.push_back(st_ptr);
+				break;
+			
+			case 'M':
+				st_ptr = std::make_shared<StaticObject>(' ', location, m_textures[MAAKE_TEXTURE]);
+				m_static.push_back(st_ptr);
+				break;
+
+			case 'Z':
+				st_ptr = std::make_shared<StaticObject>(' ', location, m_textures[ZEVEL_TEXTURE]);
+				m_static.push_back(st_ptr);
+				break;
+			case 'S':
+				st_ptr = std::make_shared<StaticObject>(' ', location, m_textures[SHOP_TEXTURE]);
+				m_static.push_back(st_ptr);
 				break;
 			}
 		}
@@ -98,6 +118,11 @@ void Map::Draw(sf::RenderWindow &main_window)
 	for (int i = 0; i < m_coins.size(); ++i)
 	{
 		m_coins[i]->Draw(main_window);
+	}
+
+	for (int i = 0; i < m_presents.size(); ++i)
+	{
+		m_presents[i]->Draw(main_window);
 	}
 
 	for (int i = 0; i < m_dynamic.size(); ++i)
@@ -144,6 +169,22 @@ void Map::LoadTextures()
 
 	texture_ptr = std::make_shared<sf::Texture>();
 	texture_ptr->loadFromFile("ground with signs.png");
+	m_textures.push_back(texture_ptr);
+
+	texture_ptr = std::make_shared<sf::Texture>();
+	texture_ptr->loadFromFile("present.png");
+	m_textures.push_back(texture_ptr);
+
+	texture_ptr = std::make_shared<sf::Texture>();
+	texture_ptr->loadFromFile("maake.png");
+	m_textures.push_back(texture_ptr);
+
+	texture_ptr = std::make_shared<sf::Texture>();
+	texture_ptr->loadFromFile("zevel.png");
+	m_textures.push_back(texture_ptr);
+
+	texture_ptr = std::make_shared<sf::Texture>();
+	texture_ptr->loadFromFile("shop.png");
 	m_textures.push_back(texture_ptr);
 }
 //-----------------------------------------------------------------------------
@@ -254,6 +295,23 @@ int Map::IsOnCoin(sf::Vector2f location)
 }
 //-----------------------------------------------------------------------------
 
+// asks if it touches the coin
+int Map::IsOnPresent(sf::Vector2f location)
+{
+	location.y -= 1;
+
+	for (int i = 0; i < m_presents.size(); ++i)
+	{
+		if (m_presents[i]->in_bounds(location))
+		{
+			return i;
+			std::cout << "yes\n";
+		}
+	}
+	return -1;
+}
+//-----------------------------------------------------------------------------
+
 // asks if it touches the rope
 bool Map::IsOnRope(sf::Vector2f location_l, sf::Vector2f location_r)
 {
@@ -297,6 +355,19 @@ bool Map::IsOnLadder(sf::Vector2f location)
 void Map::DeleteCoin(int i)
 {
 	m_coins.erase(m_coins.begin() + i);
+
+	m_music->EaitngSound();
+}
+//-----------------------------------------------------------------------------
+
+// deletes the present
+void Map::DeletePresent(int i)
+{
+	m_presents.erase(m_presents.begin() + i);
+	
+	std::cout << "check\n";
+
+	m_music->DrinkingSound();
 }
 //-----------------------------------------------------------------------------
 

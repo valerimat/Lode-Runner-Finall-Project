@@ -3,6 +3,8 @@
 #include <chrono>
 #include <thread>
 #include "MovementController.h"
+#include "Music.h"
+
 class Player;
 class Map;
 
@@ -22,5 +24,7 @@ public:
 	void check_key_press(sf::Keyboard::Key& pressed);
 
 private:
+
+	Music* m_music = new Music;
 	Player* m_player;
 };

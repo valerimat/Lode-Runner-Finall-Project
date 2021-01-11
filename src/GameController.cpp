@@ -7,9 +7,20 @@ void GameController::Run()
 	sf::Event event;
 	sf::RenderWindow main_window(sf::VideoMode(WIDTH, HEIGHT), "Lode Runner");
 
+	sf::Music music;
+	sf::Keyboard::Key keypress;
+
+	Screens* screen = new Game;
+
+
 
 	
+
 	State* screen = new MainMenu;
+	// music theme song 
+	music.openFromFile("game theme.OGG");
+	music.setVolume(1);
+	music.play();
 
 	//Screens* screen = new MainMenu;
 
@@ -40,6 +51,7 @@ void GameController::Run()
 
 			if (dt.count() > 5)
 			{
+
 				if (!screen->satate_changed())
 				{
 					//need to setup function screen->on_update();
@@ -55,8 +67,7 @@ void GameController::Run()
 				{
 					screen = screen->get_next_state();
 				}
-			}
-			
+			}			
 	}
 }
 //-----------------------------------------------------------------------------
