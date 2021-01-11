@@ -46,12 +46,6 @@ void Map::SetObjects()
 				m_ground.push_back(st_ptr);
 				break;
 
-			case 'G':
-				st_ptr = std::make_shared<StaticObject>(GROUND, location, m_textures[GROUND_W_SIGNS_TEXTURE]);
-				m_static.push_back(st_ptr);
-				m_ground.push_back(st_ptr);
-				break;
-
 			case LADDER:
 				st_ptr = std::make_shared<StaticObject>(LADDER, location, m_textures[LADDER_TEXTURE]);
 				m_static.push_back(st_ptr);
@@ -68,6 +62,32 @@ void Map::SetObjects()
 				st_ptr = std::make_shared<StaticObject>(POLE, location, m_textures[POLE_TEXTURE]);
 				m_static.push_back(st_ptr);
 				m_poles.push_back(st_ptr);
+				break;
+
+			// the cases below represent decorations
+			case 'G':
+				st_ptr = std::make_shared<StaticObject>(GROUND, location, m_textures[GROUND_W_SIGNS_TEXTURE]);
+				m_static.push_back(st_ptr);
+				m_ground.push_back(st_ptr);
+				break;
+
+			case 'P':
+				st_ptr = std::make_shared<StaticObject>('P', location, m_textures[PRESENT_TEXTURE]);
+				m_static.push_back(st_ptr);
+				break;
+			
+			case 'M':
+				st_ptr = std::make_shared<StaticObject>(' ', location, m_textures[MAAKE_TEXTURE]);
+				m_static.push_back(st_ptr);
+				break;
+
+			case 'Z':
+				st_ptr = std::make_shared<StaticObject>(' ', location, m_textures[ZEVEL_TEXTURE]);
+				m_static.push_back(st_ptr);
+				break;
+			case 'S':
+				st_ptr = std::make_shared<StaticObject>(' ', location, m_textures[SHOP_TEXTURE]);
+				m_static.push_back(st_ptr);
 				break;
 			}
 		}
@@ -144,6 +164,22 @@ void Map::LoadTextures()
 
 	texture_ptr = std::make_shared<sf::Texture>();
 	texture_ptr->loadFromFile("ground with signs.png");
+	m_textures.push_back(texture_ptr);
+
+	texture_ptr = std::make_shared<sf::Texture>();
+	texture_ptr->loadFromFile("present.png");
+	m_textures.push_back(texture_ptr);
+
+	texture_ptr = std::make_shared<sf::Texture>();
+	texture_ptr->loadFromFile("maake.png");
+	m_textures.push_back(texture_ptr);
+
+	texture_ptr = std::make_shared<sf::Texture>();
+	texture_ptr->loadFromFile("garbage.png");
+	m_textures.push_back(texture_ptr);
+
+	texture_ptr = std::make_shared<sf::Texture>();
+	texture_ptr->loadFromFile("shop.png");
 	m_textures.push_back(texture_ptr);
 }
 //-----------------------------------------------------------------------------
