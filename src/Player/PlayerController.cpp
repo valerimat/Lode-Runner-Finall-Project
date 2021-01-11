@@ -19,17 +19,25 @@ void PlayerController::MovePlayer( float dt)
 {
 	NextStep next_wanted = NextStep::NONE;
 
+<<<<<<< HEAD
+	int x = m_player->get_location().x;
+=======
 	sf::Keyboard::Key key;
 
 	check_key_press(key);
+>>>>>>> master
 
 	switch (key)
 	{
     case sf::Keyboard::Left:
 		next_wanted = NextStep::LEFT;
+		if(x % 40 == 0)
+			m_music->RunningSound();
         break;
     case sf::Keyboard::Right:
 		next_wanted = NextStep::RIGHT;
+		if (x % 40 == 0)
+			m_music->RunningSound();
         break;
     case sf::Keyboard::Up:
 		next_wanted = NextStep::UP;
