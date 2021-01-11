@@ -15,11 +15,17 @@ void PlayerController::init_controller()
 }
 //-----------------------------------------------------------------------------
 
-void PlayerController::MovePlayer(sf::Keyboard::Key key, float dt)
+void PlayerController::MovePlayer( float dt)
 {
 	NextStep next_wanted = NextStep::NONE;
 
+<<<<<<< HEAD
 	int x = m_player->get_location().x;
+=======
+	sf::Keyboard::Key key;
+
+	check_key_press(key);
+>>>>>>> master
 
 	switch (key)
 	{
@@ -74,3 +80,16 @@ void PlayerController::set_paths()
 	m_player->SetValid(get_avaliable_steps(m_player->get_location()));
 }
 //-----------------------------------------------------------------------------
+void PlayerController::check_key_press(sf::Keyboard::Key& pressed)
+{
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+		pressed = sf::Keyboard::Left;
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+		pressed = sf::Keyboard::Right;
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+		pressed = sf::Keyboard::Up;
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+		pressed = sf::Keyboard::Down;
+	else
+		pressed = sf::Keyboard::End;
+}
