@@ -2,7 +2,6 @@
 #include <vector>
 #include <string>
 #include "StaticObject.h"
-#include "Consumables.h"
 #include "Macros.h"
 #include "Player.h"
 #include "Enemy.h"
@@ -11,7 +10,9 @@
 #include <SFML/Audio.hpp>
 #include <fstream>
 #include <iostream>
-
+#include "Graph.h"
+class Coin;
+class Present;
 class DynamicObject;
 
 class Map
@@ -31,7 +32,7 @@ public:
 	std::vector<std::shared_ptr<StaticObject>>* GetStatic();
 	int GetHeight();
 	int GetWidth();
-
+	Graph get_graph();
 	// setters
 	void SetObjects();
 
@@ -43,10 +44,11 @@ public:
 	bool IsOnLadder(sf::Vector2f location);
 	int  IsOnCoin(sf::Vector2f location);
 	int IsOnPresent(sf::Vector2f location);
-
+	void check_collision(Object& object);
+	
 	// action
-	void DeleteCoin(int i);
-	void DeletePresent(int i);
+	void DeleteCoin(Coin & coin);
+	void DeletePresent(Present & present);
 	
 private:
 	int m_width;
@@ -55,6 +57,8 @@ private:
 	char GetChar(int i, int j);
 
 	Music *m_music = new Music;
+
+	Graph * m_graph;
 
 	std::vector<std::string> m_map;
 

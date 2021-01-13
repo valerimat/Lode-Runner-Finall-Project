@@ -6,32 +6,40 @@
 void EnemyController::init_controller()
 {
 	m_enemies = m_map->GetEnemies();
+	for (auto enemy : m_enemies)
+		enemy->set_map(m_map);
 }
 //-----------------------------------------------------------------------------
 
 void EnemyController::move_enemies(float dt)
-{
-	int i = 0;
-
-	while (i < m_enemies.size())
+{	
+	for (auto enemy : m_enemies)
 	{
-		switch (m_enemies[i]->get_iq())
+		if (!enemy->m_falling)
 		{
-		case IQ::Smart:
-			m_enemies[i]->move(dt);
-			break;
-
-		case IQ::Random:
-			m_enemies[i]->move(dt);
-			break;
-
-		case IQ::OneSide:
-
-			m_enemies[i]->move(dt);
-			break;
+			enemy->move(dt);
 		}
 
-		++i;
+		//reset gravity bool
+		enemy->turn_gravity_on();
+
+		m_map->check_collision(*enemy);
+
+		sf::Vector2f before_g = enemy->get_location();
+
+		//do graviry do its job
+		enemy->gravity(dt);
+
+		//check collisions again
+		m_map->check_collision(*enemy);
+
+		sf::Vector2f after_g = enemy->get_location();
+
+		//we are falling if we were able to go down
+		if (before_g != after_g)
+			enemy->m_falling = true;
+		else
+			enemy->m_falling = false;
 	}
 }
 //-----------------------------------------------------------------------------
@@ -51,28 +59,10 @@ bool EnemyController::reached_player(Map * map)
 
 void EnemyController::set_paths()
 {
-	int i = 0;
-	while (i < m_enemies.size())
+	for (auto enemy : m_enemies)
 	{
-		switch (m_enemies[i]->get_iq())
-		{
-		case IQ::Smart:
-			if (m_enemies[i]->path_is_empty())
-				m_enemies[i]->set_path(Astar::calc_path(m_map, *this, m_enemies[i]->get_location()));
-			break;
-
-		case IQ::Random:
-			if (m_enemies[i]->path_is_empty())
-				m_enemies[i]->set_path(RandomPath::calc_path(m_map, *this, m_enemies[i]->get_location()));
-			break;
-
-		case IQ::OneSide:
-			if (m_enemies[i]->path_is_empty())
-				m_enemies[i]->set_path(OneSide::calc_path(m_map, *this, m_enemies[i]->get_location()));
-			break;
-
-		}
-		++i;
+		if (enemy->checke_if_reached())
+			enemy->set_waypoint();
 	}
 }
 //-----------------------------------------------------------------------------

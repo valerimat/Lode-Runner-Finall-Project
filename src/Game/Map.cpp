@@ -1,4 +1,10 @@
 #include "Map.h"
+#include "RigidBodyObject.h"
+#include "Ladder.h"
+#include "Pole.h"
+#include "Present.h"
+#include "Coin.h"
+
 
 // c-tor of map
 Map::Map(std::vector<std::string>* map,int height, int width):
@@ -6,11 +12,16 @@ Map::Map(std::vector<std::string>* map,int height, int width):
 	m_height(height),
 	m_width(width)
 {
+
+	m_graph = new Graph(m_map, m_width, m_height);
 	LoadTextures();
 	SetObjects();
 }
 //-----------------------------------------------------------------------------
-
+Graph Map::get_graph()
+{
+	return *m_graph;
+}
 // sets all the objects
 void Map::SetObjects()
 {
@@ -41,34 +52,37 @@ void Map::SetObjects()
 				break;
 
 			case GROUND:
-				st_ptr = std::make_shared<StaticObject>(GROUND, location, m_textures[GROUND_TEXTURE]);
+				st_ptr = std::make_shared<RigidBodyObject>(GROUND, location, m_textures[GROUND_TEXTURE]);
 				m_static.push_back(st_ptr);
 				m_ground.push_back(st_ptr);
 				break;
 
 			case LADDER:
-				st_ptr = std::make_shared<StaticObject>(LADDER, location, m_textures[LADDER_TEXTURE]);
+				st_ptr = std::make_shared<Ladder>(LADDER, location, m_textures[LADDER_TEXTURE]);
 				m_static.push_back(st_ptr);
 				m_ladders.push_back(st_ptr);
 					
 				break;
 
 			case COIN:
-				st_ptr = std::make_shared<StaticObject>(LADDER, location, m_textures[COIN_TEXTURE]);
+				st_ptr = std::make_shared<Coin>(LADDER, location, m_textures[COIN_TEXTURE]);
+				m_static.push_back(st_ptr);
 				m_coins.push_back(st_ptr);
 				break;
 
 			case POLE:
-				st_ptr = std::make_shared<StaticObject>(POLE, location, m_textures[POLE_TEXTURE]);
+				st_ptr = std::make_shared<Pole>(POLE, location, m_textures[POLE_TEXTURE]);
 				m_static.push_back(st_ptr);
 				m_poles.push_back(st_ptr);
 				break;
 
 			case PRESENT:
-				st_ptr = std::make_shared<StaticObject>(PRESENT, location, m_textures[PRESENT_TEXTURE]);
+				st_ptr = std::make_shared<Present>(PRESENT, location, m_textures[PRESENT_TEXTURE]);
+				m_static.push_back(st_ptr);
 				m_presents.push_back(st_ptr);
 				break;
 
+			/*
 			// the cases below represent decorations
 			case 'G':
 				st_ptr = std::make_shared<StaticObject>(GROUND, location, m_textures[GROUND_W_SIGNS_TEXTURE]);
@@ -89,6 +103,7 @@ void Map::SetObjects()
 				st_ptr = std::make_shared<StaticObject>(' ', location, m_textures[SHOP_TEXTURE]);
 				m_static.push_back(st_ptr);
 				break;
+			*/
 			}
 		}
 	}
@@ -129,6 +144,8 @@ void Map::Draw(sf::RenderWindow &main_window)
 	{
 		m_dynamic[i]->Draw(main_window);
 	}
+
+	m_graph->Draw(main_window);
 }
 //-----------------------------------------------------------------------------
 
@@ -352,22 +369,58 @@ bool Map::IsOnLadder(sf::Vector2f location)
 //-----------------------------------------------------------------------------
 
 // deletes the coin
-void Map::DeleteCoin(int i)
+void Map::DeleteCoin(Coin & coin)
 {
-	m_coins.erase(m_coins.begin() + i);
+	int i = 0;
+	while (coin.get_location() != m_coins[i]->get_location())
+	{
+		i++;
+	}
 
+	m_coins.erase(m_coins.begin() + i);
+	i = 0;
+	while (coin.get_location() != m_static[i]->get_location() && m_static[i]->get_name() != COIN)
+	{
+		i++;
+	}
+	m_static.erase(m_static.begin() + i);
 	m_music->EaitngSound();
 }
 //-----------------------------------------------------------------------------
 
 // deletes the present
-void Map::DeletePresent(int i)
+void Map::DeletePresent(Present & prenset)
 {
+	int i = 0;
+	while (prenset.get_location() != m_presents[i]->get_location())
+	{
+		i++;
+	}
 	m_presents.erase(m_presents.begin() + i);
-	
-	std::cout << "check\n";
-
+	i = 0;
+	while (prenset.get_location() != m_static[i]->get_location() && m_static[i]->get_name() != PRESENT)
+	{
+		i++;
+	}
+	m_static.erase(m_static.begin() + i);
 	m_music->DrinkingSound();
 }
 //-----------------------------------------------------------------------------
 
+
+void Map::check_collision(Object & object)
+{
+	
+	//in for loop to not do read access violoation
+	for(int i=0; i <m_static.size(); ++i)
+	{
+		if(m_static[i]->get_sprite().getGlobalBounds().intersects(object.get_sprite().getGlobalBounds()))
+			m_static[i]->handle_collision(object);
+	}
+
+	for (auto d_object : m_dynamic)
+	{
+		if (d_object->get_sprite().getGlobalBounds().intersects(object.get_sprite().getGlobalBounds()))
+			d_object->handle_collision(object);
+	}
+}

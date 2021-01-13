@@ -55,7 +55,6 @@ void Game::init_controllers()
 void Game::on_update()
 {
 	m_enemy_cont->set_paths();
-	m_player_cont->set_paths();
 }
 
 void Game::handle_event(float dt)

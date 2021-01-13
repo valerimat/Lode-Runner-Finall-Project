@@ -1,104 +1,43 @@
 #include "RandomPath.h"
 #include "Map.h"
-#include "time.h"
 #include "Enemy.h"
+#include <iostream>
+#include "Graph.h"
 #include "EnemyController.h"
+#include<ctime>
 
-std::vector<NextStep> RandomPath::calc_path(Map* map, EnemyController& contorller,sf::Vector2f location)
+std::vector<sf::Vector2f> RandomPath::calc_path(Graph& graph, sf::FloatRect& our_rect)
 {
-	srand((unsigned)time(NULL));
-
-	sf::Vector2f starting_loc = location;
-
-	std::vector<NextStep> steps;
-
-	std::vector<NextStep> avaliable_steps = contorller.get_avaliable_steps(starting_loc);
-
-	int random = 0;
-	int modulo = 0;
-	int i = 0;
-
-	while (1)
+	
+	srand(time(0));
+	std::vector<sf::Vector2f> next;
+	sf::Vector2f waypoint(-1, -1);
+	int index = graph.we_are_on_node(our_rect);
+	if (index == -1)
 	{
-		if (is_dir_avaliable(NextStep::UP, avaliable_steps))
-			avaliable_steps.push_back(NextStep::UP);
-
-		modulo = avaliable_steps.size();
-
-		if (avaliable_steps.size() == 0)
-		{
-			avaliable_steps.push_back(NextStep::NONE);
-			return avaliable_steps;
-		}
-
-		random = rand() % modulo;
-
+		sf::Vector2f edge = graph.we_are_on_edge(our_rect);
 		
-
-		steps.push_back(avaliable_steps[random]);
-
-		update_curr_location(starting_loc, avaliable_steps[random]);
-
-		if (steps.size() > 40)
-			break;
-
-		avaliable_steps.clear();
-
-		avaliable_steps = contorller.get_avaliable_steps(starting_loc);
-		i = 0;
-		while (i < 5)
+		if (edge != sf::Vector2f(-1, -1))
 		{
-			if (is_dir_avaliable(steps[steps.size() - 1], avaliable_steps))
+			auto random = rand() % 2;
+
+			if (random == 1)
 			{
-				NextStep same = steps[steps.size() - 1];
-				steps.push_back(same);
-				update_curr_location(starting_loc, same);
+				waypoint = graph.get_parent_node(edge.x);
 			}
 			else
-				break;
-			avaliable_steps.clear();
-			avaliable_steps = contorller.get_avaliable_steps(starting_loc);
-			++i;
+			{
+				waypoint = graph.get_neighboor_node(edge.x, edge.y);
+			}
 		}
 	}
-	return steps;
-}
-//-----------------------------------------------------------------------------
-
-void RandomPath::update_curr_location(sf::Vector2f & curr_location_with_steps, NextStep next)
-{
-	sf::Vector2f offset(0, 0);
-	switch (next)
+	else
 	{
-	case NextStep::UP:
-		offset.y -= STEP;
-		break;
-
-	case NextStep::DOWN:
-		offset.y += STEP;
-		break;
-
-	case NextStep::LEFT:
-		offset.x -= STEP;
-		break;
-
-	case NextStep::RIGHT:
-		offset.x += STEP;
-		break;
-	}	
-
-	curr_location_with_steps += offset;
-}
-//-----------------------------------------------------------------------------
-
-bool RandomPath::is_dir_avaliable(NextStep next, std::vector<NextStep> avaliable)
-{
-	for (int i = 0; i < avaliable.size(); ++i)
-	{
-		if (avaliable[i] == next)
-			return true;
+		waypoint = graph.get_random_neighboor(index, rand());
 	}
+	next.push_back(waypoint);
 
-	return false;
+	return next;
 }
 //-----------------------------------------------------------------------------
+

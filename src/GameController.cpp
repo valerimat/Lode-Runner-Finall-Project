@@ -10,12 +10,6 @@ void GameController::Run()
 	sf::Music music;
 	sf::Keyboard::Key keypress;
 
-	Screens* screen = new Game;
-
-
-
-	
-
 	State* screen = new MainMenu;
 	// music theme song 
 	music.openFromFile("game theme.OGG");
@@ -28,7 +22,7 @@ void GameController::Run()
 
 	while (main_window.isOpen())
 	{
-	
+
 
 		main_window.clear(sf::Color::Black);
 
@@ -45,29 +39,28 @@ void GameController::Run()
 				break;
 			}
 		}
-			
+
+	
+
+
+		if (!screen->satate_changed())
+		{
+			//need to setup function screen->on_update();
+			screen->on_update();
 			auto now = clock::now();
 			auto dt = std::chrono::duration_cast<std::chrono::milliseconds>(now - last);
+			//need to setup function for this one to or check type
+			float dt_long = dt.count()*0.1f;
+			if (dt_long == 0)
+				dt_long = 1;
+			screen->handle_event(dt_long);
 
-			if (dt.count() > 5)
-			{
-
-				if (!screen->satate_changed())
-				{
-					//need to setup function screen->on_update();
-					screen->on_update();
-					//need to setup function for this one to or check type
-					float dt_long = dt.count();
-
-					screen->handle_event(dt_long);
-
-					last = now;
-				}
-				else
-				{
-					screen = screen->get_next_state();
-				}
-			}			
+			last = now;
+		}
+		else
+		{
+			screen = screen->get_next_state();
+		}
 	}
 }
 //-----------------------------------------------------------------------------

@@ -1,4 +1,8 @@
 #include "StaticObject.h"
+#include "Player.h"
+#include "Enemy.h"
+#include "Coin.h"
+#include "Present.h"
 
 StaticObject::StaticObject(char name, sf::Vector2f locaiton, std::shared_ptr<sf::Texture> texture):
 Object(name,locaiton)
@@ -9,18 +13,11 @@ Object(name,locaiton)
 
 void StaticObject::set_sprite(std::shared_ptr<sf::Texture> texture)
 {
-	sf::Sprite sprite;
-	sprite.setTexture(*texture);
-	sprite.setPosition(m_location);
-	sprite.setScale(sf::Vector2f(0.8, 0.8));
-	m_sprite = sprite;
+	m_sprite.setTexture(*texture);
+	m_sprite.setScale(sf::Vector2f(0.8, 0.8));
 }
 //-----------------------------------------------------------------------------
 
-sf::Sprite& StaticObject::get_sprite()
-{
-	return m_sprite;
-}
 //-----------------------------------------------------------------------------
 
 void StaticObject::Draw(sf::RenderWindow & main_window)
@@ -46,3 +43,44 @@ bool StaticObject::in_bounds(sf::RectangleShape& rect)
 	return false;
 }
 //-----------------------------------------------------------------------------
+
+
+//===================== Collision
+void StaticObject::handle_collision(Object& object)
+{
+	object.handle_collision(*this);
+}
+
+void StaticObject::handle_collision(StaticObject& object)
+{
+	//ignore
+}
+void StaticObject::handle_collision(RigidBodyObject& object)
+{
+	//ignore
+}
+void StaticObject::handle_collision(Player& object)
+{
+	object.handle_collision(*this);
+}
+void StaticObject::handle_collision(Coin & object)
+{
+
+}
+void StaticObject::handle_collision(Present& object)
+{
+
+}
+void StaticObject::handle_collision(Enemy& object)
+{
+	object.handle_collision(*this);
+}
+
+void StaticObject::handle_collision(Ladder& object)
+{
+	//ignore
+}
+void StaticObject::handle_collision(Pole& object)
+{
+	//ignore
+}
