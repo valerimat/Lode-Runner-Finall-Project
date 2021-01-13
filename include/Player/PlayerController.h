@@ -19,12 +19,11 @@ public:
 	void init_controller();
 	//PlayerController(Map &map);
 	void MovePlayer( float dt);
-	//void physics_player(sf::Keyboard::Key key, Map& map, std::vector<char> &collision);
-	void set_paths();
+	//void physics_player(sf::Keyboard::Key key, Map& map, std::vector<char> &collision)
 	void check_key_press(sf::Keyboard::Key& pressed);
 
 private:
-
+	bool m_falling = false;
 	Music* m_music = new Music;
 	Player* m_player;
 };

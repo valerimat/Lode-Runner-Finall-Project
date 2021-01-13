@@ -9,22 +9,23 @@ class Map;
 class Enemy;
 class EnemyController;
 #include <math.h>
-
+#include "Algo.h"
 /*
 Algorithm for calcluating shortest path for enemies
 */
-namespace Astar
+class Astar : public Algo
 {
+public:
 	//main function to call
-	std::vector<NextStep> calc_path(Map* map,
-								    EnemyController& controller,
-		                            sf::Vector2f && location);
-
+	//std::vector<NextStep> calc_path(Map* map,
+	//	EnemyController& controller,
+	//	sf::Vector2f location) override;
+private:
 	void get_around(Tile& curr_tile,
-					std::vector<Tile>& arround,
-					const std::vector<Tile> closed_list,
-		            int index_of_father,
-		            EnemyController& cont);
+		std::vector<Tile>& arround,
+		const std::vector<Tile> closed_list,
+		int index_of_father,
+		EnemyController& cont);
 
 	int found_player(std::vector<Tile>& tiles, sf::Vector2f location);
 
@@ -37,5 +38,5 @@ namespace Astar
 	int find_the_best_score(std::vector<Tile>);
 
 	std::vector <NextStep> make_path(std::vector<Tile>, Tile);
-}
+};
 

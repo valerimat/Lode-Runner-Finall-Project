@@ -37,7 +37,7 @@ enum class NextStep
 };
 
 const int OFFSET = 50 * 0.8;
-const float STEP = 1;
+const float STEP = 1.f;
 
 const char PLAYER = char('@');
 const char COIN = char('*');
@@ -49,6 +49,13 @@ const char LADDER = char('H');
 const char NONE = char(' ');
 const char WALL = char('w');
 const int SIZE_OF_TILE = 40;
+
+const int LADDER_INT = 1;
+const int ROPE_INT = 2;
+const int PLATFROM_INT = 3;
+const int AIR_INT = 4;
+const int PLAYER_INT = 5;
+const int GROUND_INT = 6;
 
 #define HEIGHT 850
 #define WIDTH  800
