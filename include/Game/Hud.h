@@ -1,14 +1,15 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "Clock.h"
-class Score;
+#include "Score.h"
+
 class Player;
 
 class Hud
 {
 public:
 	Hud();
-	Hud(Score* score, Player* player, int num_of_level);
+	Hud(Player* player, int num_of_level);
 	void Draw(sf::RenderWindow& window);
 	void SetScore();
 	void SetLives();
@@ -20,6 +21,7 @@ public:
 private:
 	std::vector<std::shared_ptr <sf::Texture>> m_textures;
 	int m_number_of_level;
+
 	Player* m_player;
 	Score * m_score;
 	Clock * m_clock;

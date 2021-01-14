@@ -2,6 +2,7 @@
 #include "RigidBodyObject.h"
 #include "StaticObject.h"
 #include "Coin.h"
+#include "Score.h"
 #include "Present.h"
 #include "Pole.h"
 #include "Map.h"
@@ -51,6 +52,7 @@ void Player::handle_collision(Enemy& object)
 }
 void Player::handle_collision(Coin& object)
 {
+	Score::GetScore().IncreasePoints(1);
 	m_map->DeleteCoin(object);
 }
 void Player::handle_collision(Present& object)
