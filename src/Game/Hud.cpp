@@ -9,8 +9,8 @@ Hud::Hud()
 //-----------------------------------------------------------------------------
 
 // c-tor
-Hud::Hud(Player* player, int num_of_level):
-         m_player(player), m_number_of_level(num_of_level)
+Hud::Hud(Player* player, int num_of_level, int time) :
+	m_player(player), m_number_of_level(num_of_level), m_time(time)
 {
 	m_clock = &Clock::GetClock();
 	m_score = &Score::GetScore();
@@ -58,7 +58,7 @@ void Hud::DrawLives(sf::RenderWindow& window)
 void Hud::DrawTime(sf::RenderWindow& window)
 {
 	int i = m_textures.size();
-	int time = 60 - m_clock->GetPassedTime(), // 60 will be changed 
+	int time = m_time - m_clock->GetPassedTime(), // 60 will be changed 
 			   left_digit, right_digit;
 
 	left_digit  = time / 10;

@@ -7,10 +7,11 @@
 
 
 // c-tor of map
-Map::Map(std::vector<std::string>* map,int height, int width):
+Map::Map(std::vector<std::string>* map,int height, int width, int timer):
 	m_map(*map),
 	m_height(height),
-	m_width(width)
+	m_width(width),
+	m_timer(timer)
 {
 
 	m_graph = new Graph(m_map, m_width, m_height);
@@ -260,6 +261,12 @@ int Map::GetWidth()
 int Map::GetHeight()
 {
 	return m_height;
+}
+//-----------------------------------------------------------------------------
+
+int Map::GetTimer()
+{
+	return m_timer;
 }
 //-----------------------------------------------------------------------------
 

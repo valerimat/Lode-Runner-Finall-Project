@@ -13,6 +13,8 @@ void MapData::LoadMaps()
 	int	curr_level = 0;
 	int m_height;
 	int m_width;
+	int timer;
+
 	std::string   str; // temporary string which we push into the vector;
 	std::ifstream file;
 
@@ -35,6 +37,9 @@ void MapData::LoadMaps()
 
 		file >> m_height;
 		file >> m_width;
+		file >> timer;
+
+		m_timer.push_back(timer);
 
 		int index = 0;
 		do
@@ -113,3 +118,9 @@ int MapData::GetCurrWidth(int lvl)
 	return m_maps[lvl][0].size();
 }
 //-----------------------------------------------------------------------------
+
+// gets the current width
+int MapData::GetCurrTimer(int lvl)
+{
+	return m_timer[lvl];
+}

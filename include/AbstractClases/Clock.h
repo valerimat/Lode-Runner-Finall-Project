@@ -18,5 +18,7 @@ private:
 	void operator=(Clock const&) = delete;
 
 	//static Clock s_clock;
-	sf::Clock m_time;
+	//sf::Clock m_time;
+	sf::Clock m_clock;
+	sf::Time m_time;
 };
