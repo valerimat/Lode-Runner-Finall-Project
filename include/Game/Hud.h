@@ -9,7 +9,7 @@ class Hud
 {
 public:
 	Hud();
-	Hud(Player* player, int num_of_level, int time);
+	Hud(Player* player, int num_of_level, int *time);
 	void Draw(sf::RenderWindow& window);
 	void SetScore();
 	void SetLives();
@@ -26,5 +26,5 @@ private:
 	Score * m_score;
 	Clock * m_clock;
 
-	int m_time;
+	int *m_time;
 };

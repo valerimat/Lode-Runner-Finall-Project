@@ -264,9 +264,9 @@ int Map::GetHeight()
 }
 //-----------------------------------------------------------------------------
 
-int Map::GetTimer()
+int *Map::GetTimer()
 {
-	return m_timer;
+	return &m_timer;
 }
 //-----------------------------------------------------------------------------
 
@@ -420,8 +420,8 @@ void Map::DeletePresent(Present & prenset)
 	{
 		i++;
 	}
+	m_timer += 5;
 	m_static.erase(m_static.begin() + i);
-
 	m_music->DrinkingSound();
 }
 //-----------------------------------------------------------------------------
