@@ -402,7 +402,6 @@ void Map::DeleteCoin(Coin & coin)
 		i++;
 	}
 	m_static.erase(m_static.begin() + i);
-	m_music->EaitngSound();
 }
 //-----------------------------------------------------------------------------
 
@@ -422,7 +421,6 @@ void Map::DeletePresent(Present & prenset)
 	}
 	m_timer += 5;
 	m_static.erase(m_static.begin() + i);
-	m_music->DrinkingSound();
 }
 //-----------------------------------------------------------------------------
 

@@ -1,4 +1,5 @@
 #include "Music.h"
+#include <iostream>
 
 Music::Music()
 {
@@ -22,6 +23,10 @@ void Music::LoadBuffers()
 	buffer_ptr = std::make_shared<sf::SoundBuffer>();
 	buffer_ptr->loadFromFile("ladder.ogg");
 	m_buffers.push_back(buffer_ptr);
+
+	buffer_ptr = std::make_shared<sf::SoundBuffer>();
+	buffer_ptr->loadFromFile("rope.ogg");
+	m_buffers.push_back(buffer_ptr);
 }
 
 
@@ -34,9 +39,13 @@ void Music::EaitngSound()
 
 void Music::RunningSound()
 {
-	m_sound->setBuffer(*m_buffers[1]);
-	m_sound->setVolume(5);
-	m_sound->play();
+	sf::Sound::Status status = m_sound->getStatus();
+	if (status == sf::Sound::Status::Stopped)
+	{
+		m_sound->setBuffer(*m_buffers[1]);
+		m_sound->setVolume(5);
+		m_sound->play();
+	}
 }
 
 void Music::DrinkingSound()
@@ -48,9 +57,25 @@ void Music::DrinkingSound()
 
 void Music::LadderSound()
 {
-	m_sound->setBuffer(*m_buffers[3]);
-	m_sound->setVolume(50);
-	m_sound->play();
+	sf::Sound::Status status = m_sound->getStatus();
+	if (status == sf::Sound::Status::Stopped)
+	{
+		m_sound->setBuffer(*m_buffers[3]);
+		m_sound->setVolume(40);
+		m_sound->play();
+	}
+
+}
+
+void Music::RopeSound()
+{
+	sf::Sound::Status status = m_sound->getStatus();
+	if (status == sf::Sound::Status::Stopped)
+	{
+		m_sound->setBuffer(*m_buffers[4]);
+		m_sound->setVolume(50);
+		m_sound->play();
+	}
 }
 
 

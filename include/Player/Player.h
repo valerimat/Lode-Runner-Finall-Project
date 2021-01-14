@@ -38,4 +38,5 @@ private:
 	Map* m_map;
 	Music* m_music = new Music;
 	Lives m_lives;
+	bool m_standing;
 };
