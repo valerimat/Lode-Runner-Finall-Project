@@ -64,8 +64,6 @@ void Hud::DrawTime(sf::RenderWindow& window)
 	left_digit  = time / 10;
 	right_digit = time % 10;
 
-	std::cout << time << std::endl;
-
 	sf::Sprite score_sprt;
 	score_sprt.setTexture(*m_textures[12]);
 	score_sprt.setPosition(sf::Vector2f(100, 12.5));
