@@ -34,7 +34,7 @@ private:
 
 	//members
 	int level = 0;
-	Score m_score;
+	Score &m_score = Score::GetScore();
 	MapData m_maps;
 	Map m_curr_map;
 	Hud  m_hud;

@@ -15,11 +15,12 @@ void Game::set_prev_state(State* state)
 {
 	m_previouse_screen = state;
 }
+
 void Game::Load()
 {
 	Map temp(m_maps.GetMap(level), m_maps.GetCurrHeight(level), m_maps.GetCurrWidth(level));
 	m_curr_map = temp ;
-	Hud hud(&m_score, m_curr_map.GetPlayer(), level);
+	Hud hud(m_curr_map.GetPlayer(), level);
 	m_hud = hud;
 }
 //-----------------------------------------------------------------------------
