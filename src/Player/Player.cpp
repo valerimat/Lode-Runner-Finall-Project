@@ -5,6 +5,7 @@
 #include "Present.h"
 #include "Pole.h"
 #include "Map.h"
+#include "Music.h"
 
 void Player::Move(sf::Keyboard::Key key,float dt)
 {

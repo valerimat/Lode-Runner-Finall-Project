@@ -1,7 +1,7 @@
 #include "Hud.h"
 #include "Score.h"
 #include "Player.h"
-
+#include <iostream>
 // c-tor
 Hud::Hud()
 {
@@ -9,9 +9,10 @@ Hud::Hud()
 //-----------------------------------------------------------------------------
 
 // c-tor
-Hud::Hud(Score* score, Player* player, int num_of_level):
+Hud::Hud(Score* score, Player* player, int num_of_level) :
 	m_score(score), m_player(player), m_number_of_level(num_of_level)
 {
+	m_clock = &Clock::GetClock();
 	LoadTextures();
 }
 //-----------------------------------------------------------------------------
@@ -26,7 +27,6 @@ void Hud::Draw(sf::RenderWindow& window)
 	DrawLives(window);
 	DrawLevel(window);
 	DrawTime(window);
-
 }
 //-----------------------------------------------------------------------------
 
@@ -56,25 +56,33 @@ void Hud::DrawLives(sf::RenderWindow& window)
 void Hud::DrawTime(sf::RenderWindow& window)
 {
 	int i = m_textures.size();
+	int time = 60 - m_clock->GetPassedTime(), // 60 will be changed 
+			   left_digit, right_digit;
+
+	left_digit  = time / 10;
+	right_digit = time % 10;
+
+	std::cout << time << std::endl;
+
 	sf::Sprite score_sprt;
 	score_sprt.setTexture(*m_textures[12]);
 	score_sprt.setPosition(sf::Vector2f(100, 12.5));
 	score_sprt.scale(sf::Vector2f(1, 1));
 
-	sf::Sprite zero1;
-	zero1.setTexture(*m_textures[0]);
-	zero1.setPosition(sf::Vector2f(225, 12.5));
-	zero1.scale(sf::Vector2f(1, 1));
+	sf::Sprite left;
+	left.setTexture(*m_textures[left_digit]);
+	left.setPosition(sf::Vector2f(225, 12.5));
+	left.scale(sf::Vector2f(1, 1));
 
-	sf::Sprite zero2;
-	zero2.setTexture(*m_textures[0]);
-	zero2.setPosition(sf::Vector2f(250, 12.5));
-	zero2.scale(sf::Vector2f(1, 1));
+	sf::Sprite right;
+	right.setTexture(*m_textures[right_digit]);
+	right.setPosition(sf::Vector2f(250, 12.5));
+	right.scale(sf::Vector2f(1, 1));
 
 
 	window.draw(score_sprt);
-	window.draw(zero1);
-	window.draw(zero2);
+	window.draw(left);
+	window.draw(right);
 	//int score = get_score();
 
 }

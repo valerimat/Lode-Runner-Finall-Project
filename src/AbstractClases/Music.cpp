@@ -18,6 +18,10 @@ void Music::LoadBuffers()
 	buffer_ptr = std::make_shared<sf::SoundBuffer>();
 	buffer_ptr->loadFromFile("drinking.ogg");
 	m_buffers.push_back(buffer_ptr);
+
+	buffer_ptr = std::make_shared<sf::SoundBuffer>();
+	buffer_ptr->loadFromFile("ladder.ogg");
+	m_buffers.push_back(buffer_ptr);
 }
 
 
@@ -38,6 +42,13 @@ void Music::RunningSound()
 void Music::DrinkingSound()
 {
 	m_sound->setBuffer(*m_buffers[2]);
+	m_sound->setVolume(50);
+	m_sound->play();
+}
+
+void Music::LadderSound()
+{
+	m_sound->setBuffer(*m_buffers[3]);
 	m_sound->setVolume(50);
 	m_sound->play();
 }
