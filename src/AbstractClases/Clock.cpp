@@ -2,16 +2,15 @@
 
 Clock::Clock()
 {
-	sf::Clock m_time; // starts the clock
+	sf::Clock m_clock; // starts the clock
 }
 
 // gets the passed time since the clock is init
 int Clock::GetPassedTime()
 {
-	sf::Time time;
 	float seconds;
-	time = m_time.getElapsedTime();
-	seconds = time.asSeconds();
+	m_time = m_clock.getElapsedTime();
+	seconds = m_time.asSeconds();
 
 	return (int)seconds;
 }
@@ -19,5 +18,5 @@ int Clock::GetPassedTime()
 // restarts the clock
 void Clock::RestartTime()
 {
-	m_time.restart();
+	m_clock.restart();
 }
