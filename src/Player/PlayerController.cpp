@@ -42,8 +42,6 @@ void PlayerController::MovePlayer( float dt)
 		m_falling = true;
 	else
 		m_falling = false;
-
-	m_map->IsOnLadder(m_player->get_location());
 }
 //-----------------------------------------------------------------------------
 

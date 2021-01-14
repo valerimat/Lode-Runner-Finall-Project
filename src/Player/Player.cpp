@@ -52,7 +52,7 @@ void Player::handle_collision(Enemy& object)
 }
 void Player::handle_collision(Coin& object)
 {
-	Score::GetScore().IncreasePoints(1);
+	Score::GetScore().IncreasePoints(1); // 1 represents the lvl needs to be changed latter
 	m_map->DeleteCoin(object);
 }
 void Player::handle_collision(Present& object)
