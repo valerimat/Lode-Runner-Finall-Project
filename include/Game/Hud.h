@@ -1,7 +1,8 @@
 #pragma once
+#include <SFML/Graphics.hpp>
+#include "Clock.h"
 class Score;
 class Player;
-#include <SFML/Graphics.hpp>
 
 class Hud
 {
@@ -21,4 +22,5 @@ private:
 	int m_number_of_level;
 	Player* m_player;
 	Score * m_score;
+	Clock * m_clock;
 };

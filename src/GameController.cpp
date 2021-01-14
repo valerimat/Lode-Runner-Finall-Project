@@ -1,8 +1,11 @@
 #include "GameController.h"
+#include "Clock.h"
 
 void GameController::Run()
 {
 	using clock = std::chrono::high_resolution_clock;
+
+	//auto& timer = Clock::GetClock();
 
 	sf::Event event;
 	sf::RenderWindow main_window(sf::VideoMode(WIDTH, HEIGHT), "Lode Runner");
@@ -22,8 +25,6 @@ void GameController::Run()
 
 	while (main_window.isOpen())
 	{
-
-
 		main_window.clear(sf::Color::Black);
 
 		screen->Draw(main_window);
@@ -40,8 +41,7 @@ void GameController::Run()
 			}
 		}
 
-	
-
+		//std::cout << "Main clock: " << timer.GetPassedTime() << std::endl;
 
 		if (!screen->satate_changed())
 		{

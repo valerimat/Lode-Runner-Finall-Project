@@ -36,5 +36,6 @@ public:
 	void handle_collision(Enemy& object) override;
 private:
 	Map* m_map;
+	Music* m_music = new Music;
 	Lives m_lives;
 };

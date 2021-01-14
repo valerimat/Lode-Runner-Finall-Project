@@ -289,8 +289,15 @@ char Map::WhatIsThere(sf::Vector2f location)
 // asks if it touches the ground
 bool Map::IsOnGround(sf::Vector2f location)
 {
+	sf::Vector2f player_location = GetPlayer()->get_location();
+
+	std::cout << player_location.x << " " << player_location.y << std::endl;
+
 	for (int i = 0; i < m_ground.size(); ++i)
 	{
+		if (m_ground[i]->in_bounds(player_location))
+			//m_music->LadderSound();
+			std::cout << "yes\n";
 		if (m_ground[i]->in_bounds(location))
 			return true;
 	}
@@ -356,11 +363,15 @@ bool Map::IsOnRope(sf::Vector2f location_l, sf::Vector2f location_r)
 bool Map::IsOnLadder(sf::Vector2f location)
 {
 	sf::RectangleShape rect;
+	//sf::Vector2f play_location = GetPlayer()->get_location();
 	rect.setPosition(location);
 	rect.setSize({ 40,40 });
 
 	for (int i = 0; i < m_ladders.size(); ++i)
 	{
+		//if (m_ladders[i]->in_bounds(play_location))
+			//m_music->LadderSound();
+
 		if (m_ladders[i]->in_bounds(rect))
 			return true;
 	}
@@ -403,6 +414,7 @@ void Map::DeletePresent(Present & prenset)
 		i++;
 	}
 	m_static.erase(m_static.begin() + i);
+
 	m_music->DrinkingSound();
 }
 //-----------------------------------------------------------------------------
