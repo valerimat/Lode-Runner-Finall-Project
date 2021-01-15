@@ -53,6 +53,7 @@ void GameController::Run()
 			float dt_long = dt.count()*0.1f;
 			if (dt_long == 0)
 				dt_long = 1;
+
 			screen->handle_event(dt_long);
 
 			last = now;

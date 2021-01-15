@@ -4,50 +4,80 @@
 #include <iostream>
 #include "Graph.h"
 #include "EnemyController.h"
+#include "Node.h"
 
-std::vector<sf::Vector2f> OneSide::calc_path(Graph& graph, sf::FloatRect& our_rect)
+std::vector<sf::Vector2f> OneSide::calc_path(Graph& graph, sf::Vector2f our_location, sf::Vector2f wanted_location)
 {
-	srand(time(NULL));
-	std::vector<sf::Vector2f> next;
+	std::vector<sf::Vector2f> waypoints;
+	Node* node = graph.get_closest_node(our_location);
 	
-	sf::Vector2f waypoint(-1,-1);
-	int index = graph.we_are_on_node(our_rect);
-	if (index == -1)
-	{
-		sf::Vector2f edge = graph.we_are_on_edge_hori(our_rect);
-		if (edge != sf::Vector2f(-1, -1))
-		{
-			auto random = rand() % 2;
+	//first_we_pus_closest_node
+	waypoints.push_back(node->get_location());
+	//std::cout << "location = " << "( " << node->get_location().x << " " << node->get_location().y << " )" << std::endl;
+	sf::Vector2f next_location;
 
-			if (random == 1)
-			{
-				waypoint = graph.get_parent_node(edge.x);
-			}
-			else
-			{
-				waypoint = graph.get_neighboor_node(edge.x, edge.y);
-			}
-		}
-	}
+	srand(time(0));
+
+	int random = rand();
+	
+	if (random %2 ==0)
+		next_location = get_most_left(node);
 	else
-	{
-		auto random = rand() % 2;
+		next_location = get_most_right(node);
 
-		if (random == 1)
-		{
-			waypoint = graph.get_max_left_node(index);
-			if(waypoint == sf::Vector2f(-1,-1))
-				waypoint = graph.get_max_right_node(index);
-		}
-		else
-		{
-			waypoint = graph.get_max_right_node(index);
-			if (waypoint == sf::Vector2f(-1, -1))
-				waypoint = graph.get_max_left_node(index);
-		}
-	}
-	next.push_back(waypoint);
+	waypoints.push_back(next_location);
 
-	return next;
+	//get_most_left
+	return waypoints;
 }
 //-----------------------------------------------------------------------------
+
+
+
+sf::Vector2f OneSide::get_most_left(Node* node)
+{
+	Node* temp = node;
+	Node* next;
+	while (1)
+	{
+
+		next = temp->get_left();
+
+		//if the next node is fall node we dont want it
+		if (next == nullptr)
+			break;
+
+		if (next->get_right() == nullptr)
+			break;
+
+		temp = temp->get_left();
+		
+		if (temp == nullptr)
+			break;
+	}
+
+	return temp->get_location();
+}
+
+sf::Vector2f OneSide::get_most_right(Node* node)
+{
+	Node* temp = node;
+	Node* next;
+	while (1)
+	{
+		next = temp->get_right();
+		if (next == nullptr)
+			break;
+		//if the next node is fall node we dont want it
+		if (next->get_left() == nullptr)
+			break;
+
+		temp = temp->get_right();
+
+		if (temp == nullptr)
+			break;
+	}
+
+	return temp->get_location();
+}
+

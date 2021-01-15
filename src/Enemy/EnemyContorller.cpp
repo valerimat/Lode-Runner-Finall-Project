@@ -2,10 +2,13 @@
 #include "OneSide.h"
 #include "Map.h"
 #include "Enemy.h"
+static int stuck = 0;
 
 void EnemyController::init_controller()
 {
 	m_enemies = m_map->GetEnemies();
+	set_curr_location();
+	set_previouse_locations();
 	for (auto enemy : m_enemies)
 		enemy->set_map(m_map);
 }
@@ -13,8 +16,11 @@ void EnemyController::init_controller()
 
 void EnemyController::move_enemies(float dt)
 {	
+
 	for (auto enemy : m_enemies)
 	{
+		set_previouse_locations();
+
 		if (!enemy->m_falling)
 		{
 			enemy->move(dt);
@@ -40,6 +46,10 @@ void EnemyController::move_enemies(float dt)
 			enemy->m_falling = true;
 		else
 			enemy->m_falling = false;
+
+		set_curr_location();
+
+		check_stuck();
 	}
 }
 //-----------------------------------------------------------------------------
@@ -66,3 +76,40 @@ void EnemyController::set_paths()
 	}
 }
 //-----------------------------------------------------------------------------
+void EnemyController::set_curr_location()
+{
+	curr_loc.clear();
+	for (auto enemy : m_enemies)
+	{
+		curr_loc.push_back(enemy->get_location());
+	}
+}
+
+void EnemyController::set_previouse_locations()
+{
+	prev_loc.clear();
+	for (auto enemy : m_enemies)
+	{
+		prev_loc.push_back(enemy->get_location());
+	}
+}
+
+void EnemyController::check_stuck()
+{
+	for (int i = 0; i < curr_loc.size(); ++i)
+	{
+		if (prev_loc[i] == curr_loc[i])
+		{
+			m_enemies[i]->up_stuck();
+
+			if (m_enemies[i]->stuck())
+			{
+				m_enemies[i]->reset_path();
+			}
+		}
+		else
+		{
+			m_enemies[i]->reset_stuck();
+		}
+	}
+}

@@ -10,6 +10,7 @@ void PlayerController::init_controller()
 }
 //-----------------------------------------------------------------------------
 
+
 void PlayerController::MovePlayer( float dt)
 {
 	sf::Keyboard::Key key;
@@ -56,6 +57,4 @@ void PlayerController::check_key_press(sf::Keyboard::Key& pressed)
 		pressed = sf::Keyboard::Up;
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
 		pressed = sf::Keyboard::Down;
-	else
-		pressed = sf::Keyboard::End;
 }

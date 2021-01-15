@@ -7,6 +7,13 @@ enum class IQ
 	OneSide,
 };
 
+enum class Color
+{
+	White,
+	Grey,
+	Black,
+};
+
 enum class StateEnum
 {
 	None,
@@ -49,6 +56,9 @@ const char LADDER = char('H');
 const char NONE = char(' ');
 const char WALL = char('w');
 const int SIZE_OF_TILE = 40;
+
+const float offset_x_graph = SIZE_OF_TILE + 0.5 * SIZE_OF_TILE;
+const float offset_y_graph = SIZE_OF_TILE + 0.5 * SIZE_OF_TILE + 50;
 
 const int LADDER_INT = 1;
 const int ROPE_INT = 2;

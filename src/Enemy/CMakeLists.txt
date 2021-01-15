@@ -4,7 +4,7 @@
                                      "EnemyContorller.cpp"
                                      "OneSide.cpp"
                                      "RandomPath.cpp"
-                                    # "Astar.cpp"
+                                     "Bfs.cpp"
                                      "Tile.cpp"
                                      "Graph.cpp"
                                      "Node.cpp"

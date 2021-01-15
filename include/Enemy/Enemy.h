@@ -20,10 +20,10 @@ public:
 	//Setters:
 	virtual void set_smartness(int i);
 	void set_waypoint();
-
+	void reset_path();
 	//Getters:
 	IQ get_iq();
-
+	sf::Vector2f get_center();
 	//collisions:
 	void handle_collision(Pole& object) override;
 	void handle_collision(Ladder& object) override;
@@ -35,6 +35,12 @@ public:
 	void handle_collision(Player& object) override ;
 	void handle_collision(Enemy& object) override ;
 
+	//for debug !!
+	
+	void up_stuck();
+	void reset_stuck();
+	bool stuck();
+
 	//helpers:
 	void move(float dt);
 	bool no_waypoints();
@@ -42,11 +48,14 @@ public:
 	NextStep direction_to_waypoint();
 	bool m_falling = false;
 private:
-	
+	void set_next_waypoint();
+
+	int stuck_counter = 0;
+	int m;
 	Map* m_map;
 	Algo * algo;
 	std::vector<sf::Vector2f> waypoints;
-	sf::Vector2f next_waypoint;
+	sf::Vector2f next_waypoint = sf::Vector2f(-1, -1);
 	IQ m_iq;
 
 };

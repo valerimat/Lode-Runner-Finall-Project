@@ -19,7 +19,7 @@ Map::Map(std::vector<std::string>* map,int height, int width, int timer):
 	SetObjects();
 }
 //-----------------------------------------------------------------------------
-Graph Map::get_graph()
+Graph & Map::get_graph()
 {
 	return *m_graph;
 }
@@ -49,6 +49,7 @@ void Map::SetObjects()
 			case ENEMY:
 				dn_ptr = std::make_shared<Enemy>(ENEMY, location, m_textures[ENEMY_TEXTURE],smrt);
 				m_dynamic.push_back(dn_ptr);
+				std::cout << "location map = " << "( " << dn_ptr->get_location().x << " " << dn_ptr->get_location().y << " )" << std::endl;
 				smrt++;
 				break;
 

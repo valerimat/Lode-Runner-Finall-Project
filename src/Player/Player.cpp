@@ -4,6 +4,7 @@
 #include "Coin.h"
 #include "Score.h"
 #include "Present.h"
+#include "Ladder.h"
 #include "Pole.h"
 #include "Map.h"
 #include "Music.h"
@@ -35,8 +36,6 @@ void Player::Move(sf::Keyboard::Key key,float dt)
 }
 //-----------------------------------------------------------------------------
 
-
-//-----------------------------------------------------------------------------
 void Player::handle_collision(Object& object)
 {
 	if (this->get_name() == object.get_name()) return;
@@ -49,11 +48,9 @@ void Player::handle_collision(StaticObject& object)
 
 void Player::handle_collision(Player& object)
 {
-
 }
 void Player::handle_collision(Enemy& object)
 {
-
 }
 void Player::handle_collision(Coin& object)
 {
@@ -76,9 +73,18 @@ void Player::handle_collision(Pole& object)
 
 void Player::handle_collision(Ladder& object)
 {
-	if (!m_standing)
-		m_music->LadderSound();
-	m_gravity = false;
+	sf::FloatRect inter;
+	if (get_sprite().getGlobalBounds().intersects(object.get_sprite().getGlobalBounds(), inter))
+		if (inter.width >= 20)
+    {
+			m_gravity = false;
+      m_music->LadderSound();
+    }
+
+	//if (!m_standing)
+
+
+
 }
 
 void Player::handle_collision(RigidBodyObject& object)

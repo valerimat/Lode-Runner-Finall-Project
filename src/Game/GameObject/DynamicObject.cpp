@@ -5,6 +5,7 @@
 DynamicObject::DynamicObject(char name, sf::Vector2f locaiton, std::shared_ptr<sf::Texture> texture):
 	Object(name, locaiton)
 {
+	rect.setPosition(sf::Vector2f(-1, -1));
 	set_sprite(texture);
 }
 //-----------------------------------------------------------------------------
@@ -41,6 +42,15 @@ void DynamicObject::Draw(sf::RenderWindow &main_window)
 		this->get_sprite().setTextureRect(rect_sprite);
 	}
 	main_window.draw(m_sprite);
+
+	
+	if (rect.getPosition() != sf::Vector2f(-1, -1))
+	{
+		rect.setSize(sf::Vector2f(30, 30));
+		rect.setFillColor(sf::Color::Blue);
+	}
+	main_window.draw(rect);
+	
 }
 //-----------------------------------------------------------------------------
 
