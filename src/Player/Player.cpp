@@ -77,14 +77,10 @@ void Player::handle_collision(Ladder& object)
 	if (get_sprite().getGlobalBounds().intersects(object.get_sprite().getGlobalBounds(), inter))
 		if (inter.width >= 20)
     {
-			m_gravity = false;
-      m_music->LadderSound();
+		m_gravity = false;
+		if (!m_standing)
+		m_music->LadderSound();
     }
-
-	//if (!m_standing)
-
-
-
 }
 
 void Player::handle_collision(RigidBodyObject& object)

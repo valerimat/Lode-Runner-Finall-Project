@@ -44,7 +44,7 @@ std::vector<sf::Vector2f> Bfs::bfs(Node* from, Node* to)
 
 		//getting the first variable from open list
 		head_of_list = open_list[0];
-		std::cout << (head_of_list->get_location().x - 20) / 40 << " " << (head_of_list->get_location().y - 20 - 50) / 40 << " " << std::endl;
+
 		if (check_if_reached(head_of_list,to))
 			break;
 		//adds neighbors if they arent colored

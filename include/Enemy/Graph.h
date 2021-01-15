@@ -14,10 +14,6 @@ public:
 	//For algorithms:
 	Node* get_closest_node(sf::Vector2f& location);
 	void clean();
-	sf::Vector2f get_random_neighboor(int i, int rnd);
-	sf::Vector2f get_max_right_node(int index);
-	sf::Vector2f get_max_left_node(int index);
-	sf::Vector2f find_closest(sf::Vector2f location);
 
 	//For debug:
 	void Draw(sf::RenderWindow& window);

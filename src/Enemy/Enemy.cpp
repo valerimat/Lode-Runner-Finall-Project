@@ -135,8 +135,6 @@ void Enemy::move(float dt)
 void Enemy::up_stuck()
 {
 	stuck_counter++;
-	if (stuck_counter % 10 == 0)
-		std::cout << m << " " << stuck_counter << std::endl;
 }
 
 void Enemy::reset_stuck()
@@ -156,8 +154,6 @@ bool Enemy::stuck()
 //-----------------------------------------------------------------------------
 bool Enemy::checke_if_reached()
 {
-	rect.setPosition(next_waypoint);
-
 	sf::Vector2 location = get_center();
 
 	//if we reached the waypoint in 2 pixels diffrence

@@ -31,9 +31,6 @@ public:
 	//Getters:
 	sf::Vector2f get_location();
 
-	//for debug:
-	sf::RectangleShape rect;
-
 	void update_location(NextStep step,float dt);
 	
 protected:
