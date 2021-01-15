@@ -7,6 +7,7 @@
 class Ladder : public StaticObject
 {
 	using StaticObject::StaticObject;
+
 	void handle_collision(Player& player)
 	{
 		player.handle_collision(*this);

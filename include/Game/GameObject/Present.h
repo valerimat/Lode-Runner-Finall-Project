@@ -10,8 +10,8 @@ class Present : public StaticObject
 	{
 		player.handle_collision(*this);
 	}
-	void handle_collision(Enemey& player)
+	void handle_collision(Enemy& enemy)
 	{
-		//ignore
+
 	}
 };

@@ -4,40 +4,37 @@
 #include <iostream>
 #include "Graph.h"
 #include "EnemyController.h"
+#include "Node.h"
 #include<ctime>
 
-std::vector<sf::Vector2f> RandomPath::calc_path(Graph& graph, sf::FloatRect& our_rect)
+std::vector<sf::Vector2f> RandomPath::calc_path(Graph& graph, sf::Vector2f our_location, sf::Vector2f wanted_location)
 {
-	
-	srand(time(0));
-	std::vector<sf::Vector2f> next;
-	sf::Vector2f waypoint(-1, -1);
-	int index = graph.we_are_on_node(our_rect);
-	if (index == -1)
-	{
-		sf::Vector2f edge = graph.we_are_on_edge(our_rect);
-		
-		if (edge != sf::Vector2f(-1, -1))
-		{
-			auto random = rand() % 2;
+	std::vector<sf::Vector2f> waypoints;
 
-			if (random == 1)
-			{
-				waypoint = graph.get_parent_node(edge.x);
-			}
-			else
-			{
-				waypoint = graph.get_neighboor_node(edge.x, edge.y);
-			}
-		}
-	}
-	else
-	{
-		waypoint = graph.get_random_neighboor(index, rand());
-	}
-	next.push_back(waypoint);
+	Node* node = graph.get_closest_node(our_location);
 
-	return next;
+	//first_we_pus_closest_node
+	waypoints.push_back(node->get_location());
+
+	find_random_path(node, waypoints);
+
+
+	return waypoints;
+
 }
 //-----------------------------------------------------------------------------
 
+void RandomPath::find_random_path(Node* node, std::vector<sf::Vector2f>& waypoints)
+{
+	srand(time(NULL));
+
+	Node* next;
+	next = node->get_random_neigbor(rand());
+
+	for (int i = 0; i < 10; ++i)
+	{
+		
+		waypoints.push_back(next->get_location());
+		next = next->get_random_neigbor(rand());
+	}
+}

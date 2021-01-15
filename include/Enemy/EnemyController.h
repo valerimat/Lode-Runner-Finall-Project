@@ -23,6 +23,12 @@ public:
 	bool reached_player(Map* map);
 	void init_controller();
 private:
+	void set_curr_location();
+	void set_previouse_locations();
+	void check_stuck();
+
+	std::vector<sf::Vector2f> prev_loc;
+	std::vector<sf::Vector2f> curr_loc;
 
 	std::vector<Enemy *> m_enemies;
 };

@@ -32,7 +32,7 @@ public:
 	std::vector<std::shared_ptr<StaticObject>>* GetStatic();
 	int GetHeight();
 	int GetWidth();
-	Graph get_graph();
+	Graph & get_graph();
 	// setters
 	void SetObjects();
 
