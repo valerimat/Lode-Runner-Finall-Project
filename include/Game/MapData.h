@@ -16,6 +16,7 @@ public:
 	std::vector<std::string> * GetCleanMap(int number_of_levle);
 	int GetCurrHeight(int lvl);
 	int GetCurrWidth(int lvl);
+	int GetCurrTimer(int lvl);
 
 private:
 	// private function
@@ -24,5 +25,6 @@ private:
 	// members
 	std::vector <std::vector <std::string>> m_maps_clean;
 	std::vector<std::vector<std::string>> m_maps;
+	std::vector<int> m_timer;
 	int m_number_of_levels;
 };

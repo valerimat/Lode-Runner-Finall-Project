@@ -20,7 +20,7 @@ class Map
 public:
 	//c-tors
 	Map() = default;
-	Map(std::vector<std::string>* map, int height,int width);
+	Map(std::vector<std::string>* map, int height,int width, int timer);
 
 	// map functions
 	void LoadTextures();
@@ -33,6 +33,9 @@ public:
 	int GetHeight();
 	int GetWidth();
 	Graph & get_graph();
+
+	int *GetTimer();
+
 	// setters
 	void SetObjects();
 
@@ -43,7 +46,7 @@ public:
 	bool IsOnPlayer(sf::Vector2f& location);
 	bool IsOnLadder(sf::Vector2f location);
 	int  IsOnCoin(sf::Vector2f location);
-	int IsOnPresent(sf::Vector2f location);
+	int  IsOnPresent(sf::Vector2f location);
 	void check_collision(Object& object);
 	
 	// action
@@ -53,6 +56,7 @@ public:
 private:
 	int m_width;
 	int m_height;
+	int m_timer;
 
 	char GetChar(int i, int j);
 

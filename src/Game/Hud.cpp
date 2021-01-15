@@ -1,6 +1,6 @@
 #include "Hud.h"
-#include "Score.h"
 #include "Player.h"
+#include <iostream>
 
 // c-tor
 Hud::Hud()
@@ -9,9 +9,12 @@ Hud::Hud()
 //-----------------------------------------------------------------------------
 
 // c-tor
-Hud::Hud(Score* score, Player* player, int num_of_level):
-	m_score(score), m_player(player), m_number_of_level(num_of_level)
+Hud::Hud(Player* player, int num_of_level, int *time) :
+	m_player(player), m_number_of_level(num_of_level), m_time(time)
 {
+	m_clock = &Clock::GetClock();
+	m_score = &Score::GetScore();
+
 	LoadTextures();
 }
 //-----------------------------------------------------------------------------
@@ -26,7 +29,6 @@ void Hud::Draw(sf::RenderWindow& window)
 	DrawLives(window);
 	DrawLevel(window);
 	DrawTime(window);
-
 }
 //-----------------------------------------------------------------------------
 
@@ -56,25 +58,31 @@ void Hud::DrawLives(sf::RenderWindow& window)
 void Hud::DrawTime(sf::RenderWindow& window)
 {
 	int i = m_textures.size();
+	int time = *m_time - m_clock->GetPassedTime(), // 60 will be changed 
+			   left_digit, right_digit;
+
+	left_digit  = time / 10;
+	right_digit = time % 10;
+
 	sf::Sprite score_sprt;
 	score_sprt.setTexture(*m_textures[12]);
 	score_sprt.setPosition(sf::Vector2f(100, 12.5));
 	score_sprt.scale(sf::Vector2f(1, 1));
 
-	sf::Sprite zero1;
-	zero1.setTexture(*m_textures[0]);
-	zero1.setPosition(sf::Vector2f(225, 12.5));
-	zero1.scale(sf::Vector2f(1, 1));
+	sf::Sprite left;
+	left.setTexture(*m_textures[left_digit]);
+	left.setPosition(sf::Vector2f(225, 12.5));
+	left.scale(sf::Vector2f(1, 1));
 
-	sf::Sprite zero2;
-	zero2.setTexture(*m_textures[0]);
-	zero2.setPosition(sf::Vector2f(250, 12.5));
-	zero2.scale(sf::Vector2f(1, 1));
+	sf::Sprite right;
+	right.setTexture(*m_textures[right_digit]);
+	right.setPosition(sf::Vector2f(250, 12.5));
+	right.scale(sf::Vector2f(1, 1));
 
 
 	window.draw(score_sprt);
-	window.draw(zero1);
-	window.draw(zero2);
+	window.draw(left);
+	window.draw(right);
 	//int score = get_score();
 
 }
@@ -112,36 +120,45 @@ void Hud::DrawLevel(sf::RenderWindow& window)
 void Hud::DrawScore(sf::RenderWindow& window)
 {
 	int i = m_textures.size();
+	int score = m_score->GetPoints();
+
+
 	sf::Sprite score_sprt;
 	score_sprt.setTexture(*m_textures[10]);
 	score_sprt.setPosition(sf::Vector2f(300, 12.5));
 	score_sprt.scale(sf::Vector2f(1, 1));
 
-	sf::Sprite zero1;
-	zero1.setTexture(*m_textures[0]);
-	zero1.setPosition(sf::Vector2f(450, 12.5));
-	zero1.scale(sf::Vector2f(1, 1));
+	sf::Sprite digit1;
+	digit1.setTexture(*m_textures[score%10]);
+	digit1.setPosition(sf::Vector2f(525, 12.5)); 
+	digit1.scale(sf::Vector2f(1, 1));
 
-	sf::Sprite zero2;
-	zero2.setTexture(*m_textures[0]);
-	zero2.setPosition(sf::Vector2f(475, 12.5));
-	zero2.scale(sf::Vector2f(1, 1));
+	score /= 10;
 
-	sf::Sprite zero3;
-	zero3.setTexture(*m_textures[0]);
-	zero3.setPosition(sf::Vector2f(500, 12.5));
-	zero3.scale(sf::Vector2f(1, 1));
+	sf::Sprite digit2;
+	digit2.setTexture(*m_textures[score % 10]);
+	digit2.setPosition(sf::Vector2f(500, 12.5)); 
+	digit2.scale(sf::Vector2f(1, 1));
 
-	sf::Sprite zero4;
-	zero4.setTexture(*m_textures[0]);
-	zero4.setPosition(sf::Vector2f(525, 12.5));
-	zero4.scale(sf::Vector2f(1, 1));
+	score /= 10;
+
+	sf::Sprite digit3;
+	digit3.setTexture(*m_textures[score % 10]);
+	digit3.setPosition(sf::Vector2f(475, 12.5)); 
+	digit3.scale(sf::Vector2f(1, 1));
+
+	score /= 10;
+
+	sf::Sprite digit4;
+	digit4.setTexture(*m_textures[score % 10]);
+	digit4.setPosition(sf::Vector2f(450, 12.5));
+	digit4.scale(sf::Vector2f(1, 1));
 
 	window.draw(score_sprt);
-	window.draw(zero1);
-	window.draw(zero2);
-	window.draw(zero3);
-	window.draw(zero4);
+	window.draw(digit1);
+	window.draw(digit2);
+	window.draw(digit3);
+	window.draw(digit4);
 
 	//int score = get_score();
 

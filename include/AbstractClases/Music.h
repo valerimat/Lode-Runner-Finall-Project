@@ -14,6 +14,8 @@ public:
 	void EaitngSound();
 	void DrinkingSound();
 	void RunningSound();
+	void LadderSound();
+	void RopeSound();
 private:
 
 	sf::Sound* m_sound = new sf::Sound;

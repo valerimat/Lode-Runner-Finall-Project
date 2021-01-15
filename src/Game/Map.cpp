@@ -7,10 +7,11 @@
 
 
 // c-tor of map
-Map::Map(std::vector<std::string>* map,int height, int width):
+Map::Map(std::vector<std::string>* map,int height, int width, int timer):
 	m_map(*map),
 	m_height(height),
-	m_width(width)
+	m_width(width),
+	m_timer(timer)
 {
 
 	m_graph = new Graph(m_map, m_width, m_height);
@@ -143,6 +144,13 @@ void Map::Draw(sf::RenderWindow &main_window)
 
 	for (int i = 0; i < m_dynamic.size(); ++i)
 	{
+		
+		if (m_dynamic[i]->get_name() == '@')
+		{
+			sf::IntRect rect_sprite(0, 0, 50, 50);
+			m_dynamic[i]->get_sprite().setTextureRect(rect_sprite);
+		}
+
 		m_dynamic[i]->Draw(main_window);
 	}
 
@@ -264,6 +272,12 @@ int Map::GetHeight()
 }
 //-----------------------------------------------------------------------------
 
+int *Map::GetTimer()
+{
+	return &m_timer;
+}
+//-----------------------------------------------------------------------------
+
 // asks if it touches the player
 bool Map::IsOnPlayer(sf::Vector2f & location)
 {
@@ -290,8 +304,15 @@ char Map::WhatIsThere(sf::Vector2f location)
 // asks if it touches the ground
 bool Map::IsOnGround(sf::Vector2f location)
 {
+	sf::Vector2f player_location = GetPlayer()->get_location();
+
+	std::cout << player_location.x << " " << player_location.y << std::endl;
+
 	for (int i = 0; i < m_ground.size(); ++i)
 	{
+		if (m_ground[i]->in_bounds(player_location))
+			//m_music->LadderSound();
+			std::cout << "yes\n";
 		if (m_ground[i]->in_bounds(location))
 			return true;
 	}
@@ -357,11 +378,15 @@ bool Map::IsOnRope(sf::Vector2f location_l, sf::Vector2f location_r)
 bool Map::IsOnLadder(sf::Vector2f location)
 {
 	sf::RectangleShape rect;
+	//sf::Vector2f play_location = GetPlayer()->get_location();
 	rect.setPosition(location);
 	rect.setSize({ 40,40 });
 
 	for (int i = 0; i < m_ladders.size(); ++i)
 	{
+		//if (m_ladders[i]->in_bounds(play_location))
+			//m_music->LadderSound();
+
 		if (m_ladders[i]->in_bounds(rect))
 			return true;
 	}
@@ -385,7 +410,6 @@ void Map::DeleteCoin(Coin & coin)
 		i++;
 	}
 	m_static.erase(m_static.begin() + i);
-	m_music->EaitngSound();
 }
 //-----------------------------------------------------------------------------
 
@@ -403,8 +427,8 @@ void Map::DeletePresent(Present & prenset)
 	{
 		i++;
 	}
+	m_timer += 5;
 	m_static.erase(m_static.begin() + i);
-	m_music->DrinkingSound();
 }
 //-----------------------------------------------------------------------------
 

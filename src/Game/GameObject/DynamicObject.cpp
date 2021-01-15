@@ -36,6 +36,11 @@ void DynamicObject::turn_gravity_on()
 
 void DynamicObject::Draw(sf::RenderWindow &main_window)
 {
+	if (this->get_name() == '@')
+	{
+		sf::IntRect rect_sprite(0, 0, 50, 50);
+		this->get_sprite().setTextureRect(rect_sprite);
+	}
 	main_window.draw(m_sprite);
 
 	
@@ -52,21 +57,53 @@ void DynamicObject::Draw(sf::RenderWindow &main_window)
 void DynamicObject::update_location(NextStep step,float dt)
 {
 	sf::Vector2f loc = m_sprite.getPosition();
+	
+
 	switch (step)
 	{
 	case NextStep::LEFT:
+		if (this->get_name() == '@')
+		{
+			sf::IntRect rect_sprite(50, 100, 50, 50);
+			m_sprite.setTextureRect(rect_sprite);
+		}
+
 		m_sprite.move(dt *sf::Vector2f(-STEP, 0));
 		break;
 	case NextStep::RIGHT:
+		if (this->get_name() == '@')
+		{
+			sf::IntRect rect_sprite(50, 50, 50, 50);
+			m_sprite.setTextureRect(rect_sprite);
+		}
+
 		m_sprite.move(dt *sf::Vector2f(STEP, 0));
 		break;
 	case NextStep::UP:
+		if (this->get_name() == '@')
+		{
+			sf::IntRect rect_sprite(150, 150, 50, 50);
+			m_sprite.setTextureRect(rect_sprite);
+		}
+
 		m_sprite.move(dt *sf::Vector2f(0,-STEP));
 		break;
 	case NextStep::DOWN:
+		if (this->get_name() == '@')
+		{
+			//sf::IntRect rect_sprite(150, 150, 50, 50);
+			//m_sprite.setTextureRect(rect_sprite);
+		}
+
 		m_sprite.move(dt * sf::Vector2f(0, STEP));
 		break;
 	default:
+		if (this->get_name() == '@')
+		{
+			sf::IntRect rect_sprite(0, 0, 50, 50);
+			m_sprite.setTextureRect(rect_sprite);
+		}
+
 		break;
 	}
 	last_move = loc - m_sprite.getPosition();
