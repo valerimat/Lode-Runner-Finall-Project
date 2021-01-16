@@ -13,6 +13,8 @@ void DynamicObject::set_sprite(std::shared_ptr<sf::Texture> texture)
 {
 	
 	m_sprite.setTexture(*texture);
+	sf::IntRect rect_sprite(0, 0, 50, 50);
+	m_sprite.setTextureRect(rect_sprite);
 	m_sprite.setScale(sf::Vector2f(0.8, 0.8));
 
 }
