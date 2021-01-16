@@ -144,13 +144,6 @@ void Map::Draw(sf::RenderWindow &main_window)
 
 	for (int i = 0; i < m_dynamic.size(); ++i)
 	{
-		
-		if (m_dynamic[i]->get_name() == '@')
-		{
-			sf::IntRect rect_sprite(0, 0, 50, 50);
-			m_dynamic[i]->get_sprite().setTextureRect(rect_sprite);
-		}
-
 		m_dynamic[i]->Draw(main_window);
 	}
 

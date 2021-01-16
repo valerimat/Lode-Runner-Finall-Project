@@ -1,6 +1,7 @@
 #pragma once
 #include "Macros.h"
 #include "Object.h"
+#include "Clock.h"
 #include <SFML/Graphics.hpp>
 class Map;
 class RigidBodyObject;
@@ -36,5 +37,4 @@ public:
 protected:
 	sf::Vector2f last_move;
 	bool m_gravity;
-	
 };

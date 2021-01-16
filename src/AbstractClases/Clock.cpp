@@ -6,13 +6,22 @@ Clock::Clock()
 }
 
 // gets the passed time since the clock is init
-int Clock::GetPassedTime()
+int Clock::GetPassedSeconds()
 {
 	float seconds;
 	m_time = m_clock.getElapsedTime();
 	seconds = m_time.asSeconds();
 
 	return (int)seconds;
+}
+
+float Clock::GetPassedMillSeconds()
+{
+	float seconds;
+	m_time = m_clock.getElapsedTime();
+	seconds = m_time.asSeconds();
+
+	return seconds - (int)seconds;
 }
 
 // restarts the clock
