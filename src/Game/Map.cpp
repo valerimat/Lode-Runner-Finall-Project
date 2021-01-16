@@ -145,7 +145,7 @@ void Map::Draw(sf::RenderWindow &main_window)
 	for (int i = 0; i < m_dynamic.size(); ++i)
 	{
 		
-		if (m_dynamic[i]->get_name() == '@')
+		if (m_dynamic[i]->get_name() == PLAYER)
 		{
 			sf::IntRect rect_sprite(0, 0, 50, 50);
 			m_dynamic[i]->get_sprite().setTextureRect(rect_sprite);

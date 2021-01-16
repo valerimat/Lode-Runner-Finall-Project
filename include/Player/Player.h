@@ -34,9 +34,11 @@ public:
 	void handle_collision(StaticObject& object)override;
     void handle_collision(Player& object) override;
 	void handle_collision(Enemy& object) override;
+	bool m_no_ground =false;
 private:
 	Map* m_map;
 	Music* m_music = new Music;
 	Lives m_lives;
 	bool m_standing;
+	
 };
