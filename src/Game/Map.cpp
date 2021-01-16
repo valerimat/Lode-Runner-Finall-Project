@@ -4,6 +4,7 @@
 #include "Pole.h"
 #include "Present.h"
 #include "Coin.h"
+#include "Clock.h"
 
 
 // c-tor of map
@@ -147,7 +148,7 @@ void Map::Draw(sf::RenderWindow &main_window)
 		m_dynamic[i]->Draw(main_window);
 	}
 
-
+	//m_graph->Draw(main_window);
 }
 //-----------------------------------------------------------------------------
 
@@ -440,5 +441,53 @@ void Map::check_collision(Object & object)
 	{
 		if (d_object->get_sprite().getGlobalBounds().intersects(object.get_sprite().getGlobalBounds()))
 			d_object->handle_collision(object);
+	}
+}
+
+
+void Map::make_hole(sf::Vector2f location)
+{
+	for (int i = 0; i < m_static.size(); ++i)
+	{
+		if (m_static[i]->get_sprite().getGlobalBounds().contains(location))
+		{
+			if (m_static[i]->make_hole())
+			{
+				m_holes.push_back(m_static[i]);
+				holes_time.push_back(Clock::GetClock().GetPassedSecondsFloat());
+			}
+		}
+	}
+}
+
+void Map::check_holes()
+{
+	for (int i = 0; i < m_holes.size(); i++)
+	{
+		if (Clock::GetClock().GetPassedSecondsFloat()  - holes_time[i]  > 4)
+		{
+			m_holes_to_close.push_back(m_holes[i]);
+			m_holes.erase(m_holes.begin()  +i);
+		}
+	}
+}
+
+void Map::close_holes()
+{
+	for (int i = 0; i < m_holes_to_close.size(); i++)
+	{
+		sf::Vector2f curr_scale = m_holes_to_close[i]->get_sprite().getScale();
+		if (abs(curr_scale.y - (0.8)) < 0.00001)
+		{
+			m_holes_to_close[i]->m_hole = false;
+			m_holes_to_close.erase(m_holes_to_close.begin() + i);
+			holes_time.erase(holes_time.begin() + i);
+			continue;
+		}
+		m_holes_to_close[i]->get_sprite().move(sf::Vector2f(0, -5));
+		m_holes_to_close[i]->get_sprite().setScale(curr_scale + sf::Vector2f(0, 0.1));
+		m_holes_to_close[i]->get_sprite().setColor(sf::Color(255, 255, 255, 255));
+
+
 	}
 }

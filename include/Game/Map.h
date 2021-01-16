@@ -36,6 +36,10 @@ public:
 
 	int *GetTimer();
 
+	void make_hole(sf::Vector2f location);
+	void check_holes();
+	void close_holes();
+
 	// setters
 	void SetObjects();
 
@@ -65,6 +69,9 @@ private:
 	Graph * m_graph;
 
 	std::vector<std::string> m_map;
+	std::vector<std::shared_ptr <StaticObject>> m_holes;
+	std::vector<std::shared_ptr <StaticObject>> m_holes_to_close;
+	std::vector<float> holes_time;
 
 	std::vector<std::shared_ptr <sf::Texture>>  m_textures;
 

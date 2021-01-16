@@ -10,10 +10,15 @@ std::vector<sf::Vector2f> OneSide::calc_path(Graph& graph, sf::Vector2f our_loca
 {
 	std::vector<sf::Vector2f> waypoints;
 	Node* node = graph.get_closest_node(our_location);
-	
+	if (node == nullptr)
+	{
+		waypoints.push_back(our_location);
+		return waypoints;
+	}
+
 	//first_we_pus_closest_node
 	waypoints.push_back(node->get_location());
-	//std::cout << "location = " << "( " << node->get_location().x << " " << node->get_location().y << " )" << std::endl;
+	
 	sf::Vector2f next_location;
 
 	srand(time(0));

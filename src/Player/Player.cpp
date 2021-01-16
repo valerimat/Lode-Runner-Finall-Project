@@ -56,6 +56,7 @@ void Player::handle_collision(Player& object)
 
 void Player::handle_collision(Enemy& object)
 {
+	std::cout << "collision";
 }
 //-----------------------------------------------------------------------------
 
@@ -66,7 +67,10 @@ void Player::handle_collision(Coin& object)
 	m_music->EaitngSound();
 }
 //-----------------------------------------------------------------------------
-
+void Player::handle_collision(DynamicObject& object)
+{
+	object.handle_collision(*this);
+}
 void Player::handle_collision(Present& object)
 {
 	m_map->DeletePresent(object);
@@ -98,10 +102,10 @@ void Player::handle_collision(Ladder& object)
 void Player::handle_collision(RigidBodyObject& object)
 {
 	sf::FloatRect inter;
-	if(get_sprite().getGlobalBounds().intersects(object.get_sprite().getGlobalBounds(),inter))
+	if (get_sprite().getGlobalBounds().intersects(object.get_sprite().getGlobalBounds(), inter))
 		if (inter.height >= 1 && inter.width >= 1)
 		{
-			move_back();
+			move_back(object);
 		}
 
 	if(!m_standing)
@@ -114,3 +118,12 @@ void Player::set_map(Map* map)
 	m_map = map;
 }
 //-----------------------------------------------------------------------------
+
+void Player::delete_left()
+{
+	m_map->make_hole(get_location() + sf::Vector2f(-10, 45));
+}
+void Player::delete_right()
+{
+	m_map->make_hole(get_location() + sf::Vector2f(50, 45));
+}

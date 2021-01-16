@@ -28,7 +28,6 @@ Graph::Graph(std::vector<std::string> m_map,int width, int height)
 	}
 
 	clenup(matrix);
-	for (auto vec : matrix)
 	create_node_matrix(matrix);
 	link_neighbors_to_list(matrix);
 }
@@ -264,6 +263,7 @@ Node * Graph::get_closest_node(sf::Vector2f & location)
 	Node* node = get_node(y,x);
 
 	return node;
+	
 }
 
 //get node that is found in the matrix in x,y

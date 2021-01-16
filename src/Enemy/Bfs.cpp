@@ -9,7 +9,20 @@ std::vector<sf::Vector2f> Bfs::calc_path(Graph& graph, sf::Vector2f our_location
 	Node* from, * to;
 
 	from =  graph.get_closest_node(our_location);
+
+	if (from == nullptr)
+	{
+		waypoints.push_back(our_location);
+		return waypoints;
+	}
+
 	to = graph.get_closest_node(wanted_location);
+	if (to == nullptr)
+	{
+		sf::Vector2f off(0, -SIZE_OF_TILE);
+		wanted_location += off;
+		to = graph.get_closest_node((wanted_location));
+	}
 
 	waypoints = bfs(from, to);
 

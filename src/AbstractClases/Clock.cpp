@@ -15,6 +15,15 @@ int Clock::GetPassedSeconds()
 	return (int)seconds;
 }
 
+float Clock::GetPassedSecondsFloat()
+{
+	float seconds;
+	m_time = m_clock.getElapsedTime();
+	seconds = m_time.asSeconds();
+
+	return seconds;
+}
+
 float Clock::GetPassedMillSeconds()
 {
 	float seconds;

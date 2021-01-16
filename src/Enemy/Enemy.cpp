@@ -70,8 +70,15 @@ void Enemy::set_waypoint()
 //-----------------------------------------------------------------------------
 void Enemy::set_next_waypoint()
 {
-	next_waypoint = waypoints[0];
-	waypoints.erase(waypoints.begin());
+	if (waypoints.size() >= 1)
+	{
+		next_waypoint = waypoints[0];
+		waypoints.erase(waypoints.begin());
+	}
+	else
+	{
+		reset_path();
+	}
 }
 //-----------------------------------------------------------------------------
 void Enemy::reset_path()
@@ -96,16 +103,6 @@ void Enemy::set_smartness(int i)
 //for movement:
 void Enemy::move(float dt)
 {
-	//do we need it here?
-	/*
-	if (checke_if_reached())
-	{
-		set_waypoint();
-		return;
-	}
-
-	*/
-
 	NextStep step = direction_to_waypoint();
 	switch (step)
 	{
@@ -178,7 +175,7 @@ NextStep Enemy::direction_to_waypoint()
 	sf::Vector2f location = get_center();
 
 	//for safety
-	if(next_waypoint == sf::Vector2f(-1,-1))
+	if(abs(next_waypoint.y - get_location().y) <1 && abs(next_waypoint.y - get_location().y) <1)
 		return NextStep::NONE;
 
 	if (abs(location.x - next_waypoint.x) > 2)
@@ -215,6 +212,11 @@ bool Enemy::no_waypoints()
 
 	return false;
 }
+void Enemy::dont_move()
+{
+	//waypoints.clear();
+	//next_waypoint = sf::Vector2f(-1, -1);
+}
 //-----------------------------------------------------------------------------
 
 //Collision:
@@ -231,10 +233,13 @@ void Enemy::handle_collision(Present& object) {};
 void Enemy::handle_collision(Object & object)
 {
 	if (this->get_name() == object.get_name()) return;
-	this->handle_collision(object);
+	object.handle_collision(*this);
 }
 //-----------------------------------------------------------------------------
-
+void Enemy::handle_collision(DynamicObject& object)
+{
+	object.handle_collision(*this);
+}
 void Enemy::handle_collision(StaticObject& object)
 {
 	object.handle_collision(*this);
@@ -243,7 +248,7 @@ void Enemy::handle_collision(StaticObject& object)
 
 void Enemy::handle_collision(Player& object)
 {
-
+	object.handle_collision(*this);
 }
 //-----------------------------------------------------------------------------
 
@@ -267,7 +272,8 @@ void Enemy::handle_collision(RigidBodyObject& object)
 	sf::FloatRect inter;
 	if (get_sprite().getGlobalBounds().intersects(object.get_sprite().getGlobalBounds(), inter))
 		if (inter.height >= 2 && inter.width >= 2)
-			move_back();
+			move_back(object);
+	
 	//reset_path();
 }
 //-----------------------------------------------------------------------------

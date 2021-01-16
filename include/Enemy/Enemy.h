@@ -34,12 +34,14 @@ public:
 	void handle_collision(StaticObject& object)override;
 	void handle_collision(Player& object) override ;
 	void handle_collision(Enemy& object) override ;
+	void handle_collision(DynamicObject& object) override;
 
 	//for debug !!
 	
 	void up_stuck();
 	void reset_stuck();
 	bool stuck();
+	void dont_move();
 
 	//helpers:
 	void move(float dt);

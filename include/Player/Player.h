@@ -21,6 +21,9 @@ public:
 
 	//Lives* get_lives();
 
+	void delete_left();
+	void delete_right();
+
 	//PlayerController * get_controller();
 	void Move(sf::Keyboard::Key key,float dt);
 	void set_map(Map * map);
@@ -32,6 +35,7 @@ public:
 	void handle_collision(Ladder& object) override;
 	void handle_collision(Object& object) override;
 	void handle_collision(StaticObject& object)override;
+	void handle_collision(DynamicObject& object)override;
     void handle_collision(Player& object) override;
 	void handle_collision(Enemy& object) override;
 	bool m_no_ground =false;

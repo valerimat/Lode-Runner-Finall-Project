@@ -46,7 +46,7 @@ void DynamicObject::update_location(NextStep step,float dt)
 	sf::Vector2f loc = m_sprite.getPosition();
 	auto mill_seconds = Clock::GetClock().GetPassedMillSeconds();
 
-	Animation(step,this->get_name());
+	Animation(step, this->get_name());
 
 	switch (step)
 	{
@@ -73,11 +73,64 @@ void DynamicObject::handle_collision(Object& object)
 {
 	object.handle_collision(*this);
 }
+void DynamicObject::handle_collision(DynamicObject& object)
+{
+	(*this).handle_collision(object);
+}
 
-void DynamicObject::move_back()
+
+void DynamicObject::handle_collision(StaticObject& object)
+{
+	(*this).handle_collision(object);
+}
+void DynamicObject::handle_collision(RigidBodyObject& object)
+{
+	(*this).handle_collision(object);
+}
+
+void DynamicObject::handle_collision(Player& object)
+{
+	(*this).handle_collision(object);
+}
+void DynamicObject::handle_collision(Coin& object)
+{
+	(*this).handle_collision(object);
+}
+void DynamicObject::handle_collision(Present& object)
+{
+	(*this).handle_collision(object);
+
+}
+void DynamicObject::handle_collision(Enemy& object)
+{
+	(*this).handle_collision(object);
+}
+
+void DynamicObject::handle_collision(Ladder& object)
+{
+	(*this).handle_collision(object);
+}
+void DynamicObject::handle_collision(Pole& object)
+{
+	(*this).handle_collision(object);
+}
+
+
+
+void DynamicObject::move_back(RigidBodyObject &object)
 {
 	sf::Vector2f loc = m_sprite.getPosition();
-	loc += last_move;
+	if (object.m_hole == false)
+	{
+		loc += last_move;	
+	}
+	else
+	{
+		loc += last_move;
+		sf::FloatRect rect;
+		m_sprite.getGlobalBounds().intersects(object.get_sprite().getGlobalBounds(), rect);
+		loc += sf::Vector2f(0, -rect.height);
+	}
 	m_sprite.setPosition(loc);
 }
 

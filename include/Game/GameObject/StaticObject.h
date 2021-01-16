@@ -20,7 +20,9 @@ public:
 	bool in_bounds(sf::Vector2f &location);
 	bool in_bounds(sf::RectangleShape& rect);
 
+	virtual bool  make_hole() { return false; };
 	//collision:
+	void handle_collision(DynamicObject& object) override;
 	void handle_collision(Coin& object) override;
 	void handle_collision(Present& object) override;
 	void handle_collision(Pole &object) override;
@@ -30,6 +32,8 @@ public:
 	void handle_collision(RigidBodyObject& object) override;
 	void handle_collision(Player& object) override;
 	void handle_collision(Enemy& object) override;
+
+	bool m_hole = false;
 
 protected:
 

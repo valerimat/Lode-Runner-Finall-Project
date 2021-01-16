@@ -57,6 +57,8 @@ void Game::init_controllers()
 void Game::on_update()
 {
 	m_enemy_cont->set_paths();
+	m_curr_map.check_holes();
+	m_curr_map.close_holes();
 }
 
 void Game::handle_event(float dt)

@@ -1,4 +1,5 @@
 ﻿target_sources (LodeRunner PRIVATE
+                                     #"Hole.cpp"
                                      "Object.cpp"
                                      "StaticObject.cpp"
                                      "DynamicObject.cpp"

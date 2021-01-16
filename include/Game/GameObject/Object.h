@@ -1,6 +1,7 @@
 #pragma once
 #include "Macros.h"
 #include <SFML/Graphics.hpp>
+class DynamicObject;
 class Enemy;
 class StaticObject;
 class RigidBodyObject;
@@ -37,6 +38,7 @@ public:
 	virtual void handle_collision(RigidBodyObject& object) = 0;
 	virtual void handle_collision(Ladder& object) =0;
 
+	virtual void handle_collision(DynamicObject& object) = 0;
 	virtual void handle_collision(Player& object) = 0;
 	virtual void handle_collision(Enemy& object) = 0;
 
