@@ -58,7 +58,7 @@ void Hud::DrawLives(sf::RenderWindow& window)
 void Hud::DrawTime(sf::RenderWindow& window)
 {
 	int i = m_textures.size();
-	int time = *m_time - m_clock->GetPassedTime(), // 60 will be changed 
+	int time = *m_time - m_clock->GetPassedSeconds(), // 60 will be changed 
 			   left_digit, right_digit;
 
 	left_digit  = time / 10;
