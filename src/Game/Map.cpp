@@ -121,7 +121,7 @@ void Map::Draw(sf::RenderWindow &main_window)
 	float scale_height = float(m_height) * float(50) / float(HEIGHT),
 		  scale_width  = float(m_width)  * float(50) / float(WIDTH);
 
-	StaticObject background(NULL, sf::Vector2f(0, 0), m_textures[BACKGROUND_TEXTURE]);
+	StaticObject background(NULL, sf::Vector2f(1, 0), m_textures[BACKGROUND_TEXTURE]);
 	background.get_sprite().scale(scale_width, scale_height);
 
 	background.Draw(main_window);
@@ -144,13 +144,6 @@ void Map::Draw(sf::RenderWindow &main_window)
 
 	for (int i = 0; i < m_dynamic.size(); ++i)
 	{
-		
-		if (m_dynamic[i]->get_name() == PLAYER)
-		{
-			sf::IntRect rect_sprite(0, 0, 50, 50);
-			m_dynamic[i]->get_sprite().setTextureRect(rect_sprite);
-		}
-
 		m_dynamic[i]->Draw(main_window);
 	}
 

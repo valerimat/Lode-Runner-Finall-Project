@@ -131,17 +131,20 @@ void Enemy::move(float dt)
 
 }
 //-----------------------------------------------------------------------------
+
 //for unstucking:
 void Enemy::up_stuck()
 {
 	stuck_counter++;
 }
+//-----------------------------------------------------------------------------
 
 void Enemy::reset_stuck()
 {
 	stuck_counter = 0;
 }
 //-----------------------------------------------------------------------------
+
 bool Enemy::stuck()
 {
 	if (stuck_counter == 10)
@@ -152,6 +155,7 @@ bool Enemy::stuck()
 	return false;
 }
 //-----------------------------------------------------------------------------
+
 bool Enemy::checke_if_reached()
 {
 	sf::Vector2 location = get_center();
@@ -167,6 +171,7 @@ bool Enemy::checke_if_reached()
 	return false;
 }
 //-----------------------------------------------------------------------------
+
 //For waypoints:
 NextStep Enemy::direction_to_waypoint()
 {
@@ -202,6 +207,7 @@ NextStep Enemy::direction_to_waypoint()
 	return NextStep::NONE;
 }
 //-----------------------------------------------------------------------------
+
 bool Enemy::no_waypoints()
 {
 	if (waypoints.size() == 0)
@@ -211,12 +217,14 @@ bool Enemy::no_waypoints()
 }
 //-----------------------------------------------------------------------------
 
-
 //Collision:
 //Ignored::
 void Enemy::handle_collision(Enemy& object) {};
+//-----------------------------------------------------------------------------
 void Enemy::handle_collision(Coin& object) {};
+//-----------------------------------------------------------------------------
 void Enemy::handle_collision(Present& object) {};
+//-----------------------------------------------------------------------------
 
 
 //Not ignored:
@@ -225,21 +233,25 @@ void Enemy::handle_collision(Object & object)
 	if (this->get_name() == object.get_name()) return;
 	this->handle_collision(object);
 }
+//-----------------------------------------------------------------------------
 
 void Enemy::handle_collision(StaticObject& object)
 {
 	object.handle_collision(*this);
 }
+//-----------------------------------------------------------------------------
 
 void Enemy::handle_collision(Player& object)
 {
 
 }
+//-----------------------------------------------------------------------------
 
 void Enemy::handle_collision(Pole& object)
 {
 	on_pole(object.get_location());
 }
+//-----------------------------------------------------------------------------
 
 void Enemy::handle_collision(Ladder& object) 
 {
@@ -248,6 +260,7 @@ void Enemy::handle_collision(Ladder& object)
 		if (inter.width >= 20)
 			m_gravity = false;
 }
+//-----------------------------------------------------------------------------
 
 void Enemy::handle_collision(RigidBodyObject& object)
 {
@@ -257,4 +270,5 @@ void Enemy::handle_collision(RigidBodyObject& object)
 			move_back();
 	//reset_path();
 }
+//-----------------------------------------------------------------------------
 

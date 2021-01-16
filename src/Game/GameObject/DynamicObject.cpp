@@ -2,7 +2,7 @@
 #include "Map.h"
 #include "RigidBodyObject.h"
 
-DynamicObject::DynamicObject(char name, sf::Vector2f locaiton, std::shared_ptr<sf::Texture> texture):
+DynamicObject::DynamicObject(char name, sf::Vector2f locaiton, std::shared_ptr<sf::Texture> texture) :
 	Object(name, locaiton)
 {
 	set_sprite(texture);
@@ -47,15 +47,28 @@ void DynamicObject::Draw(sf::RenderWindow &main_window)
 void DynamicObject::update_location(NextStep step,float dt)
 {
 	sf::Vector2f loc = m_sprite.getPosition();
-	
+	auto mill_seconds = Clock::GetClock().GetPassedMillSeconds();
 
 	switch (step)
 	{
 	case NextStep::LEFT:
 		if (this->get_name() == '@')
 		{
-			sf::IntRect rect_sprite(50, 100, 50, 50);
-			m_sprite.setTextureRect(rect_sprite);
+			if (mill_seconds < 0.3)
+			{
+				sf::IntRect rect_sprite(0, 100, 50, 50);
+				m_sprite.setTextureRect(rect_sprite);
+			}
+			else if (mill_seconds > 0.33 && mill_seconds < 0.66)
+			{
+				sf::IntRect rect_sprite(50, 100, 50, 50);
+				m_sprite.setTextureRect(rect_sprite);
+			}
+			else
+			{
+				sf::IntRect rect_sprite(100, 100, 50, 50);
+				m_sprite.setTextureRect(rect_sprite);
+			}
 		}
 
 		m_sprite.move(dt *sf::Vector2f(-STEP, 0));
@@ -63,8 +76,21 @@ void DynamicObject::update_location(NextStep step,float dt)
 	case NextStep::RIGHT:
 		if (this->get_name() == '@')
 		{
-			sf::IntRect rect_sprite(50, 50, 50, 50);
-			m_sprite.setTextureRect(rect_sprite);
+			if (mill_seconds < 0.3)
+			{
+				sf::IntRect rect_sprite(0, 50, 50, 50);
+				m_sprite.setTextureRect(rect_sprite);
+			}
+			else if (mill_seconds > 0.33 && mill_seconds < 0.66)
+			{
+				sf::IntRect rect_sprite(50, 50, 50, 50);
+				m_sprite.setTextureRect(rect_sprite);
+			}
+			else
+			{
+				sf::IntRect rect_sprite(100, 50, 50, 50);
+				m_sprite.setTextureRect(rect_sprite);
+			}
 		}
 
 		m_sprite.move(dt *sf::Vector2f(STEP, 0));
@@ -72,8 +98,16 @@ void DynamicObject::update_location(NextStep step,float dt)
 	case NextStep::UP:
 		if (this->get_name() == '@')
 		{
-			sf::IntRect rect_sprite(150, 150, 50, 50);
-			m_sprite.setTextureRect(rect_sprite);
+			if (mill_seconds < 0.5)
+			{
+				sf::IntRect rect_sprite(150, 150, 50, 50);
+				m_sprite.setTextureRect(rect_sprite);
+			}
+			else
+			{
+				sf::IntRect rect_sprite(100, 150, 50, 50);
+				m_sprite.setTextureRect(rect_sprite);
+			}
 		}
 
 		m_sprite.move(dt *sf::Vector2f(0,-STEP));

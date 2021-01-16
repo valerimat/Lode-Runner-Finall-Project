@@ -8,7 +8,8 @@ public:
 	static Clock& GetClock() {static Clock s_clock; return s_clock;};
 
 	void RestartTime();
-	int GetPassedTime();
+	int GetPassedSeconds();
+	float GetPassedMillSeconds();
 
 private:
 	Clock();

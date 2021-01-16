@@ -41,28 +41,38 @@ void Player::handle_collision(Object& object)
 	if (this->get_name() == object.get_name()) return;
 	this->handle_collision(object);
 }
+//-----------------------------------------------------------------------------
+
 void Player::handle_collision(StaticObject& object)
 {
 	object.handle_collision(*this);
 }
+//-----------------------------------------------------------------------------
 
 void Player::handle_collision(Player& object)
 {
 }
+//-----------------------------------------------------------------------------
+
 void Player::handle_collision(Enemy& object)
 {
 }
+//-----------------------------------------------------------------------------
+
 void Player::handle_collision(Coin& object)
 {
 	Score::GetScore().IncreasePoints(1); // 1 represents the lvl needs to be changed latter
 	m_map->DeleteCoin(object);
 	m_music->EaitngSound();
 }
+//-----------------------------------------------------------------------------
+
 void Player::handle_collision(Present& object)
 {
 	m_map->DeletePresent(object);
 	m_music->DrinkingSound();
 }
+//-----------------------------------------------------------------------------
 
 void Player::handle_collision(Pole& object)
 {
@@ -70,6 +80,7 @@ void Player::handle_collision(Pole& object)
 	if (!m_standing)
 		m_music->RopeSound();
 }
+//-----------------------------------------------------------------------------
 
 void Player::handle_collision(Ladder& object)
 {
@@ -82,6 +93,7 @@ void Player::handle_collision(Ladder& object)
 		m_music->LadderSound();
     }
 }
+//-----------------------------------------------------------------------------
 
 void Player::handle_collision(RigidBodyObject& object)
 {
@@ -95,8 +107,10 @@ void Player::handle_collision(RigidBodyObject& object)
 	if(!m_standing)
 		m_music->RunningSound();
 }
+//-----------------------------------------------------------------------------
 
 void Player::set_map(Map* map)
 {
 	m_map = map;
 }
+//-----------------------------------------------------------------------------
