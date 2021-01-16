@@ -31,7 +31,7 @@ void Object::set_name(char &name)
 
 //-----------------------------------------------------------------------------
 
-sf::Sprite Object::get_sprite()
+sf::Sprite & Object::get_sprite()
 {
 	return m_sprite;
 }

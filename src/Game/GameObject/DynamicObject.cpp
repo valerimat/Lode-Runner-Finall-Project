@@ -35,14 +35,12 @@ void DynamicObject::turn_gravity_on()
 
 void DynamicObject::Draw(sf::RenderWindow &main_window)
 {
-	if (this->get_name() == '@')
+	if (this->get_name() == PLAYER)
 	{
 		sf::IntRect rect_sprite(0, 0, 50, 50);
 		this->get_sprite().setTextureRect(rect_sprite);
 	}
 	main_window.draw(m_sprite);
-
-	
 }
 //-----------------------------------------------------------------------------
 

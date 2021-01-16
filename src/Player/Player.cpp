@@ -99,8 +99,11 @@ void Player::handle_collision(RigidBodyObject& object)
 {
 	sf::FloatRect inter;
 	if(get_sprite().getGlobalBounds().intersects(object.get_sprite().getGlobalBounds(),inter))
-	if(inter.height >=1 && inter.width >= 1)
-	move_back();
+		if (inter.height >= 1 && inter.width >= 1)
+		{
+			move_back();
+		}
+
 	if(!m_standing)
 		m_music->RunningSound();
 }

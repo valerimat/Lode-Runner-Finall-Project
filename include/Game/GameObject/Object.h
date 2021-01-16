@@ -24,7 +24,7 @@ public:
 	//Getters:
 	char		 get_name();
 	sf::Vector2f get_location();
-	sf::Sprite get_sprite();
+	sf::Sprite &  get_sprite();
 
 	//coliisions
 	virtual void handle_collision(Object & object) = 0;
