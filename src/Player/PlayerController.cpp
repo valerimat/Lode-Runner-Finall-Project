@@ -46,7 +46,6 @@ void PlayerController::MovePlayer( float dt)
 }
 //-----------------------------------------------------------------------------
 
-//-----------------------------------------------------------------------------
 void PlayerController::check_key_press(sf::Keyboard::Key& pressed)
 {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
