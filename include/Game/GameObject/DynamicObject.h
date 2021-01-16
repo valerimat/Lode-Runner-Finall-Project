@@ -29,6 +29,8 @@ public:
 	void on_pole(sf::Vector2f  location);
 	void move_back();
 
+	void Animation(NextStep step, char name);
+
 	//Getters:
 	sf::Vector2f get_location();
 
