@@ -148,7 +148,7 @@ void Map::Draw(sf::RenderWindow &main_window)
 		m_dynamic[i]->Draw(main_window);
 	}
 
-	//m_graph->Draw(main_window);
+	m_graph->Draw(main_window);
 }
 //-----------------------------------------------------------------------------
 
@@ -491,3 +491,4 @@ void Map::close_holes()
 
 	}
 }
+

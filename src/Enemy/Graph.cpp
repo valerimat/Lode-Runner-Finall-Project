@@ -249,8 +249,8 @@ Node* Graph::right_neighbor (int i, int  j, std::vector<std::vector<int>> matrix
 Node * Graph::get_closest_node(sf::Vector2f & location)
 {
 	//thats our center
-	float x = location.x + 0.5f * SIZE_OF_TILE -1;
-	float y = location.y + 0.5f * SIZE_OF_TILE -1;
+	float x = location.x + 0.5f * SIZE_OF_TILE ;
+	float y = location.y + 0.5f * SIZE_OF_TILE ;
 
 	//we will find the left and the right posibilitys by rouding up
 	x = x / SIZE_OF_TILE;

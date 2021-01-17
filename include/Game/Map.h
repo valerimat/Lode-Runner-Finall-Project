@@ -52,7 +52,6 @@ public:
 	int  IsOnCoin(sf::Vector2f location);
 	int  IsOnPresent(sf::Vector2f location);
 	void check_collision(Object& object);
-	
 	// action
 	void DeleteCoin(Coin & coin);
 	void DeletePresent(Present & present);

@@ -175,7 +175,7 @@ NextStep Enemy::direction_to_waypoint()
 	sf::Vector2f location = get_center();
 
 	//for safety
-	if(abs(next_waypoint.y - get_location().y) <1 && abs(next_waypoint.y - get_location().y) <1)
+	if(abs(next_waypoint.x - get_location().x) <1 && abs(next_waypoint.y - get_location().y) <1)
 		return NextStep::NONE;
 
 	if (abs(location.x - next_waypoint.x) > 2)
