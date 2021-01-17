@@ -41,6 +41,8 @@ public:
 	void handle_collision(Enemy& object) override;
 	bool m_no_ground =false;
 	void on_create()override;
+	int get_lives();
+
 private:
 	
 

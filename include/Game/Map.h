@@ -50,7 +50,7 @@ public:
 	// action
 	void DeleteCoin(Coin & coin);
 	void DeletePresent(Present & present);
-	
+	void reset_positions();
 private:
 	int m_width;
 	int m_height;

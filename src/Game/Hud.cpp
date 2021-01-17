@@ -35,14 +35,16 @@ void Hud::Draw(sf::RenderWindow& window)
 // draws the lives <3
 void Hud::DrawLives(sf::RenderWindow& window)
 {
-	int i = m_textures.size();
+
+	int i = lives;
+	
 	sf::Sprite score_sprt;
 	score_sprt.setTexture(*m_textures[11]);
 	score_sprt.setPosition(sf::Vector2f( 0,12.5));
 	score_sprt.scale(sf::Vector2f(1, 1));
 
 	sf::Sprite three;
-	three.setTexture(*m_textures[3]);
+	three.setTexture(*m_textures[lives]);
 	three.setPosition(sf::Vector2f(50, 12.5));
 	three.scale(sf::Vector2f(1, 1));
 
@@ -175,7 +177,7 @@ void Hud::SetScore()
 // sets the lives
 void Hud::SetLives() 
 {
-	//int lives = m_player->get_lives();
+	lives = m_player->get_lives();
 }
 //-----------------------------------------------------------------------------
 

@@ -249,3 +249,9 @@ void DynamicObject::Animation(NextStep step, char name)
 		break;
 	}
 }
+
+
+void  DynamicObject::reset_position()
+{
+	m_sprite.setPosition(m_base_location);
+}

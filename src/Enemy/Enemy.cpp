@@ -21,6 +21,9 @@ Enemy::Enemy(char name, sf::Vector2f locaiton, std::shared_ptr<sf::Texture> text
 //-----------------------------------------------------------------------------
 void Enemy::on_create()
 {
+	//
+	m_base_location = get_location();
+
 	//random number
 	auto random = std::random_device();
 	std::cout << random() << std::endl;
