@@ -71,8 +71,11 @@ void Player::handle_collision(DynamicObject& object)
 {
 	object.handle_collision(*this);
 }
+//-----------------------------------------------------------------------------
+
 void Player::handle_collision(Present& object)
 {
+	std::cout << object.get_type() << std::endl;
 	m_map->DeletePresent(object);
 	m_music->DrinkingSound();
 }
