@@ -111,29 +111,29 @@ void Enemy::move(float dt)
 	rect.setSize(sf::Vector2f(40, 40));
 	rect.setFillColor(sf::Color::Blue);
 	//m_falling = false;
-	std::cout << next_waypoint.x << " " << next_waypoint.y << std::endl;
+	//std::cout << next_waypoint.x << " " << next_waypoint.y << std::endl;
 	NextStep step = direction_to_waypoint();
 	
 	switch (step)
 	{
 	case NextStep::LEFT:
 		update_location(NextStep::LEFT, dt);
-		std::cout << "left" << std::endl;
+		//std::cout << "left" << std::endl;
 		break;
 	case NextStep::RIGHT:
 		update_location(NextStep::RIGHT, dt);
-		std::cout << "RIGHT" << std::endl;
+		//std::cout << "RIGHT" << std::endl;
 		break;
 	case NextStep::UP:
 		update_location(NextStep::UP, dt);
-		std::cout << "up" << std::endl;
+		//std::cout << "up" << std::endl;
 		break;
 	case NextStep::DOWN:
 		update_location(NextStep::DOWN, dt);
-		std::cout << "down" << std::endl;
+		//std::cout << "down" << std::endl;
 		break;
 	case NextStep::NONE:
-		std::cout << "none" << std::endl;
+		//std::cout << "none" << std::endl;
 		//reset_path();
 		//set_next_waypoint();
 		break;
@@ -160,7 +160,7 @@ bool Enemy::stuck()
 {
 	if (stuck_counter == 500)
 	{
-		std::cout << stuck_counter;
+		//std::cout << stuck_counter;
 		stuck_counter = 0;
 		return true;
 	}
@@ -177,7 +177,7 @@ bool Enemy::checke_if_reached()
 		&&
 		abs(location.y - next_waypoint.y) < 3)
 	{
-		std::cout << "true";
+		//std::cout << "true";
 		return true;
 	}
 
