@@ -49,11 +49,14 @@ public:
 	virtual void on_create() = 0;
 
 	sf::RectangleShape rect;
+
+	void reset_position();
+
 protected:
 
 	//on create function
 	
-
+	sf::Vector2f m_base_location;
 	sf::Vector2f last_move;
 
 	bool m_gravity;

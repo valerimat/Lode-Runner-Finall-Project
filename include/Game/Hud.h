@@ -21,6 +21,7 @@ public:
 private:
 	std::vector<std::shared_ptr <sf::Texture>> m_textures;
 	int m_number_of_level;
+	int lives;
 
 	Player* m_player;
 	Score * m_score;

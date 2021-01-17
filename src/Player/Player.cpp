@@ -16,6 +16,7 @@ Player::Player(char name, sf::Vector2f locaiton, std::shared_ptr<sf::Texture> te
 }
 void Player::on_create()
 {	
+	m_base_location = get_location();
 	m_lives.set_lives();
 }
 
@@ -71,6 +72,7 @@ void Player::handle_collision(Enemy& object)
 		if (inter.width > 5 && inter.height > 5)
 		{
 			m_lives.dec_lives();
+			m_map->reset_positions();
 		}
 	std::cout << "collision";
 }
@@ -145,4 +147,9 @@ void Player::delete_left()
 void Player::delete_right()
 {
 	m_map->make_hole(get_location() + sf::Vector2f(50, 45));
+}
+
+int Player::get_lives()
+{
+	return m_lives.get_lives();
 }

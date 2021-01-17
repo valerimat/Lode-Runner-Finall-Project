@@ -373,4 +373,15 @@ bool Map::all_coins_collected()
 	}
 	return true;
 }
+
 //-----------------------------------------------------------------------------
+
+
+void Map::reset_positions()
+{
+	for (int i = 0; i < m_dynamic.size(); ++i)
+	{
+		m_dynamic[i]->reset_position();
+	}
+}
+
