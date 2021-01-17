@@ -17,8 +17,8 @@ class Player : public DynamicObject
 {
 public:
 
-	using DynamicObject::DynamicObject;
-
+	//using DynamicObject::DynamicObject;
+	Player(char name, sf::Vector2f locaiton, std::shared_ptr<sf::Texture> texture);
 	//Lives* get_lives();
 
 	void delete_left();
@@ -39,7 +39,10 @@ public:
     void handle_collision(Player& object) override;
 	void handle_collision(Enemy& object) override;
 	bool m_no_ground =false;
+	void on_create()override;
 private:
+	
+
 	Map* m_map;
 	Music* m_music = new Music;
 	Lives m_lives;

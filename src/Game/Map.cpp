@@ -47,7 +47,7 @@ void Map::SetObjects()
 				break;
 
 			case ENEMY:
-				dn_ptr = std::make_shared<Enemy>(ENEMY, location, m_textures[ENEMY_TEXTURE],smrt);
+				dn_ptr = std::make_shared<Enemy>(ENEMY, location, m_textures[ENEMY_TEXTURE]);
 				m_dynamic.push_back(dn_ptr);
 				smrt++;
 				break;
@@ -259,7 +259,7 @@ void Map::DeleteCoin(Coin & coin)
 {
 	
 	auto i = 0;
-	while (coin.get_location() != m_static[i]->get_location() && m_static[i]->get_name() != COIN)
+	while (coin.get_location() != m_static[i]->get_location())
 	{
 		i++;
 	}
@@ -271,7 +271,7 @@ void Map::DeleteCoin(Coin & coin)
 void Map::DeletePresent(Present & prenset)
 {
 	auto i = 0;
-	while (prenset.get_location() != m_static[i]->get_location() && m_static[i]->get_name() != PRESENT)
+	while (prenset.get_location() != m_static[i]->get_location())
 	{
 		i++;
 	}

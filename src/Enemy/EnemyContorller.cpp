@@ -10,42 +10,40 @@ void EnemyController::init_controller()
 	set_curr_location();
 	set_previouse_locations();
 	for (auto enemy : m_enemies)
+	{
 		enemy->set_map(m_map);
+		enemy->set_waypoint();
+	}
 }
 //-----------------------------------------------------------------------------
 
 void EnemyController::move_enemies(float dt)
 {	
+	sf::Vector2f before_g;
+	sf::Vector2f after_g;
 
-	for (auto enemy : m_enemies)
+	for(int i =0;i < m_enemies.size(); ++i)
 	{
-		set_previouse_locations();
 
-		if (!enemy->m_falling)
+		if (m_enemies[i]->checke_if_reached())
 		{
-			enemy->move(dt);
+			
+			m_enemies[i]->set_waypoint();
+			continue;
 		}
 
-		//reset gravity bool
-		enemy->turn_gravity_on();
+		move_enemy(dt, m_enemies[i]);
 
-		m_map->check_collision(*enemy);
+		before_g = m_enemies[i]->get_location();
 
-		sf::Vector2f before_g = enemy->get_location();
+		apply_gravity(dt, m_enemies[i]);
+		
+		after_g = m_enemies[i]->get_location();
 
-		//do graviry do its job
-		enemy->gravity(dt);
-
-		//check collisions again
-		m_map->check_collision(*enemy);
-
-		sf::Vector2f after_g = enemy->get_location();
-
-		//we are falling if we were able to go down
-		if (before_g != after_g)
-			enemy->m_falling = true;
+		if (enemy_falling(before_g, after_g))
+			m_enemies[i]->m_falling = true;
 		else
-			enemy->m_falling = false;
+			m_enemies[i]->m_falling = false;
 
 		set_curr_location();
 
@@ -54,18 +52,8 @@ void EnemyController::move_enemies(float dt)
 }
 //-----------------------------------------------------------------------------
 
-bool EnemyController::reached_player(Map * map)
-{
-	sf::Vector2f player_loc = map->get_player()->get_location();
-
-	for (int i = 0; i < m_enemies.size(); i++)
-	{
-		if (m_enemies[i]->get_sprite().getGlobalBounds().contains(player_loc))
-			return true;
-	}
-	return false;
-}
 //-----------------------------------------------------------------------------
+
 
 void EnemyController::set_paths()
 {
@@ -106,6 +94,7 @@ void EnemyController::check_stuck()
 			if (m_enemies[i]->stuck())
 			{
 				m_enemies[i]->reset_path();
+				m_enemies[i]->set_waypoint();
 			}
 		}
 		else
@@ -113,4 +102,39 @@ void EnemyController::check_stuck()
 			m_enemies[i]->reset_stuck();
 		}
 	}
+}
+
+
+void EnemyController::move_enemy(float dt, Enemy * enemy)
+{
+	set_previouse_locations();
+
+	
+
+	if (!enemy->m_falling)
+	{
+		enemy->move(dt);
+	}
+
+	//reset gravity bool
+	enemy->turn_gravity_on();
+
+	m_map->check_collision(*enemy);
+}
+
+void EnemyController::apply_gravity(float dt, Enemy* enemy)
+{
+	//do graviry do its job
+	enemy->gravity(dt);
+
+	//check collisions again
+	m_map->check_collision(*enemy);
+}
+
+bool EnemyController::enemy_falling(sf::Vector2f before, sf::Vector2f after)
+{
+	if (abs(before.y -  after.y) > 0.f)
+		return true;
+	
+	return false;
 }

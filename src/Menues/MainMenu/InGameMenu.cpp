@@ -53,7 +53,7 @@ void  InGameMenu::set_next_state(ButtonNames next_state)
 		next_screen = m_previouse_screen;
 		break;
 	case ButtonNames::Settings:
-		next = new Settings;
+		next = new Settings(this);
 		sate_changed = true;
 		next_screen = next;
 		break;

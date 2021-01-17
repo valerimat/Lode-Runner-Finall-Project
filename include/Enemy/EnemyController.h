@@ -17,12 +17,13 @@ public:
 	//Setters:
 	void set_paths();
 
-
 	//Helpers:
 	void move_enemies(float dt);
-	bool reached_player(Map* map);
 	void init_controller();
 private:
+	void move_enemy(float dt, Enemy* enemy);
+	void apply_gravity(float dt, Enemy* enemy);
+	bool enemy_falling(sf::Vector2f before, sf::Vector2f after);
 	void set_curr_location();
 	void set_previouse_locations();
 	void check_stuck();

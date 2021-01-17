@@ -14,11 +14,12 @@ class DynamicObject : public Object
 public:
 	//Ctors:
 	using Object::Object;
+
 	DynamicObject(char name, sf::Vector2f locaiton, std::shared_ptr<sf::Texture> texture);
-	
+
 	//Draw:
-	void Draw(sf::RenderWindow &window);
-	
+	void Draw(sf::RenderWindow& window);
+
 	//Setters:
 	void set_sprite(std::shared_ptr<sf::Texture> texture);
 
@@ -44,10 +45,16 @@ public:
 	//Getters:
 	sf::Vector2f get_location();
 
-	void update_location(NextStep step,float dt);
-	
+	void update_location(NextStep step, float dt);
+	virtual void on_create() = 0;
+
+	sf::RectangleShape rect;
 protected:
-	NextStep last_step;
+
+	//on create function
+	
+
 	sf::Vector2f last_move;
+
 	bool m_gravity;
 };

@@ -10,15 +10,23 @@
 #include "Algo.h"
 #include "RandomPath.h"
 #include "Bfs.h"
+#include <random>
 
-static int number = 0;
 //Ctors
-Enemy::Enemy(char name, sf::Vector2f locaiton, std::shared_ptr<sf::Texture> texture, int smart) :
+Enemy::Enemy(char name, sf::Vector2f locaiton, std::shared_ptr<sf::Texture> texture) :
 	DynamicObject(name, locaiton, texture)
 {
-	m = number;
-	number++;
-	set_smartness(smart);
+	on_create();
+}
+//-----------------------------------------------------------------------------
+void Enemy::on_create()
+{
+	//random number
+	auto random = std::random_device();
+	std::cout << random() << std::endl;
+	auto smartness = rand() % 3;
+	set_smartness(smartness);
+
 	switch (m_iq)
 	{
 	case IQ::Smart:
@@ -34,8 +42,6 @@ Enemy::Enemy(char name, sf::Vector2f locaiton, std::shared_ptr<sf::Texture> text
 		break;
 	}
 }
-//-----------------------------------------------------------------------------
-
 //Getter:
 IQ Enemy::get_iq()
 {
@@ -47,7 +53,7 @@ sf::Vector2f Enemy::get_center()
 	sf::Vector2f our_loc = get_location();
 
 	sf::Vector2f center_offset(SIZE_OF_TILE / 2, SIZE_OF_TILE / 2);
-	our_loc = our_loc += center_offset;
+	our_loc += center_offset;
 
 	return our_loc;
 }
@@ -57,7 +63,7 @@ sf::Vector2f Enemy::get_center()
 //for movement:
 void Enemy::set_waypoint()
 {
-	if (no_waypoints())
+ 	if (no_waypoints())
 	{
 		reset_path();
 		set_next_waypoint();
@@ -70,22 +76,17 @@ void Enemy::set_waypoint()
 //-----------------------------------------------------------------------------
 void Enemy::set_next_waypoint()
 {
-	if (waypoints.size() >= 1)
-	{
-		next_waypoint = waypoints[0];
-		waypoints.erase(waypoints.begin());
-	}
-	else
-	{
-		reset_path();
-	}
+	
+	next_waypoint = waypoints[0];
+	waypoints.erase(waypoints.begin());
+
 }
 //-----------------------------------------------------------------------------
 void Enemy::reset_path()
 {
 	waypoints.clear();
 	waypoints = algo->calc_path(m_map->get_graph(), get_location(), m_map->get_player()->get_location());
-	set_next_waypoint();
+	
 }
 //-----------------------------------------------------------------------------
 
@@ -103,29 +104,39 @@ void Enemy::set_smartness(int i)
 //for movement:
 void Enemy::move(float dt)
 {
+	rect.setPosition(next_waypoint);
+	rect.setSize(sf::Vector2f(40, 40));
+	rect.setFillColor(sf::Color::Blue);
+	//m_falling = false;
+	std::cout << next_waypoint.x << " " << next_waypoint.y << std::endl;
 	NextStep step = direction_to_waypoint();
+	
 	switch (step)
 	{
 	case NextStep::LEFT:
 		update_location(NextStep::LEFT, dt);
+		std::cout << "left" << std::endl;
 		break;
 	case NextStep::RIGHT:
 		update_location(NextStep::RIGHT, dt);
+		std::cout << "RIGHT" << std::endl;
 		break;
 	case NextStep::UP:
 		update_location(NextStep::UP, dt);
+		std::cout << "up" << std::endl;
 		break;
 	case NextStep::DOWN:
 		update_location(NextStep::DOWN, dt);
+		std::cout << "down" << std::endl;
 		break;
 	case NextStep::NONE:
-		waypoints.clear();
-		set_waypoint();
+		std::cout << "none" << std::endl;
+		//reset_path();
+		//set_next_waypoint();
 		break;
 	default:
 		break;
 	}
-
 }
 //-----------------------------------------------------------------------------
 
@@ -144,8 +155,9 @@ void Enemy::reset_stuck()
 
 bool Enemy::stuck()
 {
-	if (stuck_counter == 10)
+	if (stuck_counter == 500)
 	{
+		std::cout << stuck_counter;
 		stuck_counter = 0;
 		return true;
 	}
@@ -158,10 +170,11 @@ bool Enemy::checke_if_reached()
 	sf::Vector2 location = get_center();
 
 	//if we reached the waypoint in 2 pixels diffrence
-	if (abs((location.x - next_waypoint.x) < 2
+	if (abs(location.x - next_waypoint.x) < 3
 		&&
-		abs(location.y - next_waypoint.y) < 2))
+		abs(location.y - next_waypoint.y) < 3)
 	{
+		std::cout << "true";
 		return true;
 	}
 
@@ -178,7 +191,7 @@ NextStep Enemy::direction_to_waypoint()
 	if(abs(next_waypoint.x - get_location().x) <1 && abs(next_waypoint.y - get_location().y) <1)
 		return NextStep::NONE;
 
-	if (abs(location.x - next_waypoint.x) > 2)
+	if (abs(location.x - next_waypoint.x) > 1)
 	{
 		if (location.x - next_waypoint.x > 0)
 		{
@@ -189,7 +202,7 @@ NextStep Enemy::direction_to_waypoint()
 			return NextStep::RIGHT;
 		}
 	}
-	else if (abs(location.y - next_waypoint.y) > 2)
+	else if (abs(location.y - next_waypoint.y) > 1)
 	{
 		if (location.y - next_waypoint.y > 0)
 		{
@@ -271,9 +284,10 @@ void Enemy::handle_collision(RigidBodyObject& object)
 {
 	sf::FloatRect inter;
 	if (get_sprite().getGlobalBounds().intersects(object.get_sprite().getGlobalBounds(), inter))
-		if (inter.height >= 2 && inter.width >= 2)
+		if (inter.height >= 2 && inter.width >= 3)
+		{
 			move_back(object);
-	
+		}
 	//reset_path();
 }
 //-----------------------------------------------------------------------------

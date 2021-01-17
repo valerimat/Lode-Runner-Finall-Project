@@ -1,6 +1,8 @@
 #include "DynamicObject.h"
 #include "Map.h"
 #include "RigidBodyObject.h"
+#include "Player.h"
+#include "Enemy.h"
 
 DynamicObject::DynamicObject(char name, sf::Vector2f locaiton, std::shared_ptr<sf::Texture> texture) :
 	Object(name, locaiton)
@@ -38,6 +40,7 @@ void DynamicObject::turn_gravity_on()
 void DynamicObject::Draw(sf::RenderWindow &main_window)
 {
 	main_window.draw(m_sprite);
+	//main_window.draw(rect);
 }
 //-----------------------------------------------------------------------------
 

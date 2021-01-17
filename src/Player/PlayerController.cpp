@@ -30,7 +30,6 @@ void PlayerController::MovePlayer( float dt)
 		m_map->check_collision(*m_player);
 		
 		sf::Vector2f before_g = m_player->get_location();
-		std::cout << before_g.x << std::endl;
 
 		//do graviry do its job
 		m_player->gravity(dt);
@@ -39,7 +38,7 @@ void PlayerController::MovePlayer( float dt)
 		m_map->check_collision(*m_player);
 
 		sf::Vector2f after_g = m_player->get_location();
-		std::cout << after_g.x << std::endl;
+
 		//we are falling if we were able to go down
 		if (before_g != after_g)
 			m_falling = true;
