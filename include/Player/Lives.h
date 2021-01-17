@@ -6,7 +6,7 @@ class Lives
 public:
 	void set_lives()
 	{
-		m_lives = 3;
+		m_lives = 1;
 	}
 	int get_lives()
 	{
