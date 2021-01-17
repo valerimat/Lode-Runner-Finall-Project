@@ -16,6 +16,8 @@ public:
 	void Draw(sf::RenderWindow& window) override;
 
 protected:
+	sf::Sprite background;
+
 	void check_release();
 	void check_preseed_now();
 
