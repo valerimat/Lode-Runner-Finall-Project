@@ -28,7 +28,6 @@ Graph::Graph(std::vector<std::string> m_map,int width, int height)
 	}
 
 	clenup(matrix);
-	for (auto vec : matrix)
 	create_node_matrix(matrix);
 	link_neighbors_to_list(matrix);
 }
@@ -250,8 +249,8 @@ Node* Graph::right_neighbor (int i, int  j, std::vector<std::vector<int>> matrix
 Node * Graph::get_closest_node(sf::Vector2f & location)
 {
 	//thats our center
-	float x = location.x + 0.5f * SIZE_OF_TILE -1;
-	float y = location.y + 0.5f * SIZE_OF_TILE -1;
+	float x = location.x + 0.5f * SIZE_OF_TILE ;
+	float y = location.y + 0.5f * SIZE_OF_TILE ;
 
 	//we will find the left and the right posibilitys by rouding up
 	x = x / SIZE_OF_TILE;
@@ -264,6 +263,7 @@ Node * Graph::get_closest_node(sf::Vector2f & location)
 	Node* node = get_node(y,x);
 
 	return node;
+	
 }
 
 //get node that is found in the matrix in x,y

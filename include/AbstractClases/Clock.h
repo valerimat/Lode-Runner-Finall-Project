@@ -10,6 +10,7 @@ public:
 	void RestartTime();
 	int GetPassedSeconds();
 	float GetPassedMillSeconds();
+	float GetPassedSecondsFloat();
 
 private:
 	Clock();

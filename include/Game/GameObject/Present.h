@@ -1,17 +1,26 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "StaticObject.h"
+#include "DynamicObject.h"
 #include "Player.h"
 #include "Enemy.h"
+
 class Present : public StaticObject
 {
 	using StaticObject::StaticObject;
-	void handle_collision(Player& player)
+	void handle_collision(DynamicObject& object)
 	{
-		player.handle_collision(*this);
+		object.handle_collision(*this);
 	}
-	void handle_collision(Enemy& enemy)
+	void handle_collision(Player& object)
 	{
+		object.handle_collision(*this);
 
 	}
+	void handle_collision(Enemy& object)
+	{
+		object.handle_collision(*this);
+
+	}
+
 };

@@ -61,7 +61,7 @@ void StaticObject::handle_collision(RigidBodyObject& object)
 }
 void StaticObject::handle_collision(Player& object)
 {
-	object.handle_collision(*this);
+	//object.handle_collision(*this);
 }
 void StaticObject::handle_collision(Coin & object)
 {
@@ -83,4 +83,9 @@ void StaticObject::handle_collision(Ladder& object)
 void StaticObject::handle_collision(Pole& object)
 {
 	//ignore
+}
+
+void StaticObject::handle_collision(DynamicObject& object)
+{
+	object.handle_collision(*this);
 }
