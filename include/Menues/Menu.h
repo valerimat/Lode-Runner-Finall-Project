@@ -16,7 +16,10 @@ public:
 	void Draw(sf::RenderWindow& window) override;
 
 protected:
+	void check_release();
+	void check_preseed_now();
 
+	sf::Keyboard::Key was_pressed;
 
 	int index_of_selected_button = 0;
 

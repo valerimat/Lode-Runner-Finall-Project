@@ -84,7 +84,7 @@ void Enemy::set_next_waypoint()
 void Enemy::reset_path()
 {
 	waypoints.clear();
-	waypoints = algo->calc_path(m_map->get_graph(), get_location(), m_map->GetPlayer()->get_location());
+	waypoints = algo->calc_path(m_map->get_graph(), get_location(), m_map->get_player()->get_location());
 	set_next_waypoint();
 }
 //-----------------------------------------------------------------------------

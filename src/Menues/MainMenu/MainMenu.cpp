@@ -30,25 +30,8 @@ void MainMenu::on_update()
 void MainMenu::handle_event(float dt)
 {
 
-	//check _which button pressed
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
-	{
-		set_next_state(m_buttons[index_of_selected_button].get_name());
-	}
-	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
-		if(m_previouse_screen != nullptr)
-		set_next_state(ButtonNames::Back);
-	
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-	{
-		index_of_selected_button = (index_of_selected_button + 1) % m_buttons.size();
-	}
-	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-	{
-		index_of_selected_button = (index_of_selected_button + 1) % m_buttons.size();
-			m_arrow.move_arrow(m_buttons[index_of_selected_button].get_location());
-	}
-	
+	check_preseed_now();
+	check_release();
 }
 //========================States and teyr handeling:
 

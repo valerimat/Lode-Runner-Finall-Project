@@ -56,7 +56,7 @@ void EnemyController::move_enemies(float dt)
 
 bool EnemyController::reached_player(Map * map)
 {
-	sf::Vector2f player_loc = map->GetPlayer()->get_location();
+	sf::Vector2f player_loc = map->get_player()->get_location();
 
 	for (int i = 0; i < m_enemies.size(); i++)
 	{

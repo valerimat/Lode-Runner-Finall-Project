@@ -14,7 +14,6 @@ Map::Map(std::vector<std::string>* map,int height, int width, int timer):
 	m_width(width),
 	m_timer(timer)
 {
-
 	m_graph = new Graph(m_map, m_width, m_height);
 	LoadTextures();
 	SetObjects();
@@ -46,43 +45,36 @@ void Map::SetObjects()
 				dn_ptr = std::make_shared<Player>(PLAYER, location, m_textures[PLAYER_TEXTURE]);
 				m_dynamic.push_back(dn_ptr);
 				break;
-	
+
 			case ENEMY:
 				dn_ptr = std::make_shared<Enemy>(ENEMY, location, m_textures[ENEMY_TEXTURE],smrt);
 				m_dynamic.push_back(dn_ptr);
-				std::cout << "location map = " << "( " << dn_ptr->get_location().x << " " << dn_ptr->get_location().y << " )" << std::endl;
 				smrt++;
 				break;
 
 			case GROUND:
 				st_ptr = std::make_shared<RigidBodyObject>(GROUND, location, m_textures[GROUND_TEXTURE]);
 				m_static.push_back(st_ptr);
-				m_ground.push_back(st_ptr);
 				break;
 
 			case LADDER:
 				st_ptr = std::make_shared<Ladder>(LADDER, location, m_textures[LADDER_TEXTURE]);
 				m_static.push_back(st_ptr);
-				m_ladders.push_back(st_ptr);
-					
 				break;
 
 			case COIN:
 				st_ptr = std::make_shared<Coin>(LADDER, location, m_textures[COIN_TEXTURE]);
 				m_static.push_back(st_ptr);
-				m_coins.push_back(st_ptr);
 				break;
 
 			case POLE:
 				st_ptr = std::make_shared<Pole>(POLE, location, m_textures[POLE_TEXTURE]);
 				m_static.push_back(st_ptr);
-				m_poles.push_back(st_ptr);
 				break;
 
 			case PRESENT:
 				st_ptr = std::make_shared<Present>(PRESENT, location, m_textures[PRESENT_TEXTURE]);
 				m_static.push_back(st_ptr);
-				m_presents.push_back(st_ptr);
 				break;
 
 			/*
@@ -132,23 +124,12 @@ void Map::Draw(sf::RenderWindow &main_window)
 	{	
 		m_static[i]->Draw(main_window);
 	}
-
-	for (int i = 0; i < m_coins.size(); ++i)
-	{
-		m_coins[i]->Draw(main_window);
-	}
-
-	for (int i = 0; i < m_presents.size(); ++i)
-	{
-		m_presents[i]->Draw(main_window);
-	}
-
 	for (int i = 0; i < m_dynamic.size(); ++i)
 	{
 		m_dynamic[i]->Draw(main_window);
 	}
 
-	m_graph->Draw(main_window);
+	//m_graph->Draw(main_window);
 }
 //-----------------------------------------------------------------------------
 
@@ -217,7 +198,7 @@ char Map::GetChar(int i,int j)
 //-----------------------------------------------------------------------------
 
 // gets us the player ptr
-Player* Map::GetPlayer() // later change to Player as a return value
+Player* Map::get_player() // later change to Player as a return value
 {
 	for (int i = 0; i < m_dynamic.size(); i++)
 	{
@@ -272,133 +253,12 @@ int *Map::GetTimer()
 }
 //-----------------------------------------------------------------------------
 
-// asks if it touches the player
-bool Map::IsOnPlayer(sf::Vector2f & location)
-{
-	if (GetPlayer()->get_sprite().getGlobalBounds().contains(location))
-		return true;
-	else
-		return false;
-}
-//-----------------------------------------------------------------------------
-
-// whats next basiclly 
-char Map::WhatIsThere(sf::Vector2f location)
-{
-
-	for (int i = 0; i < m_static.size(); ++i)
-	{
-		if (m_static[i]->in_bounds(location))
-			return m_static[i]->get_name();
-	}
-	return NONE;
-}
-//-----------------------------------------------------------------------------
-
-// asks if it touches the ground
-bool Map::IsOnGround(sf::Vector2f location)
-{
-	sf::Vector2f player_location = GetPlayer()->get_location();
-
-	std::cout << player_location.x << " " << player_location.y << std::endl;
-
-	for (int i = 0; i < m_ground.size(); ++i)
-	{
-		if (m_ground[i]->in_bounds(player_location))
-			//m_music->LadderSound();
-			std::cout << "yes\n";
-		if (m_ground[i]->in_bounds(location))
-			return true;
-	}
-	return false;
-}
-//-----------------------------------------------------------------------------
-
-// asks if it touches the coin
-int Map::IsOnCoin(sf::Vector2f location)
-{
-	location.y += 1;
-
-	for (int i = 0; i < m_coins.size(); ++i)
-	{
-		if (m_coins[i]->in_bounds(location))
-			return i;
-	}
-	return -1;
-}
-//-----------------------------------------------------------------------------
-
-// asks if it touches the coin
-int Map::IsOnPresent(sf::Vector2f location)
-{
-	location.y -= 1;
-
-	for (int i = 0; i < m_presents.size(); ++i)
-	{
-		if (m_presents[i]->in_bounds(location))
-		{
-			return i;
-			std::cout << "yes\n";
-		}
-	}
-	return -1;
-}
-//-----------------------------------------------------------------------------
-
-// asks if it touches the rope
-bool Map::IsOnRope(sf::Vector2f location_l, sf::Vector2f location_r)
-{
-	for (int i = 0; i < m_poles.size(); ++i)
-	{
-		//if the x is the same x and its somewhere on the y
-		if (m_poles[i]->in_bounds(location_l)) {
-			if ((m_poles[i]->get_location().y == location_l.y))
-				return true;
-
-			return false;
-		}
-		else if (m_poles[i]->in_bounds(location_r)) {
-			if ((m_poles[i]->get_location().y == location_r.y))
-				return true;
-
-			return false;
-		}
-	}
-	return false;
-}
-//-----------------------------------------------------------------------------
-
-// asks if it touches the ladder
-bool Map::IsOnLadder(sf::Vector2f location)
-{
-	sf::RectangleShape rect;
-	//sf::Vector2f play_location = GetPlayer()->get_location();
-	rect.setPosition(location);
-	rect.setSize({ 40,40 });
-
-	for (int i = 0; i < m_ladders.size(); ++i)
-	{
-		//if (m_ladders[i]->in_bounds(play_location))
-			//m_music->LadderSound();
-
-		if (m_ladders[i]->in_bounds(rect))
-			return true;
-	}
-	return false;
-}
-//-----------------------------------------------------------------------------
 
 // deletes the coin
 void Map::DeleteCoin(Coin & coin)
 {
-	int i = 0;
-	while (coin.get_location() != m_coins[i]->get_location())
-	{
-		i++;
-	}
-
-	m_coins.erase(m_coins.begin() + i);
-	i = 0;
+	
+	auto i = 0;
 	while (coin.get_location() != m_static[i]->get_location() && m_static[i]->get_name() != COIN)
 	{
 		i++;
@@ -410,13 +270,7 @@ void Map::DeleteCoin(Coin & coin)
 // deletes the present
 void Map::DeletePresent(Present & prenset)
 {
-	int i = 0;
-	while (prenset.get_location() != m_presents[i]->get_location())
-	{
-		i++;
-	}
-	m_presents.erase(m_presents.begin() + i);
-	i = 0;
+	auto i = 0;
 	while (prenset.get_location() != m_static[i]->get_location() && m_static[i]->get_name() != PRESENT)
 	{
 		i++;
