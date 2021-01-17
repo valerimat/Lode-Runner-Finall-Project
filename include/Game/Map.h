@@ -45,6 +45,7 @@ public:
 
 	// info
 	void check_collision(Object& object);
+	bool all_coins_collected();
 
 	// action
 	void DeleteCoin(Coin & coin);

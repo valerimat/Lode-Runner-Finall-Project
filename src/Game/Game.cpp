@@ -1,6 +1,7 @@
 #include "Game.h"
 #include "MainMenu.h"
 #include "InGameMenu.h"
+#include "Clock.h"
 
 Game::Game():
 	m_maps(MapData())
@@ -27,9 +28,10 @@ void Game::Load()
 //-----------------------------------------------------------------------------
 void Game::reset_level()
 {
-	//(need to reset timer)
+	//(need to reset time
 	Load();
 	init_controllers();
+	Clock::GetClock().RestartTime();
 }
 
 void Game::reset_game()
@@ -70,10 +72,16 @@ void Game::init_controllers()
 
 void Game::on_update()
 {
+	if (m_curr_map.all_coins_collected())
+	{
+		advance_level();
+	}
+
 	m_enemy_cont->set_paths();
 	m_curr_map.check_holes();
 	m_curr_map.close_holes();
 }
+
 
 void Game::handle_event(float dt)
 {
@@ -119,4 +127,10 @@ void Game::check_preseed_now()
 	{
 		was_pressed = sf::Keyboard::Escape;
 	}
+}
+
+void Game::advance_level()
+{
+	++level;
+	reset_level();
 }

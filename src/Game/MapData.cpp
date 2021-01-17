@@ -42,6 +42,7 @@ void MapData::LoadMaps()
 		m_timer.push_back(timer);
 
 		int index = 0;
+
 		do
 		{
 			//reads each line from the Board.txt
@@ -58,7 +59,6 @@ void MapData::LoadMaps()
 		// Read the next line from File untill it reaches empty row.
 		while (index <= m_height);
 
-		m_maps.push_back(m_vector_of_strings);
 		m_maps.push_back(m_vector_of_strings);
 
 		for (int i = 0; i < m_vector_of_strings.size(); i++)
