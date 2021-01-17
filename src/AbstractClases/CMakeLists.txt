@@ -2,5 +2,6 @@
                                      "Clock.cpp"    
                                      "Music.cpp"
                                      "State.cpp"
+                                     "MacroSettings.cpp"
                                      "MovementController.cpp"
                                   )
