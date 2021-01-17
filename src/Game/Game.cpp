@@ -2,6 +2,7 @@
 #include "MainMenu.h"
 #include "InGameMenu.h"
 #include "Clock.h"
+#include "Death.h"
 
 Game::Game():
 	m_maps(MapData())
@@ -77,6 +78,9 @@ void Game::on_update()
 		advance_level();
 	}
 
+	if (m_curr_map.get_player()->get_lives() == 0)
+		set_next_state(ButtonNames::Death);
+
 	m_enemy_cont->set_paths();
 	m_curr_map.check_holes();
 	m_curr_map.close_holes();
@@ -102,6 +106,11 @@ void  Game::set_next_state(ButtonNames next_state)
 		next = new InGameMenu;
 		next->set_prev_state(this);
 		sate_changed  = true;
+		next_screen = next;
+		break;
+	case ButtonNames::Death:
+		next = new Death;
+		sate_changed = true;
 		next_screen = next;
 		break;
 	}

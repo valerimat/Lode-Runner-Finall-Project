@@ -27,8 +27,11 @@ enum class StateEnum
 enum class ButtonNames
 {
 	InGameMenu,
+	MainMenu,
 	Back,
 	Play,
+	Death,
+	Exit,
 	Menu,
 	Continue,
 	Settings,
