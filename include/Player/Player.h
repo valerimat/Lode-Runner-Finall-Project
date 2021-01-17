@@ -1,5 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include <iostream>
 #include "DynamicObject.h"
 #include "Lives.h"
 #include "PlayerController.h"

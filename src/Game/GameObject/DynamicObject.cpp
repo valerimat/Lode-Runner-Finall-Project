@@ -18,6 +18,8 @@ void DynamicObject::set_sprite(std::shared_ptr<sf::Texture> texture)
 	m_sprite.setScale(sf::Vector2f(0.8, 0.8));
 
 }
+//-----------------------------------------------------------------------------
+
 void DynamicObject::gravity(float dt)
 {
 	if(m_gravity == true)
@@ -30,10 +32,12 @@ sf::Vector2f DynamicObject::get_location()
 	return m_sprite.getPosition();
 }
 //-----------------------------------------------------------------------------
+
 void DynamicObject::turn_gravity_on()
 {
 	m_gravity = true;
 }
+//-----------------------------------------------------------------------------
 
 void DynamicObject::Draw(sf::RenderWindow &main_window)
 {
@@ -67,55 +71,67 @@ void DynamicObject::update_location(NextStep step,float dt)
 	}
 	last_move = loc - m_sprite.getPosition();
 }
-
+//-----------------------------------------------------------------------------
 
 void DynamicObject::handle_collision(Object& object)
 {
 	object.handle_collision(*this);
 }
+//-----------------------------------------------------------------------------
+
 void DynamicObject::handle_collision(DynamicObject& object)
 {
 	(*this).handle_collision(object);
 }
-
+//-----------------------------------------------------------------------------
 
 void DynamicObject::handle_collision(StaticObject& object)
 {
 	(*this).handle_collision(object);
 }
+//-----------------------------------------------------------------------------
+
 void DynamicObject::handle_collision(RigidBodyObject& object)
 {
 	(*this).handle_collision(object);
 }
+//-----------------------------------------------------------------------------
 
 void DynamicObject::handle_collision(Player& object)
 {
 	(*this).handle_collision(object);
 }
+//-----------------------------------------------------------------------------
+
 void DynamicObject::handle_collision(Coin& object)
 {
 	(*this).handle_collision(object);
 }
+//-----------------------------------------------------------------------------
+
 void DynamicObject::handle_collision(Present& object)
 {
 	(*this).handle_collision(object);
-
 }
+//-----------------------------------------------------------------------------
+
 void DynamicObject::handle_collision(Enemy& object)
 {
 	(*this).handle_collision(object);
 }
+//-----------------------------------------------------------------------------
 
 void DynamicObject::handle_collision(Ladder& object)
 {
 	(*this).handle_collision(object);
 }
+//-----------------------------------------------------------------------------
+
 void DynamicObject::handle_collision(Pole& object)
 {
 	(*this).handle_collision(object);
 }
-
-
+//-----------------------------------------------------------------------------
 
 void DynamicObject::move_back(RigidBodyObject &object)
 {
@@ -133,12 +149,14 @@ void DynamicObject::move_back(RigidBodyObject &object)
 	}
 	m_sprite.setPosition(loc);
 }
+//-----------------------------------------------------------------------------
 
 void DynamicObject::on_pole(sf::Vector2f location)
 {
 	if (abs (get_location().y -location.y) < 5)
 		m_gravity = false;
 }
+//-----------------------------------------------------------------------------
 
 void DynamicObject::Animation(NextStep step, char name)
 {

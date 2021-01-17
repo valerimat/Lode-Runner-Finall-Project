@@ -1,25 +1,23 @@
 #include "GameController.h"
+#include "MacroSettings.h"
 #include "Clock.h"
 
 void GameController::Run()
 {
 	using clock = std::chrono::high_resolution_clock;
-
-	//auto& timer = Clock::GetClock();
-
+	auto& settings = MacroSettings::GetSettings(); // inits the singelton of the settings
 	sf::Event event;
-	sf::RenderWindow main_window(sf::VideoMode(WIDTH, HEIGHT), "Lode Runner");
-
-	sf::Music music;
 	sf::Keyboard::Key keypress;
-
 	State* screen = new MainMenu;
-	// music theme song 
+
+	sf::RenderWindow main_window(sf::VideoMode(settings.GetWidth(), settings.GetHeight()), "Lode Runner");
+
+	// music theme song
+	sf::Music music;
 	music.openFromFile("game theme.OGG");
 	music.setVolume(1);
 	music.play();
-
-	//Screens* screen = new MainMenu;
+	//-----------------
 
 	auto last = clock::now();
 
@@ -40,8 +38,6 @@ void GameController::Run()
 				break;
 			}
 		}
-
-		//std::cout << "Main clock: " << timer.GetPassedTime() << std::endl;
 
 		if (!screen->satate_changed())
 		{
