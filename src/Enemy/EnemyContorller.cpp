@@ -22,6 +22,11 @@ void EnemyController::move_enemies(float dt)
 	sf::Vector2f before_g;
 	sf::Vector2f after_g;
 
+	if (m_enemies.size() != m_map->GetEnemies().size())
+	{
+		init_controller();
+	}
+
 	for(int i =0;i < m_enemies.size(); ++i)
 	{
 
