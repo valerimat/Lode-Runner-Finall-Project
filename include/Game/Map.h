@@ -27,7 +27,7 @@ public:
 	void Draw(sf::RenderWindow& main_window);
 
 	// getters
-	Player* GetPlayer();
+	Player* get_player();
 	std::vector<Enemy*> GetEnemies();
 	std::vector<std::shared_ptr<StaticObject>>* GetStatic();
 	int GetHeight();
@@ -44,14 +44,8 @@ public:
 	void SetObjects();
 
 	// info
-	char WhatIsThere(sf::Vector2f location);
-	bool IsOnGround(sf::Vector2f location);
-	bool IsOnRope(sf::Vector2f location_l, sf::Vector2f location_r);
-	bool IsOnPlayer(sf::Vector2f& location);
-	bool IsOnLadder(sf::Vector2f location);
-	int  IsOnCoin(sf::Vector2f location);
-	int  IsOnPresent(sf::Vector2f location);
 	void check_collision(Object& object);
+
 	// action
 	void DeleteCoin(Coin & coin);
 	void DeletePresent(Present & present);
@@ -68,6 +62,7 @@ private:
 	Graph * m_graph;
 
 	std::vector<std::string> m_map;
+
 	std::vector<std::shared_ptr <StaticObject>> m_holes;
 	std::vector<std::shared_ptr <StaticObject>> m_holes_to_close;
 	std::vector<float> holes_time;
@@ -75,9 +70,6 @@ private:
 	std::vector<std::shared_ptr <sf::Texture>>  m_textures;
 
 	std::vector<std::shared_ptr <StaticObject>>  m_static;
-	std::vector<std::shared_ptr <StaticObject>>  m_ground;
-	std::vector<std::shared_ptr <StaticObject>>  m_ladders;
-	std::vector<std::shared_ptr <StaticObject>>  m_poles;
 	std::vector<std::shared_ptr <StaticObject>>  m_coins;
 	std::vector<std::shared_ptr <StaticObject>>  m_presents;
 	std::vector<std::shared_ptr <DynamicObject>> m_dynamic;

@@ -5,7 +5,7 @@
 
 void PlayerController::init_controller()
 {
-	m_player = m_map->GetPlayer();
+	m_player = m_map->get_player();
 	m_player->set_map(m_map);
 }
 //-----------------------------------------------------------------------------

@@ -32,6 +32,7 @@ enum class ButtonNames
 	Menu,
 	Continue,
 	Settings,
+	ResetLevel,
 	Scoreboard,
 };
 enum class NextStep

@@ -18,21 +18,16 @@ void Settings::Load()
 
 }
 
-
 void Settings::on_update()
 {
 
 };
 
-
 void Settings::handle_event(float dt)
 {
-
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
-		if (m_previouse_screen != nullptr)
-			set_next_state(ButtonNames::Back);
+	check_preseed_now();
+	check_release();
 }
-
 
 void  Settings::set_next_state(ButtonNames next_state)
 {

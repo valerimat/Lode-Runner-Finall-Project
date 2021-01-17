@@ -21,10 +21,24 @@ void Game::Load()
 	Map temp(m_maps.GetMap(level), m_maps.GetCurrHeight(level), m_maps.GetCurrWidth(level), m_maps.GetCurrTimer(level));
 	m_curr_map = temp;
 
-	Hud hud(m_curr_map.GetPlayer(), level, m_curr_map.GetTimer());
+	Hud hud(m_curr_map.get_player(), level, m_curr_map.GetTimer());
 	m_hud = hud;
 }
 //-----------------------------------------------------------------------------
+void Game::reset_level()
+{
+	//(need to reset timer)
+	Load();
+	init_controllers();
+}
+
+void Game::reset_game()
+{
+	level = 0;
+	Load();
+	init_controllers();
+}
+
 State* Game::get_next_state()
 {
 	sate_changed = false;
@@ -63,15 +77,12 @@ void Game::on_update()
 
 void Game::handle_event(float dt)
 {
-	if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
-	{
-		m_enemy_cont->move_enemies(dt);
-		m_player_cont->MovePlayer(dt);
-	}
-	else
-	{
-		set_next_state(ButtonNames::InGameMenu);
-	}
+	check_preseed_now();
+	check_release();
+
+	m_enemy_cont->move_enemies(dt);
+	m_player_cont->MovePlayer(dt);
+
 }
 
 void  Game::set_next_state(ButtonNames next_state)
@@ -91,4 +102,21 @@ void  Game::set_next_state(ButtonNames next_state)
 bool Game::satate_changed()
 {
 	return sate_changed;
+}
+
+void Game::check_release()
+{
+	if (was_pressed == sf::Keyboard::Escape && !(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)))
+	{
+		set_next_state(ButtonNames::InGameMenu);
+		was_pressed = sf::Keyboard::Unknown;
+	}
+}
+
+void Game::check_preseed_now()
+{
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+	{
+		was_pressed = sf::Keyboard::Escape;
+	}
 }
