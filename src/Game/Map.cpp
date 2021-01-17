@@ -49,7 +49,6 @@ void Map::SetObjects()
 			case ENEMY:
 				dn_ptr = std::make_shared<Enemy>(ENEMY, location, m_textures[ENEMY_TEXTURE]);
 				m_dynamic.push_back(dn_ptr);
-				smrt++; // each init of the player makes him smarter
 				break;
 
 			case GROUND:
@@ -271,7 +270,7 @@ void Map::DeletePresent(Present &present)
 {
 	auto i = 0;
 
-	while (prenset.get_location() != m_static[i]->get_location())
+	while (present.get_location() != m_static[i]->get_location())
 	{
 		i++;
 	}
@@ -289,7 +288,7 @@ void Map::DeletePresent(Present &present)
 	case 3:
 		std::shared_ptr<DynamicObject> dn_ptr;
 		sf::Vector2f location = { 5,5 };
-		dn_ptr = std::make_shared<Enemy>(ENEMY, location, m_textures[ENEMY_TEXTURE], 0);
+		dn_ptr = std::make_shared<Enemy>(ENEMY, location, m_textures[ENEMY_TEXTURE]);
 		m_dynamic.push_back(dn_ptr);
 		break;
 	}
