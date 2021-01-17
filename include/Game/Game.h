@@ -36,6 +36,7 @@ public:
 	Map* get_curr_map();
 	
 private:
+	void advance_level();
 
 	void check_release();
 	void check_preseed_now();

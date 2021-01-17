@@ -63,7 +63,7 @@ void Map::SetObjects()
 				break;
 
 			case COIN:
-				st_ptr = std::make_shared<Coin>(LADDER, location, m_textures[COIN_TEXTURE]);
+				st_ptr = std::make_shared<Coin>(COIN, location, m_textures[COIN_TEXTURE]);
 				m_static.push_back(st_ptr);
 				break;
 
@@ -346,3 +346,14 @@ void Map::close_holes()
 	}
 }
 
+
+bool Map::all_coins_collected()
+{
+	for (int i = 0; i < m_static.size(); ++i)
+	{
+		if (m_static[i]->get_name() == COIN)
+			return false;
+	}
+
+	return true;
+}

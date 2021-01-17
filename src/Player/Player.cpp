@@ -103,7 +103,7 @@ void Player::handle_collision(RigidBodyObject& object)
 {
 	sf::FloatRect inter;
 	if (get_sprite().getGlobalBounds().intersects(object.get_sprite().getGlobalBounds(), inter))
-		if (inter.height >= 1 && inter.width >= 1)
+		if (inter.height >= 2 && inter.width >= 2)
 		{
 			move_back(object);
 		}
