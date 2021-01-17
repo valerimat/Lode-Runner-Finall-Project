@@ -45,7 +45,7 @@ enum class NextStep
 };
 
 const int OFFSET = 50 * 0.8;
-const float STEP = 1.f;
+const float STEP = 1.2f;
 
 const char PLAYER = char('@');
 const char COIN = char('*');

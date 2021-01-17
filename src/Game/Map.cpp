@@ -49,7 +49,7 @@ void Map::SetObjects()
 			case ENEMY:
 				dn_ptr = std::make_shared<Enemy>(ENEMY, location, m_textures[ENEMY_TEXTURE]);
 				m_dynamic.push_back(dn_ptr);
-				smrt++;
+				smrt++; // each init of the player makes him smarter
 				break;
 
 			case GROUND:
@@ -109,15 +109,13 @@ void Map::SetObjects()
 void Map::Draw(sf::RenderWindow &main_window)
 {
 	// Background
-	
-
 	float scale_height = float(m_height) * float(50) / float(HEIGHT),
 		  scale_width  = float(m_width)  * float(50) / float(WIDTH);
-
+	// scales the background so it will fit nicely in the game
 	StaticObject background(NULL, sf::Vector2f(1, 0), m_textures[BACKGROUND_TEXTURE]);
 	background.get_sprite().scale(scale_width, scale_height);
-
 	background.Draw(main_window);
+
 
 	// All the other objects
 	for (int i = 0; i < m_static.size(); ++i)
@@ -126,6 +124,7 @@ void Map::Draw(sf::RenderWindow &main_window)
 	}
 	for (int i = 0; i < m_dynamic.size(); ++i)
 	{
+		std::cout << m_dynamic.size() << std::endl;
 		m_dynamic[i]->Draw(main_window);
 	}
 
@@ -268,18 +267,35 @@ void Map::DeleteCoin(Coin & coin)
 //-----------------------------------------------------------------------------
 
 // deletes the present
-void Map::DeletePresent(Present & prenset)
+void Map::DeletePresent(Present &present)
 {
 	auto i = 0;
+
 	while (prenset.get_location() != m_static[i]->get_location())
 	{
 		i++;
 	}
-	m_timer += 5;
+	switch(present.get_type())
+	{
+	case 0:
+		m_timer += 5;
+		break;
+	case 1:
+		// add life
+		break;
+	case 2:
+		// add points
+		break;
+	case 3:
+		std::shared_ptr<DynamicObject> dn_ptr;
+		sf::Vector2f location = { 5,5 };
+		dn_ptr = std::make_shared<Enemy>(ENEMY, location, m_textures[ENEMY_TEXTURE], 0);
+		m_dynamic.push_back(dn_ptr);
+		break;
+	}
 	m_static.erase(m_static.begin() + i);
 }
 //-----------------------------------------------------------------------------
-
 
 void Map::check_collision(Object & object)
 {
@@ -297,6 +313,7 @@ void Map::check_collision(Object & object)
 			d_object->handle_collision(object);
 	}
 }
+//-----------------------------------------------------------------------------
 
 
 void Map::make_hole(sf::Vector2f location)
@@ -313,6 +330,7 @@ void Map::make_hole(sf::Vector2f location)
 		}
 	}
 }
+//-----------------------------------------------------------------------------
 
 void Map::check_holes()
 {
@@ -325,6 +343,7 @@ void Map::check_holes()
 		}
 	}
 }
+//-----------------------------------------------------------------------------
 
 void Map::close_holes()
 {
@@ -341,11 +360,9 @@ void Map::close_holes()
 		m_holes_to_close[i]->get_sprite().move(sf::Vector2f(0, -5));
 		m_holes_to_close[i]->get_sprite().setScale(curr_scale + sf::Vector2f(0, 0.1));
 		m_holes_to_close[i]->get_sprite().setColor(sf::Color(255, 255, 255, 255));
-
-
 	}
 }
-
+//-----------------------------------------------------------------------------
 
 bool Map::all_coins_collected()
 {
@@ -354,6 +371,6 @@ bool Map::all_coins_collected()
 		if (m_static[i]->get_name() == COIN)
 			return false;
 	}
-
 	return true;
 }
+//-----------------------------------------------------------------------------

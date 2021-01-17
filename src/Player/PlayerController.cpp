@@ -31,6 +31,7 @@ void PlayerController::MovePlayer( float dt)
 		
 		sf::Vector2f before_g = m_player->get_location();
 
+
 		//do graviry do its job
 		m_player->gravity(dt);
 
