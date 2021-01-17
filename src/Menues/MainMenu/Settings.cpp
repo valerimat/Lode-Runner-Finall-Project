@@ -12,6 +12,17 @@ Settings::Settings()
 	set_prev_state(nullptr);
 	
 }
+Settings::Settings(State * prev)
+{
+	my_state = (StateEnum::Settings);
+	next_state = (StateEnum::Settings);
+	load_textures();
+	load_background();
+	load_buttons();
+	load_arrow();
+	set_prev_state(prev);
+
+}
 
 void Settings::Load()
 {

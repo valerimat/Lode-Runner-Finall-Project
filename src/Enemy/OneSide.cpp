@@ -5,9 +5,12 @@
 #include "Graph.h"
 #include "EnemyController.h"
 #include "Node.h"
+#include <random>
 
 std::vector<sf::Vector2f> OneSide::calc_path(Graph& graph, sf::Vector2f our_location, sf::Vector2f wanted_location)
 {
+	auto random = std::random_device();
+
 	std::vector<sf::Vector2f> waypoints;
 	Node* node = graph.get_closest_node(our_location);
 	if (node == nullptr)
@@ -17,18 +20,27 @@ std::vector<sf::Vector2f> OneSide::calc_path(Graph& graph, sf::Vector2f our_loca
 	}
 
 	//first_we_pus_closest_node
-	waypoints.push_back(node->get_location());
+	//waypoints.push_back(node->get_location());
 	
 	sf::Vector2f next_location;
 
-	srand(time(0));
 
-	int random = rand();
+	int random_number = random();
 	
-	if (random %2 ==0)
+	if (random_number % 2 == 0)
+	{
 		next_location = get_most_left(node);
+		if (next_location == node->get_location())
+			next_location = get_most_right(node);
+	}
 	else
+	{
 		next_location = get_most_right(node);
+		if (next_location == node->get_location())
+			next_location = get_most_left(node);
+	}
+	
+	
 
 	waypoints.push_back(next_location);
 

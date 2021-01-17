@@ -9,6 +9,16 @@
 #include "Map.h"
 #include "Music.h"
 
+Player::Player(char name, sf::Vector2f locaiton, std::shared_ptr<sf::Texture> texture) :
+	DynamicObject(name, locaiton, texture)
+{
+	on_create();
+}
+void Player::on_create()
+{	
+	m_lives.set_lives();
+}
+
 void Player::Move(sf::Keyboard::Key key,float dt)
 {
 	switch (key)
@@ -39,7 +49,7 @@ void Player::Move(sf::Keyboard::Key key,float dt)
 void Player::handle_collision(Object& object)
 {
 	if (this->get_name() == object.get_name()) return;
-	this->handle_collision(object);
+	object.handle_collision(*this);
 }
 //-----------------------------------------------------------------------------
 
@@ -56,6 +66,12 @@ void Player::handle_collision(Player& object)
 
 void Player::handle_collision(Enemy& object)
 {
+	sf::FloatRect inter;
+	if (get_sprite().getGlobalBounds().intersects(object.get_sprite().getGlobalBounds(), inter))
+		if (inter.width > 5 && inter.height > 5)
+		{
+			m_lives.dec_lives();
+		}
 	std::cout << "collision";
 }
 //-----------------------------------------------------------------------------
@@ -106,7 +122,7 @@ void Player::handle_collision(RigidBodyObject& object)
 {
 	sf::FloatRect inter;
 	if (get_sprite().getGlobalBounds().intersects(object.get_sprite().getGlobalBounds(), inter))
-		if (inter.height >= 2 && inter.width >= 2)
+		if (inter.height >= 2 && inter.width >= 3)
 		{
 			move_back(object);
 		}

@@ -4,9 +4,18 @@
 class Lives
 {
 public:
-	void set_lives();
-	int get_lives();
-	void dec_lives();
+	void set_lives()
+	{
+
+	}
+	int get_lives()
+	{
+
+	}
+	void dec_lives()
+	{
+
+	}
 
 private:
 

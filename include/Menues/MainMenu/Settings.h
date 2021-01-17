@@ -9,6 +9,7 @@ class Settings : public Menu
 {
 public:
 	Settings();
+	Settings(State* prev);
 	void Load() override;
 	void on_update() override;
 	void handle_event(float dt)override;

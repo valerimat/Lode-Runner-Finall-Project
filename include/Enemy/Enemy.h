@@ -15,7 +15,8 @@ class Enemy : public DynamicObject
 public:
 	//C-tors:
 	using DynamicObject::DynamicObject;
-	Enemy(char name, sf::Vector2f locaiton, std::shared_ptr<sf::Texture> texture, int smart);
+	Enemy(char name, sf::Vector2f locaiton, std::shared_ptr<sf::Texture> texture);
+
 	void set_map(Map* map);
 	//Setters:
 	virtual void set_smartness(int i);
@@ -49,8 +50,12 @@ public:
 	bool checke_if_reached();
 	NextStep direction_to_waypoint();
 	bool m_falling = false;
+	void on_create()override;
+	
 private:
+	
 	void set_next_waypoint();
+	
 
 	int stuck_counter = 0;
 	int m;
