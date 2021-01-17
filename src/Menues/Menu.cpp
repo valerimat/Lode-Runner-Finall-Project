@@ -14,10 +14,14 @@ State* Menu::get_next_state()
 
 void Menu::Draw(sf::RenderWindow& window)
 {
+	window.draw(background);
+
 	for (int i = 0; i < m_buttons.size(); ++i)
 		m_buttons[i].Draw(window);
 
 	m_arrow.Draw(window);
+
+	
 };
 
 

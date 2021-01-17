@@ -11,7 +11,7 @@ Selection::Selection(std::shared_ptr<sf::Texture> texture, sf::Vector2f location
 	
 	m_sprite_r.setTexture(*texture);
 	m_sprite_r.scale(-1, 1);
-	m_sprite_r.setPosition(location + sf::Vector2f(250,0));
+	m_sprite_r.setPosition(location + sf::Vector2f(300,0));
 
 
 

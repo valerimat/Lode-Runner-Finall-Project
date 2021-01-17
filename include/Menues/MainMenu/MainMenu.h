@@ -17,7 +17,7 @@ public:
 	StateEnum get_state() { return my_state; };
 
 private:
-	
+
 	sf::Keyboard::Key was_pressed;
 	float stop = 0;
 	void load_textures();

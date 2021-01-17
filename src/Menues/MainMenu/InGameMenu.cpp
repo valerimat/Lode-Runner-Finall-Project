@@ -1,6 +1,7 @@
 #include "InGameMenu.h"
 #include "Game.h"	
 #include "Settings.h"
+#include "MainMenu.h"
 
 //========================Ctor
 InGameMenu::InGameMenu()
@@ -42,11 +43,6 @@ void  InGameMenu::set_next_state(ButtonNames next_state)
 	State* next;
 	switch (next_state)
 	{
-	case ButtonNames::Back:
-		if (m_previouse_screen != nullptr)
-			sate_changed = true;
-		next_screen = m_previouse_screen;
-		break;
 	case ButtonNames::Continue:
 		if (m_previouse_screen != nullptr)
 			sate_changed = true;
@@ -69,6 +65,15 @@ void  InGameMenu::set_next_state(ButtonNames next_state)
 			next_screen = next;
 		}
 		break;
+	case ButtonNames::Exit:
+		exit(EXIT_SUCCESS);
+		break;
+	case ButtonNames::MainMenu:
+		next = new MainMenu;
+		sate_changed = true;
+		next_screen = next;
+		break;
+
 	}
 }
 
@@ -89,11 +94,15 @@ Loads all textures
 void InGameMenu::load_textures()
 {
 	auto texture = std::make_shared<sf::Texture>();
-	texture->loadFromFile("play_button.png");
+	texture->loadFromFile("continue.png");
 	m_textures.push_back(texture);
 
 	texture = std::make_shared<sf::Texture>();
-	texture->loadFromFile("arrow.png");
+	texture->loadFromFile("main_menu_png.png");
+	m_textures.push_back(texture);
+
+	texture = std::make_shared<sf::Texture>();
+	texture->loadFromFile("reset_button.png");
 	m_textures.push_back(texture);
 
 	texture = std::make_shared<sf::Texture>();
@@ -101,7 +110,11 @@ void InGameMenu::load_textures()
 	m_textures.push_back(texture);
 
 	texture = std::make_shared<sf::Texture>();
-	texture->loadFromFile("reset_b.png");
+	texture->loadFromFile("exit_button.png");
+	m_textures.push_back(texture);
+
+	texture = std::make_shared<sf::Texture>();
+	texture->loadFromFile("arrow.png");
 	m_textures.push_back(texture);
 }
 
@@ -115,14 +128,21 @@ void InGameMenu::load_buttons()
 	Button Continue(m_textures[0], sf::Vector2f(300, 300), ButtonNames::Continue);
 	m_buttons.push_back(Continue);
 	
-	Button settings(m_textures[2], sf::Vector2f(300, 400), ButtonNames::Settings);
+	Button main_menu(m_textures[1], sf::Vector2f(300, 400), ButtonNames::MainMenu);
+	m_buttons.push_back(main_menu);
+
+	Button reset_level(m_textures[2], sf::Vector2f(300, 500), ButtonNames::ResetLevel);
+	m_buttons.push_back(reset_level);
+
+	Button settings(m_textures[3], sf::Vector2f(300, 600), ButtonNames::Settings);
 	m_buttons.push_back(settings);
 
-	Button reset(m_textures[3], sf::Vector2f(300, 500), ButtonNames::ResetLevel);
-	m_buttons.push_back(reset);
+
+	Button exit(m_textures[4], sf::Vector2f(300, 700), ButtonNames::Exit);
+	m_buttons.push_back(exit);
 }
 void InGameMenu::load_arrow()
 {
-	m_arrow = Selection(m_textures[1], sf::Vector2f(250, 300));
+	m_arrow = Selection(m_textures[5], sf::Vector2f(250, 300));
 }
 
