@@ -5,7 +5,7 @@
 #include "Present.h"
 #include "Coin.h"
 #include "Clock.h"
-
+#include "Score.h"
 
 // c-tor of map
 Map::Map(std::vector<std::string>* map,int height, int width, int timer):
@@ -123,7 +123,6 @@ void Map::Draw(sf::RenderWindow &main_window)
 	}
 	for (int i = 0; i < m_dynamic.size(); ++i)
 	{
-		std::cout << m_dynamic.size() << std::endl;
 		m_dynamic[i]->Draw(main_window);
 	}
 
@@ -266,7 +265,7 @@ void Map::DeleteCoin(Coin & coin)
 //-----------------------------------------------------------------------------
 
 // deletes the present
-void Map::DeletePresent(Present &present)
+void Map::DeletePresent(Present& present)
 {
 	auto i = 0;
 
@@ -274,23 +273,30 @@ void Map::DeletePresent(Present &present)
 	{
 		i++;
 	}
-	switch(present.get_type())
+	switch (present.get_type())
 	{
 	case 0:
+		std::cout << "time added\n";
 		m_timer += 5;
+		m_music->DrinkingSound();
 		break;
 	case 1:
-		// add life
+		std::cout << "lives added\n";
+		this->get_player()->add_lives();
+		m_music->DrinkingSound();
 		break;
 	case 2:
-		// add points
+		std::cout << "score added\n";
+		Score::GetScore().IncreasePoints(1);
+		m_music->DrinkingSound();
 		break;
 	case 3:
-		std::cout << "enemy has spawned\n";
+		std::cout << "enemy added\n";;
 		std::shared_ptr<DynamicObject> dn_ptr;
-		sf::Vector2f location = { 5,5 };
+		sf::Vector2f location = { 5,5 }; // needs to be a random location
 		dn_ptr = std::make_shared<Enemy>(ENEMY, location, m_textures[ENEMY_TEXTURE]);
 		m_dynamic.push_back(dn_ptr);
+		//m_music->BadPresentSound();
 		break;
 	}
 	m_static.erase(m_static.begin() + i);

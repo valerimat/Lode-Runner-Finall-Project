@@ -11,6 +11,7 @@
 #include <fstream>
 #include <iostream>
 #include "Graph.h"
+
 class Coin;
 class Present;
 class DynamicObject;
