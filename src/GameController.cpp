@@ -43,10 +43,13 @@ void GameController::Run()
 		{
 			//need to setup function screen->on_update();
 			screen->on_update();
+
 			auto now = clock::now();
+
 			auto dt = std::chrono::duration_cast<std::chrono::milliseconds>(now - last);
 			//need to setup function for this one to or check type
 			float dt_long = dt.count()*0.1f;
+
 			if (dt_long == 0)
 				dt_long = 1;
 

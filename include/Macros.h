@@ -24,16 +24,14 @@ enum class StateEnum
 	End,
 };
 
-enum class ButtonNames
+enum class States
 {
 	Win,
 	InGameMenu,
 	MainMenu,
-	Back,
 	Play,
 	Death,
 	Exit,
-	Menu,
 	Continue,
 	Settings,
 	ResetLevel,
