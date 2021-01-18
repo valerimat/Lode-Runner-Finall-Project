@@ -124,3 +124,8 @@ int MapData::GetCurrTimer(int lvl)
 {
 	return m_timer[lvl];
 }
+
+int MapData::get_number_of_levels()
+{
+	return m_number_of_levels;
+}

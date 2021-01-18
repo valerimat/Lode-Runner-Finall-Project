@@ -17,6 +17,7 @@ public:
 	int GetCurrHeight(int lvl);
 	int GetCurrWidth(int lvl);
 	int GetCurrTimer(int lvl);
+	int get_number_of_levels();
 
 private:
 	// private function

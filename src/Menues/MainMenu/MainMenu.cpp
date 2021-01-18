@@ -21,7 +21,7 @@ void MainMenu::Load()
 //========================Base functions:
 
 
-void MainMenu::on_update() 
+void MainMenu::on_update()
 {
 
 };
@@ -42,27 +42,18 @@ void  MainMenu::set_next_state(ButtonNames next_state)
 	State* next;
 	switch (next_state)
 	{
-	case ButtonNames::Back:
-		if (m_previouse_screen != nullptr)
-			sate_changed = true;
-			next_screen = m_previouse_screen;
-		break;
+
 	case ButtonNames::Play:
-		next = new Game;
-		sate_changed = true;
-		next_screen = next;
+		next_game();
 		break;
 	case ButtonNames::Settings:
-		next = new Settings;
-		sate_changed = true;
-		next_screen = next;
+		next_settings();
 		break;
 	case ButtonNames::Scoreboard:
+		next_scoreboard();
 		break;
-
 	case ButtonNames::Exit:
-		exit(EXIT_SUCCESS);
-
+		next_exit();
 		break;
 	}
 }
@@ -112,8 +103,6 @@ void MainMenu::load_textures()
 
 void MainMenu::load_background()
 {
-	float m_height = 20.f;
-	float m_width = 20.f;
 
 	float scale_height = float(HEIGHT)/900.f,
 		scale_width = float(WIDTH)/1200.f;
@@ -131,10 +120,10 @@ void MainMenu::load_buttons()
 	Button settings(m_textures[1], sf::Vector2f(300, 400),ButtonNames::Settings);
 	m_buttons.push_back(settings);
 
-	Button scoreboard(m_textures[2], sf::Vector2f(300, 500), ButtonNames::Scoreboard);
-	m_buttons.push_back(scoreboard);
+	//Button scoreboard(m_textures[2], sf::Vector2f(300, 500), ButtonNames::Scoreboard);
+	//m_buttons.push_back(scoreboard);
 
-	Button exit(m_textures[3], sf::Vector2f(300, 600), ButtonNames::Exit);
+	Button exit(m_textures[3], sf::Vector2f(300, 500), ButtonNames::Exit);
 	m_buttons.push_back(exit);
 }
 
