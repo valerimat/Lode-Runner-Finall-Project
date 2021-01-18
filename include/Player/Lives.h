@@ -16,7 +16,10 @@ public:
 	{
 		--m_lives;
 	}
-
+	void add_lives()
+	{
+		++m_lives;
+	}
 private:
 
 	int m_lives;

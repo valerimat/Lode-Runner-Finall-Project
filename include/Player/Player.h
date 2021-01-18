@@ -42,6 +42,7 @@ public:
 	bool m_no_ground =false;
 	void on_create()override;
 	int get_lives();
+	void add_lives();
 
 private:
 	

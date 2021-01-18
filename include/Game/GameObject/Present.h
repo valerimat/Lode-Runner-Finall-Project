@@ -15,8 +15,8 @@ public:
 		    :StaticObject(Name, locaiton, texture)
 	{
 		std::cout << "present was created with the type of ";
-		//m_type = rand() % 4;
-		m_type = 3;
+		m_type = rand() % 4;
+
 		std::cout << m_type << std::endl;
 	}
 

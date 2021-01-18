@@ -153,3 +153,8 @@ int Player::get_lives()
 {
 	return m_lives.get_lives();
 }
+
+void Player::add_lives()
+{
+	return m_lives.add_lives();
+}
