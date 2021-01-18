@@ -1,4 +1,4 @@
-﻿configure_file ("arial.ttf"${CMAKE_BINARY_DIR} COPYONLY)
+﻿configure_file ("8-bit-hud.ttf"${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("./skins/enemy.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("./skins/ground.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("./skins/ground with signs.png" ${CMAKE_BINARY_DIR} COPYONLY)
@@ -47,3 +47,5 @@ configure_file ("./buttons/wasted.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("./buttons/arrow.png" ${CMAKE_BINARY_DIR} COPYONLY)
 
 configure_file ("./buttons/background_main.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("./buttons/pause.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("./buttons/victory.png" ${CMAKE_BINARY_DIR} COPYONLY)

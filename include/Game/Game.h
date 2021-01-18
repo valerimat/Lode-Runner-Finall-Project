@@ -37,7 +37,7 @@ public:
 	
 private:
 	void advance_level();
-
+	bool max_level();
 	void check_release();
 	void check_preseed_now();
 	sf::Keyboard::Key was_pressed;

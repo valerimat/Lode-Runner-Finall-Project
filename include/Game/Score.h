@@ -7,6 +7,7 @@ public:
 
 	int  GetPoints();
 	void IncreasePoints(int lvl);
+	void reset_score();
 
 private:
 	Score();

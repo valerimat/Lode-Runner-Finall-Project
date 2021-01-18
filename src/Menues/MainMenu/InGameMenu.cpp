@@ -44,36 +44,23 @@ void  InGameMenu::set_next_state(ButtonNames next_state)
 	switch (next_state)
 	{
 	case ButtonNames::Continue:
-		if (m_previouse_screen != nullptr)
-			sate_changed = true;
-		next_screen = m_previouse_screen;
+		next_continue();
 		break;
 	case ButtonNames::Settings:
-		next = new Settings(this);
-		sate_changed = true;
-		next_screen = next;
+		next_settings();
 		break;
 	case ButtonNames::Scoreboard:
+		next_scoreboard();
 		break;
-
 	case ButtonNames::ResetLevel:
-		next = m_previouse_screen;
-		if (static_cast<Game*>(m_previouse_screen))
-		{
-			static_cast<Game*>(m_previouse_screen)->reset_level();
-			sate_changed = true;
-			next_screen = next;
-		}
+		next_reset_level();
 		break;
 	case ButtonNames::Exit:
-		exit(EXIT_SUCCESS);
+		next_exit();
 		break;
 	case ButtonNames::MainMenu:
-		next = new MainMenu;
-		sate_changed = true;
-		next_screen = next;
+		next_main_menu();
 		break;
-
 	}
 }
 
@@ -116,11 +103,19 @@ void InGameMenu::load_textures()
 	texture = std::make_shared<sf::Texture>();
 	texture->loadFromFile("arrow.png");
 	m_textures.push_back(texture);
+
+	texture = std::make_shared<sf::Texture>();
+	texture->loadFromFile("pause.png");
+	m_textures.push_back(texture);
 }
 
 void InGameMenu::load_background()
 {
+	float scale_height = float(HEIGHT) / 900.f,
+		scale_width = float(WIDTH) / 1200.f;
 
+	background.setTexture(*m_textures[6]);
+	background.scale(scale_width, scale_height);
 }
 
 void InGameMenu::load_buttons()

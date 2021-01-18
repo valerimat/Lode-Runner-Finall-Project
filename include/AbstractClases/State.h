@@ -18,6 +18,17 @@ public:
 
 protected:
 
+	void next_main_menu();
+	void next_exit();
+	void next_in_game_menu();
+	void next_reset_level();
+	void next_continue();
+	void next_scoreboard();
+	void next_settings();
+	void next_death_screen();
+	void next_game();
+	void next_win(int score);
+
 	StateEnum my_state;
 	StateEnum next_state;
 	bool sate_changed = false;

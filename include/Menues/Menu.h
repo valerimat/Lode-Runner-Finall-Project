@@ -18,8 +18,8 @@ public:
 protected:
 	sf::Sprite background;
 
-	void check_release();
-	void check_preseed_now();
+	virtual void check_release();
+	virtual void check_preseed_now();
 
 	sf::Keyboard::Key was_pressed;
 

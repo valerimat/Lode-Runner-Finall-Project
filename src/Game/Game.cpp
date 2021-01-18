@@ -2,7 +2,6 @@
 #include "MainMenu.h"
 #include "InGameMenu.h"
 #include "Clock.h"
-#include "Death.h"
 
 Game::Game():
 	m_maps(MapData())
@@ -75,8 +74,14 @@ void Game::on_update()
 {
 	if (m_curr_map.all_coins_collected())
 	{
+		if (max_level())
+		{
+			set_next_state(ButtonNames::Win);
+			return;
+		}
 		advance_level();
 	}
+
 
 	if (m_curr_map.get_player()->get_lives() == 0)
 		set_next_state(ButtonNames::Death);
@@ -103,15 +108,14 @@ void  Game::set_next_state(ButtonNames next_state)
 	switch (next_state)
 	{
 	case ButtonNames::InGameMenu:
-		next = new InGameMenu;
-		next->set_prev_state(this);
-		sate_changed  = true;
-		next_screen = next;
+		next_in_game_menu();
 		break;
 	case ButtonNames::Death:
-		next = new Death;
-		sate_changed = true;
-		next_screen = next;
+		next_death_screen();
+		break;
+	case ButtonNames::Win:
+		next_win(m_score.GetPoints());
+		m_score.reset_score();
 		break;
 	}
 }
@@ -142,4 +146,13 @@ void Game::advance_level()
 {
 	++level;
 	reset_level();
+}
+
+bool Game::max_level()
+{
+	if ((level + 1) >= m_maps.get_number_of_levels())
+	{
+		return true;
+	}
+	return false;
 }

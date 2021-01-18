@@ -18,7 +18,7 @@ public:
 	StateEnum get_state() { return my_state; };
 
 private:
-	float stop = 0;
+
 	void load_textures();
 	void load_buttons();
 	void load_background();

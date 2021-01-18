@@ -26,6 +26,7 @@ enum class StateEnum
 
 enum class ButtonNames
 {
+	Win,
 	InGameMenu,
 	MainMenu,
 	Back,
