@@ -5,7 +5,6 @@
                                      "OneSide.cpp"
                                      "RandomPath.cpp"
                                      "Bfs.cpp"
-                                     "Tile.cpp"
                                      "Graph.cpp"
                                      "Node.cpp"
                                   )

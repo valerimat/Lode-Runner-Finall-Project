@@ -14,6 +14,7 @@ Player::Player(char name, sf::Vector2f locaiton, std::shared_ptr<sf::Texture> te
 {
 	on_create();
 }
+
 void Player::on_create()
 {	
 	m_base_location = get_location();
@@ -80,7 +81,7 @@ void Player::handle_collision(Enemy& object)
 
 void Player::handle_collision(Coin& object)
 {
-	Score::GetScore().IncreasePoints(1); // 1 represents the lvl needs to be changed latter
+	Score::GetScore().IncreasePoints(); // 1 represents the lvl needs to be changed latter
 	m_map->DeleteCoin(object);
 	m_music->EaitngSound();
 }

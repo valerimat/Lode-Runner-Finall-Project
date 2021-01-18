@@ -43,7 +43,6 @@ configure_file ("./buttons/reset_button.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("./buttons/scoreboard.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("./buttons/reset_button.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("./buttons/setting_button.png" ${CMAKE_BINARY_DIR} COPYONLY)
-configure_file ("./buttons/wasted.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("./buttons/arrow.png" ${CMAKE_BINARY_DIR} COPYONLY)
 
 configure_file ("./buttons/background_main.png" ${CMAKE_BINARY_DIR} COPYONLY)
