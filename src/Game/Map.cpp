@@ -286,6 +286,7 @@ void Map::DeletePresent(Present &present)
 		// add points
 		break;
 	case 3:
+		std::cout << "enemy has spawned\n";
 		std::shared_ptr<DynamicObject> dn_ptr;
 		sf::Vector2f location = { 5,5 };
 		dn_ptr = std::make_shared<Enemy>(ENEMY, location, m_textures[ENEMY_TEXTURE]);
