@@ -6,6 +6,7 @@
 Game::Game():
 	m_maps(MapData())
 {
+	Clock::GetClock().RestartTime();
 	load();
 	init_controllers();
 }
