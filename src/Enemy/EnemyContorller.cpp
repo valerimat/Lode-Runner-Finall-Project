@@ -2,7 +2,7 @@
 #include "OneSide.h"
 #include "Map.h"
 #include "Enemy.h"
-static int stuck = 0;
+static int Stuck = 0;
 
 void EnemyController::InitController()
 {
@@ -12,7 +12,7 @@ void EnemyController::InitController()
 	for (auto enemy : m_enemies)
 	{
 		enemy->SetMap(m_map);
-		enemy->set_waypoint();
+		enemy->SetWaypoint();
 	}
 }
 //-----------------------------------------------------------------------------
@@ -30,10 +30,10 @@ void EnemyController::MoveEnemies(float dt)
 	for(int i =0;i < m_enemies.size(); ++i)
 	{
 
-		if (m_enemies[i]->checke_if_reached())
+		if (m_enemies[i]->CheckIfReached())
 		{
 			
-			m_enemies[i]->set_waypoint();
+			m_enemies[i]->SetWaypoint();
 			continue;
 		}
 
@@ -61,8 +61,8 @@ void EnemyController::SetPaths()
 {
 	for (auto enemy : m_enemies)
 	{
-		if (enemy->checke_if_reached())
-			enemy->set_waypoint();
+		if (enemy->CheckIfReached())
+			enemy->SetWaypoint();
 	}
 }
 //-----------------------------------------------------------------------------
@@ -93,18 +93,18 @@ void EnemyController::CheckStuck()
 	{
 		if (prev_loc[i] == curr_loc[i])
 		{
-			m_enemies[i]->dont_move();
-			m_enemies[i]->up_stuck();
+			m_enemies[i]->DontMove();
+			m_enemies[i]->UpStuck();
 
-			if (m_enemies[i]->stuck())
+			if (m_enemies[i]->Stuck())
 			{
-				m_enemies[i]->reset_path();
-				m_enemies[i]->set_waypoint();
+				m_enemies[i]->ResetPath();
+				m_enemies[i]->SetWaypoint();
 			}
 		}
 		else
 		{
-			m_enemies[i]->reset_stuck();
+			m_enemies[i]->ResetStuck();
 		}
 	}
 }

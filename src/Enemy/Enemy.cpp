@@ -29,7 +29,7 @@ void Enemy::on_create()
 	auto random = std::random_device();
 	std::cout << random() << std::endl;
 	auto smartness = rand() % 3;
-	set_smartness(smartness);
+	SetSmartness(smartness);
 
 	switch (m_iq)
 	{
@@ -49,13 +49,13 @@ void Enemy::on_create()
 //-----------------------------------------------------------------------------
 
 //Getter:
-IQ Enemy::get_iq()
+IQ Enemy::GetIQ()
 {
 	return m_iq;
 }
 //-----------------------------------------------------------------------------
 
-sf::Vector2f Enemy::get_center()
+sf::Vector2f Enemy::GetCenter()
 {
 	sf::Vector2f our_loc = get_location();
 
@@ -68,21 +68,21 @@ sf::Vector2f Enemy::get_center()
 
 //Setter:
 //for movement:
-void Enemy::set_waypoint()
+void Enemy::SetWaypoint()
 {
- 	if (no_waypoints())
+ 	if (NoWaypoints())
 	{
-		reset_path();
-		set_next_waypoint();
+		ResetPath();
+		SetNextWaypoint();
 	}
 	else
 	{
-		set_next_waypoint();
+		SetNextWaypoint();
 	}
 }
 //-----------------------------------------------------------------------------
 
-void Enemy::set_next_waypoint()
+void Enemy::SetNextWaypoint()
 {
 	
 	next_waypoint = waypoints[0];
@@ -91,7 +91,7 @@ void Enemy::set_next_waypoint()
 }
 //-----------------------------------------------------------------------------
 
-void Enemy::reset_path()
+void Enemy::ResetPath()
 {
 	waypoints.clear();
 	waypoints = algo->CalcPath(m_map->get_graph(), get_location(), m_map->get_player()->get_location());
@@ -106,7 +106,7 @@ void Enemy::SetMap(Map* map)
 }
 //-----------------------------------------------------------------------------
 
-void Enemy::set_smartness(int i)
+void Enemy::SetSmartness(int i)
 {
 	m_iq = IQ(i);
 }
@@ -120,7 +120,7 @@ void Enemy::move(float dt)
 	rect.setFillColor(sf::Color::Blue);
 	//m_falling = false;
 	//std::cout << next_waypoint.x << " " << next_waypoint.y << std::endl;
-	NextStep step = direction_to_waypoint();
+	NextStep step = DirectionToWaypoint();
 	
 	switch (step)
 	{
@@ -152,19 +152,19 @@ void Enemy::move(float dt)
 //-----------------------------------------------------------------------------
 
 //for unstucking:
-void Enemy::up_stuck()
+void Enemy::UpStuck()
 {
 	stuck_counter++;
 }
 //-----------------------------------------------------------------------------
 
-void Enemy::reset_stuck()
+void Enemy::ResetStuck()
 {
 	stuck_counter = 0;
 }
 //-----------------------------------------------------------------------------
 
-bool Enemy::stuck()
+bool Enemy::Stuck()
 {
 	if (stuck_counter == 500)
 	{
@@ -176,9 +176,9 @@ bool Enemy::stuck()
 }
 //-----------------------------------------------------------------------------
 
-bool Enemy::checke_if_reached()
+bool Enemy::CheckIfReached()
 {
-	sf::Vector2 location = get_center();
+	sf::Vector2 location = GetCenter();
 
 	//if we reached the waypoint in 2 pixels diffrence
 	if (abs(location.x - next_waypoint.x) < 3
@@ -194,9 +194,9 @@ bool Enemy::checke_if_reached()
 //-----------------------------------------------------------------------------
 
 //For waypoints:
-NextStep Enemy::direction_to_waypoint()
+NextStep Enemy::DirectionToWaypoint()
 {
-	sf::Vector2f location = get_center();
+	sf::Vector2f location = GetCenter();
 
 	//for safety
 	if(abs(next_waypoint.x - get_location().x) <1 && abs(next_waypoint.y - get_location().y) <1)
@@ -229,7 +229,7 @@ NextStep Enemy::direction_to_waypoint()
 }
 //-----------------------------------------------------------------------------
 
-bool Enemy::no_waypoints()
+bool Enemy::NoWaypoints()
 {
 	if (waypoints.size() == 0)
 		return true;
@@ -238,7 +238,7 @@ bool Enemy::no_waypoints()
 }
 //-----------------------------------------------------------------------------
 
-void Enemy::dont_move()
+void Enemy::DontMove()
 {
 	//waypoints.clear();
 	//next_waypoint = sf::Vector2f(-1, -1);

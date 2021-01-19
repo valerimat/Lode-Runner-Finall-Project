@@ -24,17 +24,18 @@ std::vector<sf::Vector2f> Bfs::CalcPath(Graph& graph, sf::Vector2f our_location,
 		to = graph.GetClosestNode((wanted_location));
 	}
 
-	waypoints = bfs(from, to);
+	waypoints = BFS(from, to);
 
 	graph.Clean();
 
 	return waypoints;
 };
+//-----------------------------------------------------------------------------
 
 /*
 Bfs algorithm from 2 nodes
 */
-std::vector<sf::Vector2f> Bfs::bfs(Node* from, Node* to)
+std::vector<sf::Vector2f> Bfs::BFS(Node* from, Node* to)
 {
 
 	std::vector< Node*> open_list;
@@ -53,30 +54,32 @@ std::vector<sf::Vector2f> Bfs::bfs(Node* from, Node* to)
 	{
 		//for protection
 		if (open_list.size() == 0)
-			return get_path(nullptr);
+			return GetPath(nullptr);
 
 		//getting the first variable from open list
 		head_of_list = open_list[0];
 
-		if (check_if_reached(head_of_list,to))
+		if (CheckIfReached(head_of_list,to))
 			break;
 		//adds neighbors if they arent colored
 		//colors them 
 		//colors myself in black
 		//delets myself from the list
-		handle_curr(head_of_list,open_list);
+		HandleCurr(head_of_list,open_list);
 		open_list.erase(open_list.begin());
 
 	}
-	return get_path(head_of_list);
+	return GetPath(head_of_list);
 }
+//-----------------------------------------------------------------------------
 
 void Bfs::SetFather(Node* node, Node* father)
 {
 	node->SetFather(father);
 }
+//-----------------------------------------------------------------------------
 
-bool Bfs::check_if_reached(Node* curr, Node * to)
+bool Bfs::CheckIfReached(Node* curr, Node * to)
 {
 	if (curr == to)
 		return true;
@@ -84,8 +87,9 @@ bool Bfs::check_if_reached(Node* curr, Node * to)
 	return false;
 
 }
+//-----------------------------------------------------------------------------
 
-void Bfs::handle_curr(Node * curr, std::vector< Node*> & open_list)
+void Bfs::HandleCurr(Node * curr, std::vector< Node*> & open_list)
 {
 	//from grey to black
 	curr->SetColor();
@@ -102,8 +106,9 @@ void Bfs::handle_curr(Node * curr, std::vector< Node*> & open_list)
 		}
 	}
 }
+//-----------------------------------------------------------------------------
 
-std::vector<sf::Vector2f> Bfs::get_path(Node * last)
+std::vector<sf::Vector2f> Bfs::GetPath(Node * last)
 {
 	std::vector<sf::Vector2f> waypoints;
 
@@ -123,5 +128,5 @@ std::vector<sf::Vector2f> Bfs::get_path(Node * last)
 
 	return waypoints;
 }
-
+//-----------------------------------------------------------------------------
 
