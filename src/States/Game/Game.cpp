@@ -43,10 +43,10 @@ void Game::init_controllers()
 {
 	//can move it to one array
 	m_enemy_cont = std::make_shared<EnemyController>(get_curr_map());
-	m_enemy_cont->init_controller();
+	m_enemy_cont->InitController();
 
 	m_player_cont = std::make_shared<PlayerController>(get_curr_map());
-	m_player_cont->init_controller();
+	m_player_cont->InitController();
 }
 //=============================================================================
 
@@ -64,10 +64,10 @@ void Game::on_update()
 	}
 
 
-	if (m_curr_map.get_player()->get_lives() == 0)
+	if (m_curr_map.get_player()->GetLives() == 0)
 		set_next_state(States::Death);
 
-	m_enemy_cont->set_paths();
+	m_enemy_cont->SetPaths();
 	m_curr_map.check_holes();
 	m_curr_map.close_holes();
 }
@@ -79,7 +79,7 @@ void Game::handle_event(float dt)
 	check_preseed_now();
 	check_release();
 
-	m_enemy_cont->move_enemies(dt);
+	m_enemy_cont->MoveEnemies(dt);
 	m_player_cont->MovePlayer(dt);
 
 }

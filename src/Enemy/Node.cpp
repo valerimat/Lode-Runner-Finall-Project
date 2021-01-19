@@ -1,17 +1,21 @@
 #include "Node.h"
 #include <iostream>
 
+// c-tor
 Node::Node(sf::Vector2f location):
 	m_location(location)
 {}
+//-----------------------------------------------------------------------------
 
-void Node::set_father(Node* father)
+void Node::SetFather(Node* father)
 {
 	m_father = father;
 }
+//-----------------------------------------------------------------------------
+
 //do we really need weight???
 //void set_weight(int weight);
-void Node::set_color()
+void Node::SetColor()
 {
 	switch (m_color)
 	{
@@ -28,88 +32,108 @@ void Node::set_color()
 		break;
 	}
 }
-void Node::reset_color()
+//-----------------------------------------------------------------------------
+
+void Node::ResetColor()
 {
 	m_color = Color::White;
 }
+//-----------------------------------------------------------------------------
 
-void Node::set_left(Node* node)
+void Node::SetLeft(Node* node)
 {
 	if (node != nullptr)
 		neig_arr.push_back(node);
 
 	left_n = node;
 }
-void Node::set_right(Node* node)
+//-----------------------------------------------------------------------------
+
+void Node::SetRight(Node* node)
 {
 	right_n = node;
 	if (node != nullptr)
 		neig_arr.push_back(node);
 }
+//-----------------------------------------------------------------------------
 
-void Node::set_top(Node* node)
+void Node::SetTop(Node* node)
 {
 	top_n = node;
 	if (node != nullptr)
 		neig_arr.push_back(node);
 }
+//-----------------------------------------------------------------------------
 
-void Node::set_bot(Node* node)
+void Node::SetBot(Node* node)
 {
 	bottom_n = node;
 	if (node != nullptr)
 		neig_arr.push_back(node);
 }
+//-----------------------------------------------------------------------------
 
-Node* Node::get_random_neigbor(int random)
+Node* Node::GetRandomNeighbor(int random)
 {
 	random = random % neig_arr.size();
 
 	return neig_arr[random];
 }
+//-----------------------------------------------------------------------------
 
-Node* Node::get_left()
+Node* Node::GetLeft()
 {
 	return left_n;
 }
-Node* Node::get_right()
+//-----------------------------------------------------------------------------
+
+Node* Node::GetRight()
 {
 	return right_n;
 }
+//-----------------------------------------------------------------------------
 
-Node* Node::get_top()
+Node* Node::GetTop()
 {
 	return top_n ;
 }
+//-----------------------------------------------------------------------------
 
-Node* Node::get_bot()
+Node* Node::GetBot()
 {
 	return bottom_n ;
 }
+//-----------------------------------------------------------------------------
 
 //getters:
-Color Node::get_color()
+Color Node::GetColor()
 {
 	return m_color;
 }
-//get father:
-Node* Node::get_father()
+//-----------------------------------------------------------------------------
+
+//gets father
+Node* Node::GetFather()
 {
 	return m_father;
 }
-//get location:
+//-----------------------------------------------------------------------------
+
+//gets location
 sf::Vector2f Node::get_location()
 {
 	return m_location;
 }
+//-----------------------------------------------------------------------------
 
-void Node::reset()
+void Node::Reset()
 {
-	set_color(Color::White);
-	set_father(nullptr);
+	SetColor(Color::White);
+	SetFather(nullptr);
 }
+//-----------------------------------------------------------------------------
 
-void Node::print_node()
+void Node::PrintNode()
 {
 	std::cout << "(" << m_location.x << "," << m_location.y << ") ";
 
@@ -125,12 +149,16 @@ void Node::print_node()
 	std::cout << std::endl;
 
 }
+//-----------------------------------------------------------------------------
 
-std::vector<Node*> Node::get_neigbor_list()
+std::vector<Node*> Node::GetNeighborList()
 {
 	return neig_arr;
 }
-void Node::set_color(Color color)
+//-----------------------------------------------------------------------------
+
+void Node::SetColor(Color color)
 {
 	m_color = color;
 }
+//-----------------------------------------------------------------------------

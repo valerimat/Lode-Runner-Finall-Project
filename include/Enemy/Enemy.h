@@ -17,7 +17,7 @@ public:
 	using DynamicObject::DynamicObject;
 	Enemy(char name, sf::Vector2f locaiton, std::shared_ptr<sf::Texture> texture);
 
-	void set_map(Map* map);
+	void SetMap(Map* map);
 	//Setters:
 	virtual void set_smartness(int i);
 	void set_waypoint();

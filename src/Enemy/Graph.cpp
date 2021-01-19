@@ -23,38 +23,41 @@ Graph::Graph(std::vector<std::string> m_map,int width, int height)
 
 	while (curr_row >= 0)
 	{
-		add_row(matrix, m_map, curr_row , width);
+		AddRow(matrix, m_map, curr_row , width);
 		curr_row--;
 	}
 
-	clenup(matrix);
-	create_node_matrix(matrix);
-	link_neighbors_to_list(matrix);
+	Clenup(matrix);
+	CreateNodeMatrix(matrix);
+	LinkNeighborsToList(matrix);
 }
+//-----------------------------------------------------------------------------
 
 //function that runs on rows and fills up matrix
-void Graph::add_row(std::vector<std::vector<int>> & matrix, std::vector<std::string> m_map, int row,int width)
+void Graph::AddRow(std::vector<std::vector<int>> & matrix, std::vector<std::string> m_map, int row,int width)
 {
 	for (int i = 0; i < width; i++)
 	{
-		if (we_found_ground(m_map, i, row) && !we_found_ladder(m_map, i, row))
+		if (WeFoundGround(m_map, i, row) && !WeFoundLadder(m_map, i, row))
 			matrix[row][i] = PLATFROM_INT;
-		else if(we_found_rope(m_map, i, row))
+		else if(WeFoundRope(m_map, i, row))
 			matrix[row][i] = ROPE_INT;
-		else if (we_found_ladder(m_map, i, row))
+		else if (WeFoundLadder(m_map, i, row))
 			matrix[row][i] = LADDER_INT;
-		else if (we_found_player(m_map, i, row))
+		else if (WeFoundPlayer(m_map, i, row))
 			matrix[row][i] = PLATFROM_INT;
-		else if(we_found_player(m_map, i, row) || we_found_air(m_map, i, row))
+		else if(WeFoundPlayer(m_map, i, row) || WeFoundAir(m_map, i, row))
 			matrix[row][i] = AIR_INT;
 		else
 			matrix[row][i] = GROUND_INT;
 	}
 	
 }
+//-----------------------------------------------------------------------------
+
 //that uses:
 //==============Found Functions:
-bool Graph::we_found_ground(std::vector<std::string> m_map, int i, int row)
+bool Graph::WeFoundGround(std::vector<std::string> m_map, int i, int row)
 {
 	if (m_map[row][i] != GROUND && m_map[row + 1][i] == GROUND)
 		return true;
@@ -63,45 +66,56 @@ bool Graph::we_found_ground(std::vector<std::string> m_map, int i, int row)
 
 	return false;
 }
-bool Graph::we_found_ladder(std::vector<std::string> m_map, int i, int row)
+//-----------------------------------------------------------------------------
+
+bool Graph::WeFoundLadder(std::vector<std::string> m_map, int i, int row)
 {
 	if (m_map[row][i] == LADDER)
 		return true;
 
 	return false;
 }
-bool Graph::we_found_player(std::vector<std::string> m_map, int i, int row)
+//-----------------------------------------------------------------------------
+
+bool Graph::WeFoundPlayer(std::vector<std::string> m_map, int i, int row)
 {
 	if (m_map[row][i] == PLAYER)
 		return true;
 
 	return false;
 }
-bool Graph::we_found_enemy (std::vector<std::string> m_map, int i, int row)
+//-----------------------------------------------------------------------------
+
+bool Graph::WeFoundEnemy(std::vector<std::string> m_map, int i, int row)
 {
 	if (m_map[row][i] == ENEMY)
 		return true;
 
 	return false;
 }
-bool Graph::we_found_rope  (std::vector<std::string> m_map, int i, int row)
+//-----------------------------------------------------------------------------
+
+bool Graph::WeFoundRope(std::vector<std::string> m_map, int i, int row)
 {
 	if (m_map[row][i] == POLE)
 		return true;
 
 	return false;
 }
-bool Graph::we_found_air   (std::vector<std::string> m_map, int i, int row)
+//-----------------------------------------------------------------------------
+
+bool Graph::WeFoundAir(std::vector<std::string> m_map, int i, int row)
 {
 	if (m_map[row][i] == NONE)
 		return true;
 
 	return false;
 }
+//-----------------------------------------------------------------------------
 
 //then we clen it with :
 //THIS FUNC ALITTLE BIT MESSY MIGHT WANNA FIX
-void Graph::clenup(std::vector<std::vector<int>>& matrix)
+void Graph::Clenup(std::vector<std::vector<int>>& matrix)
 {
 	//we want to run on columns and not on rows
 	int width = matrix[0].size();
@@ -147,11 +161,12 @@ void Graph::clenup(std::vector<std::vector<int>>& matrix)
 		}
 	}
 } 
+//-----------------------------------------------------------------------------
 
 //then we create node matrix:
-void Graph::create_node_matrix(std::vector<std::vector<int>> matrix)
+void Graph::CreateNodeMatrix(std::vector<std::vector<int>> matrix)
 {
-	set_matricies_sizes(matrix.size(), matrix[0].size());
+	SetMatriciesSizes(matrix.size(), matrix[0].size());
 
 	for (int i = 0; i < matrix.size(); ++i)
 	{
@@ -167,9 +182,10 @@ void Graph::create_node_matrix(std::vector<std::vector<int>> matrix)
 		}
 	}
 }
+//-----------------------------------------------------------------------------
 
 //that uses:
-void Graph::set_matricies_sizes(int height, int width)
+void Graph::SetMatriciesSizes(int height, int width)
 {
 	node_matrix.resize(height);
 	for (int i = 0; i < node_matrix.size(); ++i)
@@ -177,9 +193,10 @@ void Graph::set_matricies_sizes(int height, int width)
 		node_matrix[i].resize(width);
 	}
 }
+//-----------------------------------------------------------------------------
 
 //then we link neighboors together:
-void Graph::link_neighbors_to_list(std::vector<std::vector<int>> matrix)
+void Graph::LinkNeighborsToList(std::vector<std::vector<int>> matrix)
 {
 	for (int i = 0; i < node_matrix.size(); ++i)
 	{
@@ -187,40 +204,46 @@ void Graph::link_neighbors_to_list(std::vector<std::vector<int>> matrix)
 		{
 			if (node_matrix[i][j])
 			{
-				set_neighbors(i, j, matrix, node_matrix[i][j]);
+				SetNeighbors(i, j, matrix, node_matrix[i][j]);
 
 				neighbor_list.push_back(node_matrix[i][j]);
 			}
 		}
 	}
 }
+//-----------------------------------------------------------------------------
 
 //for this we use this set:
-void Graph::set_neighbors(int i, int j, std::vector<std::vector<int>> matrix, Node* node)
+void Graph::SetNeighbors(int i, int j, std::vector<std::vector<int>> matrix, Node* node)
 {
-	node->set_top(above_neighbor(i, j, matrix));
-	node->set_bot(bellow_neighbor(i, j, matrix));
-	node->set_left(left_neighbor(i, j, matrix));
-	node->set_right(right_neighbor(i, j, matrix));
+	node->SetTop(AboveNeighbor(i, j, matrix));
+	node->SetBot(BellowNeighbor(i, j, matrix));
+	node->SetLeft(LeftNeighbor(i, j, matrix));
+	node->SetRight(RightNeighbor(i, j, matrix));
 }
+//-----------------------------------------------------------------------------
 
 //that uses:
 //==============Linking Neighbors:
-Node* Graph::above_neighbor (int i, int  j, std::vector<std::vector<int>> matrix)
+Node* Graph::AboveNeighbor(int i, int  j, std::vector<std::vector<int>> matrix)
 {
 	if (matrix[i][j] == LADDER_INT && matrix[i - 1][j] != GROUND_INT)
 		return node_matrix[i - 1][j];
 
 	return nullptr;
 }
-Node* Graph::bellow_neighbor(int i, int  j, std::vector<std::vector<int>> matrix)
+//-----------------------------------------------------------------------------
+
+Node* Graph::BellowNeighbor(int i, int  j, std::vector<std::vector<int>> matrix)
 {
 	if (matrix[i + 1][j] != GROUND_INT)
 		return node_matrix[i + 1][j];
 
 	return nullptr;
 }
-Node* Graph::left_neighbor  (int i, int  j, std::vector<std::vector<int>> matrix)
+//-----------------------------------------------------------------------------
+
+Node* Graph::LeftNeighbor(int i, int  j, std::vector<std::vector<int>> matrix)
 {
 	//if (j - 1 > 0)
 	//{
@@ -229,7 +252,9 @@ Node* Graph::left_neighbor  (int i, int  j, std::vector<std::vector<int>> matrix
 	//}
 	return nullptr;
 }
-Node* Graph::right_neighbor (int i, int  j, std::vector<std::vector<int>> matrix)
+//-----------------------------------------------------------------------------
+
+Node* Graph::RightNeighbor(int i, int  j, std::vector<std::vector<int>> matrix)
 {
 	//if (j + 1 < matrix[0].size())
 		if (matrix[i][j] != AIR_INT && matrix[i][j + 1] != GROUND_INT)
@@ -246,7 +271,7 @@ Node* Graph::right_neighbor (int i, int  j, std::vector<std::vector<int>> matrix
 //we get the center of ourselfs and check if we fall on a horizonatl edge
 //the margin for mistake is <1
 //if not we return null ptr
-Node * Graph::get_closest_node(sf::Vector2f & location)
+Node * Graph::GetClosestNode(sf::Vector2f & location)
 {
 	//thats our center
 	float x = location.x + 0.5f * SIZE_OF_TILE ;
@@ -260,25 +285,27 @@ Node * Graph::get_closest_node(sf::Vector2f & location)
 	round(x);
 	round(y);
 
-	Node* node = get_node(y,x);
+	Node* node = GetNode(y,x);
 
 	return node;
 	
 }
+//-----------------------------------------------------------------------------
 
 //get node that is found in the matrix in x,y
-Node* Graph::get_node(int x, int y)
+Node* Graph::GetNode(int x, int y)
 {
 	return node_matrix[x][y];
 }
+//-----------------------------------------------------------------------------
 
 //clean graph after bfs
-void Graph::clean()
+void Graph::Clean()
 {
 	for (int i = 0; i < neighbor_list.size(); ++i)
-		neighbor_list[i]->reset();
-
+		neighbor_list[i]->Reset();
 }
+//-----------------------------------------------------------------------------
 
 //=======================================================================================================
 //=======================================================================================================
@@ -294,11 +321,11 @@ void Graph::Draw(sf::RenderWindow& window)
 		rect.setSize(sf::Vector2f(10, 10));
 		window.draw(rect);
 		
-		if (neighbor_list[i]->get_top() != nullptr)
+		if (neighbor_list[i]->GetTop() != nullptr)
 		{
 			sf::RectangleShape rect;
 			rect.setPosition(neighbor_list[i]->get_location());
-			sf::Vector2f size = neighbor_list[i]->get_top()->get_location() - neighbor_list[i]->get_location();
+			sf::Vector2f size = neighbor_list[i]->GetTop()->get_location() - neighbor_list[i]->get_location();
 
 			if (size.x == 0)
 				size.x = 5;
@@ -313,11 +340,11 @@ void Graph::Draw(sf::RenderWindow& window)
 			window.draw(rect);
 		}
 		
-		if (neighbor_list[i]->get_bot() != nullptr)
+		if (neighbor_list[i]->GetBot() != nullptr)
 		{
 			sf::RectangleShape rect;
 			rect.setPosition(neighbor_list[i]->get_location());
-			sf::Vector2f size = neighbor_list[i]->get_bot()->get_location() - neighbor_list[i]->get_location();
+			sf::Vector2f size = neighbor_list[i]->GetBot()->get_location() - neighbor_list[i]->get_location();
 
 			if (size.x == 0)
 				size.x = 5;
@@ -332,11 +359,11 @@ void Graph::Draw(sf::RenderWindow& window)
 			window.draw(rect);
 		}
 
-		if (neighbor_list[i]->get_right() != nullptr)
+		if (neighbor_list[i]->GetRight() != nullptr)
 		{
 			sf::RectangleShape rect;
 			rect.setPosition(neighbor_list[i]->get_location());
-			sf::Vector2f size = neighbor_list[i]->get_right()->get_location() - neighbor_list[i]->get_location();
+			sf::Vector2f size = neighbor_list[i]->GetRight()->get_location() - neighbor_list[i]->get_location();
 
 			if (size.x == 0)
 				size.x = 5;
@@ -351,27 +378,22 @@ void Graph::Draw(sf::RenderWindow& window)
 			window.draw(rect);
 		}
 
-		if (neighbor_list[i]->get_left() != nullptr)
+		if (neighbor_list[i]->GetLeft() != nullptr)
 		{
 			sf::RectangleShape rect;
 			rect.setPosition(neighbor_list[i]->get_location());
-			sf::Vector2f size = neighbor_list[i]->get_left()->get_location() - neighbor_list[i]->get_location();
+			sf::Vector2f size = neighbor_list[i]->GetLeft()->get_location() - neighbor_list[i]->get_location();
 
 			if (size.x == 0)
 				size.x = 5;
 			if (size.y == 0)
 				size.y = 5;
-
 	
 			rect.setFillColor(sf::Color::Green);
-		
 
 			rect.setSize(sf::Vector2f(size));
 			window.draw(rect);
 		}
-
-
-
 	}
 }
-
+//-----------------------------------------------------------------------------

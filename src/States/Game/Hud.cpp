@@ -180,7 +180,7 @@ void Hud::SetScore()
 // sets the lives
 void Hud::SetLives() 
 {
-	lives = m_player->get_lives();
+	lives = m_player->GetLives();
 }
 //-----------------------------------------------------------------------------
 

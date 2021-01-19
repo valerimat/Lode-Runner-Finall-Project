@@ -4,27 +4,27 @@
 #include "Enemy.h"
 static int stuck = 0;
 
-void EnemyController::init_controller()
+void EnemyController::InitController()
 {
 	m_enemies = m_map->GetEnemies();
-	set_curr_location();
-	set_previouse_locations();
+	SetCurrLocation();
+	SetPreviousLocations();
 	for (auto enemy : m_enemies)
 	{
-		enemy->set_map(m_map);
+		enemy->SetMap(m_map);
 		enemy->set_waypoint();
 	}
 }
 //-----------------------------------------------------------------------------
 
-void EnemyController::move_enemies(float dt)
+void EnemyController::MoveEnemies(float dt)
 {	
 	sf::Vector2f before_g;
 	sf::Vector2f after_g;
 
 	if (m_enemies.size() != m_map->GetEnemies().size())
 	{
-		init_controller();
+		InitController();
 	}
 
 	for(int i =0;i < m_enemies.size(); ++i)
@@ -37,30 +37,27 @@ void EnemyController::move_enemies(float dt)
 			continue;
 		}
 
-		move_enemy(dt, m_enemies[i]);
+		MoveEnemy(dt, m_enemies[i]);
 
 		before_g = m_enemies[i]->get_location();
 
-		apply_gravity(dt, m_enemies[i]);
+		ApplyGravity(dt, m_enemies[i]);
 		
 		after_g = m_enemies[i]->get_location();
 
-		if (enemy_falling(before_g, after_g))
+		if (EnemyFalling(before_g, after_g))
 			m_enemies[i]->m_falling = true;
 		else
 			m_enemies[i]->m_falling = false;
 
-		set_curr_location();
+		SetCurrLocation();
 
-		check_stuck();
+		CheckStuck();
 	}
 }
 //-----------------------------------------------------------------------------
 
-//-----------------------------------------------------------------------------
-
-
-void EnemyController::set_paths()
+void EnemyController::SetPaths()
 {
 	for (auto enemy : m_enemies)
 	{
@@ -69,7 +66,8 @@ void EnemyController::set_paths()
 	}
 }
 //-----------------------------------------------------------------------------
-void EnemyController::set_curr_location()
+
+void EnemyController::SetCurrLocation()
 {
 	curr_loc.clear();
 	for (auto enemy : m_enemies)
@@ -77,8 +75,9 @@ void EnemyController::set_curr_location()
 		curr_loc.push_back(enemy->get_location());
 	}
 }
+//-----------------------------------------------------------------------------
 
-void EnemyController::set_previouse_locations()
+void EnemyController::SetPreviousLocations()
 {
 	prev_loc.clear();
 	for (auto enemy : m_enemies)
@@ -86,8 +85,9 @@ void EnemyController::set_previouse_locations()
 		prev_loc.push_back(enemy->get_location());
 	}
 }
+//-----------------------------------------------------------------------------
 
-void EnemyController::check_stuck()
+void EnemyController::CheckStuck()
 {
 	for (int i = 0; i < curr_loc.size(); ++i)
 	{
@@ -108,11 +108,11 @@ void EnemyController::check_stuck()
 		}
 	}
 }
+//-----------------------------------------------------------------------------
 
-
-void EnemyController::move_enemy(float dt, Enemy * enemy)
+void EnemyController::MoveEnemy(float dt, Enemy * enemy)
 {
-	set_previouse_locations();
+	SetPreviousLocations();
 
 	
 
@@ -126,8 +126,9 @@ void EnemyController::move_enemy(float dt, Enemy * enemy)
 
 	m_map->check_collision(*enemy);
 }
+//-----------------------------------------------------------------------------
 
-void EnemyController::apply_gravity(float dt, Enemy* enemy)
+void EnemyController::ApplyGravity(float dt, Enemy* enemy)
 {
 	//do graviry do its job
 	enemy->gravity(dt);
@@ -135,11 +136,13 @@ void EnemyController::apply_gravity(float dt, Enemy* enemy)
 	//check collisions again
 	m_map->check_collision(*enemy);
 }
+//-----------------------------------------------------------------------------
 
-bool EnemyController::enemy_falling(sf::Vector2f before, sf::Vector2f after)
+bool EnemyController::EnemyFalling(sf::Vector2f before, sf::Vector2f after)
 {
 	if (abs(before.y -  after.y) > 0.f)
 		return true;
 	
 	return false;
 }
+//-----------------------------------------------------------------------------

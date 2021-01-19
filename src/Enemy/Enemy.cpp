@@ -19,6 +19,7 @@ Enemy::Enemy(char name, sf::Vector2f locaiton, std::shared_ptr<sf::Texture> text
 	on_create();
 }
 //-----------------------------------------------------------------------------
+
 void Enemy::on_create()
 {
 	//
@@ -45,12 +46,15 @@ void Enemy::on_create()
 		break;
 	}
 }
+//-----------------------------------------------------------------------------
+
 //Getter:
 IQ Enemy::get_iq()
 {
 	return m_iq;
 }
 //-----------------------------------------------------------------------------
+
 sf::Vector2f Enemy::get_center()
 {
 	sf::Vector2f our_loc = get_location();
@@ -77,6 +81,7 @@ void Enemy::set_waypoint()
 	}
 }
 //-----------------------------------------------------------------------------
+
 void Enemy::set_next_waypoint()
 {
 	
@@ -85,25 +90,28 @@ void Enemy::set_next_waypoint()
 
 }
 //-----------------------------------------------------------------------------
+
 void Enemy::reset_path()
 {
 	waypoints.clear();
-	waypoints = algo->calc_path(m_map->get_graph(), get_location(), m_map->get_player()->get_location());
+	waypoints = algo->CalcPath(m_map->get_graph(), get_location(), m_map->get_player()->get_location());
 	
 }
 //-----------------------------------------------------------------------------
 
 //for data:
-void Enemy::set_map(Map* map)
+void Enemy::SetMap(Map* map)
 {
 	m_map = map;
 }
 //-----------------------------------------------------------------------------
+
 void Enemy::set_smartness(int i)
 {
 	m_iq = IQ(i);
 }
 //-----------------------------------------------------------------------------
+
 //for movement:
 void Enemy::move(float dt)
 {
@@ -228,6 +236,8 @@ bool Enemy::no_waypoints()
 
 	return false;
 }
+//-----------------------------------------------------------------------------
+
 void Enemy::dont_move()
 {
 	//waypoints.clear();
@@ -243,7 +253,6 @@ void Enemy::handle_collision(Coin& object) {};
 //-----------------------------------------------------------------------------
 void Enemy::handle_collision(Present& object) {};
 //-----------------------------------------------------------------------------
-
 
 //Not ignored:
 void Enemy::handle_collision(Object & object)

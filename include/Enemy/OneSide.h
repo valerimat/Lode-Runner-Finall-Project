@@ -15,8 +15,8 @@ class OneSide :public Algo
 {
 public:
 	//Main call function:
-	std::vector<sf::Vector2f> calc_path(Graph & graph, sf::Vector2f our_location, sf::Vector2f wanted_location) override;
+	std::vector<sf::Vector2f> CalcPath(Graph & graph, sf::Vector2f our_location, sf::Vector2f wanted_location) override;
 private:
-	sf::Vector2f get_most_left(Node* node);
-	sf::Vector2f get_most_right(Node* node);
+	sf::Vector2f GetMostLeft(Node* node);
+	sf::Vector2f GetMostRight(Node* node);
 };

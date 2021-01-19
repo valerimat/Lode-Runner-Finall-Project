@@ -8,7 +8,7 @@ public:
 	{
 		m_lives = 1;
 	}
-	int get_lives()
+	int GetLives()
 	{
 		return m_lives;
 	}
@@ -16,7 +16,7 @@ public:
 	{
 		--m_lives;
 	}
-	void add_lives()
+	void AddLives()
 	{
 		++m_lives;
 	}

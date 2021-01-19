@@ -15,18 +15,18 @@ public:
 	using MovementController::MovementController;
 
 	//Setters:
-	void set_paths();
+	void SetPaths();
 
 	//Helpers:
-	void move_enemies(float dt);
-	void init_controller();
+	void MoveEnemies(float dt);
+	void InitController();
 private:
-	void move_enemy(float dt, Enemy* enemy);
-	void apply_gravity(float dt, Enemy* enemy);
-	bool enemy_falling(sf::Vector2f before, sf::Vector2f after);
-	void set_curr_location();
-	void set_previouse_locations();
-	void check_stuck();
+	void MoveEnemy(float dt, Enemy* enemy);
+	void ApplyGravity(float dt, Enemy* enemy);
+	bool EnemyFalling(sf::Vector2f before, sf::Vector2f after);
+	void SetCurrLocation();
+	void SetPreviousLocations();
+	void CheckStuck();
 
 	std::vector<sf::Vector2f> prev_loc;
 	std::vector<sf::Vector2f> curr_loc;
