@@ -3,10 +3,10 @@
 #include "Map.h"
 
 
-void PlayerController::init_controller()
+void PlayerController::InitController()
 {
 	m_player = m_map->get_player();
-	m_player->set_map(m_map);
+	m_player->SetMap(m_map);
 }
 //-----------------------------------------------------------------------------
 
@@ -49,7 +49,7 @@ void PlayerController::MovePlayer( float dt)
 	else
 	{
 		if (key == sf::Keyboard::Z)
-			m_player->delete_left();
+			m_player->DeleteLeft();
 		else
 			m_player->delete_right();
 	}

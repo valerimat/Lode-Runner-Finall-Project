@@ -22,12 +22,12 @@ public:
 	Player(char name, sf::Vector2f locaiton, std::shared_ptr<sf::Texture> texture);
 	//Lives* get_lives();
 
-	void delete_left();
+	void DeleteLeft();
 	void delete_right();
 
 	//PlayerController * get_controller();
 	void Move(sf::Keyboard::Key key,float dt);
-	void set_map(Map * map);
+	void SetMap(Map * map);
 	//Handle collision:
 	virtual void handle_collision(RigidBodyObject& object) override;
 	void handle_collision(Pole& object) override;
@@ -41,8 +41,8 @@ public:
 	void handle_collision(Enemy& object) override;
 	bool m_no_ground =false;
 	void on_create()override;
-	int get_lives();
-	void add_lives();
+	int GetLives();
+	void AddLives();
 
 private:
 	

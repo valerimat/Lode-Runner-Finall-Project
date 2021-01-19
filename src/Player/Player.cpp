@@ -9,17 +9,21 @@
 #include "Map.h"
 #include "Music.h"
 
+// c-tor
 Player::Player(char name, sf::Vector2f locaiton, std::shared_ptr<sf::Texture> texture) :
 	DynamicObject(name, locaiton, texture)
 {
 	on_create();
 }
+//-----------------------------------------------------------------------------
 
+// init player
 void Player::on_create()
 {	
 	m_base_location = get_location();
 	m_lives.set_lives();
 }
+//-----------------------------------------------------------------------------
 
 void Player::Move(sf::Keyboard::Key key,float dt)
 {
@@ -48,6 +52,7 @@ void Player::Move(sf::Keyboard::Key key,float dt)
 }
 //-----------------------------------------------------------------------------
 
+// double dispatch functions
 void Player::handle_collision(Object& object)
 {
 	if (this->get_name() == object.get_name()) return;
@@ -63,6 +68,7 @@ void Player::handle_collision(StaticObject& object)
 
 void Player::handle_collision(Player& object)
 {
+	// empty
 }
 //-----------------------------------------------------------------------------
 
@@ -135,27 +141,32 @@ void Player::handle_collision(RigidBodyObject& object)
 }
 //-----------------------------------------------------------------------------
 
-void Player::set_map(Map* map)
+void Player::SetMap(Map* map)
 {
 	m_map = map;
 }
 //-----------------------------------------------------------------------------
 
-void Player::delete_left()
+void Player::DeleteLeft()
 {
 	m_map->make_hole(get_location() + sf::Vector2f(-10, 45));
 }
+//-----------------------------------------------------------------------------
+
 void Player::delete_right()
 {
 	m_map->make_hole(get_location() + sf::Vector2f(50, 45));
 }
+//-----------------------------------------------------------------------------
 
-int Player::get_lives()
+int Player::GetLives()
 {
-	return m_lives.get_lives();
+	return m_lives.GetLives();
 }
+//-----------------------------------------------------------------------------
 
-void Player::add_lives()
+void Player::AddLives()
 {
-	return m_lives.add_lives();
+	return m_lives.AddLives();
 }
+//-----------------------------------------------------------------------------

@@ -282,7 +282,7 @@ void Map::DeletePresent(Present& present)
 		break;
 	case 1:
 		std::cout << "lives added\n";
-		this->get_player()->add_lives();
+		this->get_player()->AddLives();
 		m_music->DrinkingSound();
 		break;
 	case 2:

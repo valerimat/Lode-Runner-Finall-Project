@@ -7,11 +7,11 @@
 #include "Node.h"
 #include <random>
 
-std::vector<sf::Vector2f> RandomPath::calc_path(Graph& graph, sf::Vector2f our_location, sf::Vector2f wanted_location)
+std::vector<sf::Vector2f> RandomPath::CalcPath(Graph& graph, sf::Vector2f our_location, sf::Vector2f wanted_location)
 {
 	std::vector<sf::Vector2f> waypoints;
 
-	Node* node = graph.get_closest_node(our_location);
+	Node* node = graph.GetClosestNode(our_location);
 	if (node == nullptr)
 	{
 		waypoints.push_back(our_location);
@@ -21,7 +21,7 @@ std::vector<sf::Vector2f> RandomPath::calc_path(Graph& graph, sf::Vector2f our_l
 	//first_we_pus_closest_node
 	waypoints.push_back(node->get_location());
 
-	find_random_path(node, waypoints);
+	FindRandomPath(node, waypoints);
 
 
 	return waypoints;
@@ -29,17 +29,18 @@ std::vector<sf::Vector2f> RandomPath::calc_path(Graph& graph, sf::Vector2f our_l
 }
 //-----------------------------------------------------------------------------
 
-void RandomPath::find_random_path(Node* node, std::vector<sf::Vector2f>& waypoints)
+void RandomPath::FindRandomPath(Node* node, std::vector<sf::Vector2f>& waypoints)
 {
 	auto random = std::random_device();
 	
 	Node* next;
-	next = node->get_random_neigbor(random());
+	next = node->GetRandomNeighbor(random());
 
 	for (int i = 0; i < 10; ++i)
 	{
 		
 		waypoints.push_back(next->get_location());
-		next = next->get_random_neigbor(rand());
+		next = next->GetRandomNeighbor(rand());
 	}
 }
+//-----------------------------------------------------------------------------

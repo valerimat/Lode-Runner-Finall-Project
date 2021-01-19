@@ -3,12 +3,12 @@
 #include "Node.h"
 #include <iostream>
 
-std::vector<sf::Vector2f> Bfs::calc_path(Graph& graph, sf::Vector2f our_location, sf::Vector2f wanted_location)
+std::vector<sf::Vector2f> Bfs::CalcPath(Graph& graph, sf::Vector2f our_location, sf::Vector2f wanted_location)
 {
 	std::vector<sf::Vector2f> waypoints;
 	Node* from, * to;
 
-	from =  graph.get_closest_node(our_location);
+	from =  graph.GetClosestNode(our_location);
 
 	if (from == nullptr)
 	{
@@ -16,17 +16,17 @@ std::vector<sf::Vector2f> Bfs::calc_path(Graph& graph, sf::Vector2f our_location
 		return waypoints;
 	}
 
-	to = graph.get_closest_node(wanted_location);
+	to = graph.GetClosestNode(wanted_location);
 	if (to == nullptr)
 	{
 		sf::Vector2f off(0, -SIZE_OF_TILE);
 		wanted_location += off;
-		to = graph.get_closest_node((wanted_location));
+		to = graph.GetClosestNode((wanted_location));
 	}
 
 	waypoints = bfs(from, to);
 
-	graph.clean();
+	graph.Clean();
 
 	return waypoints;
 };
@@ -43,10 +43,10 @@ std::vector<sf::Vector2f> Bfs::bfs(Node* from, Node* to)
 	open_list.push_back(from);
 
 	//colors grey
-	from->set_color(Color::Grey);
+	from->SetColor(Color::Grey);
 
 	//sets null
-	from->set_father(nullptr);
+	from->SetFather(nullptr);
 
 	Node* head_of_list;
 	while (1)
@@ -71,9 +71,9 @@ std::vector<sf::Vector2f> Bfs::bfs(Node* from, Node* to)
 	return get_path(head_of_list);
 }
 
-void Bfs::set_father(Node* node, Node* father)
+void Bfs::SetFather(Node* node, Node* father)
 {
-	node->set_father(father);
+	node->SetFather(father);
 }
 
 bool Bfs::check_if_reached(Node* curr, Node * to)
@@ -88,16 +88,16 @@ bool Bfs::check_if_reached(Node* curr, Node * to)
 void Bfs::handle_curr(Node * curr, std::vector< Node*> & open_list)
 {
 	//from grey to black
-	curr->set_color();
-	std::vector<Node* > neigbors = curr->get_neigbor_list();
+	curr->SetColor();
+	std::vector<Node* > neigbors = curr->GetNeighborList();
 
 	for (int i = 0; i < neigbors.size(); ++i)
 	{
 		//if we dont want them we delete
-		if (neigbors[i]->get_color() == Color::White)
+		if (neigbors[i]->GetColor() == Color::White)
 		{
-			neigbors[i]->set_color();
-			neigbors[i]->set_father(curr);
+			neigbors[i]->SetColor();
+			neigbors[i]->SetFather(curr);
 			open_list.push_back(neigbors[i]);
 		}
 	}
@@ -115,10 +115,10 @@ std::vector<sf::Vector2f> Bfs::get_path(Node * last)
 	}
 
 	
-	while (last->get_father() != nullptr)
+	while (last->GetFather() != nullptr)
 	{
 		waypoints.insert(waypoints.begin(), last->get_location());
-		last = last->get_father();
+		last = last->GetFather();
 	}
 
 	return waypoints;

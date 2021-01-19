@@ -16,7 +16,7 @@ public:
 	//
 	using MovementController::MovementController;
 	//
-	void init_controller();
+	void InitController();
 	//PlayerController(Map &map);
 	void MovePlayer( float dt);
 	//void physics_player(sf::Keyboard::Key key, Map& map, std::vector<char> &collision)
