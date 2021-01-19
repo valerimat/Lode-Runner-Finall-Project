@@ -40,7 +40,9 @@ void Hud::DrawLives(sf::RenderWindow& window)
 {
 
 	int i = lives;
-	
+	if (lives < 0)
+		return;
+
 	sf::Sprite score_sprt;
 	score_sprt.setTexture(*m_textures[11]);
 	score_sprt.setPosition(sf::Vector2f( 0,0));
@@ -68,6 +70,8 @@ void Hud::DrawTime(sf::RenderWindow& window)
 
 	left_digit  = time / 10;
 	right_digit = time % 10;
+	if (left_digit < 0 || right_digit < 0)
+		return;
 
 	sf::Sprite time_sprt;
 	time_sprt.setTexture(*m_textures[12]);

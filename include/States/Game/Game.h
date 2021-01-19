@@ -30,6 +30,7 @@ public:
 	Map* get_curr_map();
 	
 private:
+	bool timeIsUp();
 
 	//level realted private stuff:
 	void advance_level();

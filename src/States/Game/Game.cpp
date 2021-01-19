@@ -69,9 +69,18 @@ void Game::on_update()
 		
 	}
 
+	if (timeIsUp())
+	{
+		set_next_state(States::Death);
+		return;
+	}
+
 
 	if (m_curr_map.get_player()->GetLives() == 0)
+	{
 		set_next_state(States::Death);
+		return;
+	}
 
 	m_enemy_cont->SetPaths();
 	m_curr_map.check_holes();
@@ -118,11 +127,13 @@ void Game::check_preseed_now()
 void Game::advance_level()
 {
 	++level;
+
+	MacroSettings::GetSettings().SetMapHeight(m_maps.GetCurrHeight(level));
+	MacroSettings::GetSettings().SetMapWidth(m_maps.GetCurrWidth(level));
 	(&Score::GetScore())->advance_level();
 	m_hud.up_level();
 	reset_level();
-	MacroSettings::GetSettings().SetHeight(m_maps.GetCurrHeight(level));
-	MacroSettings::GetSettings().SetWidth(m_maps.GetCurrWidth(level));
+
 }
 //=============================================================================
 
@@ -155,3 +166,13 @@ void Game::reset_game()
 	init_controllers();
 }
 //=============================================================================
+
+//=============================================================================
+bool Game::timeIsUp()
+{
+	int time = m_maps.GetCurrTimer(level);
+	if (time - Clock::GetClock().GetPassedSeconds() < 0)
+		return true;
+
+	return false;
+}
