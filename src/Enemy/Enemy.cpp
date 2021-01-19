@@ -59,7 +59,7 @@ sf::Vector2f Enemy::GetCenter()
 {
 	sf::Vector2f our_loc = get_location();
 
-	sf::Vector2f center_offset(SIZE_OF_TILE / 2, SIZE_OF_TILE / 2);
+	sf::Vector2f center_offset(MacroSettings::GetSettings().GetScaleWidth()*50 / 2, MacroSettings::GetSettings().GetScaleWidth()*50 / 2);
 	our_loc += center_offset;
 
 	return our_loc;

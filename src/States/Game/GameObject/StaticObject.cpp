@@ -3,6 +3,7 @@
 #include "Enemy.h"
 #include "Coin.h"
 #include "Present.h"
+#include "MacroSettings.h"
 
 StaticObject::StaticObject(char name, sf::Vector2f locaiton, std::shared_ptr<sf::Texture> texture):
 Object(name,locaiton)
@@ -14,7 +15,7 @@ Object(name,locaiton)
 void StaticObject::set_sprite(std::shared_ptr<sf::Texture> texture)
 {
 	m_sprite.setTexture(*texture);
-	m_sprite.setScale(sf::Vector2f(0.8, 0.8));
+	m_sprite.setScale(sf::Vector2f(MacroSettings::GetSettings().GetScaleWidth(), MacroSettings::GetSettings().GetScaleHeight()));
 }
 //-----------------------------------------------------------------------------
 

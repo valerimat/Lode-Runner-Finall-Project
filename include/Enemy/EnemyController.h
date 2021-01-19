@@ -3,7 +3,6 @@
 #include "MovementController.h"
 #include "OneSide.h"
 #include "RandomPath.h"
-#include "Astar.h"
 class Enemy;
 class Map;
 
@@ -20,6 +19,7 @@ public:
 	//Helpers:
 	void MoveEnemies(float dt);
 	void InitController();
+
 private:
 	void MoveEnemy(float dt, Enemy* enemy);
 	void ApplyGravity(float dt, Enemy* enemy);

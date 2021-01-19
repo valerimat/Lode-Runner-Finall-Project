@@ -14,15 +14,6 @@ enum class Color
 	Black,
 };
 
-enum class StateEnum
-{
-	None,
-	Main,
-	Settings,
-	ScoreBoard,
-	Game,
-	End,
-};
 
 enum class States
 {
@@ -37,6 +28,7 @@ enum class States
 	ResetLevel,
 	Scoreboard,
 };
+
 enum class NextStep
 {
 	UP,
@@ -45,7 +37,7 @@ enum class NextStep
 	RIGHT,
 	NONE,
 };
-
+const int BASE_LIVES = 3;
 const int OFFSET = 50 * 0.8;
 const float STEP = 1.2f;
 
@@ -58,10 +50,8 @@ const char GROUND = char('#');
 const char LADDER = char('H');
 const char NONE = char(' ');
 const char WALL = char('w');
-const float SIZE_OF_TILE = 40.f;
 
-const float offset_x_graph = SIZE_OF_TILE + 0.5 * SIZE_OF_TILE;
-const float offset_y_graph = SIZE_OF_TILE + 0.5 * SIZE_OF_TILE + 50;
+
 
 const int LADDER_INT = 1;
 const int ROPE_INT = 2;

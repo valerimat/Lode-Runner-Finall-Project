@@ -3,6 +3,7 @@
 #include "RigidBodyObject.h"
 #include "Player.h"
 #include "Enemy.h"
+#include "MacroSettings.h"
 
 DynamicObject::DynamicObject(char name, sf::Vector2f locaiton, std::shared_ptr<sf::Texture> texture) :
 	Object(name, locaiton)
@@ -17,7 +18,8 @@ void DynamicObject::set_sprite(std::shared_ptr<sf::Texture> texture)
 	m_sprite.setTexture(*texture);
 	sf::IntRect rect_sprite(0, 0, 50, 50);
 	m_sprite.setTextureRect(rect_sprite);
-	m_sprite.setScale(sf::Vector2f(0.8, 0.8));
+	m_sprite.setScale(1, 1);
+	m_sprite.setScale(sf::Vector2f(MacroSettings::GetSettings().GetScaleWidth(), MacroSettings::GetSettings().GetScaleHeight()));
 
 }
 //-----------------------------------------------------------------------------

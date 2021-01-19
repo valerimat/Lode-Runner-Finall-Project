@@ -51,7 +51,7 @@ void PlayerController::MovePlayer( float dt)
 		if (key == sf::Keyboard::Z)
 			m_player->DeleteLeft();
 		else
-			m_player->delete_right();
+			m_player->DeleteRight();
 	}
 }
 //-----------------------------------------------------------------------------

@@ -1,5 +1,6 @@
 #include "Music.h"
 #include <iostream>
+#include "MacroSettings.h"
 
 Music::Music()
 {
@@ -33,7 +34,7 @@ void Music::LoadBuffers()
 void Music::EaitngSound()
 {
 	m_sound->setBuffer(*m_buffers[0]);
-	m_sound->setVolume(10);
+	m_sound->setVolume(MacroSettings::GetSettings().GetVolume()/ 5);
 	m_sound->play();
 }
 
@@ -43,7 +44,7 @@ void Music::RunningSound()
 	if (status == sf::Sound::Status::Stopped)
 	{
 		m_sound->setBuffer(*m_buffers[1]);
-		m_sound->setVolume(5);
+		m_sound->setVolume(MacroSettings::GetSettings().GetVolume()/ 10);
 		m_sound->play();
 	}
 }
@@ -51,7 +52,7 @@ void Music::RunningSound()
 void Music::DrinkingSound()
 {
 	m_sound->setBuffer(*m_buffers[2]);
-	m_sound->setVolume(50);
+	m_sound->setVolume(MacroSettings::GetSettings().GetVolume());
 	m_sound->play();
 }
 
@@ -61,7 +62,7 @@ void Music::LadderSound()
 	if (status == sf::Sound::Status::Stopped)
 	{
 		m_sound->setBuffer(*m_buffers[3]);
-		m_sound->setVolume(40);
+		m_sound->setVolume(MacroSettings::GetSettings().GetVolume());
 		m_sound->play();
 	}
 
@@ -73,7 +74,7 @@ void Music::RopeSound()
 	if (status == sf::Sound::Status::Stopped)
 	{
 		m_sound->setBuffer(*m_buffers[4]);
-		m_sound->setVolume(50);
+		m_sound->setVolume(MacroSettings::GetSettings().GetVolume());
 		m_sound->play();
 	}
 }

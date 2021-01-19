@@ -23,13 +23,13 @@ public:
 	//Lives* get_lives();
 
 	void DeleteLeft();
-	void delete_right();
+	void DeleteRight();
 
 	//PlayerController * get_controller();
 	void Move(sf::Keyboard::Key key,float dt);
 	void SetMap(Map * map);
 	//Handle collision:
-	virtual void handle_collision(RigidBodyObject& object) override;
+	void handle_collision(RigidBodyObject& object) override;
 	void handle_collision(Pole& object) override;
 	void handle_collision(Coin& object) override;
 	void handle_collision(Present& object) override;
@@ -39,14 +39,14 @@ public:
 	void handle_collision(DynamicObject& object)override;
     void handle_collision(Player& object) override;
 	void handle_collision(Enemy& object) override;
-	bool m_no_ground =false;
+
+	
 	void on_create()override;
 	int GetLives();
 	void AddLives();
 
 private:
 	
-
 	Map* m_map;
 	Music* m_music = new Music;
 	Lives m_lives;
