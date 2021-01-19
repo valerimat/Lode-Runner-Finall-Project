@@ -16,9 +16,9 @@ class RigidBodyObject : public StaticObject
 		{
 			m_hole = true;
 
-			m_sprite.setPosition(get_location() + sf::Vector2f(0, MacroSettings::GetSettings().GetScaleWidth() * 50 *0.875));
+			m_sprite.setPosition(get_location() + sf::Vector2f(0, MacroSettings::GetSettings().GetScaleWidth() * 50 * 0.875));
 
-			m_sprite.setScale(0.8, 0.1);
+			m_sprite.setScale(0.8, MacroSettings::GetSettings().GetScaleHeight()/8);
 			//m_sprite.setColor(sf::Color(0, 0, 0, 0));
 			return true;
 		}

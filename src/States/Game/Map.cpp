@@ -126,7 +126,7 @@ void Map::Draw(sf::RenderWindow &main_window)
 		m_dynamic[i]->Draw(main_window);
 	}
 
-	m_graph->Draw(main_window);
+	//m_graph->Draw(main_window);
 }
 //-----------------------------------------------------------------------------
 
@@ -356,15 +356,15 @@ void Map::close_holes()
 	for (int i = 0; i < m_holes_to_close.size(); i++)
 	{
 		sf::Vector2f curr_scale = m_holes_to_close[i]->get_sprite().getScale();
-		if (abs(curr_scale.y - (0.8)) < 0.00001)
+		if (abs(curr_scale.y - (MacroSettings::GetSettings().GetScaleHeight())) < 0.01)
 		{
 			m_holes_to_close[i]->m_hole = false;
 			m_holes_to_close.erase(m_holes_to_close.begin() + i);
 			holes_time.erase(holes_time.begin() + i);
 			continue;
 		}
-		m_holes_to_close[i]->get_sprite().move(sf::Vector2f(0, -5));
-		m_holes_to_close[i]->get_sprite().setScale(curr_scale + sf::Vector2f(0, 0.1));
+		m_holes_to_close[i]->get_sprite().move(sf::Vector2f(0, -(MacroSettings::GetSettings().GetScaleWidth() * 50 * 0.125)));
+		m_holes_to_close[i]->get_sprite().setScale(curr_scale + sf::Vector2f(0, MacroSettings::GetSettings().GetScaleHeight() / 8));
 		m_holes_to_close[i]->get_sprite().setColor(sf::Color(255, 255, 255, 255));
 	}
 }

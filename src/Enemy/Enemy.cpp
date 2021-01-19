@@ -287,7 +287,7 @@ void Enemy::handle_collision(Ladder& object)
 {
 	sf::FloatRect inter;
 	if (get_sprite().getGlobalBounds().intersects(object.get_sprite().getGlobalBounds(), inter))
-		if (inter.width >= 20)
+		if (inter.width >= 5)
 			m_gravity = false;
 }
 //-----------------------------------------------------------------------------
@@ -296,7 +296,7 @@ void Enemy::handle_collision(RigidBodyObject& object)
 {
 	sf::FloatRect inter;
 	if (get_sprite().getGlobalBounds().intersects(object.get_sprite().getGlobalBounds(), inter))
-		if (inter.height >= 2 && inter.width >= 3)
+		if (inter.height >= 3 && inter.width >= 3)
 		{
 			move_back(object);
 		}

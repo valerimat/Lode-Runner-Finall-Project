@@ -78,10 +78,11 @@ void Player::handle_collision(Enemy& object)
 	if (get_sprite().getGlobalBounds().intersects(object.get_sprite().getGlobalBounds(), inter))
 		if (inter.width > 5 && inter.height > 5)
 		{
-			m_lives.DecLives();
 			m_map->reset_positions();
+			std::cout << "collision";
+			m_lives.DecLives();
 		}
-	std::cout << "collision";
+	
 }
 //-----------------------------------------------------------------------------
 
@@ -118,7 +119,7 @@ void Player::handle_collision(Ladder& object)
 {
 	sf::FloatRect inter;
 	if (get_sprite().getGlobalBounds().intersects(object.get_sprite().getGlobalBounds(), inter))
-		if (inter.width >= 20)
+		if (inter.width >= 5)
     {
 		m_gravity = false;
 		if (!m_standing)
@@ -131,7 +132,7 @@ void Player::handle_collision(RigidBodyObject& object)
 {
 	sf::FloatRect inter;
 	if (get_sprite().getGlobalBounds().intersects(object.get_sprite().getGlobalBounds(), inter))
-		if (inter.height >= 2 && inter.width >= 3)
+		if (inter.height >= 4 && inter.width >= 4)
 		{
 			move_back(object);
 		}
