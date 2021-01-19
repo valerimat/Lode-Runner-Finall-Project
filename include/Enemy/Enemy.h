@@ -19,12 +19,12 @@ public:
 
 	void SetMap(Map* map);
 	//Setters:
-	virtual void set_smartness(int i);
-	void set_waypoint();
-	void reset_path();
+	virtual void SetSmartness(int i);
+	void SetWaypoint();
+	void ResetPath();
 	//Getters:
-	IQ get_iq();
-	sf::Vector2f get_center();
+	IQ GetIQ();
+	sf::Vector2f GetCenter();
 	//collisions:
 	void handle_collision(Pole& object) override;
 	void handle_collision(Ladder& object) override;
@@ -39,22 +39,22 @@ public:
 
 	//for debug !!
 	
-	void up_stuck();
-	void reset_stuck();
-	bool stuck();
-	void dont_move();
+	void UpStuck();
+	void ResetStuck();
+	bool Stuck();
+	void DontMove();
 
 	//helpers:
 	void move(float dt);
-	bool no_waypoints();
-	bool checke_if_reached();
-	NextStep direction_to_waypoint();
+	bool NoWaypoints();
+	bool CheckIfReached();
+	NextStep DirectionToWaypoint();
 	bool m_falling = false;
 	void on_create()override;
 	
 private:
 	
-	void set_next_waypoint();
+	void SetNextWaypoint();
 	
 
 	int stuck_counter = 0;

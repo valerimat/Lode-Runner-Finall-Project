@@ -12,10 +12,10 @@ public:
 	std::vector<sf::Vector2f> CalcPath(Graph& graph, sf::Vector2f our_location, sf::Vector2f wanted_location) override;
 private:
 
-	std::vector<sf::Vector2f> bfs(Node * from , Node * to);
+	std::vector<sf::Vector2f> BFS(Node * from , Node * to);
 	void SetFather(Node* node, Node* father);
-	bool check_if_reached(Node* curr, Node* to);
-	void handle_curr(Node* curr, std::vector< Node*>& open_list);
-	std::vector<sf::Vector2f> get_path(Node* last);
+	bool CheckIfReached(Node* curr, Node* to);
+	void HandleCurr(Node* curr, std::vector< Node*>& open_list);
+	std::vector<sf::Vector2f> GetPath(Node* last);
 	
 };
