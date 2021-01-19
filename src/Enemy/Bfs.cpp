@@ -2,6 +2,7 @@
 #include "Graph.h"
 #include "Node.h"
 #include <iostream>
+#include "MacroSettings.h"
 
 std::vector<sf::Vector2f> Bfs::CalcPath(Graph& graph, sf::Vector2f our_location, sf::Vector2f wanted_location)
 {
@@ -18,8 +19,8 @@ std::vector<sf::Vector2f> Bfs::CalcPath(Graph& graph, sf::Vector2f our_location,
 
 	to = graph.GetClosestNode(wanted_location);
 	if (to == nullptr)
-	{
-		sf::Vector2f off(0, -SIZE_OF_TILE);
+	{ 
+		sf::Vector2f off(0, - MacroSettings::GetSettings().GetScaleWidth()*50);
 		wanted_location += off;
 		to = graph.GetClosestNode((wanted_location));
 	}

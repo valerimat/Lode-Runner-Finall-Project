@@ -2,6 +2,7 @@
 #include "MainMenu.h"
 #include "InGameMenu.h"
 #include "Clock.h"
+#include "MacroSettings.h"
 
 Game::Game():
 	m_maps(MapData())
@@ -15,11 +16,15 @@ Game::Game():
 //=============================================================================
 void Game::load()
 {
+	MacroSettings::GetSettings().SetMapHeight(m_maps.GetCurrHeight(level));
+	MacroSettings::GetSettings().SetMapWidth(m_maps.GetCurrWidth(level));
+
 	Map temp(m_maps.GetMap(level), m_maps.GetCurrHeight(level), m_maps.GetCurrWidth(level), m_maps.GetCurrTimer(level));
 	m_curr_map = temp;
 
 	Hud hud(m_curr_map.get_player(), level, m_curr_map.GetTimer());
 	m_hud = hud;
+	
 }
 //=============================================================================
 
@@ -61,6 +66,7 @@ void Game::on_update()
 			return;
 		}
 		advance_level();
+		
 	}
 
 
@@ -115,6 +121,8 @@ void Game::advance_level()
 	(&Score::GetScore())->advance_level();
 	m_hud.up_level();
 	reset_level();
+	MacroSettings::GetSettings().SetHeight(m_maps.GetCurrHeight(level));
+	MacroSettings::GetSettings().SetWidth(m_maps.GetCurrWidth(level));
 }
 //=============================================================================
 

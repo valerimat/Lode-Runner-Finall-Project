@@ -1,15 +1,11 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-#include <chrono>
-#include <thread>
 #include "MovementController.h"
 #include "Music.h"
-
 class Player;
 class Map;
 
-class PlayerController
-	: public MovementController
+class PlayerController : public MovementController
 {
 public:
 

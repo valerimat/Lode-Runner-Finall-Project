@@ -55,7 +55,7 @@ void Hud::DrawLives(sf::RenderWindow& window)
 	window.draw(score_sprt);
 	window.draw(three);
 
-	//int score = get_score();
+
 }
 //-----------------------------------------------------------------------------
 
@@ -97,10 +97,13 @@ void Hud::DrawTime(sf::RenderWindow& window)
 void Hud::DrawLevel(sf::RenderWindow& window)
 {
 	int i = m_textures.size();
-	sf::Sprite score_sprt;
-	score_sprt.setTexture(*m_textures[13]);
-	score_sprt.setPosition(sf::Vector2f(575, 0));
-	score_sprt.scale(sf::Vector2f(0.8, 0.8));
+	int level = m_number_of_level;
+	level = level % 10;
+
+	sf::Sprite level_sprt;
+	level_sprt.setTexture(*m_textures[13]);
+	level_sprt.setPosition(sf::Vector2f(575, 0));
+	level_sprt.scale(sf::Vector2f(0.8, 0.8));
 
 	sf::Sprite zero1;
 	zero1.setTexture(*m_textures[0]);
@@ -108,12 +111,12 @@ void Hud::DrawLevel(sf::RenderWindow& window)
 	zero1.scale(sf::Vector2f(0.8, 0.8));
 
 	sf::Sprite zero2;
-	zero2.setTexture(*m_textures[0]);
+	zero2.setTexture(*m_textures[level]);
 	zero2.setPosition(sf::Vector2f(700, 0));
 	zero2.scale(sf::Vector2f(0.8, 0.8));
 
 
-	window.draw(score_sprt);
+	window.draw(level_sprt);
 	window.draw(zero1);
 	window.draw(zero2);
 	//int score = get_score();

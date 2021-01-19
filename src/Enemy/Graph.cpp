@@ -1,7 +1,7 @@
 #include "Graph.h"
 #include "Macros.h"
 #include "Node.h"
-
+#include "MacroSettings.h"
 #include <iostream>
 #include <math.h>
 
@@ -174,7 +174,10 @@ void Graph::CreateNodeMatrix(std::vector<std::vector<int>> matrix)
 		{
 			if (matrix[i][j] != GROUND_INT)
 			{
-				Node* new_node = new Node(sf::Vector2f(j * SIZE_OF_TILE + 0.5 * SIZE_OF_TILE, i * SIZE_OF_TILE + 0.5 * SIZE_OF_TILE + 50));
+				Node* new_node = new Node(sf::Vector2f(j * MacroSettings::GetSettings().GetScaleWidth() * 50 
+					                                 + 0.5 * MacroSettings::GetSettings().GetScaleWidth() * 50,
+					                                     i * MacroSettings::GetSettings().GetScaleWidth() * 50
+													+ 0.5 * MacroSettings::GetSettings().GetScaleWidth() * 50 + 50));
 				node_matrix[i][j] = new_node;
 			}
 			else
@@ -227,8 +230,11 @@ void Graph::SetNeighbors(int i, int j, std::vector<std::vector<int>> matrix, Nod
 //==============Linking Neighbors:
 Node* Graph::AboveNeighbor(int i, int  j, std::vector<std::vector<int>> matrix)
 {
-	if (matrix[i][j] == LADDER_INT && matrix[i - 1][j] != GROUND_INT)
-		return node_matrix[i - 1][j];
+	if (i - 1 >= 0)
+	{
+		if (matrix[i][j] == LADDER_INT && matrix[i - 1][j] != GROUND_INT)
+			return node_matrix[i - 1][j];
+	}
 
 	return nullptr;
 }
@@ -236,8 +242,11 @@ Node* Graph::AboveNeighbor(int i, int  j, std::vector<std::vector<int>> matrix)
 
 Node* Graph::BellowNeighbor(int i, int  j, std::vector<std::vector<int>> matrix)
 {
-	if (matrix[i + 1][j] != GROUND_INT)
-		return node_matrix[i + 1][j];
+	if (i + 1 < matrix[0].size())
+	{
+		if (matrix[i + 1][j] != GROUND_INT)
+			return node_matrix[i + 1][j];
+	}
 
 	return nullptr;
 }
@@ -245,20 +254,22 @@ Node* Graph::BellowNeighbor(int i, int  j, std::vector<std::vector<int>> matrix)
 
 Node* Graph::LeftNeighbor(int i, int  j, std::vector<std::vector<int>> matrix)
 {
-	//if (j - 1 > 0)
-	//{
+	if (j - 1 > 0)
+	{
 		if (matrix[i][j] != AIR_INT && matrix[i][j - 1] != GROUND_INT)
 			return node_matrix[i][j - 1];
-	//}
+	}
 	return nullptr;
 }
 //-----------------------------------------------------------------------------
 
 Node* Graph::RightNeighbor(int i, int  j, std::vector<std::vector<int>> matrix)
 {
-	//if (j + 1 < matrix[0].size())
+	if (j + 1 < matrix[0].size())
+	{
 		if (matrix[i][j] != AIR_INT && matrix[i][j + 1] != GROUND_INT)
 			return node_matrix[i][j + 1];
+	}
 
 	return nullptr;
 }
@@ -274,12 +285,12 @@ Node* Graph::RightNeighbor(int i, int  j, std::vector<std::vector<int>> matrix)
 Node * Graph::GetClosestNode(sf::Vector2f & location)
 {
 	//thats our center
-	float x = location.x + 0.5f * SIZE_OF_TILE ;
-	float y = location.y + 0.5f * SIZE_OF_TILE ;
+	float x = location.x + 0.5f * MacroSettings::GetSettings().GetScaleWidth() * 50; ;
+	float y = location.y + 0.5f * MacroSettings::GetSettings().GetScaleWidth() * 50; ;
 
 	//we will find the left and the right posibilitys by rouding up
-	x = x / SIZE_OF_TILE;
-	y = (y - 50) / SIZE_OF_TILE;
+	x = x / (MacroSettings::GetSettings().GetScaleWidth() * 50);
+	y = (y - 50) / (MacroSettings::GetSettings().GetScaleWidth() * 50);
 
 	//now we round up
 	round(x);
