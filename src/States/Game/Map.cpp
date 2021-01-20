@@ -6,6 +6,7 @@
 #include "Coin.h"
 #include "Clock.h"
 #include "Score.h"
+#include "Music.h"
 
 // c-tor of map
 Map::Map(std::vector<std::string>* map,int height, int width, int timer):
@@ -278,17 +279,17 @@ void Map::DeletePresent(Present& present)
 	case 0:
 		std::cout << "time added\n";
 		m_timer += 5;
-		m_music->DrinkingSound();
+		Music::GetMusic().DrinkingSound();
 		break;
 	case 1:
 		std::cout << "lives added\n";
 		this->get_player()->AddLives();
-		m_music->DrinkingSound();
+		Music::GetMusic().DrinkingSound();
 		break;
 	case 2:
 		std::cout << "score added\n";
 		Score::GetScore().IncreasePoints();
-		m_music->DrinkingSound();
+		Music::GetMusic().DrinkingSound();
 		break;
 	case 3:
 		std::cout << "enemy added\n";;

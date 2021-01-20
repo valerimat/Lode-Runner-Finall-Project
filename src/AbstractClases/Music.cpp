@@ -28,6 +28,14 @@ void Music::LoadBuffers()
 	buffer_ptr = std::make_shared<sf::SoundBuffer>();
 	buffer_ptr->loadFromFile("rope.ogg");
 	m_buffers.push_back(buffer_ptr);
+
+	buffer_ptr = std::make_shared<sf::SoundBuffer>();
+	buffer_ptr->loadFromFile("hurt.ogg");
+	m_buffers.push_back(buffer_ptr);
+
+	buffer_ptr = std::make_shared<sf::SoundBuffer>();
+	buffer_ptr->loadFromFile("busted.ogg");
+	m_buffers.push_back(buffer_ptr);
 }
 
 
@@ -41,6 +49,7 @@ void Music::EaitngSound()
 void Music::RunningSound()
 {
 	sf::Sound::Status status = m_sound->getStatus();
+
 	if (status == sf::Sound::Status::Stopped)
 	{
 		m_sound->setBuffer(*m_buffers[1]);
@@ -79,13 +88,21 @@ void Music::RopeSound()
 	}
 }
 
+void Music::HurtSound()
+{
+	m_sound->setBuffer(*m_buffers[5]);
+	m_sound->setVolume(MacroSettings::GetSettings().GetVolume());
+	m_sound->play();
+}
 
-/*
+void Music::BustedSound()
+{
+	m_sound->setBuffer(*m_buffers[6]);
+	m_sound->setVolume(MacroSettings::GetSettings().GetVolume());
+	m_sound->play();
+}
+
 void Music::StopSound()
 {
-	m_sound = new sf::Sound;
-	m_sound->setBuffer(*m_buffers[1]);
-	m_sound->setVolume(5);
 	m_sound->stop();
 }
-*/

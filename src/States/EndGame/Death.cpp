@@ -1,5 +1,6 @@
 #include "Death.h"
 #include "Game.h"	
+#include "Music.h"
 #include "Settings.h"
 #include "MainMenu.h"
 
@@ -29,8 +30,6 @@ void Death::Draw(sf::RenderWindow& window)
 		m_buttons[i].Draw(window);
 
 	m_arrow.Draw(window);
-
-	
 }
 //=============================================================================
 

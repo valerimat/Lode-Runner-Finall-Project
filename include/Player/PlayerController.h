@@ -20,6 +20,5 @@ public:
 
 private:
 	bool m_falling = false;
-	Music* m_music = new Music;
 	Player* m_player;
 };
