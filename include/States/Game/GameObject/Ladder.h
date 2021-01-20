@@ -7,20 +7,10 @@
 
 class Ladder : public StaticObject
 {
+public:
 	using StaticObject::StaticObject;
 
-	void handle_collision(DynamicObject& object)
-	{
-		object.handle_collision(*this);
-	}
-	void handle_collision(Player& object)
-	{
-		object.handle_collision(*this);
-
-	}
-	void handle_collision(Enemy& object)
-	{
-		object.handle_collision(*this);
-
-	}
+	void handle_collision(DynamicObject& object);
+	void handle_collision(Player& object);
+	void handle_collision(Enemy& object);
 };

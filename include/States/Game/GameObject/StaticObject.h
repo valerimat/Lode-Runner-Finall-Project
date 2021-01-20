@@ -32,11 +32,11 @@ public:
 	void handle_collision(RigidBodyObject& object) override;
 	void handle_collision(Player& object) override;
 	void handle_collision(Enemy& object) override;
-
-	bool m_hole = false;
+	
+	void SetHole(bool boolean);
+	bool get_hole();
 
 protected:
-
-	//std::shared_ptr<sf::Texture> m_texture;
+	bool m_hole = false;
 
 };

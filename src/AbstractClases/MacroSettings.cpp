@@ -76,3 +76,8 @@ float MacroSettings::GetScaleWidth()
 	return m_scale_width;
 }
 //-------------------------------------------------------------------
+float MacroSettings::GetSizeOfTile()
+{
+	return GetScaleWidth() * 50;
+}
+//-------------------------------------------------------------------

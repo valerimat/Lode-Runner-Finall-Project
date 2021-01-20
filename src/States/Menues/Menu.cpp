@@ -1,5 +1,6 @@
  #include "Menu.h"
 
+//=============================================================================
 Menu::~Menu()
 {
 	for (int i = 0; i < m_textures.size(); ++i)
@@ -7,7 +8,9 @@ Menu::~Menu()
 		delete (m_textures[i]);
 	}
 }
+//=============================================================================
 
+//=============================================================================
 void Menu::Draw(sf::RenderWindow& window)
 {
 	window.draw(background);
@@ -18,8 +21,9 @@ void Menu::Draw(sf::RenderWindow& window)
 	m_arrow.Draw(window);
 	
 };
+//=============================================================================
 
-
+//=============================================================================
 void Menu::check_release()
 {
 	if (was_pressed == sf::Keyboard::Enter && !(sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)))
@@ -41,7 +45,9 @@ void Menu::check_release()
 	}
 
 }
+//=============================================================================
 
+//=============================================================================
 void Menu::check_preseed_now()
 {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
@@ -57,3 +63,4 @@ void Menu::check_preseed_now()
 		was_pressed = sf::Keyboard::Up;
 	}
 }
+//=============================================================================
