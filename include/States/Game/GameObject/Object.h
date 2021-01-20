@@ -44,7 +44,7 @@ public:
 
 	//Setters:
 	void set_name(char & name);
-	void set_location(sf::Vector2f & location);
+	void SetLocation(sf::Vector2f  location);
 
 protected:
 

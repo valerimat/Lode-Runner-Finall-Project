@@ -58,6 +58,7 @@ public:
 private:
 
 	void LoadBackground();
+	void check_dynamic_inside(RigidBodyObject& rigidBodyObject);
 
 	int m_width;
 	int m_height;
@@ -69,8 +70,8 @@ private:
 
 	std::vector<std::string> m_map;
 
-	std::vector<StaticObject*> m_holes;
-	std::vector<StaticObject*> m_holes_to_close;
+	std::vector<RigidBodyObject*> m_holes;
+	std::vector<RigidBodyObject*> m_holes_to_close;
 	std::vector<float> holes_time;
 
 	std::vector<std::unique_ptr<sf::Texture>>  m_textures;

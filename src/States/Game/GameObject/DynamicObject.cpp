@@ -4,6 +4,7 @@
 #include "Player.h"
 #include "Enemy.h"
 #include "MacroSettings.h"
+#include "Ladder.h"
 
 DynamicObject::DynamicObject(char name, sf::Vector2f locaiton, sf::Texture* texture) :
 	Object(name, locaiton)
@@ -159,11 +160,7 @@ void DynamicObject::move_back(Enemy& object)
 {
 	sf::Vector2f loc = m_sprite.getPosition();
 	
-	
 	loc += last_move;
-	sf::FloatRect rect;
-	m_sprite.getGlobalBounds().intersects(object.get_sprite().getGlobalBounds(), rect);
-	loc += sf::Vector2f(0, -rect.height);
 	
 	m_sprite.setPosition(loc);
 }
@@ -270,4 +267,58 @@ void DynamicObject::Animation(NextStep step, char name)
 void  DynamicObject::reset_position()
 {
 	m_sprite.setPosition(m_base_location);
+}
+
+
+
+bool DynamicObject::IsInHole()
+{
+	return m_in_hole;
+}
+
+
+void DynamicObject::SetInHole(bool IsInHole)
+{
+	m_in_hole = IsInHole;
+}
+
+
+void DynamicObject::GoInsideHole(sf::Vector2f  location)
+{
+	m_sprite.setPosition(
+	location
+	+
+	sf::Vector2f(0, -MacroSettings::GetSettings().GetSizeOfTile() * 0.875f));
+}
+
+void DynamicObject::CollideWithRigidBody(RigidBodyObject & object)
+{
+	sf::FloatRect inter;
+
+	if (get_sprite().getGlobalBounds().intersects(object.get_sprite().getGlobalBounds(), inter))
+	{
+		if (inter.height >= 4 && inter.width >= 4)
+		{
+			move_back(object);
+
+			if (object.IsHole())
+			{
+				m_in_hole = true;
+				GoInsideHole(object.get_sprite().getPosition());
+			}
+
+			else
+			{
+				m_in_hole = false;
+			}
+		}
+	}
+}
+
+void DynamicObject::CollideWithLadder(Ladder & object)
+{
+	sf::FloatRect inter;
+	if (get_sprite().getGlobalBounds().intersects(object.get_sprite().getGlobalBounds(), inter))
+		if (inter.width >= 5)
+			m_gravity = false;
 }

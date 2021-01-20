@@ -27,8 +27,9 @@ void Enemy::on_create()
 
 	//random number
 	auto random = std::random_device();
-	std::cout << random() << std::endl;
+
 	auto smartness = rand() % 3;
+
 	SetSmartness(smartness);
 
 	switch (m_iq)
@@ -73,6 +74,7 @@ sf::Vector2f Enemy::GetCenter()
 //for movement:
 void Enemy::SetWaypoint()
 {
+	//if there are no waypoints
  	if (NoWaypoints())
 	{
 		ResetPath();
@@ -117,11 +119,7 @@ void Enemy::SetSmartness(int i)
 //for movement:
 void Enemy::move(float dt)
 {
-	rect.setPosition(next_waypoint);
-	rect.setSize(sf::Vector2f(40, 40));
-	rect.setFillColor(sf::Color::Blue);
-	//m_falling = false;
-	//std::cout << next_waypoint.x << " " << next_waypoint.y << std::endl;
+
 	NextStep step = DirectionToWaypoint();
 	
 	switch (step)
@@ -163,7 +161,6 @@ bool Enemy::Stuck()
 {
 	if (stuck_counter == 500)
 	{
-		//std::cout << stuck_counter;
 		stuck_counter = 0;
 		return true;
 	}
@@ -178,9 +175,8 @@ bool Enemy::CheckIfReached()
 	//if we reached the waypoint in 2 pixels diffrence
 	if (abs(location.x - next_waypoint.x) < 3
 		&&
-		abs(location.y - next_waypoint.y) < 3)
+		abs(location.y - next_waypoint.y) < 4.5)
 	{
-		//std::cout << "true";
 		return true;
 	}
 
@@ -188,7 +184,7 @@ bool Enemy::CheckIfReached()
 }
 //-----------------------------------------------------------------------------
 
-//For waypoints:
+//Calculates which direction to move to reach waypoint
 NextStep Enemy::DirectionToWaypoint()
 {
 	sf::Vector2f location = GetCenter();
@@ -233,13 +229,6 @@ bool Enemy::NoWaypoints()
 }
 //-----------------------------------------------------------------------------
 
-void Enemy::DontMove()
-{
-	//waypoints.clear();
-	//next_waypoint = sf::Vector2f(-1, -1);
-}
-//-----------------------------------------------------------------------------
-
 //Collision:
 //Ignored::
 void Enemy::handle_collision(Enemy& object) {};
@@ -280,30 +269,17 @@ void Enemy::handle_collision(Pole& object)
 
 void Enemy::handle_collision(Ladder& object) 
 {
-	sf::FloatRect inter;
-	if (get_sprite().getGlobalBounds().intersects(object.get_sprite().getGlobalBounds(), inter))
-		if (inter.width >= 5)
-			m_gravity = false;
+	CollideWithLadder(object);
 }
 //-----------------------------------------------------------------------------
 
 void Enemy::handle_collision(RigidBodyObject& object)
 {
-	sf::FloatRect inter;
-	if (get_sprite().getGlobalBounds().intersects(object.get_sprite().getGlobalBounds(), inter))
-		if (inter.height >= 3 && inter.width >= 3)
-		{
-			move_back(object);
-			if (object.IsHole())
-				m_in_hole = true;
-			else
-				m_in_hole = false;
-		}
-	//reset_path();
+	CollideWithRigidBody(object);
 }
 //-----------------------------------------------------------------------------
 
-bool Enemy::IsInHole()
-{
-	return m_in_hole;
-}
+
+
+
+
