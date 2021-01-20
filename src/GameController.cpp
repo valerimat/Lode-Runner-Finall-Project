@@ -6,14 +6,14 @@
 void GameController::Run()
 {
 	using clock = std::chrono::high_resolution_clock;
-	auto& settings = MacroSettings::GetSettings(); // inits the singelton of the settings
+	auto& settings = MacroSettings::get_settings(); // inits the singelton of the settings
 
 	sf::Event event;
 	sf::Keyboard::Key keypress;
 
 	State* screen = new MainMenu;
 
-	sf::RenderWindow main_window(sf::VideoMode(settings.GetWidth(), settings.GetHeight()), "Lode Runner");
+	sf::RenderWindow main_window(sf::VideoMode(settings.get_width(), settings.get_height()), "Lode Runner");
 
 	// music theme song
 	sf::Music music;

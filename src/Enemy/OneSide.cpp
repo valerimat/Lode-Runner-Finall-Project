@@ -7,12 +7,12 @@
 #include "Node.h"
 #include <random>
 
-std::vector<sf::Vector2f> OneSide::CalcPath(Graph& graph, sf::Vector2f our_location, sf::Vector2f wanted_location)
+std::vector<sf::Vector2f> OneSide::calc_path(Graph& graph, sf::Vector2f our_location, sf::Vector2f wanted_location)
 {
 	auto random = std::random_device();
 
 	std::vector<sf::Vector2f> waypoints;
-	Node* node = graph.GetClosestNode(our_location);
+	Node* node = graph.get_closest_node(our_location);
 	if (node == nullptr)
 	{
 		waypoints.push_back(our_location);
@@ -29,15 +29,15 @@ std::vector<sf::Vector2f> OneSide::CalcPath(Graph& graph, sf::Vector2f our_locat
 	
 	if (random_number % 2 == 0)
 	{
-		next_location = GetMostLeft(node);
+		next_location = get_most_left(node);
 		if (next_location == node->get_location())
-			next_location = GetMostRight(node);
+			next_location = get_most_right(node);
 	}
 	else
 	{
-		next_location = GetMostRight(node);
+		next_location = get_most_right(node);
 		if (next_location == node->get_location())
-			next_location = GetMostLeft(node);
+			next_location = get_most_left(node);
 	}
 	
 	
@@ -49,7 +49,7 @@ std::vector<sf::Vector2f> OneSide::CalcPath(Graph& graph, sf::Vector2f our_locat
 }
 //-----------------------------------------------------------------------------
 
-sf::Vector2f OneSide::GetMostLeft(Node* node)
+sf::Vector2f OneSide::get_most_left(Node* node)
 {
 	Node* temp = node;
 	Node* next;
@@ -75,7 +75,7 @@ sf::Vector2f OneSide::GetMostLeft(Node* node)
 }
 //-----------------------------------------------------------------------------
 
-sf::Vector2f OneSide::GetMostRight(Node* node)
+sf::Vector2f OneSide::get_most_right(Node* node)
 {
 	Node* temp = node;
 	Node* next;

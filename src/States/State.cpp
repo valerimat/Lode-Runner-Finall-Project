@@ -139,7 +139,7 @@ void  State::next_win()
 {
 	auto score = &Score::GetScore();
 	State* next;
-	next = new Win(score->GetPoints());
+	next = new Win(score->get_points());
 	sate_changed = true;
 	next_screen = next;
 }

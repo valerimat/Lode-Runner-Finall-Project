@@ -7,7 +7,7 @@ Node::Node(sf::Vector2f location):
 {}
 //-----------------------------------------------------------------------------
 
-void Node::SetFather(Node* father)
+void Node::set_father(Node* father)
 {
 	m_father = father;
 }
@@ -129,7 +129,7 @@ sf::Vector2f Node::get_location()
 void Node::Reset()
 {
 	SetColor(Color::White);
-	SetFather(nullptr);
+	set_father(nullptr);
 }
 //-----------------------------------------------------------------------------
 

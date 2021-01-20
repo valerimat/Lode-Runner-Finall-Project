@@ -3,21 +3,21 @@
 
 Lives::Lives()
 {
-	SetLives();
+	set_lives();
 }
-void Lives::SetLives()
+void Lives::set_lives()
 {
 	m_lives = BASE_LIVES;
 }
-int Lives::GetLives()
+int Lives::get_lives()
 {
 	return m_lives;
 }
-void Lives::DecLives()
+void Lives::dec_lives()
 {
 	--m_lives;
 }
-void Lives::AddLives()
+void Lives::add_lives()
 {
 	++m_lives;
 }

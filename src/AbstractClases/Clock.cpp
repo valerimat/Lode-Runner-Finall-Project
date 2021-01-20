@@ -6,7 +6,7 @@ Clock::Clock()
 }
 
 // gets the passed time since the clock is init
-int Clock::GetPassedSeconds()
+int Clock::get_passed_seconds()
 {
 	float seconds;
 	m_time = m_clock.getElapsedTime();
@@ -15,7 +15,7 @@ int Clock::GetPassedSeconds()
 	return (int)seconds;
 }
 
-float Clock::GetPassedSecondsFloat()
+float Clock::get_passed_seconds_float()
 {
 	float seconds;
 	m_time = m_clock.getElapsedTime();
@@ -24,7 +24,7 @@ float Clock::GetPassedSecondsFloat()
 	return seconds;
 }
 
-float Clock::GetPassedMillSeconds()
+float Clock::get_passed_mill_seconds()
 {
 	float seconds;
 	m_time = m_clock.getElapsedTime();
@@ -34,7 +34,7 @@ float Clock::GetPassedMillSeconds()
 }
 
 // restarts the clock
-void Clock::RestartTime()
+void Clock::restart_time()
 {
 	m_clock.restart();
 }

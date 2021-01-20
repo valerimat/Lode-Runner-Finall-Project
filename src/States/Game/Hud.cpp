@@ -14,10 +14,10 @@ Hud::Hud()
 Hud::Hud(int lives,int num_of_level, int *time) :
 	m_lives(lives), m_number_of_level(num_of_level+1), m_time(time)
 {
-	m_clock = &Clock::GetClock();
+	m_clock = &Clock::get_clock();
 	m_score = &Score::GetScore();
 
-	LoadTextures();
+	load_textures();
 }
 //=============================================================================
 
@@ -25,12 +25,12 @@ Hud::Hud(int lives,int num_of_level, int *time) :
 //=============================================================================
 void Hud::Draw(sf::RenderWindow& window)
 {
-	SetScore();
+	set_score();
 
-	DrawScore(window);
-	DrawLives(window);
-	DrawLevel(window);
-	DrawTime(window);
+	draw_score(window);
+	draw_lives(window);
+	draw_level(window);
+	draw_time(window);
 }
 //=============================================================================
 
@@ -43,7 +43,7 @@ void Hud::up_level()
 
 // draws the lives <3
 //=============================================================================
-void Hud::DrawLives(sf::RenderWindow& window)
+void Hud::draw_lives(sf::RenderWindow& window)
 {
 
 	int i = m_lives;
@@ -69,10 +69,10 @@ void Hud::DrawLives(sf::RenderWindow& window)
 //=============================================================================
 
 //=============================================================================
-void Hud::DrawTime(sf::RenderWindow& window)
+void Hud::draw_time(sf::RenderWindow& window)
 {
 	int i = m_textures.size();
-	int time = *m_time - m_clock->GetPassedSeconds(), // 60 will be changed 
+	int time = *m_time - m_clock->get_passed_seconds(), // 60 will be changed 
 			   left_digit, right_digit;
 
 	left_digit  = time / 10;
@@ -106,7 +106,7 @@ void Hud::DrawTime(sf::RenderWindow& window)
 
 // draws the current lvl we are playing
 //=============================================================================
-void Hud::DrawLevel(sf::RenderWindow& window)
+void Hud::draw_level(sf::RenderWindow& window)
 {
 	int i = m_textures.size();
 	int level = m_number_of_level;
@@ -138,10 +138,10 @@ void Hud::DrawLevel(sf::RenderWindow& window)
 
 // draws the player's score
 //=============================================================================
-void Hud::DrawScore(sf::RenderWindow& window)
+void Hud::draw_score(sf::RenderWindow& window)
 {
 	int i = m_textures.size();
-	int score = m_score->GetPoints();
+	int score = m_score->get_points();
 
 
 	sf::Sprite score_sprt;
@@ -188,7 +188,7 @@ void Hud::DrawScore(sf::RenderWindow& window)
 
 // sets the score
 //=============================================================================
-void Hud::SetScore()
+void Hud::set_score()
 {
 	//int score = score->get_score();
 }
@@ -196,7 +196,7 @@ void Hud::SetScore()
 
 // sets the lives
 //=============================================================================
-void Hud::SetLives(int lives) 
+void Hud::set_lives(int lives) 
 {
 	m_lives = lives;
 }
@@ -205,7 +205,7 @@ void Hud::SetLives(int lives)
 
 // loads all the needed the textures for the sprite
 //=============================================================================
-void Hud::LoadTextures()
+void Hud::load_textures()
 {
 	auto texture_ptr = std::make_shared<sf::Texture>();
 	texture_ptr->loadFromFile("number0.png");

@@ -4,10 +4,10 @@
 
 Music::Music()
 {
-	LoadBuffers();
+	load_buffers();
 }
 
-void Music::LoadBuffers()
+void Music::load_buffers()
 {
 	auto buffer_ptr = std::make_shared<sf::SoundBuffer>();
 	buffer_ptr->loadFromFile("eating laffa.OGG");
@@ -39,70 +39,70 @@ void Music::LoadBuffers()
 }
 
 
-void Music::EaitngSound()
+void Music::eating_sound()
 {
 	m_sound->setBuffer(*m_buffers[0]);
-	m_sound->setVolume(MacroSettings::GetSettings().GetVolume()/ 5);
+	m_sound->setVolume(MacroSettings::get_settings().get_volume()/ 5);
 	m_sound->play();
 }
 
-void Music::RunningSound()
+void Music::running_sound()
 {
 	sf::Sound::Status status = m_sound->getStatus();
 
 	if (status == sf::Sound::Status::Stopped)
 	{
 		m_sound->setBuffer(*m_buffers[1]);
-		m_sound->setVolume(MacroSettings::GetSettings().GetVolume()/ 10);
+		m_sound->setVolume(MacroSettings::get_settings().get_volume()/ 10);
 		m_sound->play();
 	}
 }
 
-void Music::DrinkingSound()
+void Music::drinking_sound()
 {
 	m_sound->setBuffer(*m_buffers[2]);
-	m_sound->setVolume(MacroSettings::GetSettings().GetVolume());
+	m_sound->setVolume(MacroSettings::get_settings().get_volume());
 	m_sound->play();
 }
 
-void Music::LadderSound()
+void Music::ladder_sound()
 {
 	sf::Sound::Status status = m_sound->getStatus();
 	if (status == sf::Sound::Status::Stopped)
 	{
 		m_sound->setBuffer(*m_buffers[3]);
-		m_sound->setVolume(MacroSettings::GetSettings().GetVolume());
+		m_sound->setVolume(MacroSettings::get_settings().get_volume());
 		m_sound->play();
 	}
 
 }
 
-void Music::RopeSound()
+void Music::rope_sound()
 {
 	sf::Sound::Status status = m_sound->getStatus();
 	if (status == sf::Sound::Status::Stopped)
 	{
 		m_sound->setBuffer(*m_buffers[4]);
-		m_sound->setVolume(MacroSettings::GetSettings().GetVolume());
+		m_sound->setVolume(MacroSettings::get_settings().get_volume());
 		m_sound->play();
 	}
 }
 
-void Music::HurtSound()
+void Music::hurt_sound()
 {
 	m_sound->setBuffer(*m_buffers[5]);
-	m_sound->setVolume(MacroSettings::GetSettings().GetVolume());
+	m_sound->setVolume(MacroSettings::get_settings().get_volume());
 	m_sound->play();
 }
 
-void Music::BustedSound()
+void Music::busted_sound()
 {
 	m_sound->setBuffer(*m_buffers[6]);
-	m_sound->setVolume(MacroSettings::GetSettings().GetVolume());
+	m_sound->setVolume(MacroSettings::get_settings().get_volume());
 	m_sound->play();
 }
 
-void Music::StopSound()
+void Music::stop_sound()
 {
 	m_sound->stop();
 }

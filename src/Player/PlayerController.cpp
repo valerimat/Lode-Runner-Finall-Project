@@ -2,15 +2,15 @@
 #include "Map.h"
 
 
-void PlayerController::InitController()
+void PlayerController::init_controller()
 {
 	m_player = (m_map->get_player());
-	m_player->SetMap(m_map);
+	m_player->set_map(m_map);
 }
 //-----------------------------------------------------------------------------
 
 
-void PlayerController::MovePlayer( float dt)
+void PlayerController::move_player( float dt)
 {
 	sf::Keyboard::Key key;
 
@@ -48,9 +48,9 @@ void PlayerController::MovePlayer( float dt)
 	else
 	{
 		if (key == sf::Keyboard::Z)
-			m_player->DeleteLeft();
+			m_player->delete_left();
 		else
-			m_player->DeleteRight();
+			m_player->delete_right();
 	}
 }
 //-----------------------------------------------------------------------------
