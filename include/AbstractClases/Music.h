@@ -9,18 +9,20 @@
 class Music
 {
 public:
-	static Music& GetMusic() { static Music s_music; return s_music; };
+	static Music& get_music() { static Music s_music; return s_music; };
 
-	void LoadBuffers();
+	// loads all the buffers
+	void load_buffers();
 
-	void EaitngSound();
-	void DrinkingSound();
-	void RunningSound();
-	void LadderSound();
-	void RopeSound();
-	void HurtSound();
-	void BustedSound();
-	void StopSound();
+	// sounds
+	void eating_sound();
+	void drinking_sound();
+	void running_sound();
+	void ladder_sound();
+	void rope_sound();
+	void hurt_sound();
+	void busted_sound();
+	void stop_sound();
 
 private:
 	Music();
@@ -30,5 +32,5 @@ private:
 	void operator=(Music const&) = delete;
 
 	sf::Sound* m_sound = new sf::Sound;
-	std::vector<std::shared_ptr<sf::SoundBuffer>>  m_buffers;
+	std::vector<std::shared_ptr<sf::SoundBuffer>> m_buffers;
 };

@@ -5,12 +5,15 @@
 class Clock
 {
 public:
-	static Clock& GetClock() {static Clock s_clock; return s_clock;};
+	static Clock& get_clock(){static Clock s_clock; return s_clock;};
 
-	void RestartTime();
-	int GetPassedSeconds();
-	float GetPassedMillSeconds();
-	float GetPassedSecondsFloat();
+	// clock func
+	void  restart_time();
+
+	// getters
+	int   get_passed_seconds();
+	float get_passed_mill_seconds();
+	float get_passed_seconds_float();
 
 private:
 	Clock();
@@ -19,8 +22,6 @@ private:
 	Clock(const Clock&) = delete;
 	void operator=(Clock const&) = delete;
 
-	//static Clock s_clock;
-	//sf::Clock m_time;
 	sf::Clock m_clock;
 	sf::Time m_time;
 };

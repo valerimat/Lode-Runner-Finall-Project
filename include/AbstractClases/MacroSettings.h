@@ -5,20 +5,22 @@
 class MacroSettings
 {
 public:
-	static MacroSettings& GetSettings() { static MacroSettings s_settings; return s_settings; };
+	static MacroSettings& get_settings(){ static MacroSettings s_settings; return s_settings; };
 
-	int GetHeight();
-	int GetWidth();
-	int GetVolume();
+	// setters
+	void set_height(int num);
+	void set_width(int num);
+	void set_volume(int num);
+	void set_map_height(int num);
+	void set_map_width(int num);
 
-	void SetHeight(int num);
-	void SetWidth(int num);
-	void SetVolume(int num);
-	void SetMapHeight(int num);
-	void SetMapWidth(int num);
-	float GetScaleHeight();
-	float GetScaleWidth();
-	float GetSizeOfTile();
+	// getters
+	int get_height();
+	int get_width();
+	int get_volume();
+	float get_scale_height();
+	float get_scale_width();
+	float get_size_of_tile();
 
 private:
 	MacroSettings();
@@ -26,11 +28,12 @@ private:
 	// avoids copy 
 	MacroSettings(const MacroSettings&) = delete;
 	void operator=(MacroSettings const&) = delete;
+
 	float m_sacle_height;
 	float m_scale_width;
-	int m_map_height;
-	int m_map_width;
-	int m_height;
-	int m_width;
-	int m_volume;
+	int   m_map_height;
+	int   m_map_width;
+	int   m_height;
+	int   m_width;
+	int   m_volume;
 };

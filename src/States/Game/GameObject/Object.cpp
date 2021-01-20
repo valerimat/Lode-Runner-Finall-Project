@@ -6,8 +6,8 @@ Object::Object(char m_name,sf::Vector2f location):
 	m_name(m_name)
 {
 	sf::Vector2f location_of_sprite;
-	location_of_sprite.x = location.y * MacroSettings::GetSettings().GetScaleWidth() * 50;
-	location_of_sprite.y = location.x * MacroSettings::GetSettings().GetScaleHeight() * 50 + 50;
+	location_of_sprite.x = location.y * MacroSettings::get_settings().get_scale_width() * 50;
+	location_of_sprite.y = location.x * MacroSettings::get_settings().get_scale_height() * 50 + 50;
 	m_sprite.setPosition(location_of_sprite);
 };
 //-----------------------------------------------------------------------------

@@ -17,7 +17,7 @@ Object(name,locaiton)
 void StaticObject::set_sprite(sf::Texture * texture)
 {
 	m_sprite.setTexture(*texture);
-	m_sprite.setScale(sf::Vector2f(MacroSettings::GetSettings().GetScaleWidth(), MacroSettings::GetSettings().GetScaleHeight()));
+	m_sprite.setScale(sf::Vector2f(MacroSettings::get_settings().get_scale_width(), MacroSettings::get_settings().get_scale_height()));
 }
 //==============================================================================
 

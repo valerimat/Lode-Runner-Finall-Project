@@ -3,73 +3,73 @@
 #include "Map.h"
 #include "Enemy.h"
 
-void EnemyController::InitController()
+void EnemyController::init_controller()
 {
-	m_enemies = m_map->GetEnemies();
-	SetCurrLocation();
-	SetPreviousLocations();
+	m_enemies = m_map->get_enemies();
+	set_curr_location();
+	set_previous_location();
 	for (auto enemy : m_enemies)
 	{
-		enemy->SetMap(m_map);
-		enemy->SetWaypoint();
+		enemy->set_map(m_map);
+		enemy->set_waypoints();
 	}
 
 }
 //-----------------------------------------------------------------------------
 
-void EnemyController::MoveEnemies(float dt)
+void EnemyController::move_enemies(float dt)
 {	
 	sf::Vector2f before_g;
 	sf::Vector2f after_g;
 
-	if (m_enemies.size() != m_map->GetEnemies().size())
+	if (m_enemies.size() != m_map->get_enemies().size())
 	{
-		InitController();
+		init_controller();
 	}
 
 	for(int i =0;i < m_enemies.size(); ++i)
 	{
 
-		if (m_enemies[i]->CheckIfReached())
+		if (m_enemies[i]->check_reached())
 		{
 			
-			m_enemies[i]->SetWaypoint();
+			m_enemies[i]->set_waypoints();
 			continue;
 		}
 
-		if (!m_enemies[i]->IsInHole())
-		MoveEnemy(dt, *m_enemies[i]);
+		if (!m_enemies[i]->is_in_hole())
+		move_enemy(dt, *m_enemies[i]);
 
 		before_g = m_enemies[i]->get_location();
 
-		if (!m_enemies[i]->IsInHole())
-		ApplyGravity(dt, *m_enemies[i]);
+		if (!m_enemies[i]->is_in_hole())
+		apply_gravity(dt, *m_enemies[i]);
 		
 		after_g = m_enemies[i]->get_location();
 
-		if (EnemyFalling(before_g, after_g))
+		if (enemy_falling(before_g, after_g))
 			m_enemies[i]->m_falling = true;
 		else
 			m_enemies[i]->m_falling = false;
 
-		SetCurrLocation();
+		set_curr_location();
 
-		CheckStuck();
+		check_stuck();
 	}
 }
 //-----------------------------------------------------------------------------
 
-void EnemyController::SetPaths()
+void EnemyController::set_path()
 {
 	for (auto enemy : m_enemies)
 	{
-		if (enemy->CheckIfReached())
-			enemy->SetWaypoint();
+		if (enemy->check_reached())
+			enemy->set_waypoints();
 	}
 }
 //-----------------------------------------------------------------------------
 
-void EnemyController::SetCurrLocation()
+void EnemyController::set_curr_location()
 {
 	curr_loc.clear();
 	for (auto enemy : m_enemies)
@@ -79,7 +79,7 @@ void EnemyController::SetCurrLocation()
 }
 //-----------------------------------------------------------------------------
 
-void EnemyController::SetPreviousLocations()
+void EnemyController::set_previous_location()
 {
 	prev_loc.clear();
 	for (auto enemy : m_enemies)
@@ -89,7 +89,7 @@ void EnemyController::SetPreviousLocations()
 }
 //-----------------------------------------------------------------------------
 
-void EnemyController::CheckStuck()
+void EnemyController::check_stuck()
 {
 	for (int i = 0; i < curr_loc.size(); ++i)
 	{
@@ -98,23 +98,23 @@ void EnemyController::CheckStuck()
 			//m_enemies[i]->DontMove();
 			m_enemies[i]->UpStuck();
 
-			if (m_enemies[i]->Stuck())
+			if (m_enemies[i]->stuck())
 			{
-				m_enemies[i]->ResetPath();
-				m_enemies[i]->SetWaypoint();
+				m_enemies[i]->reset_path();
+				m_enemies[i]->set_waypoints();
 			}
 		}
 		else
 		{
-			m_enemies[i]->ResetStuck();
+			m_enemies[i]->reset_stuck();
 		}
 	}
 }
 //-----------------------------------------------------------------------------
 
-void EnemyController::MoveEnemy(float dt, Enemy & enemy)
+void EnemyController::move_enemy(float dt, Enemy & enemy)
 {
-	SetPreviousLocations();
+	set_previous_location();
 
 	
 
@@ -130,7 +130,7 @@ void EnemyController::MoveEnemy(float dt, Enemy & enemy)
 }
 //-----------------------------------------------------------------------------
 
-void EnemyController::ApplyGravity(float dt, Enemy& enemy)
+void EnemyController::apply_gravity(float dt, Enemy& enemy)
 {
 	//do graviry do its job
 	enemy.gravity(dt);
@@ -140,7 +140,7 @@ void EnemyController::ApplyGravity(float dt, Enemy& enemy)
 }
 //-----------------------------------------------------------------------------
 
-bool EnemyController::EnemyFalling(sf::Vector2f before, sf::Vector2f after)
+bool EnemyController::enemy_falling(sf::Vector2f before, sf::Vector2f after)
 {
 	if (abs(before.y -  after.y) > 0.f)
 		return true;

@@ -11,6 +11,6 @@ class Algo
 {
 public:
 	Algo() = default;
-	virtual std::vector<sf::Vector2f> CalcPath(Graph& graph, sf::Vector2f our_location, sf::Vector2f wanted_location) =0;
+	virtual std::vector<sf::Vector2f> calc_path(Graph& graph, sf::Vector2f our_location, sf::Vector2f wanted_location) =0;
 private:
 };

@@ -7,7 +7,7 @@
 Game::Game():
 	m_maps(MapData())
 {
-	Clock::GetClock().RestartTime();
+	Clock::get_clock().restart_time();
 	load();
 	init_controllers();
 }
@@ -16,13 +16,13 @@ Game::Game():
 //=============================================================================
 void Game::load()
 {
-	MacroSettings::GetSettings().SetMapHeight(m_maps.GetCurrHeight(level));
-	MacroSettings::GetSettings().SetMapWidth(m_maps.GetCurrWidth(level));
+	MacroSettings::get_settings().set_map_height(m_maps.get_curr_height(level));
+	MacroSettings::get_settings().set_map_width(m_maps.get_curr_width(level));
 
-	Map temp(m_maps.GetMap(level), m_maps.GetCurrHeight(level), m_maps.GetCurrWidth(level), m_maps.GetCurrTimer(level));
-	m_curr_map = new Map(m_maps.GetMap(level), m_maps.GetCurrHeight(level), m_maps.GetCurrWidth(level), m_maps.GetCurrTimer(level));
+	Map temp(m_maps.get_map(level), m_maps.get_curr_height(level), m_maps.get_curr_width(level), m_maps.get_curr_time(level));
+	m_curr_map = new Map(m_maps.get_map(level), m_maps.get_curr_height(level), m_maps.get_curr_width(level), m_maps.get_curr_time(level));
 
-	Hud hud(m_curr_map->get_player()->GetLives(),level, m_curr_map->GetTimer());
+	Hud hud(m_curr_map->get_player()->get_lives(),level, m_curr_map->get_timer());
 	m_hud = hud;
 	
 }
@@ -48,10 +48,10 @@ void Game::init_controllers()
 {
 	//can move it to one array
 	m_enemy_cont = std::make_shared<EnemyController>(get_curr_map());
-	m_enemy_cont->InitController();
+	m_enemy_cont->init_controller();
 
 	m_player_cont = std::make_shared<PlayerController>(get_curr_map());
-	m_player_cont->InitController();
+	m_player_cont->init_controller();
 }
 //=============================================================================
 
@@ -71,20 +71,20 @@ void Game::on_update()
 
 	if (timeIsUp())
 	{
-		Music::GetMusic().BustedSound();
+		Music::get_music().busted_sound();
 		set_next_state(States::Death);
 		return;
 	}
 
 
-	if (m_curr_map->get_player()->GetLives() == 0)
+	if (m_curr_map->get_player()->get_lives() == 0)
 	{
-		Music::GetMusic().BustedSound();
+		Music::get_music().busted_sound();
 		set_next_state(States::Death);
 		return;
 	}
-	m_hud.SetLives(m_curr_map->get_player()->GetLives());
-	m_enemy_cont->SetPaths();
+	m_hud.set_lives(m_curr_map->get_player()->get_lives());
+	m_enemy_cont->set_path();
 	m_curr_map->check_holes();
 	m_curr_map->close_holes();
 }
@@ -97,8 +97,8 @@ void Game::handle_event(float dt)
 	check_release();
 
 
-	m_enemy_cont->MoveEnemies(dt);
-	m_player_cont->MovePlayer(dt);
+	m_enemy_cont->move_enemies(dt);
+	m_player_cont->move_player(dt);
 
 }
 //=============================================================================
@@ -131,8 +131,8 @@ void Game::advance_level()
 {
 	++level;
 
-	MacroSettings::GetSettings().SetMapHeight(m_maps.GetCurrHeight(level));
-	MacroSettings::GetSettings().SetMapWidth(m_maps.GetCurrWidth(level));
+	MacroSettings::get_settings().set_map_height(m_maps.get_curr_height(level));
+	MacroSettings::get_settings().set_map_width(m_maps.get_curr_width(level));
 	(&Score::GetScore())->advance_level();
 	m_hud.up_level();
 	reset_level();
@@ -143,7 +143,7 @@ void Game::advance_level()
 //=============================================================================
 bool Game::max_level()
 {
-	if ((level + 1) >= m_maps.GetNumberOfLevels())
+	if ((level + 1) >= m_maps.get_num_of_levels())
 	{
 		return true;
 	}
@@ -157,7 +157,7 @@ void Game::reset_level()
 	//(need to reset time
 	load();
 	init_controllers();
-	Clock::GetClock().RestartTime();
+	Clock::get_clock().restart_time();
 }
 //=============================================================================
 
@@ -173,8 +173,8 @@ void Game::reset_game()
 //=============================================================================
 bool Game::timeIsUp()
 {
-	int time = m_maps.GetCurrTimer(level);
-	if (time - Clock::GetClock().GetPassedSeconds() < 0)
+	int time = m_maps.get_curr_time(level);
+	if (time - Clock::get_clock().get_passed_seconds() < 0)
 		return true;
 
 	return false;

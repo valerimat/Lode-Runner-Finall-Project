@@ -25,6 +25,7 @@ public:
 	//Setters:
 	void SetMap(Map* map);
 
+
 	//For Digging:
 	void DeleteLeft();
 	void DeleteRight();
@@ -32,6 +33,7 @@ public:
 	//Move:
 	void Move(sf::Keyboard::Key key,float dt);
 	
+
 	//Handle collision:
 	void handle_collision(RigidBodyObject& object) override;
 	void handle_collision(Pole& object) override;
@@ -44,9 +46,11 @@ public:
     void handle_collision(Player& object) override;
 	void handle_collision(Enemy& object) override;
 
+
 	//For lives managment:
 	int GetLives();
 	void AddLives();
+
 
 private:
 	

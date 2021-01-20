@@ -22,7 +22,7 @@ Player::Player(char name, sf::Vector2f locaiton, sf::Texture * texture) :
 void Player::on_create()
 {	
 	m_base_location = get_location();
-	m_lives.SetLives();
+	m_lives.set_lives();
 }
 //-----------------------------------------------------------------------------
 
@@ -78,6 +78,7 @@ void Player::handle_collision(Enemy& object)
 	sf::FloatRect inter;
 	if (get_sprite().getGlobalBounds().intersects(object.get_sprite().getGlobalBounds(), inter))
 		{
+
 			//so we walk on him
 			if (object.IsInHole())
 			{
@@ -86,6 +87,7 @@ void Player::handle_collision(Enemy& object)
 			}
 			else
 			{
+
 				if (inter.width >= 8 && inter.height >= 8)
 				{
 					m_map->reset_positions();
@@ -100,9 +102,9 @@ void Player::handle_collision(Enemy& object)
 
 void Player::handle_collision(Coin& object)
 {
-	Score::GetScore().IncreasePoints(); // 1 represents the lvl needs to be changed latter
-	m_map->DeleteCoin(object);
-	Music::GetMusic().EaitngSound();
+	Score::GetScore().increase_points(); // 1 represents the lvl needs to be changed latter
+	m_map->delete_coin(object);
+	Music::get_music().eating_sound();
 }
 //-----------------------------------------------------------------------------
 void Player::handle_collision(DynamicObject& object)
@@ -122,17 +124,18 @@ void Player::handle_collision(Pole& object)
 {
 	on_pole(object.get_location());
 	if (!m_standing)
-		Music::GetMusic().RopeSound();
+		Music::get_music().rope_sound();
 }
 //-----------------------------------------------------------------------------
 
 void Player::handle_collision(Ladder& object)
 {
+
 	CollideWithLadder(object);
 
 	if (!m_standing)
 		Music::GetMusic().LadderSound();
-   
+  
 }
 //-----------------------------------------------------------------------------
 
@@ -141,37 +144,37 @@ void Player::handle_collision(RigidBodyObject& object)
 	CollideWithRigidBody(object);
 
 	if(!m_standing)
-		Music::GetMusic().RunningSound();
+		Music::get_music().running_sound();
 }
 //-----------------------------------------------------------------------------
 
-void Player::SetMap(Map* map)
+void Player::set_map(Map* map)
 {
 	m_map = map;
 }
 //-----------------------------------------------------------------------------
 
-void Player::DeleteLeft()
+void Player::delete_left()
 {
 	m_map->make_hole(BottomLeft());
 }
 //-----------------------------------------------------------------------------
 
-void Player::DeleteRight()
+void Player::delete_right()
 {
 	m_map->make_hole(BottomRight());
 }
 //-----------------------------------------------------------------------------
 
-int Player::GetLives()
+int Player::get_lives()
 {
-	return m_lives.GetLives();
+	return m_lives.get_lives();
 }
 //-----------------------------------------------------------------------------
 
-void Player::AddLives()
+void Player::add_lives()
 {
-	return m_lives.AddLives();
+	return m_lives.add_lives();
 }
 //-----------------------------------------------------------------------------
 

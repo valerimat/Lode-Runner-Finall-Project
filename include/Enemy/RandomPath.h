@@ -15,7 +15,7 @@ class RandomPath :public Algo
 {
 public:
 	//Main call function:
-	std::vector<sf::Vector2f> CalcPath(Graph& graph, sf::Vector2f our_rect, sf::Vector2f wanted_location) override;
+	std::vector<sf::Vector2f> calc_path(Graph& graph, sf::Vector2f our_rect, sf::Vector2f wanted_location) override;
 private:
-	void FindRandomPath(Node* node, std::vector<sf::Vector2f>& waypoints);
+	void find_random_path(Node* node, std::vector<sf::Vector2f>& waypoints);
 };

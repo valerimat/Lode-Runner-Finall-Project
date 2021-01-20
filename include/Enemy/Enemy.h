@@ -17,18 +17,18 @@ public:
 	using DynamicObject::DynamicObject;
 	Enemy(char name, sf::Vector2f locaiton, sf::Texture* texture);
 
+
 	void on_create()override;
 	void SetMap(Map* map);
-
 	//Setters:
-	virtual void SetSmartness(int i);
-	void SetWaypoint();
-	void ResetPath();
+	virtual void set_smartness(int i);
+	void set_waypoints();
+	void reset_path();
 
 	//Getters:
-	IQ GetIQ();
-	
 
+	IQ GetIQ();
+  
 	//collisions:
 	void handle_collision(Pole& object) override;
 	void handle_collision(Ladder& object) override;
@@ -40,6 +40,7 @@ public:
 	void handle_collision(Player& object) override ;
 	void handle_collision(Enemy& object) override ;
 	void handle_collision(DynamicObject& object) override;
+
 
 	//For unstucking:
 	void UpStuck();
@@ -59,9 +60,8 @@ private:
 	sf::Vector2f GetCenter();
 	NextStep DirectionToWaypoint();
 	
-	void SetNextWaypoint();
 
-	//to know if we are stuck
+	void SetNextWaypoint();
 	int stuck_counter = 0;
 
 	//to request information

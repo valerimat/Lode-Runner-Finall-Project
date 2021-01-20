@@ -8,14 +8,14 @@ bool RigidBodyObject::make_hole()
 	//edges
 	if (get_location().x != 0
 		&&
-		get_location().x != 800 - MacroSettings::GetSettings().GetSizeOfTile())
+		get_location().x != 800 - MacroSettings::get_settings().get_size_of_tile())
 	{
 		m_hole = true;
 
 		m_sprite.setPosition(get_location() + 
-			     sf::Vector2f(0, MacroSettings::GetSettings().GetSizeOfTile() * 0.875f));
+			     sf::Vector2f(0, MacroSettings::get_settings().get_size_of_tile() * 0.875f));
 
-		m_sprite.setScale(0.8, MacroSettings::GetSettings().GetScaleHeight() / 8.f);
+		m_sprite.setScale(0.8, MacroSettings::get_settings().get_scale_height() / 8.f);
 		
 		return true;
 	}

@@ -20,9 +20,9 @@ Map::Map(std::vector<std::string>* map,int height, int width, int timer):
 	m_timer(timer)
 {
 	m_graph = new Graph(m_map, m_width, m_height);
-	LoadTextures();
-	LoadBackground();
-	SetObjects();
+	load_textures();
+	load_background();
+	set_objects();
 }
 //=============================================================================
 
@@ -35,7 +35,7 @@ Graph & Map::get_graph()
 
 // sets all the objects
 //=============================================================================
-void Map::SetObjects()
+void Map::set_objects()
 {
 
 	for (int i = 0; i < m_height; ++i)
@@ -44,7 +44,7 @@ void Map::SetObjects()
 		{
 			sf::Vector2f location(i, j);
 
-			switch(GetChar(i,j))
+			switch(get_char(i,j))
 			{
 			case PLAYER: 
 				m_dynamic.push_back(
@@ -131,7 +131,7 @@ void Map::Draw(sf::RenderWindow &main_window)
 
 // loads all the textures on shared ptr
 //=============================================================================
-void Map::LoadTextures()
+void Map::load_textures()
 {
 	m_textures.push_back(std::make_unique<sf::Texture>());
 	m_textures[0]->loadFromFile("ladder.png");
@@ -176,7 +176,7 @@ void Map::LoadTextures()
 
 // gets char from the board
 //=============================================================================
-char Map::GetChar(int i,int j)
+char Map::get_char(int i,int j)
 {
 	return m_map[i][j];
 }
@@ -197,7 +197,7 @@ Player* Map::get_player() // later change to Player as a return value
 
 // gets us vector of enemies ptr
 //=============================================================================
-std::vector<Enemy*> Map::GetEnemies()
+std::vector<Enemy*> Map::get_enemies()
 {
 	int index = 0;
 	std::vector<Enemy*> temp;
@@ -218,21 +218,21 @@ std::vector<Enemy*> Map::GetEnemies()
 
 
 //=============================================================================
-int Map::GetWidth()
+int Map::get_width()
 {
 	return m_width;
 }
 //=============================================================================
 
 //=============================================================================
-int Map::GetHeight()
+int Map::get_height()
 {
 	return m_height;
 }
 //=============================================================================
 
 //=============================================================================
-int *Map::GetTimer()
+int *Map::get_timer()
 {
 	return &m_timer;
 }
@@ -241,7 +241,7 @@ int *Map::GetTimer()
 
 // deletes the coin
 //=============================================================================
-void Map::DeleteCoin(Coin & coin)
+void Map::delete_coin(Coin & coin)
 {
 	
 	auto i = 0;
@@ -255,7 +255,7 @@ void Map::DeleteCoin(Coin & coin)
 
 // deletes the present
 //=============================================================================
-void Map::DeletePresent(Present& present)
+void Map::delete_present(Present& present)
 {
 	auto i = 0;
 
@@ -268,16 +268,16 @@ void Map::DeletePresent(Present& present)
 	case 0:
 		std::cout << "time added\n";
 		m_timer += 5;
-		Music::GetMusic().DrinkingSound();
+		Music::get_music().drinking_sound();
 		break;
 	case 1:
 		std::cout << "lives added\n";
-		get_player()->AddLives();
-		Music::GetMusic().DrinkingSound();
+		get_player()->add_lives();
+		Music::get_music().drinking_sound();
 		break;
 	case 2:
-		Score::GetScore().IncreasePoints();
-		Music::GetMusic().DrinkingSound();
+		Score::GetScore().increase_points();
+		Music::get_music().drinking_sound();
 		break;
 	case 3:
 		std::shared_ptr<DynamicObject> dn_ptr;
@@ -322,6 +322,7 @@ void Map::make_hole(sf::Vector2f location)
 		{
 			if (m_static[i]->make_hole())
 			{
+
 				m_holes.push_back(dynamic_cast<RigidBodyObject*>(m_static[i].get()));
 				holes_time.push_back(Clock::GetClock().GetPassedSecondsFloat());
 			}
@@ -335,7 +336,7 @@ void Map::check_holes()
 {
 	for (int i = 0; i < m_holes.size(); i++)
 	{
-		if (Clock::GetClock().GetPassedSecondsFloat()  - holes_time[i]  > 4)
+		if (Clock::get_clock().get_passed_seconds_float()  - holes_time[i]  > 4)
 		{
 			m_holes_to_close.push_back(m_holes[i]);
 			m_holes.erase(m_holes.begin()  +i);
@@ -350,7 +351,7 @@ void Map::close_holes()
 	for (int i = 0; i < m_holes_to_close.size(); i++)
 	{
 		sf::Vector2f curr_scale = m_holes_to_close[i]->get_sprite().getScale();
-		if (abs(curr_scale.y - (MacroSettings::GetSettings().GetScaleHeight())) < 0.01)
+		if (abs(curr_scale.y - (MacroSettings::get_settings().get_scale_height())) < 0.01)
 		{
 			m_holes_to_close[i]->SetHole(false);
 			m_holes_to_close.erase(m_holes_to_close.begin() + i);
@@ -387,7 +388,7 @@ void Map::reset_positions()
 //=============================================================================
 
 
-void Map::LoadBackground()
+void Map::load_background()
 {
 	float scale_height = float(HEIGHT) / 900.f,
 		scale_width = float(WIDTH) / 1200.f;

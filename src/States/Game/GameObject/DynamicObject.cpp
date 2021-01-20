@@ -20,7 +20,7 @@ void DynamicObject::set_sprite(sf::Texture* texture)
 	sf::IntRect rect_sprite(0, 0, 50, 50);
 	m_sprite.setTextureRect(rect_sprite);
 	m_sprite.setScale(1, 1);
-	m_sprite.setScale(sf::Vector2f(MacroSettings::GetSettings().GetScaleWidth(), MacroSettings::GetSettings().GetScaleHeight()));
+	m_sprite.setScale(sf::Vector2f(MacroSettings::get_settings().get_scale_width(), MacroSettings::get_settings().get_scale_height()));
 
 }
 //-----------------------------------------------------------------------------
@@ -54,7 +54,7 @@ void DynamicObject::Draw(sf::RenderWindow &main_window)
 void DynamicObject::update_location(NextStep step,float dt)
 {
 	sf::Vector2f loc = m_sprite.getPosition();
-	auto mill_seconds = Clock::GetClock().GetPassedMillSeconds();
+	auto mill_seconds = Clock::get_clock().get_passed_mill_seconds();
 
 	Animation(step, this->get_name());
 
@@ -176,7 +176,7 @@ void DynamicObject::on_pole(sf::Vector2f location)
 
 void DynamicObject::Animation(NextStep step, char name)
 {
-	auto mill_seconds = Clock::GetClock().GetPassedMillSeconds();
+	auto mill_seconds = Clock::get_clock().get_passed_mill_seconds();
 
 	switch (step)
 	{
