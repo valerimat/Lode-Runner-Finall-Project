@@ -1,19 +1,18 @@
 #pragma once
 #include <vector>
 #include <string>
-#include "StaticObject.h"
-#include "Macros.h"
-#include "Player.h"
-#include "Enemy.h"
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include <fstream>
 #include <iostream>
 #include "Graph.h"
-
+#include <memory>
+#include "StaticObject.h"	
+#include "Enemy.h"
+#include "Player.h"
 class Coin;
 class Present;
-class DynamicObject;
+class Object;
 
 class Map
 {
@@ -21,7 +20,13 @@ public:
 	//c-tors
 	Map() = default;
 	Map(std::vector<std::string>* map, int height,int width, int timer);
+	~Map() = default;
 
+	Map& operator=(Map& map)
+	{
+		return map;
+	};
+	
 	// map functions
 	void LoadTextures();
 	void Draw(sf::RenderWindow& main_window);
@@ -29,7 +34,6 @@ public:
 	// getters
 	Player* get_player();
 	std::vector<Enemy*> GetEnemies();
-	std::vector<std::shared_ptr<StaticObject>>* GetStatic();
 	int GetHeight();
 	int GetWidth();
 	Graph & get_graph();
@@ -52,6 +56,9 @@ public:
 	void DeletePresent(Present & present);
 	void reset_positions();
 private:
+
+	void LoadBackground();
+
 	int m_width;
 	int m_height;
 	int m_timer;
@@ -62,14 +69,12 @@ private:
 
 	std::vector<std::string> m_map;
 
-	std::vector<std::shared_ptr <StaticObject>> m_holes;
-	std::vector<std::shared_ptr <StaticObject>> m_holes_to_close;
+	std::vector<StaticObject*> m_holes;
+	std::vector<StaticObject*> m_holes_to_close;
 	std::vector<float> holes_time;
 
-	std::vector<std::shared_ptr <sf::Texture>>  m_textures;
-
-	std::vector<std::shared_ptr <StaticObject>>  m_static;
-	std::vector<std::shared_ptr <StaticObject>>  m_coins;
-	std::vector<std::shared_ptr <StaticObject>>  m_presents;
-	std::vector<std::shared_ptr <DynamicObject>> m_dynamic;
+	std::vector<std::unique_ptr<sf::Texture>>  m_textures;
+	sf::Sprite  m_background;
+	std::vector<std::unique_ptr<StaticObject>>  m_static;
+	std::vector<std::unique_ptr<DynamicObject>> m_dynamic;
 };

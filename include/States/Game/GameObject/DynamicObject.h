@@ -14,14 +14,15 @@ class DynamicObject : public Object
 public:
 	//Ctors:
 	using Object::Object;
+	~DynamicObject()override = default;
 
-	DynamicObject(char name, sf::Vector2f locaiton, std::shared_ptr<sf::Texture> texture);
-
+	DynamicObject(char name, sf::Vector2f locaiton, sf::Texture *texture);
+	DynamicObject(const DynamicObject&) = delete;
 	//Draw:
 	void Draw(sf::RenderWindow& window);
 
 	//Setters:
-	void set_sprite(std::shared_ptr<sf::Texture> texture);
+	void set_sprite(sf::Texture* texture);
 
 	//handle collision:
 	void handle_collision(Object& object) override;
@@ -38,7 +39,9 @@ public:
 	void gravity(float dt);
 	void turn_gravity_on();
 	void on_pole(sf::Vector2f  location);
+
 	void move_back(RigidBodyObject& object);
+	void move_back(Enemy & object);
 
 	void Animation(NextStep step, char name);
 

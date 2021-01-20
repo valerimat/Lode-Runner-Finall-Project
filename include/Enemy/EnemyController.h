@@ -21,8 +21,8 @@ public:
 	void InitController();
 
 private:
-	void MoveEnemy(float dt, Enemy* enemy);
-	void ApplyGravity(float dt, Enemy* enemy);
+	void MoveEnemy(float dt, Enemy& enemy);
+	void ApplyGravity(float dt, Enemy& enemy);
 	bool EnemyFalling(sf::Vector2f before, sf::Vector2f after);
 	void SetCurrLocation();
 	void SetPreviousLocations();
@@ -31,5 +31,5 @@ private:
 	std::vector<sf::Vector2f> prev_loc;
 	std::vector<sf::Vector2f> curr_loc;
 
-	std::vector<Enemy *> m_enemies;
+	std::vector<Enemy*> m_enemies;
 };

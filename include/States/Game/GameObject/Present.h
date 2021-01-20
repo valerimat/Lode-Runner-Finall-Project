@@ -11,7 +11,7 @@ class Present : public StaticObject
 {
 public:
 	//using StaticObject::StaticObject;
-	Present(char Name, sf::Vector2f locaiton, std::shared_ptr<sf::Texture> texture);
+	Present(char Name, sf::Vector2f locaiton, sf::Texture * texture);
 
 	void handle_collision(DynamicObject& object);
 	void handle_collision(Player& object);

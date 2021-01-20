@@ -20,9 +20,9 @@ void Game::load()
 	MacroSettings::GetSettings().SetMapWidth(m_maps.GetCurrWidth(level));
 
 	Map temp(m_maps.GetMap(level), m_maps.GetCurrHeight(level), m_maps.GetCurrWidth(level), m_maps.GetCurrTimer(level));
-	m_curr_map = temp;
+	m_curr_map = new Map(m_maps.GetMap(level), m_maps.GetCurrHeight(level), m_maps.GetCurrWidth(level), m_maps.GetCurrTimer(level));
 
-	Hud hud(m_curr_map.get_player(), level, m_curr_map.GetTimer());
+	Hud hud(m_curr_map->get_player()->GetLives(),level, m_curr_map->GetTimer());
 	m_hud = hud;
 	
 }
@@ -31,7 +31,7 @@ void Game::load()
 //=============================================================================
 void Game::Draw(sf::RenderWindow &window)
 {
-	m_curr_map.Draw(window);
+	m_curr_map->Draw(window);
 	m_hud.Draw(window);
 }
 //=============================================================================
@@ -39,7 +39,7 @@ void Game::Draw(sf::RenderWindow &window)
 //=============================================================================
 Map * Game::get_curr_map()
 {
-	return & m_curr_map;
+	return  m_curr_map;
 }
 //=============================================================================
 
@@ -58,7 +58,7 @@ void Game::init_controllers()
 //=============================================================================
 void Game::on_update()
 {
-	if (m_curr_map.all_coins_collected())
+	if (m_curr_map->all_coins_collected())
 	{
 		if (max_level())
 		{
@@ -77,16 +77,16 @@ void Game::on_update()
 	}
 
 
-	if (m_curr_map.get_player()->GetLives() == 0)
+	if (m_curr_map->get_player()->GetLives() == 0)
 	{
 		Music::GetMusic().BustedSound();
 		set_next_state(States::Death);
 		return;
 	}
-
+	m_hud.SetLives(m_curr_map->get_player()->GetLives());
 	m_enemy_cont->SetPaths();
-	m_curr_map.check_holes();
-	m_curr_map.close_holes();
+	m_curr_map->check_holes();
+	m_curr_map->close_holes();
 }
 //=============================================================================
 
@@ -95,6 +95,7 @@ void Game::handle_event(float dt)
 {
 	check_preseed_now();
 	check_release();
+
 
 	m_enemy_cont->MoveEnemies(dt);
 	m_player_cont->MovePlayer(dt);

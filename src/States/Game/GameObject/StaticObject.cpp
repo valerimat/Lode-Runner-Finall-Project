@@ -6,7 +6,7 @@
 #include "MacroSettings.h"
 
 //==============================================================================
-StaticObject::StaticObject(char name, sf::Vector2f locaiton, std::shared_ptr<sf::Texture> texture):
+StaticObject::StaticObject(char name, sf::Vector2f locaiton, sf::Texture *texture):
 Object(name,locaiton)
 {
 	set_sprite(texture);
@@ -14,7 +14,7 @@ Object(name,locaiton)
 //==============================================================================
 
 //==============================================================================
-void StaticObject::set_sprite(std::shared_ptr<sf::Texture> texture)
+void StaticObject::set_sprite(sf::Texture * texture)
 {
 	m_sprite.setTexture(*texture);
 	m_sprite.setScale(sf::Vector2f(MacroSettings::GetSettings().GetScaleWidth(), MacroSettings::GetSettings().GetScaleHeight()));

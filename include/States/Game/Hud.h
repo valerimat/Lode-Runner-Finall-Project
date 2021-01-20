@@ -9,10 +9,10 @@ class Hud
 {
 public:
 	Hud();
-	Hud(Player* player, int num_of_level, int *time);
+	Hud(int lives, int num_of_level, int* time);
 	void Draw(sf::RenderWindow& window);
 	void SetScore();
-	void SetLives();
+	void SetLives(int lives);
 	void LoadTextures();
 	void up_level();
 
@@ -27,9 +27,9 @@ private:
 
 	int m_number_of_level;
 
-	int lives;
+	int m_lives;
 
-	Player* m_player;
+	
 	Score * m_score;
 	Clock * m_clock;
 

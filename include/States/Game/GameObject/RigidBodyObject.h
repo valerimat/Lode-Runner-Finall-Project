@@ -8,8 +8,10 @@
 
 class RigidBodyObject : public StaticObject
 {
+public:
 	using StaticObject::StaticObject;
 	bool make_hole() override;
+	bool IsHole();
 
 	void handle_collision(DynamicObject& object);
 	void handle_collision(Player& object);

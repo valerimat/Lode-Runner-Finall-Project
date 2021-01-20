@@ -3,7 +3,6 @@
 #include <iostream>
 #include "DynamicObject.h"
 #include "Lives.h"
-#include "PlayerController.h"
 #include <vector>
 #include "Macros.h"
 class Map;
@@ -17,9 +16,9 @@ class RigidBodyObject;
 class Player : public DynamicObject
 {
 public:
-
-	//using DynamicObject::DynamicObject;
-	Player(char name, sf::Vector2f locaiton, std::shared_ptr<sf::Texture> texture);
+	
+	using DynamicObject::DynamicObject;
+	Player(char name, sf::Vector2f locaiton, sf::Texture * texture);
 	//Lives* get_lives();
 
 	void DeleteLeft();
@@ -52,3 +51,4 @@ private:
 	bool m_standing;
 	
 };
+

@@ -10,7 +10,7 @@
 #include "Music.h"
 
 // c-tor
-Player::Player(char name, sf::Vector2f locaiton, std::shared_ptr<sf::Texture> texture) :
+Player::Player(char name, sf::Vector2f locaiton, sf::Texture * texture) :
 	DynamicObject(name, locaiton, texture)
 {
 	on_create();
@@ -76,12 +76,20 @@ void Player::handle_collision(Enemy& object)
 {
 	sf::FloatRect inter;
 	if (get_sprite().getGlobalBounds().intersects(object.get_sprite().getGlobalBounds(), inter))
-		if (inter.width > 5 && inter.height > 5)
+		if (inter.width >= 5 && inter.height >= 5)
 		{
-			m_map->reset_positions();
-			std::cout << "collision";
-			m_lives.DecLives();
-			Music::GetMusic().HurtSound();
+			if (object.IsInHole())
+			{
+				if (inter.height >= 7)
+				move_back(object);
+			}
+			else
+			{
+				m_map->reset_positions();
+				std::cout << "collision";
+				m_lives.DecLives();
+				Music::GetMusic().HurtSound();
+			}
 		}
 	
 }

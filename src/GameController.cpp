@@ -65,6 +65,7 @@ void GameController::OnUpdate(std::chrono::steady_clock::time_point & last,State
 		//need to setup function for this one to or check type
 		float dt_long = dt.count() * 0.1f;
 
+
 		if (dt_long == 0)
 			dt_long = 1;
 

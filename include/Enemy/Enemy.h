@@ -15,13 +15,14 @@ class Enemy : public DynamicObject
 public:
 	//C-tors:
 	using DynamicObject::DynamicObject;
-	Enemy(char name, sf::Vector2f locaiton, std::shared_ptr<sf::Texture> texture);
+	Enemy(char name, sf::Vector2f locaiton, sf::Texture* texture);
 
 	void SetMap(Map* map);
 	//Setters:
 	virtual void SetSmartness(int i);
 	void SetWaypoint();
 	void ResetPath();
+
 	//Getters:
 	IQ GetIQ();
 	sf::Vector2f GetCenter();
@@ -39,6 +40,7 @@ public:
 
 	//for debug !!
 	
+	bool IsInHole();
 	void UpStuck();
 	void ResetStuck();
 	bool Stuck();
@@ -56,7 +58,7 @@ private:
 	
 	void SetNextWaypoint();
 	
-
+	bool m_in_hole = false;
 	int stuck_counter = 0;
 	int m;
 	Map* m_map;

@@ -5,7 +5,7 @@ MacroSettings::MacroSettings()
 {
 	m_height = 850;
 	m_width = 800;
-	m_volume = 50;
+	m_volume = 80;
 	m_sacle_height = 0;
 	m_scale_width = 0;
 	m_map_height= 0;
