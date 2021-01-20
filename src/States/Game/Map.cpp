@@ -21,6 +21,7 @@ Map::Map(std::vector<std::string>* map,int height, int width, int timer):
 {
 	m_graph = new Graph(m_map, m_width, m_height);
 	LoadTextures();
+	LoadBackground();
 	SetObjects();
 }
 //=============================================================================
@@ -46,31 +47,38 @@ void Map::SetObjects()
 			switch(GetChar(i,j))
 			{
 			case PLAYER: 
-				this->m_dynamic.push_back(std::make_unique<Player>(PLAYER, location, m_textures[PLAYER_TEXTURE]));
+				m_dynamic.push_back(
+					std::make_unique<Player>(PLAYER, location, m_textures[PLAYER_TEXTURE].get()));
 				break;
 
 			case ENEMY:
-				this->m_dynamic.push_back(std::make_unique<Enemy>(ENEMY, location, m_textures[ENEMY_TEXTURE]));
+				m_dynamic.push_back(
+					std::make_unique<Enemy>(ENEMY, location, m_textures[ENEMY_TEXTURE].get()));
 				break;
 
 			case GROUND:
-				this->m_static.push_back(std::make_unique<RigidBodyObject>(GROUND, location, m_textures[GROUND_TEXTURE]));
+				m_static.push_back(
+					std::make_unique<RigidBodyObject>(GROUND, location, m_textures[GROUND_TEXTURE].get()));
 				break;
 
 			case LADDER:
-				this->m_static.push_back(std::make_unique<Ladder>(LADDER, location, m_textures[LADDER_TEXTURE]));
+				m_static.push_back(
+					std::make_unique<Ladder>(LADDER, location, m_textures[LADDER_TEXTURE].get()));
 				break;
 
 			case COIN:
-				this->m_static.push_back(std::make_unique<Coin>(COIN, location, m_textures[COIN_TEXTURE]));
+				m_static.push_back(
+					std::make_unique<Coin>(COIN, location, m_textures[COIN_TEXTURE].get()));
 				break;
 
 			case POLE:
-				this->m_static.push_back(std::make_unique<Pole>(POLE, location, m_textures[POLE_TEXTURE]));
+				m_static.push_back(
+					std::make_unique<Pole>(POLE, location, m_textures[POLE_TEXTURE].get()));
 				break;
 
 			case PRESENT:
-				this->m_static.push_back(std::make_unique<Present>(PRESENT, location, m_textures[PRESENT_TEXTURE]));
+				m_static.push_back(
+					std::make_unique<Present>(PRESENT, location, m_textures[PRESENT_TEXTURE].get()));
 				break;
 
 			/*
@@ -105,13 +113,7 @@ void Map::SetObjects()
 //=============================================================================
 void Map::Draw(sf::RenderWindow &main_window)
 {
-	// Background
-	float scale_height = float(m_height) * float(50) / float(HEIGHT),
-		  scale_width  = float(m_width)  * float(50) / float(WIDTH);
-	// scales the background so it will fit nicely in the game
-	StaticObject background(NULL, sf::Vector2f(1, 0), m_textures[BACKGROUND_TEXTURE]);
-	background.get_sprite().scale(scale_width, scale_height);
-	background.Draw(main_window);
+	main_window.draw(m_background);
 
 
 	// All the other objects
@@ -124,7 +126,6 @@ void Map::Draw(sf::RenderWindow &main_window)
 		m_dynamic[i]->Draw(main_window);
 	}
 
-	//m_graph->Draw(main_window);
 }
 //=============================================================================
 
@@ -132,57 +133,44 @@ void Map::Draw(sf::RenderWindow &main_window)
 //=============================================================================
 void Map::LoadTextures()
 {
-	auto texture_ptr = std::make_shared<sf::Texture>();
-	texture_ptr->loadFromFile("ladder.png");
-	m_textures.push_back(texture_ptr);
+	m_textures.push_back(std::make_unique<sf::Texture>());
+	m_textures[0]->loadFromFile("ladder.png");
 
-	texture_ptr = std::make_shared<sf::Texture>();
-	texture_ptr->loadFromFile("ground.png");
-	m_textures.push_back(texture_ptr);
+	m_textures.push_back(std::make_unique<sf::Texture>());
+	m_textures[1]->loadFromFile("ground.png");
 
-	texture_ptr = std::make_shared<sf::Texture>();
-	texture_ptr->loadFromFile("player.png");
-	m_textures.push_back(texture_ptr);
+	m_textures.push_back(std::make_unique<sf::Texture>());
+	m_textures[2]->loadFromFile("player.png");
 
-	texture_ptr = std::make_shared<sf::Texture>();
-	texture_ptr->loadFromFile("rope.png");
-	m_textures.push_back(texture_ptr);
+	m_textures.push_back(std::make_unique<sf::Texture>());
+	m_textures[3]->loadFromFile("rope.png");
 
-	texture_ptr = std::make_shared<sf::Texture>();
-	texture_ptr->loadFromFile("enemy.png");
-	m_textures.push_back(texture_ptr);
+	m_textures.push_back(std::make_unique<sf::Texture>());
+	m_textures[4]->loadFromFile("enemy.png");
 
-	texture_ptr = std::make_shared<sf::Texture>();
-	texture_ptr->loadFromFile("coin.png");
-	m_textures.push_back(texture_ptr);
+	m_textures.push_back(std::make_unique<sf::Texture>());
+	m_textures[5]->loadFromFile("coin.png");
 
-	texture_ptr = std::make_shared<sf::Texture>();
-	texture_ptr->loadFromFile("wall.png");
-	m_textures.push_back(texture_ptr);
+	m_textures.push_back(std::make_unique<sf::Texture>());
+	m_textures[6]->loadFromFile("wall.png");
 
-	texture_ptr = std::make_shared<sf::Texture>();
-	texture_ptr->loadFromFile("background.png");
-	m_textures.push_back(texture_ptr);
+	m_textures.push_back(std::make_unique<sf::Texture>());
+	m_textures[7]->loadFromFile("background.png");
 
-	texture_ptr = std::make_shared<sf::Texture>();
-	texture_ptr->loadFromFile("ground with signs.png");
-	m_textures.push_back(texture_ptr);
+	m_textures.push_back(std::make_unique<sf::Texture>());
+	m_textures[8]->loadFromFile("ground with signs.png");
 
-	texture_ptr = std::make_shared<sf::Texture>();
-	texture_ptr->loadFromFile("present.png");
-	m_textures.push_back(texture_ptr);
+	m_textures.push_back(std::make_unique<sf::Texture>());
+	m_textures[9]->loadFromFile("present.png");
 
-	texture_ptr = std::make_shared<sf::Texture>();
-	texture_ptr->loadFromFile("maake.png");
-	m_textures.push_back(texture_ptr);
+	m_textures.push_back(std::make_unique<sf::Texture>());
+	m_textures[10]->loadFromFile("maake.png");
 
-	texture_ptr = std::make_shared<sf::Texture>();
-	texture_ptr->loadFromFile("zevel.png");
-	m_textures.push_back(texture_ptr);
+	m_textures.push_back(std::make_unique<sf::Texture>());
+	m_textures[11]->loadFromFile("zevel.png");
 
-	texture_ptr = std::make_shared<sf::Texture>();
-	texture_ptr->loadFromFile("shop.png");
-	m_textures.push_back(texture_ptr);
+	m_textures.push_back(std::make_unique<sf::Texture>());
+	m_textures[12]->loadFromFile("shop.png");
 }
 //=============================================================================
 
@@ -205,6 +193,7 @@ Player* Map::get_player() // later change to Player as a return value
 	}
 }
 //=============================================================================
+
 
 // gets us vector of enemies ptr
 //=============================================================================
@@ -293,7 +282,8 @@ void Map::DeletePresent(Present& present)
 	case 3:
 		std::shared_ptr<DynamicObject> dn_ptr;
 		sf::Vector2f location = { 5,5 }; // needs to be a random location
-		m_dynamic.push_back(std::make_unique<Enemy>(ENEMY, location, m_textures[ENEMY_TEXTURE]));
+		m_dynamic.push_back(std::make_unique<Enemy>(ENEMY, location, m_textures[ENEMY_TEXTURE].get()));
+		m_dynamic.push_back(std::make_unique<Enemy>(ENEMY, location, m_textures[ENEMY_TEXTURE].get()));
 		//m_music->BadPresentSound();
 		break;
 	}
@@ -308,13 +298,17 @@ void Map::check_collision(Object & object)
 	//in for loop to not do read access violoation
 	for(int i=0; i <m_static.size(); ++i)
 	{
-		if(m_static[i]->get_sprite().getGlobalBounds().intersects(object.get_sprite().getGlobalBounds()))
+		if(m_static[i]->
+			get_sprite().getGlobalBounds().intersects(object.get_sprite().getGlobalBounds()))
+
 			m_static[i]->handle_collision(object);
 	}
 
 	for (int i = 0; i < m_dynamic.size(); ++i)
 	{
-		if (m_dynamic[i]->get_sprite().getGlobalBounds().intersects(object.get_sprite().getGlobalBounds()))
+		if (m_dynamic[i]->
+			get_sprite().getGlobalBounds().intersects(object.get_sprite().getGlobalBounds()))
+
 			m_dynamic[i]->handle_collision(object);
 	}
 }
@@ -394,3 +388,13 @@ void Map::reset_positions()
 }
 //=============================================================================
 
+
+void Map::LoadBackground()
+{
+	float scale_height = float(HEIGHT) / 900.f,
+		scale_width = float(WIDTH) / 1200.f;
+
+	m_background.setTexture(*(m_textures[BACKGROUND_TEXTURE].get()));
+	m_background.setPosition(sf::Vector2f(0, 50));
+	m_background.scale(scale_width, scale_height);
+}

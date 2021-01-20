@@ -2,7 +2,7 @@
 
 
 //=============================================================================
-Present::Present(char Name, sf::Vector2f locaiton, std::shared_ptr<sf::Texture> texture)
+Present::Present(char Name, sf::Vector2f locaiton, sf::Texture * texture)
 	:StaticObject(Name, locaiton, texture)
 {
 	m_type = rand() % 4;

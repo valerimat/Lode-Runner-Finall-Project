@@ -37,10 +37,12 @@ void EnemyController::MoveEnemies(float dt)
 			continue;
 		}
 
+		if (!m_enemies[i]->IsInHole())
 		MoveEnemy(dt, *m_enemies[i]);
 
 		before_g = m_enemies[i]->get_location();
 
+		if (!m_enemies[i]->IsInHole())
 		ApplyGravity(dt, *m_enemies[i]);
 		
 		after_g = m_enemies[i]->get_location();

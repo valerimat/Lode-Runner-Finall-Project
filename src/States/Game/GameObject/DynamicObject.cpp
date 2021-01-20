@@ -5,14 +5,14 @@
 #include "Enemy.h"
 #include "MacroSettings.h"
 
-DynamicObject::DynamicObject(char name, sf::Vector2f locaiton, std::shared_ptr<sf::Texture> texture) :
+DynamicObject::DynamicObject(char name, sf::Vector2f locaiton, sf::Texture* texture) :
 	Object(name, locaiton)
 {
 	set_sprite(texture);
 }
 //-----------------------------------------------------------------------------
 
-void DynamicObject::set_sprite(std::shared_ptr<sf::Texture> texture)
+void DynamicObject::set_sprite(sf::Texture* texture)
 {
 	
 	m_sprite.setTexture(*texture);
@@ -155,6 +155,20 @@ void DynamicObject::move_back(RigidBodyObject &object)
 	m_sprite.setPosition(loc);
 }
 //-----------------------------------------------------------------------------
+void DynamicObject::move_back(Enemy& object)
+{
+	sf::Vector2f loc = m_sprite.getPosition();
+	
+	
+	loc += last_move;
+	sf::FloatRect rect;
+	m_sprite.getGlobalBounds().intersects(object.get_sprite().getGlobalBounds(), rect);
+	loc += sf::Vector2f(0, -rect.height);
+	
+	m_sprite.setPosition(loc);
+}
+//-----------------------------------------------------------------------------
+
 
 void DynamicObject::on_pole(sf::Vector2f location)
 {

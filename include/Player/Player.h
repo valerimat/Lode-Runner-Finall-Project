@@ -18,7 +18,7 @@ class Player : public DynamicObject
 public:
 	
 	using DynamicObject::DynamicObject;
-	Player(char name, sf::Vector2f locaiton, std::shared_ptr<sf::Texture> texture);
+	Player(char name, sf::Vector2f locaiton, sf::Texture * texture);
 	//Lives* get_lives();
 
 	void DeleteLeft();

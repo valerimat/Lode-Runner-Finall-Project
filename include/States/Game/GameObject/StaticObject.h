@@ -14,9 +14,9 @@ class StaticObject : public Object
 {
 public:
 	using Object::Object;
-	StaticObject(char Name, sf::Vector2f locaiton, std::shared_ptr<sf::Texture> texture);
+	StaticObject(char Name, sf::Vector2f locaiton,sf::Texture *texture);
 	void Draw(sf::RenderWindow &window);
-	void set_sprite(std::shared_ptr<sf::Texture> texture);
+	void set_sprite(sf::Texture * texture);
 	bool in_bounds(sf::Vector2f &location);
 	bool in_bounds(sf::RectangleShape& rect);
 

@@ -56,6 +56,9 @@ public:
 	void DeletePresent(Present & present);
 	void reset_positions();
 private:
+
+	void LoadBackground();
+
 	int m_width;
 	int m_height;
 	int m_timer;
@@ -70,8 +73,8 @@ private:
 	std::vector<StaticObject*> m_holes_to_close;
 	std::vector<float> holes_time;
 
-	std::vector<std::shared_ptr <sf::Texture>>  m_textures;
-
+	std::vector<std::unique_ptr<sf::Texture>>  m_textures;
+	sf::Sprite  m_background;
 	std::vector<std::unique_ptr<StaticObject>>  m_static;
 	std::vector<std::unique_ptr<DynamicObject>> m_dynamic;
 };

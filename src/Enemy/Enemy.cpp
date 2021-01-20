@@ -13,7 +13,7 @@
 #include <random>
 
 //Ctors
-Enemy::Enemy(char name, sf::Vector2f locaiton, std::shared_ptr<sf::Texture> texture) :
+Enemy::Enemy(char name, sf::Vector2f locaiton, sf::Texture* texture) :
 	DynamicObject(name, locaiton, texture)
 {
 	on_create();
@@ -59,7 +59,10 @@ sf::Vector2f Enemy::GetCenter()
 {
 	sf::Vector2f our_loc = get_location();
 
-	sf::Vector2f center_offset(MacroSettings::GetSettings().GetScaleWidth()*50 / 2, MacroSettings::GetSettings().GetScaleWidth()*50 / 2);
+	sf::Vector2f center_offset(
+		MacroSettings::GetSettings().GetScaleWidth()*50 / 2,
+		MacroSettings::GetSettings().GetScaleWidth()*50 / 2);
+
 	our_loc += center_offset;
 
 	return our_loc;
@@ -95,7 +98,6 @@ void Enemy::ResetPath()
 {
 	waypoints.clear();
 	waypoints = algo->CalcPath(m_map->get_graph(), get_location(), m_map->get_player()->get_location());
-	
 }
 //-----------------------------------------------------------------------------
 
@@ -126,24 +128,17 @@ void Enemy::move(float dt)
 	{
 	case NextStep::LEFT:
 		update_location(NextStep::LEFT, dt);
-		//std::cout << "left" << std::endl;
 		break;
 	case NextStep::RIGHT:
 		update_location(NextStep::RIGHT, dt);
-		//std::cout << "RIGHT" << std::endl;
 		break;
 	case NextStep::UP:
 		update_location(NextStep::UP, dt);
-		//std::cout << "up" << std::endl;
 		break;
 	case NextStep::DOWN:
 		update_location(NextStep::DOWN, dt);
-		//std::cout << "down" << std::endl;
 		break;
 	case NextStep::NONE:
-		//std::cout << "none" << std::endl;
-		//reset_path();
-		//set_next_waypoint();
 		break;
 	default:
 		break;
@@ -299,8 +294,16 @@ void Enemy::handle_collision(RigidBodyObject& object)
 		if (inter.height >= 3 && inter.width >= 3)
 		{
 			move_back(object);
+			if (object.IsHole())
+				m_in_hole = true;
+			else
+				m_in_hole = false;
 		}
 	//reset_path();
 }
 //-----------------------------------------------------------------------------
 
+bool Enemy::IsInHole()
+{
+	return m_in_hole;
+}
