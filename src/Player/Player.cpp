@@ -8,8 +8,9 @@
 #include "Pole.h"
 #include "Map.h"
 #include "Music.h"
+#include "MacroSettings.h"	
 
-// c-tor
+//Ctor:
 Player::Player(char name, sf::Vector2f locaiton, sf::Texture * texture) :
 	DynamicObject(name, locaiton, texture)
 {
@@ -76,19 +77,23 @@ void Player::handle_collision(Enemy& object)
 {
 	sf::FloatRect inter;
 	if (get_sprite().getGlobalBounds().intersects(object.get_sprite().getGlobalBounds(), inter))
-		if (inter.width >= 5 && inter.height >= 5)
 		{
-			if (object.is_in_hole())
+
+			//so we walk on him
+			if (object.IsInHole())
 			{
-				if (inter.height >= 7)
+				if (inter.height >= 4 && inter.width >= 4)
 				move_back(object);
 			}
 			else
 			{
-				m_map->reset_positions();
-				std::cout << "collision";
-				m_lives.dec_lives();
-				Music::get_music().hurt_sound();
+
+				if (inter.width >= 8 && inter.height >= 8)
+				{
+					m_map->reset_positions();
+					m_lives.DecLives();
+					Music::GetMusic().HurtSound();
+				}
 			}
 		}
 	
@@ -110,9 +115,8 @@ void Player::handle_collision(DynamicObject& object)
 
 void Player::handle_collision(Present& object)
 {
-	std::cout << object.get_type() << std::endl;
-	m_map->delete_present(object);
-	Music::get_music().drinking_sound();
+	m_map->DeletePresent(object);
+	Music::GetMusic().DrinkingSound();
 }
 //-----------------------------------------------------------------------------
 
@@ -126,25 +130,18 @@ void Player::handle_collision(Pole& object)
 
 void Player::handle_collision(Ladder& object)
 {
-	sf::FloatRect inter;
-	if (get_sprite().getGlobalBounds().intersects(object.get_sprite().getGlobalBounds(), inter))
-		if (inter.width >= 5)
-    {
-		m_gravity = false;
-		if (!m_standing)
-			Music::get_music().ladder_sound();
-    }
+
+	CollideWithLadder(object);
+
+	if (!m_standing)
+		Music::GetMusic().LadderSound();
+  
 }
 //-----------------------------------------------------------------------------
 
 void Player::handle_collision(RigidBodyObject& object)
 {
-	sf::FloatRect inter;
-	if (get_sprite().getGlobalBounds().intersects(object.get_sprite().getGlobalBounds(), inter))
-		if (inter.height >= 4 && inter.width >= 4)
-		{
-			move_back(object);
-		}
+	CollideWithRigidBody(object);
 
 	if(!m_standing)
 		Music::get_music().running_sound();
@@ -159,13 +156,13 @@ void Player::set_map(Map* map)
 
 void Player::delete_left()
 {
-	m_map->make_hole(get_location() + sf::Vector2f(-10, 45));
+	m_map->make_hole(BottomLeft());
 }
 //-----------------------------------------------------------------------------
 
 void Player::delete_right()
 {
-	m_map->make_hole(get_location() + sf::Vector2f(50, 45));
+	m_map->make_hole(BottomRight());
 }
 //-----------------------------------------------------------------------------
 
@@ -180,3 +177,21 @@ void Player::add_lives()
 	return m_lives.add_lives();
 }
 //-----------------------------------------------------------------------------
+
+sf::Vector2f Player::BottomLeft()
+{
+	sf::Vector2f our_loc = get_location();
+	float offset_y = MacroSettings::GetSettings().GetSizeOfTile() + 2;
+	float offset_x = MacroSettings::GetSettings().GetSizeOfTile() / 2; // so we wont get our tile
+	return our_loc + sf::Vector2f(-offset_x, offset_y);
+}
+
+sf::Vector2f Player::BottomRight()
+{
+	sf::Vector2f our_loc = get_location();
+	float offset_y = MacroSettings::GetSettings().GetSizeOfTile() + 2;
+	float offset_x = (MacroSettings::GetSettings().GetSizeOfTile() / 2)+
+		             (MacroSettings::GetSettings().GetSizeOfTile()); // so we wont get our tile
+
+	return our_loc + sf::Vector2f(offset_x, offset_y);
+}

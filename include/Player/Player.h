@@ -17,16 +17,22 @@ class Player : public DynamicObject
 {
 public:
 	
+	//Ctors:
 	using DynamicObject::DynamicObject;
 	Player(char name, sf::Vector2f locaiton, sf::Texture * texture);
-	//Lives* get_lives();
+	void on_create()override;
 
-	void delete_left();
-	void delete_right();
+	//Setters:
+	void SetMap(Map* map);
 
-	//PlayerController * get_controller();
+
+	//For Digging:
+	void DeleteLeft();
+	void DeleteRight();
+	
+	//Move:
 	void Move(sf::Keyboard::Key key,float dt);
-	void set_map(Map * map);
+	
 
 	//Handle collision:
 	void handle_collision(RigidBodyObject& object) override;
@@ -40,13 +46,19 @@ public:
     void handle_collision(Player& object) override;
 	void handle_collision(Enemy& object) override;
 
-	
-	void on_create()override;
-	int  get_lives();
-	void add_lives();
+
+	//For lives managment:
+	int GetLives();
+	void AddLives();
+
 
 private:
 	
+	//for diggind:
+	sf::Vector2f BottomRight();
+	sf::Vector2f BottomLeft();
+
+	//Mebers:
 	Map* m_map;
 	Lives m_lives;
 	bool m_standing;

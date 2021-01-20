@@ -283,7 +283,6 @@ void Map::delete_present(Present& present)
 		std::shared_ptr<DynamicObject> dn_ptr;
 		sf::Vector2f location = { 5,5 }; // needs to be a random location
 		m_dynamic.push_back(std::make_unique<Enemy>(ENEMY, location, m_textures[ENEMY_TEXTURE].get()));
-		m_dynamic.push_back(std::make_unique<Enemy>(ENEMY, location, m_textures[ENEMY_TEXTURE].get()));
 		//m_music->BadPresentSound();
 		break;
 	}
@@ -323,8 +322,9 @@ void Map::make_hole(sf::Vector2f location)
 		{
 			if (m_static[i]->make_hole())
 			{
-				m_holes.push_back(m_static[i].get());
-				holes_time.push_back(Clock::get_clock().get_passed_seconds_float());
+
+				m_holes.push_back(dynamic_cast<RigidBodyObject*>(m_static[i].get()));
+				holes_time.push_back(Clock::GetClock().GetPassedSecondsFloat());
 			}
 		}
 	}
@@ -353,15 +353,14 @@ void Map::close_holes()
 		sf::Vector2f curr_scale = m_holes_to_close[i]->get_sprite().getScale();
 		if (abs(curr_scale.y - (MacroSettings::get_settings().get_scale_height())) < 0.01)
 		{
-			m_holes_to_close[i]->SetHole( false);
+			m_holes_to_close[i]->SetHole(false);
 			m_holes_to_close.erase(m_holes_to_close.begin() + i);
 			holes_time.erase(holes_time.begin() + i);
 			continue;
 		}
 
-		m_holes_to_close[i]->get_sprite().move(sf::Vector2f(0, -(MacroSettings::get_settings().get_size_of_tile() * 0.125)));
-		m_holes_to_close[i]->get_sprite().setScale(curr_scale + sf::Vector2f(0, MacroSettings::get_settings().get_scale_height() / 8));
-		m_holes_to_close[i]->get_sprite().setColor(sf::Color(255, 255, 255, 255));
+		m_holes_to_close[i]->RestOriginal();
+		check_dynamic_inside(*m_holes_to_close[i]);
 	}
 }
 //=============================================================================
@@ -397,4 +396,27 @@ void Map::load_background()
 	m_background.setTexture(*(m_textures[BACKGROUND_TEXTURE].get()));
 	m_background.setPosition(sf::Vector2f(0, 50));
 	m_background.scale(scale_width, scale_height);
+}
+
+
+void Map::check_dynamic_inside(RigidBodyObject& rigidBodyObject)
+{
+	for (int i = 0; i < m_dynamic.size(); ++i)
+	{
+		if (m_dynamic[i]->
+			get_sprite().getGlobalBounds().intersects(rigidBodyObject.get_sprite().getGlobalBounds()))
+		{
+			if (m_dynamic[i]->IsInHole())
+			{
+				m_dynamic[i]->SetLocation(
+					rigidBodyObject.get_location()
+					+ 
+					sf::Vector2f(0,- MacroSettings::GetSettings().GetSizeOfTile())
+					);
+
+				m_dynamic[i]->SetInHole(false);
+			}
+		}
+	}
+	
 }

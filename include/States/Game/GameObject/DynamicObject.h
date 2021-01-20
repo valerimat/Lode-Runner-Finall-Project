@@ -55,12 +55,23 @@ public:
 
 	void reset_position();
 
+	void SetInHole(bool IsInHole);
+
+	//for Holes:
+	bool IsInHole();
+
 protected:
 
+	//hellping collision:
+	void CollideWithRigidBody(RigidBodyObject& object);
+	void CollideWithLadder(Ladder& ladder);
+
 	//on create function
-	
+	void GoInsideHole(sf::Vector2f  location);
+
 	sf::Vector2f m_base_location;
 	sf::Vector2f last_move;
 
 	bool m_gravity;
+	bool m_in_hole = false;
 };

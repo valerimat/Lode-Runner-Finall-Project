@@ -35,3 +35,8 @@ sf::Sprite& Object::get_sprite()
 {
 	return m_sprite;
 }
+
+void Object::SetLocation(sf::Vector2f  location)
+{
+	m_sprite.setPosition(location);
+}

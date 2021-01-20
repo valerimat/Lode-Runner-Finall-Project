@@ -4,6 +4,7 @@
 //==============================================================================
 bool RigidBodyObject::make_hole() 
 {
+	origina_pos = m_sprite.getPosition();
 	//edges
 	if (get_location().x != 0
 		&&
@@ -50,3 +51,17 @@ bool RigidBodyObject::IsHole()
 }
 //=============================================================================
 
+//=============================================================================
+void RigidBodyObject::RestOriginal()
+{
+	m_sprite.setPosition(origina_pos);
+	m_sprite.setScale(sf::Vector2f(MacroSettings::GetSettings().GetScaleWidth(), MacroSettings::GetSettings().GetScaleHeight()));
+}
+//=============================================================================
+
+//==============================================================================
+void RigidBodyObject::SetHole(bool boolean)
+{
+	m_hole = boolean;
+}
+//==============================================================================

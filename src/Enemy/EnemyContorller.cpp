@@ -95,8 +95,8 @@ void EnemyController::check_stuck()
 	{
 		if (prev_loc[i] == curr_loc[i])
 		{
-			m_enemies[i]->dont_move();
-			m_enemies[i]->up_stuck();
+			//m_enemies[i]->DontMove();
+			m_enemies[i]->UpStuck();
 
 			if (m_enemies[i]->stuck())
 			{
