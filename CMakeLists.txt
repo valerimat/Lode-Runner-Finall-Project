@@ -9,7 +9,7 @@ if (MSVC)
     add_compile_options (/permissive-)
 endif ()
 
-add_executable (LodeRunner "")
+add_executable (LodeRunner WIN32)
 
 #==========================================================
 add_subdirectory (include)

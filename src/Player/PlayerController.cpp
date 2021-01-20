@@ -1,11 +1,10 @@
 #include "PlayerController.h"
-#include "Player.h"
 #include "Map.h"
 
 
 void PlayerController::InitController()
 {
-	m_player = m_map->get_player();
+	m_player = (m_map->get_player());
 	m_player->SetMap(m_map);
 }
 //-----------------------------------------------------------------------------
@@ -71,3 +70,4 @@ void PlayerController::check_key_press(sf::Keyboard::Key& pressed)
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::X))
 		pressed = sf::Keyboard::X;
 }
+

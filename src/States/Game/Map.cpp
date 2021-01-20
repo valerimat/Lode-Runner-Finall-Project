@@ -7,6 +7,9 @@
 #include "Clock.h"
 #include "Score.h"
 #include "Music.h"
+#include "Music.h"
+
+
 
 // c-tor of map
 //=============================================================================
@@ -34,12 +37,6 @@ Graph & Map::get_graph()
 void Map::SetObjects()
 {
 
-	std::shared_ptr<StaticObject> st_ptr;
-	std::shared_ptr<DynamicObject> dn_ptr;
-	std::shared_ptr<Consumables> coin_ptr;
-	
-	int smrt = 0;
-
 	for (int i = 0; i < m_height; ++i)
 	{
 		for (int j = 0; j < m_width; ++j)
@@ -49,38 +46,31 @@ void Map::SetObjects()
 			switch(GetChar(i,j))
 			{
 			case PLAYER: 
-				dn_ptr = std::make_shared<Player>(PLAYER, location, m_textures[PLAYER_TEXTURE]);
-				m_dynamic.push_back(dn_ptr);
+				this->m_dynamic.push_back(std::make_unique<Player>(PLAYER, location, m_textures[PLAYER_TEXTURE]));
 				break;
 
 			case ENEMY:
-				dn_ptr = std::make_shared<Enemy>(ENEMY, location, m_textures[ENEMY_TEXTURE]);
-				m_dynamic.push_back(dn_ptr);
+				this->m_dynamic.push_back(std::make_unique<Enemy>(ENEMY, location, m_textures[ENEMY_TEXTURE]));
 				break;
 
 			case GROUND:
-				st_ptr = std::make_shared<RigidBodyObject>(GROUND, location, m_textures[GROUND_TEXTURE]);
-				m_static.push_back(st_ptr);
+				this->m_static.push_back(std::make_unique<RigidBodyObject>(GROUND, location, m_textures[GROUND_TEXTURE]));
 				break;
 
 			case LADDER:
-				st_ptr = std::make_shared<Ladder>(LADDER, location, m_textures[LADDER_TEXTURE]);
-				m_static.push_back(st_ptr);
+				this->m_static.push_back(std::make_unique<Ladder>(LADDER, location, m_textures[LADDER_TEXTURE]));
 				break;
 
 			case COIN:
-				st_ptr = std::make_shared<Coin>(COIN, location, m_textures[COIN_TEXTURE]);
-				m_static.push_back(st_ptr);
+				this->m_static.push_back(std::make_unique<Coin>(COIN, location, m_textures[COIN_TEXTURE]));
 				break;
 
 			case POLE:
-				st_ptr = std::make_shared<Pole>(POLE, location, m_textures[POLE_TEXTURE]);
-				m_static.push_back(st_ptr);
+				this->m_static.push_back(std::make_unique<Pole>(POLE, location, m_textures[POLE_TEXTURE]));
 				break;
 
 			case PRESENT:
-				st_ptr = std::make_shared<Present>(PRESENT, location, m_textures[PRESENT_TEXTURE]);
-				m_static.push_back(st_ptr);
+				this->m_static.push_back(std::make_unique<Present>(PRESENT, location, m_textures[PRESENT_TEXTURE]));
 				break;
 
 			/*
@@ -211,9 +201,8 @@ Player* Map::get_player() // later change to Player as a return value
 	for (int i = 0; i < m_dynamic.size(); i++)
 	{
 		if (m_dynamic[i]->get_name() == PLAYER)
-			return dynamic_cast<Player*>(&(*m_dynamic[i]));
+			return (dynamic_cast<Player*>(m_dynamic[i].get()));
 	}
-	return NULL;
 }
 //=============================================================================
 
@@ -224,13 +213,13 @@ std::vector<Enemy*> Map::GetEnemies()
 	int index = 0;
 	std::vector<Enemy*> temp;
 	DynamicObject* DinamicPtr;
-	std::shared_ptr< DynamicObject> d_ptr;
+
 
 	while (index < m_dynamic.size())
 	{
 		if (m_dynamic[index]->get_name() == ENEMY)
 		{
-			temp.push_back(dynamic_cast<Enemy*>(&(*m_dynamic[index])));
+			temp.push_back(dynamic_cast<Enemy*>(m_dynamic[index].get()));
 		}
 		++index;
 	}
@@ -238,12 +227,6 @@ std::vector<Enemy*> Map::GetEnemies()
 }
 //=============================================================================
 
-//=============================================================================
-std::vector<std::shared_ptr<StaticObject>>* Map::GetStatic()
-{
-	return  &m_static;
-}
-//=============================================================================
 
 //=============================================================================
 int Map::GetWidth()
@@ -300,7 +283,7 @@ void Map::DeletePresent(Present& present)
 		break;
 	case 1:
 		std::cout << "lives added\n";
-		this->get_player()->AddLives();
+		get_player()->AddLives();
 		Music::GetMusic().DrinkingSound();
 		break;
 	case 2:
@@ -310,8 +293,7 @@ void Map::DeletePresent(Present& present)
 	case 3:
 		std::shared_ptr<DynamicObject> dn_ptr;
 		sf::Vector2f location = { 5,5 }; // needs to be a random location
-		dn_ptr = std::make_shared<Enemy>(ENEMY, location, m_textures[ENEMY_TEXTURE]);
-		m_dynamic.push_back(dn_ptr);
+		m_dynamic.push_back(std::make_unique<Enemy>(ENEMY, location, m_textures[ENEMY_TEXTURE]));
 		//m_music->BadPresentSound();
 		break;
 	}
@@ -330,10 +312,10 @@ void Map::check_collision(Object & object)
 			m_static[i]->handle_collision(object);
 	}
 
-	for (auto d_object : m_dynamic)
+	for (int i = 0; i < m_dynamic.size(); ++i)
 	{
-		if (d_object->get_sprite().getGlobalBounds().intersects(object.get_sprite().getGlobalBounds()))
-			d_object->handle_collision(object);
+		if (m_dynamic[i]->get_sprite().getGlobalBounds().intersects(object.get_sprite().getGlobalBounds()))
+			m_dynamic[i]->handle_collision(object);
 	}
 }
 //=============================================================================
@@ -347,7 +329,7 @@ void Map::make_hole(sf::Vector2f location)
 		{
 			if (m_static[i]->make_hole())
 			{
-				m_holes.push_back(m_static[i]);
+				m_holes.push_back(m_static[i].get());
 				holes_time.push_back(Clock::GetClock().GetPassedSecondsFloat());
 			}
 		}

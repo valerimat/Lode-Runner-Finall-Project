@@ -2,7 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include "MovementController.h"
 #include "Music.h"
-class Player;
+#include "Player.h"
 class Map;
 
 class PlayerController : public MovementController
@@ -20,5 +20,5 @@ public:
 
 private:
 	bool m_falling = false;
-	Player* m_player;
+	Player * m_player;
 };

@@ -14,9 +14,10 @@ class DynamicObject : public Object
 public:
 	//Ctors:
 	using Object::Object;
+	~DynamicObject()override = default;
 
 	DynamicObject(char name, sf::Vector2f locaiton, std::shared_ptr<sf::Texture> texture);
-
+	DynamicObject(const DynamicObject&) = delete;
 	//Draw:
 	void Draw(sf::RenderWindow& window);
 

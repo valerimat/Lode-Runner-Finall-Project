@@ -45,7 +45,7 @@ private:
 	int level = 0;
 //Score &m_score = Score::GetScore();
 	MapData m_maps;
-	Map m_curr_map;
+	Map * m_curr_map;
 	Hud  m_hud;
 
 	std::shared_ptr <EnemyController> m_enemy_cont;

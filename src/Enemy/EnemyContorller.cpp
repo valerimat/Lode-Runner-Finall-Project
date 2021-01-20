@@ -2,7 +2,6 @@
 #include "OneSide.h"
 #include "Map.h"
 #include "Enemy.h"
-static int Stuck = 0;
 
 void EnemyController::InitController()
 {
@@ -14,6 +13,7 @@ void EnemyController::InitController()
 		enemy->SetMap(m_map);
 		enemy->SetWaypoint();
 	}
+
 }
 //-----------------------------------------------------------------------------
 
@@ -37,11 +37,11 @@ void EnemyController::MoveEnemies(float dt)
 			continue;
 		}
 
-		MoveEnemy(dt, m_enemies[i]);
+		MoveEnemy(dt, *m_enemies[i]);
 
 		before_g = m_enemies[i]->get_location();
 
-		ApplyGravity(dt, m_enemies[i]);
+		ApplyGravity(dt, *m_enemies[i]);
 		
 		after_g = m_enemies[i]->get_location();
 
@@ -110,31 +110,31 @@ void EnemyController::CheckStuck()
 }
 //-----------------------------------------------------------------------------
 
-void EnemyController::MoveEnemy(float dt, Enemy * enemy)
+void EnemyController::MoveEnemy(float dt, Enemy & enemy)
 {
 	SetPreviousLocations();
 
 	
 
-	if (!enemy->m_falling)
+	if (!enemy.m_falling)
 	{
-		enemy->move(dt);
+		enemy.move(dt);
 	}
 
 	//reset gravity bool
-	enemy->turn_gravity_on();
+	enemy.turn_gravity_on();
 
-	m_map->check_collision(*enemy);
+	m_map->check_collision(enemy);
 }
 //-----------------------------------------------------------------------------
 
-void EnemyController::ApplyGravity(float dt, Enemy* enemy)
+void EnemyController::ApplyGravity(float dt, Enemy& enemy)
 {
 	//do graviry do its job
-	enemy->gravity(dt);
+	enemy.gravity(dt);
 
 	//check collisions again
-	m_map->check_collision(*enemy);
+	m_map->check_collision(enemy);
 }
 //-----------------------------------------------------------------------------
 

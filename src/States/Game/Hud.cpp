@@ -11,8 +11,8 @@ Hud::Hud()
 
 // c-tor
 //=============================================================================
-Hud::Hud(Player* player, int num_of_level, int *time) :
-	m_player(player), m_number_of_level(num_of_level+1), m_time(time)
+Hud::Hud(int lives,int num_of_level, int *time) :
+	m_lives(lives), m_number_of_level(num_of_level+1), m_time(time)
 {
 	m_clock = &Clock::GetClock();
 	m_score = &Score::GetScore();
@@ -26,7 +26,6 @@ Hud::Hud(Player* player, int num_of_level, int *time) :
 void Hud::Draw(sf::RenderWindow& window)
 {
 	SetScore();
-	SetLives();
 
 	DrawScore(window);
 	DrawLives(window);
@@ -47,8 +46,8 @@ void Hud::up_level()
 void Hud::DrawLives(sf::RenderWindow& window)
 {
 
-	int i = lives;
-	if (lives < 0)
+	int i = m_lives;
+	if (m_lives < 0)
 		return;
 
 	sf::Sprite score_sprt;
@@ -57,7 +56,7 @@ void Hud::DrawLives(sf::RenderWindow& window)
 	score_sprt.scale(sf::Vector2f(0.8,0.8));
 
 	sf::Sprite three;
-	three.setTexture(*m_textures[lives]);
+	three.setTexture(*m_textures[m_lives]);
 	three.setPosition(sf::Vector2f(50, 0));
 	three.scale(sf::Vector2f(0.8, 0.8));
 
@@ -197,9 +196,9 @@ void Hud::SetScore()
 
 // sets the lives
 //=============================================================================
-void Hud::SetLives() 
+void Hud::SetLives(int lives) 
 {
-	lives = m_player->GetLives();
+	m_lives = lives;
 }
 //=============================================================================
 
