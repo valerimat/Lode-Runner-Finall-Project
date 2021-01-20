@@ -28,42 +28,42 @@ public:
 	};
 	
 	// map functions
-	void LoadTextures();
+	void load_textures();
 	void Draw(sf::RenderWindow& main_window);
 
 	// getters
 	Player* get_player();
-	std::vector<Enemy*> GetEnemies();
-	int GetHeight();
-	int GetWidth();
+	std::vector<Enemy*> get_enemies();
+	int get_height();
+	int get_width();
 	Graph & get_graph();
 
-	int *GetTimer();
+	int *get_timer();
 
 	void make_hole(sf::Vector2f location);
 	void check_holes();
 	void close_holes();
 
 	// setters
-	void SetObjects();
+	void set_objects();
 
 	// info
 	void check_collision(Object& object);
 	bool all_coins_collected();
 
 	// action
-	void DeleteCoin(Coin & coin);
-	void DeletePresent(Present & present);
+	void delete_coin(Coin & coin);
+	void delete_present(Present & present);
 	void reset_positions();
 private:
 
-	void LoadBackground();
+	void load_background();
 
 	int m_width;
 	int m_height;
 	int m_timer;
 
-	char GetChar(int i, int j);
+	char get_char(int i, int j);
 
 	Graph * m_graph;
 

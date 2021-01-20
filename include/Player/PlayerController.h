@@ -12,9 +12,9 @@ public:
 	//
 	using MovementController::MovementController;
 	//
-	void InitController();
+	void init_controller();
 	//PlayerController(Map &map);
-	void MovePlayer( float dt);
+	void move_player( float dt);
 	//void physics_player(sf::Keyboard::Key key, Map& map, std::vector<char> &collision)
 	void check_key_press(sf::Keyboard::Key& pressed);
 

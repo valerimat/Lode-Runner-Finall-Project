@@ -21,12 +21,13 @@ public:
 	Player(char name, sf::Vector2f locaiton, sf::Texture * texture);
 	//Lives* get_lives();
 
-	void DeleteLeft();
-	void DeleteRight();
+	void delete_left();
+	void delete_right();
 
 	//PlayerController * get_controller();
 	void Move(sf::Keyboard::Key key,float dt);
-	void SetMap(Map * map);
+	void set_map(Map * map);
+
 	//Handle collision:
 	void handle_collision(RigidBodyObject& object) override;
 	void handle_collision(Pole& object) override;
@@ -41,8 +42,8 @@ public:
 
 	
 	void on_create()override;
-	int GetLives();
-	void AddLives();
+	int  get_lives();
+	void add_lives();
 
 private:
 	

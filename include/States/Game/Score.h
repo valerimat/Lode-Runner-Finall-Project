@@ -5,8 +5,8 @@ class Score
 public:
 	static Score& GetScore() {static Score s_score; return s_score;};
 
-	int  GetPoints();
-	void IncreasePoints();
+	int  get_points();
+	void increase_points();
 	void reset_score();
 	void advance_level();
 

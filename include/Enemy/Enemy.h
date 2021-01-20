@@ -17,15 +17,15 @@ public:
 	using DynamicObject::DynamicObject;
 	Enemy(char name, sf::Vector2f locaiton, sf::Texture* texture);
 
-	void SetMap(Map* map);
+	void set_map(Map* map);
 	//Setters:
-	virtual void SetSmartness(int i);
-	void SetWaypoint();
-	void ResetPath();
+	virtual void set_smartness(int i);
+	void set_waypoints();
+	void reset_path();
 
 	//Getters:
-	IQ GetIQ();
-	sf::Vector2f GetCenter();
+	IQ get_IQ();
+	sf::Vector2f get_center();
 	//collisions:
 	void handle_collision(Pole& object) override;
 	void handle_collision(Ladder& object) override;
@@ -40,23 +40,23 @@ public:
 
 	//for debug !!
 	
-	bool IsInHole();
-	void UpStuck();
-	void ResetStuck();
-	bool Stuck();
-	void DontMove();
+	bool is_in_hole();
+	void up_stuck();
+	void reset_stuck();
+	bool stuck();
+	void dont_move();
 
 	//helpers:
 	void move(float dt);
-	bool NoWaypoints();
-	bool CheckIfReached();
-	NextStep DirectionToWaypoint();
+	bool no_waypoints();
+	bool check_reached();
+	NextStep direction_to_waypoints();
 	bool m_falling = false;
 	void on_create()override;
 	
 private:
 	
-	void SetNextWaypoint();
+	void set_next_waypoints();
 	
 	bool m_in_hole = false;
 	int stuck_counter = 0;

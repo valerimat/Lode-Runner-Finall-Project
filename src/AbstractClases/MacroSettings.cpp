@@ -14,70 +14,70 @@ MacroSettings::MacroSettings()
 //-------------------------------------------------------------------
 
 // gets height
-int MacroSettings::GetHeight()
+int MacroSettings::get_height()
 {
 	return m_height;
 }
 //-------------------------------------------------------------------
 
 // gets width
-int MacroSettings::GetWidth()
+int MacroSettings::get_width()
 {
 	return m_width;
 }
 //-------------------------------------------------------------------
 
 // gets volume
-int MacroSettings::GetVolume()
+int MacroSettings::get_volume()
 {
 	return m_volume;
 }
 //-------------------------------------------------------------------
 
 // sets height
-void MacroSettings::SetHeight(int num)
+void MacroSettings::set_height(int num)
 {
 	m_height = (num > 0) ? num : 850;
 }
 //-------------------------------------------------------------------
 
 // sets width
-void MacroSettings::SetWidth(int num)
+void MacroSettings::set_width(int num)
 {
 	m_width = (num > 0) ? num : 800;
 }
 //-------------------------------------------------------------------
 
 // sets volume
-void MacroSettings::SetVolume(int num)
+void MacroSettings::set_volume(int num)
 {
 	m_volume = (num > 0) ? num : 50;
 }
 //-------------------------------------------------------------------
-void MacroSettings::SetMapHeight(int num)
+void MacroSettings::set_map_height(int num)
 {
 	m_map_height = num;
 	m_sacle_height = ((float)m_width / (float)num)/50.f;
 }
 //-------------------------------------------------------------------
-void MacroSettings::SetMapWidth(int num)
+void MacroSettings::set_map_width(int num)
 {
 	m_map_width = num;
 	m_scale_width = ((float)m_width / (float)num) / 50.f;
 }
 //-------------------------------------------------------------------
-float MacroSettings::GetScaleHeight()
+float MacroSettings::get_scale_height()
 {
 	return m_sacle_height;
 }
 //-------------------------------------------------------------------
-float MacroSettings::GetScaleWidth()
+float MacroSettings::get_scale_width()
 {
 	return m_scale_width;
 }
 //-------------------------------------------------------------------
-float MacroSettings::GetSizeOfTile()
+float MacroSettings::get_size_of_tile()
 {
-	return GetScaleWidth() * 50;
+	return get_scale_width() * 50;
 }
 //-------------------------------------------------------------------

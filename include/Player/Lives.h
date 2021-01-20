@@ -4,13 +4,14 @@
 class Lives
 {
 public:
+
 	Lives();
-	void SetLives();
-	void DecLives();
-	void AddLives();
-	int  GetLives();
+	void set_lives();
+	int  get_lives();
+
+	void add_lives();
+	void dec_lives();
 
 private:
 	int m_lives;
-
 };

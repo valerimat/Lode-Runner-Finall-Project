@@ -6,7 +6,7 @@ class Node
 {
 public:
 	Node(sf::Vector2f location);
-	void SetFather(Node* father);
+	void set_father(Node* father);
 	//do we really need weight???
 	//void set_weight(int weight);
 	void SetColor();

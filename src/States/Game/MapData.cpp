@@ -3,12 +3,12 @@
 // c-tor
 MapData::MapData()
 {
-	LoadMaps();
+	load_maps();
 }
 //-----------------------------------------------------------------------------
 
 // loads maps
-void MapData::LoadMaps()
+void MapData::load_maps()
 {
 	int	curr_level = 0;
 	int m_height;
@@ -82,7 +82,7 @@ void MapData::LoadMaps()
 //-----------------------------------------------------------------------------
 
 // gets the map
-std::vector<std::string> * MapData::GetMap(int number_of_level)
+std::vector<std::string> * MapData::get_map(int number_of_level)
 {
 	if (number_of_level < m_number_of_levels)
 		return  &m_maps[number_of_level];
@@ -93,26 +93,26 @@ std::vector<std::string> * MapData::GetMap(int number_of_level)
 //-----------------------------------------------------------------------------
 
 // gets the current height
-int MapData::GetCurrHeight(int lvl)
+int MapData::get_curr_height(int lvl)
 {
 	return m_maps[lvl].size();
 }
 //-----------------------------------------------------------------------------
 
 // gets the current width
-int MapData::GetCurrWidth(int lvl)
+int MapData::get_curr_width(int lvl)
 {
 	return m_maps[lvl][0].size();
 }
 //-----------------------------------------------------------------------------
 
 // gets the current width
-int MapData::GetCurrTimer(int lvl)
+int MapData::get_curr_time(int lvl)
 {
 	return m_timer[lvl];
 }
 
-int MapData::GetNumberOfLevels()
+int MapData::get_num_of_levels()
 {
 	return m_number_of_levels;
 }
