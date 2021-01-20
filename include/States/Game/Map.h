@@ -5,7 +5,6 @@
 #include "Macros.h"
 #include "Player.h"
 #include "Enemy.h"
-#include "Music.h"
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include <fstream>
@@ -58,8 +57,6 @@ private:
 	int m_timer;
 
 	char GetChar(int i, int j);
-
-	Music *m_music = new Music;
 
 	Graph * m_graph;
 

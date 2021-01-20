@@ -81,6 +81,7 @@ void Player::handle_collision(Enemy& object)
 			m_map->reset_positions();
 			std::cout << "collision";
 			m_lives.DecLives();
+			Music::GetMusic().HurtSound();
 		}
 	
 }
@@ -90,7 +91,7 @@ void Player::handle_collision(Coin& object)
 {
 	Score::GetScore().IncreasePoints(); // 1 represents the lvl needs to be changed latter
 	m_map->DeleteCoin(object);
-	m_music->EaitngSound();
+	Music::GetMusic().EaitngSound();
 }
 //-----------------------------------------------------------------------------
 void Player::handle_collision(DynamicObject& object)
@@ -103,7 +104,7 @@ void Player::handle_collision(Present& object)
 {
 	std::cout << object.get_type() << std::endl;
 	m_map->DeletePresent(object);
-	m_music->DrinkingSound();
+	Music::GetMusic().DrinkingSound();
 }
 //-----------------------------------------------------------------------------
 
@@ -111,7 +112,7 @@ void Player::handle_collision(Pole& object)
 {
 	on_pole(object.get_location());
 	if (!m_standing)
-		m_music->RopeSound();
+		Music::GetMusic().RopeSound();
 }
 //-----------------------------------------------------------------------------
 
@@ -123,7 +124,7 @@ void Player::handle_collision(Ladder& object)
     {
 		m_gravity = false;
 		if (!m_standing)
-		m_music->LadderSound();
+			Music::GetMusic().LadderSound();
     }
 }
 //-----------------------------------------------------------------------------
@@ -138,7 +139,7 @@ void Player::handle_collision(RigidBodyObject& object)
 		}
 
 	if(!m_standing)
-		m_music->RunningSound();
+		Music::GetMusic().RunningSound();
 }
 //-----------------------------------------------------------------------------
 

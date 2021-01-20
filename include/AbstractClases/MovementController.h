@@ -13,9 +13,5 @@ public:
 	MovementController(Map* map);
 
 protected:
-	
-
-	Music* m_music = new Music;
-
 	Map* m_map = nullptr;
 };

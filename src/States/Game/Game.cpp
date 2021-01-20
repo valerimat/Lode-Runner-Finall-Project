@@ -71,6 +71,7 @@ void Game::on_update()
 
 	if (timeIsUp())
 	{
+		Music::GetMusic().BustedSound();
 		set_next_state(States::Death);
 		return;
 	}
@@ -78,6 +79,7 @@ void Game::on_update()
 
 	if (m_curr_map.get_player()->GetLives() == 0)
 	{
+		Music::GetMusic().BustedSound();
 		set_next_state(States::Death);
 		return;
 	}
