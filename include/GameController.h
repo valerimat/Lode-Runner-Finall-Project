@@ -13,4 +13,5 @@
 namespace GameController
 {
 	void Run();
+	void OnUpdate(std::chrono::steady_clock::time_point& last, State*& screen);
 };

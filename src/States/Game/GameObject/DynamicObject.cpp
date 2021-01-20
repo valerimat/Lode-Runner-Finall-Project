@@ -141,7 +141,7 @@ void DynamicObject::handle_collision(Pole& object)
 void DynamicObject::move_back(RigidBodyObject &object)
 {
 	sf::Vector2f loc = m_sprite.getPosition();
-	if (object.m_hole == false)
+	if (object.get_hole() == false)
 	{
 		loc += last_move;	
 	}

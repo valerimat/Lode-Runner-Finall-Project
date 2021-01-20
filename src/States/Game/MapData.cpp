@@ -73,10 +73,8 @@ void MapData::LoadMaps()
 					m_clean_vector_of_strings[i][j] = ' ';
 			}
 		}
-		m_maps_clean.push_back(m_clean_vector_of_strings);
 
 		m_vector_of_strings.clear();
-		m_clean_vector_of_strings.clear();
 	}
 	m_number_of_levels = m_maps.size();
 
@@ -88,17 +86,6 @@ std::vector<std::string> * MapData::GetMap(int number_of_level)
 {
 	if (number_of_level < m_number_of_levels)
 		return  &m_maps[number_of_level];
-
-	else
-		return NULL;
-}
-//-----------------------------------------------------------------------------
-
-// gets a clean map
-std::vector<std::string> * MapData::GetCleanMap(int number_of_level)
-{
-	if (number_of_level < m_number_of_levels)
-		return  &m_maps_clean[number_of_level];
 
 	else
 		return NULL;
@@ -125,7 +112,7 @@ int MapData::GetCurrTimer(int lvl)
 	return m_timer[lvl];
 }
 
-int MapData::get_number_of_levels()
+int MapData::GetNumberOfLevels()
 {
 	return m_number_of_levels;
 }

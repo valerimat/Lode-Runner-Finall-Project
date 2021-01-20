@@ -174,10 +174,10 @@ void Graph::CreateNodeMatrix(std::vector<std::vector<int>> matrix)
 		{
 			if (matrix[i][j] != GROUND_INT)
 			{
-				Node* new_node = new Node(sf::Vector2f(j * MacroSettings::GetSettings().GetScaleWidth() * 50 
-					                                 + 0.5 * MacroSettings::GetSettings().GetScaleWidth() * 50,
-					                                     i * MacroSettings::GetSettings().GetScaleWidth() * 50
-													+ 0.5 * MacroSettings::GetSettings().GetScaleWidth() * 50 + 50));
+				Node* new_node = new Node(sf::Vector2f(j * MacroSettings::GetSettings().GetSizeOfTile()
+					                                 + 0.5 * MacroSettings::GetSettings().GetSizeOfTile(),
+					                                     i * MacroSettings::GetSettings().GetSizeOfTile()
+													+ 0.5 * MacroSettings::GetSettings().GetSizeOfTile() + 50));
 				node_matrix[i][j] = new_node;
 			}
 			else
@@ -285,12 +285,12 @@ Node* Graph::RightNeighbor(int i, int  j, std::vector<std::vector<int>> matrix)
 Node * Graph::GetClosestNode(sf::Vector2f & location)
 {
 	//thats our center
-	float x = location.x + 0.5f * MacroSettings::GetSettings().GetScaleWidth() * 50; ;
-	float y = location.y + 0.5f * MacroSettings::GetSettings().GetScaleWidth() * 50; ;
+	float x = location.x + 0.5f * MacroSettings::GetSettings().GetSizeOfTile() ;
+	float y = location.y + 0.5f * MacroSettings::GetSettings().GetSizeOfTile();
 
 	//we will find the left and the right posibilitys by rouding up
-	x = x / (MacroSettings::GetSettings().GetScaleWidth() * 50);
-	y = (y - 50) / (MacroSettings::GetSettings().GetScaleWidth() * 50);
+	x = x / (MacroSettings::GetSettings().GetSizeOfTile());
+	y = (y - 50) / (MacroSettings::GetSettings().GetSizeOfTile());
 
 	//now we round up
 	round(x);

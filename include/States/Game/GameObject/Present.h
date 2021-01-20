@@ -11,31 +11,13 @@ class Present : public StaticObject
 {
 public:
 	//using StaticObject::StaticObject;
-	Present(char Name, sf::Vector2f locaiton, std::shared_ptr<sf::Texture> texture)
-		    :StaticObject(Name, locaiton, texture)
-	{
-		std::cout << "present was created with the type of ";
-		m_type = rand() % 4;
+	Present(char Name, sf::Vector2f locaiton, std::shared_ptr<sf::Texture> texture);
 
-		std::cout << m_type << std::endl;
-	}
+	void handle_collision(DynamicObject& object);
+	void handle_collision(Player& object);
+	void handle_collision(Enemy& object);
+	int get_type();
 
-	void handle_collision(DynamicObject& object)
-	{
-		object.handle_collision(*this);
-	}
-	void handle_collision(Player& object)
-	{
-		object.handle_collision(*this);
-	}
-	void handle_collision(Enemy& object)
-	{
-		object.handle_collision(*this);
-	}
-	int get_type()
-	{
-		return m_type;
-	}
 
 private:
 	int m_type;

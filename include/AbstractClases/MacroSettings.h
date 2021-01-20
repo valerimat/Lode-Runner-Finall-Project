@@ -18,6 +18,7 @@ public:
 	void SetMapWidth(int num);
 	float GetScaleHeight();
 	float GetScaleWidth();
+	float GetSizeOfTile();
 
 private:
 	MacroSettings();

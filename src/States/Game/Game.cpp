@@ -142,7 +142,7 @@ void Game::advance_level()
 //=============================================================================
 bool Game::max_level()
 {
-	if ((level + 1) >= m_maps.get_number_of_levels())
+	if ((level + 1) >= m_maps.GetNumberOfLevels())
 	{
 		return true;
 	}
@@ -178,3 +178,4 @@ bool Game::timeIsUp()
 
 	return false;
 }
+//=============================================================================
