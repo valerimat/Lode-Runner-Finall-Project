@@ -5,7 +5,9 @@ class Lives
 {
 public:
 
+	// c-tor
 	Lives();
+
 	void set_lives();
 	int  get_lives();
 

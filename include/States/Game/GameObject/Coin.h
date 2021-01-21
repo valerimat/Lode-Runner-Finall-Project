@@ -8,8 +8,10 @@
 class Coin : public StaticObject
 {
 public:
+	// c-tor
 	using StaticObject::StaticObject;
 
+	// handle collision
 	void handle_collision(DynamicObject& object);
 	void handle_collision(Player& object);
 	void handle_collision(Enemy& object);

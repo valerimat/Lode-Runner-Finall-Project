@@ -5,35 +5,36 @@
 class Node
 {
 public:
+
+	// c-tor
 	Node(sf::Vector2f location);
-	void set_father(Node* father);
-	//do we really need weight???
+
+	// setters
 	//void set_weight(int weight);
+	void set_father(Node* father);
 	void SetColor();
 	void SetColor(Color color);
-
 	void ResetColor();
 	void SetLeft(Node* node);
 	void SetRight(Node* node);
 	void SetTop(Node* node);
 	void SetBot(Node* node);
 
+	// getters
 	Node* GetLeft();
 	Node* GetRight();
 	Node* GetTop();
 	Node* GetBot();
-
 	Node* GetRandomNeighbor(int radom);
 	std::vector<Node*> GetNeighborList();
-	void Reset();
-	//getters:
 	Color GetColor();
-	//get father:
 	Node* GetFather();
-	//get location:
 	sf::Vector2f get_location();
-	void PrintNode();
 	sf::Vector2f get_location_x_y();
+
+	// class functions
+	void Reset();
+	void PrintNode();
 
 private:
 	//setting default values for security

@@ -1,10 +1,12 @@
 #pragma once
+// include section
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include "DynamicObject.h"
 #include "Lives.h"
 #include <vector>
 #include "Macros.h"
+
 class Map;
 class Coin;
 class Present;

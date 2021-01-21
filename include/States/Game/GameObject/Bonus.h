@@ -10,7 +10,9 @@ class Map;
 class Bonus
 {
 public:
+	// c-tor
 	Bonus() = default;
+	// virtual function
 	virtual void Surprise(Map *map) = 0;
 private:
 };

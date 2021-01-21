@@ -5,6 +5,7 @@
 class MacroSettings
 {
 public:
+	// get singleton
 	static MacroSettings& get_settings(){ static MacroSettings s_settings; return s_settings; };
 
 	// setters
@@ -23,12 +24,15 @@ public:
 	float get_size_of_tile();
 
 private:
+
+	// c-tor
 	MacroSettings();
 
 	// avoids copy 
 	MacroSettings(const MacroSettings&) = delete;
 	void operator=(MacroSettings const&) = delete;
 
+	// private members
 	float m_sacle_height;
 	float m_scale_width;
 	int   m_map_height;
