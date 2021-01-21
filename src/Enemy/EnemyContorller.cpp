@@ -37,20 +37,23 @@ void EnemyController::move(float dt)
 			continue;
 		}
 
+		//so we wont move
 		if (!m_enemies[i]->is_in_hole())
 		move_enemy(dt, *m_enemies[i]);
 
 		before_g = m_enemies[i]->get_location();
 
+		//sow we wont move
 		if (!m_enemies[i]->is_in_hole())
 		apply_gravity(dt, *m_enemies[i]);
 		
 		after_g = m_enemies[i]->get_location();
 
+		//check if gravity works
 		if (enemy_falling(before_g, after_g))
-			m_enemies[i]->m_falling = true;
+			m_enemies[i]->set_m_falling(true);
 		else
-			m_enemies[i]->m_falling = false;
+			m_enemies[i]->set_m_falling(false);
 
 		set_curr_location();
 
@@ -118,7 +121,7 @@ void EnemyController::move_enemy(float dt, Enemy & enemy)
 
 	
 
-	if (!enemy.m_falling)
+	if (!enemy.get_m_falling())
 	{
 		enemy.move(dt);
 	}
