@@ -11,6 +11,8 @@ class MovementController
 public:
 	//Ctors:
 	MovementController(Map* map);
+	virtual void init_controller() = 0;
+	virtual void move(float dt) = 0;
 
 protected:
 	Map* m_map = nullptr;

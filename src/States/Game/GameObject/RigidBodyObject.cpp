@@ -13,9 +13,10 @@ bool RigidBodyObject::make_hole()
 		m_hole = true;
 
 		m_sprite.setPosition(get_location() + 
-			     sf::Vector2f(0, MacroSettings::get_settings().get_size_of_tile() * 0.875f));
+			     sf::Vector2f(0, MacroSettings::get_settings().get_size_of_tile() * 0.9f));
 
-		m_sprite.setScale(0.8, MacroSettings::get_settings().get_scale_height() / 8.f);
+		m_sprite.setScale(MacroSettings::get_settings().get_scale_width(),
+			               MacroSettings::get_settings().get_scale_height() / 8.f);
 		
 		return true;
 	}
@@ -55,7 +56,8 @@ bool RigidBodyObject::IsHole()
 void RigidBodyObject::RestOriginal()
 {
 	m_sprite.setPosition(origina_pos);
-	m_sprite.setScale(sf::Vector2f(MacroSettings::GetSettings().GetScaleWidth(), MacroSettings::GetSettings().GetScaleHeight()));
+	m_sprite.setScale(sf::Vector2f(MacroSettings::get_settings().get_scale_width(),
+		                           MacroSettings::get_settings().get_scale_height()));
 }
 //=============================================================================
 

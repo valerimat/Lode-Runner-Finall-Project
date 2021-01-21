@@ -7,6 +7,7 @@
 Game::Game():
 	m_maps(MapData())
 {
+	Score::GetScore().reset_score();
 	Clock::get_clock().restart_time();
 	load();
 	init_controllers();
@@ -47,11 +48,11 @@ Map * Game::get_curr_map()
 void Game::init_controllers()
 {
 	//can move it to one array
-	m_enemy_cont = std::make_shared<EnemyController>(get_curr_map());
-	m_enemy_cont->init_controller();
-
-	m_player_cont = std::make_shared<PlayerController>(get_curr_map());
-	m_player_cont->init_controller();
+	m_controllers.push_back(std::make_unique< EnemyController>(get_curr_map()));
+	m_controllers.push_back(std::make_unique< PlayerController>(get_curr_map()));
+	
+	for (int i = 0; i < m_controllers.size(); ++i)
+		m_controllers[i]->init_controller();
 }
 //=============================================================================
 
@@ -83,8 +84,8 @@ void Game::on_update()
 		set_next_state(States::Death);
 		return;
 	}
+
 	m_hud.set_lives(m_curr_map->get_player()->get_lives());
-	m_enemy_cont->set_path();
 	m_curr_map->check_holes();
 	m_curr_map->close_holes();
 }
@@ -96,10 +97,8 @@ void Game::handle_event(float dt)
 	check_preseed_now();
 	check_release();
 
-
-	m_enemy_cont->move_enemies(dt);
-	m_player_cont->move_player(dt);
-
+	for (int i = 0; i < m_controllers.size(); ++i)
+		m_controllers[i]->move(dt);
 }
 //=============================================================================
 
@@ -133,7 +132,7 @@ void Game::advance_level()
 
 	MacroSettings::get_settings().set_map_height(m_maps.get_curr_height(level));
 	MacroSettings::get_settings().set_map_width(m_maps.get_curr_width(level));
-	(&Score::GetScore())->advance_level();
+	Score::GetScore().advance_level();
 	m_hud.up_level();
 	reset_level();
 
@@ -164,6 +163,7 @@ void Game::reset_level()
 //=============================================================================
 void Game::reset_game()
 {
+	Score::GetScore().reset_score();
 	level = 0;
 	load();
 	init_controllers();

@@ -57,7 +57,7 @@ public:
 	void reset_positions();
 private:
 
-	void LoadBackground();
+	void load_background();
 	void check_dynamic_inside(RigidBodyObject& rigidBodyObject);
 
 

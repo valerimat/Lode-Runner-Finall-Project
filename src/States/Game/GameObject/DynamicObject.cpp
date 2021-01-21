@@ -10,6 +10,7 @@ DynamicObject::DynamicObject(char name, sf::Vector2f locaiton, sf::Texture* text
 	Object(name, locaiton)
 {
 	set_sprite(texture);
+	m_size_of_tile = MacroSettings::get_settings().get_size_of_tile();
 }
 //-----------------------------------------------------------------------------
 
@@ -58,19 +59,21 @@ void DynamicObject::update_location(NextStep step,float dt)
 
 	Animation(step, this->get_name());
 
+	float size_of_step = m_size_of_tile * 0.025f;
+
 	switch (step)
 	{
 	case NextStep::LEFT:
-		m_sprite.move(dt * sf::Vector2f(-STEP, 0));
+		m_sprite.move(dt * sf::Vector2f(-size_of_step, 0));
 		break;
 	case NextStep::RIGHT:
-		m_sprite.move(dt * sf::Vector2f(STEP, 0));
+		m_sprite.move(dt * sf::Vector2f(size_of_step, 0));
 		break;
 	case NextStep::UP:
-		m_sprite.move(dt * sf::Vector2f(0, -STEP));
+		m_sprite.move(dt * sf::Vector2f(0, -size_of_step));
 		break;
 	case NextStep::DOWN:
-		m_sprite.move(dt * sf::Vector2f(0, STEP));
+		m_sprite.move(dt * sf::Vector2f(0, size_of_step));
 		break;
 	default:
 		break;
@@ -169,7 +172,7 @@ void DynamicObject::move_back(Enemy& object)
 
 void DynamicObject::on_pole(sf::Vector2f location)
 {
-	if (abs (get_location().y -location.y) < 5)
+	if (abs (get_location().y -location.y) < m_size_of_tile/0.8f)
 		m_gravity = false;
 }
 //-----------------------------------------------------------------------------
@@ -271,7 +274,7 @@ void  DynamicObject::reset_position()
 
 
 
-bool DynamicObject::IsInHole()
+bool DynamicObject::is_in_hole()
 {
 	return m_in_hole;
 }
@@ -288,16 +291,15 @@ void DynamicObject::GoInsideHole(sf::Vector2f  location)
 	m_sprite.setPosition(
 	location
 	+
-	sf::Vector2f(0, -MacroSettings::GetSettings().GetSizeOfTile() * 0.875f));
+	sf::Vector2f(0, -m_size_of_tile * 0.9f));
 }
 
 void DynamicObject::CollideWithRigidBody(RigidBodyObject & object)
 {
 	sf::FloatRect inter;
-
 	if (get_sprite().getGlobalBounds().intersects(object.get_sprite().getGlobalBounds(), inter))
 	{
-		if (inter.height >= 4 && inter.width >= 4)
+		if (inter.height >= m_size_of_tile /10.f && inter.width >= m_size_of_tile /10.f)
 		{
 			move_back(object);
 
@@ -319,6 +321,6 @@ void DynamicObject::CollideWithLadder(Ladder & object)
 {
 	sf::FloatRect inter;
 	if (get_sprite().getGlobalBounds().intersects(object.get_sprite().getGlobalBounds(), inter))
-		if (inter.width >= 5)
+		if (inter.width >= m_size_of_tile/8.f)
 			m_gravity = false;
 }

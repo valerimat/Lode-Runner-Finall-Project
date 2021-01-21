@@ -48,6 +48,6 @@ private:
 	Map * m_curr_map;
 	Hud  m_hud;
 
-	std::shared_ptr <EnemyController> m_enemy_cont;
-	std::shared_ptr <PlayerController> m_player_cont;
+	std::vector<std::unique_ptr<MovementController>> m_controllers;
+
 };

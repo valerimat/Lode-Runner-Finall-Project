@@ -58,7 +58,7 @@ public:
 	void SetInHole(bool IsInHole);
 
 	//for Holes:
-	bool IsInHole();
+	bool is_in_hole();
 
 protected:
 
@@ -71,6 +71,9 @@ protected:
 
 	sf::Vector2f m_base_location;
 	sf::Vector2f last_move;
+
+	//for calculations
+	float m_size_of_tile;
 
 	bool m_gravity;
 	bool m_in_hole = false;

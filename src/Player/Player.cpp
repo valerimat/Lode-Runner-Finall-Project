@@ -80,7 +80,7 @@ void Player::handle_collision(Enemy& object)
 		{
 
 			//so we walk on him
-			if (object.IsInHole())
+			if (object.is_in_hole())
 			{
 				if (inter.height >= 4 && inter.width >= 4)
 				move_back(object);
@@ -91,8 +91,8 @@ void Player::handle_collision(Enemy& object)
 				if (inter.width >= 8 && inter.height >= 8)
 				{
 					m_map->reset_positions();
-					m_lives.DecLives();
-					Music::GetMusic().HurtSound();
+					m_lives.dec_lives();
+					Music::get_music().hurt_sound();
 				}
 			}
 		}
@@ -115,8 +115,8 @@ void Player::handle_collision(DynamicObject& object)
 
 void Player::handle_collision(Present& object)
 {
-	m_map->DeletePresent(object);
-	Music::GetMusic().DrinkingSound();
+	m_map->delete_present(object);
+	Music::get_music().drinking_sound();
 }
 //-----------------------------------------------------------------------------
 
@@ -134,7 +134,7 @@ void Player::handle_collision(Ladder& object)
 	CollideWithLadder(object);
 
 	if (!m_standing)
-		Music::GetMusic().LadderSound();
+		Music::get_music().ladder_sound();
   
 }
 //-----------------------------------------------------------------------------
@@ -181,17 +181,17 @@ void Player::add_lives()
 sf::Vector2f Player::BottomLeft()
 {
 	sf::Vector2f our_loc = get_location();
-	float offset_y = MacroSettings::GetSettings().GetSizeOfTile() + 2;
-	float offset_x = MacroSettings::GetSettings().GetSizeOfTile() / 2; // so we wont get our tile
+	float offset_y = MacroSettings::get_settings().get_size_of_tile() + 2;
+	float offset_x = MacroSettings::get_settings().get_size_of_tile() / 2; // so we wont get our tile
 	return our_loc + sf::Vector2f(-offset_x, offset_y);
 }
 
 sf::Vector2f Player::BottomRight()
 {
 	sf::Vector2f our_loc = get_location();
-	float offset_y = MacroSettings::GetSettings().GetSizeOfTile() + 2;
-	float offset_x = (MacroSettings::GetSettings().GetSizeOfTile() / 2)+
-		             (MacroSettings::GetSettings().GetSizeOfTile()); // so we wont get our tile
+	float offset_y = MacroSettings::get_settings().get_size_of_tile() + 2;
+	float offset_x = (MacroSettings::get_settings().get_size_of_tile() / 2)+
+		             (MacroSettings::get_settings().get_size_of_tile()); // so we wont get our tile
 
 	return our_loc + sf::Vector2f(offset_x, offset_y);
 }

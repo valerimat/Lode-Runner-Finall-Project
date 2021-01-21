@@ -23,12 +23,12 @@ public:
 	void on_create()override;
 
 	//Setters:
-	void SetMap(Map* map);
+	void set_map(Map* map);
 
 
 	//For Digging:
-	void DeleteLeft();
-	void DeleteRight();
+	void delete_left();
+	void delete_right();
 	
 	//Move:
 	void Move(sf::Keyboard::Key key,float dt);
@@ -48,8 +48,8 @@ public:
 
 
 	//For lives managment:
-	int GetLives();
-	void AddLives();
+	int get_lives();
+	void add_lives();
 
 
 private:

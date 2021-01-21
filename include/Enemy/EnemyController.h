@@ -17,8 +17,8 @@ public:
 	void set_path();
 
 	//Helpers:
-	void move_enemies(float dt);
-	void init_controller();
+	void move(float dt) override;
+	void init_controller() override;
 
 private:
 	void move_enemy(float dt, Enemy& enemy);

@@ -19,7 +19,7 @@ public:
 
 
 	void on_create()override;
-	void SetMap(Map* map);
+	void set_map(Map* map);
 	//Setters:
 	virtual void set_smartness(int i);
 	void set_waypoints();
@@ -27,7 +27,7 @@ public:
 
 	//Getters:
 
-	IQ GetIQ();
+	IQ get_IQ();
   
 	//collisions:
 	void handle_collision(Pole& object) override;
@@ -43,25 +43,25 @@ public:
 
 
 	//For unstucking:
-	void UpStuck();
-	void ResetStuck();
-	bool Stuck();
+	void up_stuck();
+	void reset_stuck();
+	bool stuck();
 
 	//helpers:
 	void move(float dt);
-	bool NoWaypoints();
-	bool CheckIfReached();
+	bool no_waypoints();
+	bool check_reached();
 
 	//NEEDDDDDDDDDDD TO FIXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 	bool m_falling = false;
 	
 private:
 
-	sf::Vector2f GetCenter();
+	sf::Vector2f get_center();
 	NextStep DirectionToWaypoint();
 	
 
-	void SetNextWaypoint();
+	void set_next_waypoints();
 	int stuck_counter = 0;
 
 	//to request information
