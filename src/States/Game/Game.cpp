@@ -23,10 +23,14 @@ void Game::load()
 	MacroSettings::get_settings().set_map_height(m_maps.get_curr_height(level));
 	MacroSettings::get_settings().set_map_width(m_maps.get_curr_width(level));
 
-	m_curr_map = new Map(m_maps.get_map(level), m_maps.get_curr_height(level), m_maps.get_curr_width(level), m_maps.get_curr_time(level));
+	m_curr_map =
+	new Map(m_maps.get_map(level),
+		    m_maps.get_curr_height(level),
+	     	m_maps.get_curr_width(level), m_maps.get_curr_time(level));
 
-	Hud hud(m_curr_map->get_player()->get_lives(),level, m_curr_map->get_timer());
-	m_hud = hud;
+	
+	m_hud = new 
+		Hud(m_curr_map->get_player()->get_lives(), level, m_curr_map->get_timer());
 	
 }
 //=============================================================================
@@ -35,7 +39,7 @@ void Game::load()
 void Game::Draw(sf::RenderWindow &window)
 {
 	m_curr_map->Draw(window);
-	m_hud.Draw(window);
+	m_hud->Draw(window);
 }
 //=============================================================================
 
@@ -70,7 +74,6 @@ void Game::on_update()
 			return;
 		}
 		advance_level();
-		
 	}
 
 	if (timeIsUp())
@@ -88,7 +91,7 @@ void Game::on_update()
 		return;
 	}
 
-	m_hud.set_lives(m_curr_map->get_player()->get_lives());
+	m_hud->set_lives(m_curr_map->get_player()->get_lives());
 	m_curr_map->check_holes();
 	m_curr_map->close_holes();
 }
@@ -136,7 +139,7 @@ void Game::advance_level()
 	MacroSettings::get_settings().set_map_height(m_maps.get_curr_height(level));
 	MacroSettings::get_settings().set_map_width(m_maps.get_curr_width(level));
 	Score::GetScore().advance_level();
-	m_hud.up_level();
+	m_hud->up_level();
 	reset_level();
 
 }

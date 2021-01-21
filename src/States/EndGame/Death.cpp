@@ -43,10 +43,8 @@ void Death::on_update()
 //=============================================================================
 void Death::handle_event(float dt)
 {
-
 	check_preseed_now();
 	check_release();
-
 }
 //=============================================================================
 
@@ -86,14 +84,10 @@ void Death::load_arrow()
 //=============================================================================
 void Death::load_textures()
 {
-
-
-	//MAIN MENU BUTTON
 	auto texture = new sf::Texture;
 	texture->loadFromFile("play_again_button.png");
 	m_textures.push_back(texture);
 
-	
 	texture = new sf::Texture;
 	texture->loadFromFile("main_menu_png.png");
 	m_textures.push_back(texture);
@@ -105,7 +99,6 @@ void Death::load_textures()
 	texture = new sf::Texture;
 	texture->loadFromFile("arrow.png");
 	m_textures.push_back(texture);
-
 
 	texture = new sf::Texture;
 	texture->loadFromFile("busted.png");

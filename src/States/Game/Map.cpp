@@ -80,29 +80,6 @@ void Map::set_objects()
 				m_static.push_back(
 					std::make_unique<Present>(PRESENT, location, m_textures[PRESENT_TEXTURE].get()));
 				break;
-
-			/*
-			// the cases below represent decorations
-			case 'G':
-				st_ptr = std::make_shared<StaticObject>(GROUND, location, m_textures[GROUND_W_SIGNS_TEXTURE]);
-				m_static.push_back(st_ptr);
-				m_ground.push_back(st_ptr);
-				break;
-			
-			case 'M':
-				st_ptr = std::make_shared<StaticObject>(' ', location, m_textures[MAAKE_TEXTURE]);
-				m_static.push_back(st_ptr);
-				break;
-
-			case 'Z':
-				st_ptr = std::make_shared<StaticObject>(' ', location, m_textures[ZEVEL_TEXTURE]);
-				m_static.push_back(st_ptr);
-				break;
-			case 'S':
-				st_ptr = std::make_shared<StaticObject>(' ', location, m_textures[SHOP_TEXTURE]);
-				m_static.push_back(st_ptr);
-				break;
-			*/
 			}
 		}
 	}
@@ -125,7 +102,6 @@ void Map::Draw(sf::RenderWindow &main_window)
 	{
 		m_dynamic[i]->Draw(main_window);
 	}
-	m_graph->Draw(main_window);
 }
 //=============================================================================
 

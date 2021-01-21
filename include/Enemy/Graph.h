@@ -16,8 +16,7 @@ public:
 	void Clean();
 
 	sf::Vector2f get_free_location();
-	// for debug
-	void Draw(sf::RenderWindow& window);
+
 	
 private:
 

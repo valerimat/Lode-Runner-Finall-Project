@@ -11,6 +11,7 @@ public:
 
 	// setters
 	//void set_weight(int weight);
+
 	void set_father(Node* father);
 	void SetColor();
 	void SetColor(Color color);
@@ -30,6 +31,7 @@ public:
 	Color GetColor();
 	Node* GetFather();
 	sf::Vector2f get_location();
+
 	sf::Vector2f get_location_x_y();
 
 	// class functions

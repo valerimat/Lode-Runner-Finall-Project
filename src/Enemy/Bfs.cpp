@@ -5,13 +5,16 @@
 #include "MacroSettings.h"
 
 //=============================================================================
-std::vector<sf::Vector2f> Bfs::calc_path(Graph& graph, sf::Vector2f our_location, sf::Vector2f wanted_location)
+std::vector<sf::Vector2f> Bfs::calc_path(Graph& graph,
+	                                     sf::Vector2f our_location,
+	                                     sf::Vector2f wanted_location)
 {
 	std::vector<sf::Vector2f> waypoints;
 	Node* from, * to;
 
 	from =  graph.get_closest_node(our_location);
 
+	//For safety:
 	if (from == nullptr)
 	{
 		waypoints.push_back(our_location);
@@ -26,6 +29,8 @@ std::vector<sf::Vector2f> Bfs::calc_path(Graph& graph, sf::Vector2f our_location
 		to = graph.get_closest_node((wanted_location));
 	}
 
+
+	//from the BFS we will get set of waypoints to get to the player:
 	waypoints = BFS(from, to);
 
 	graph.Clean();
@@ -47,7 +52,7 @@ std::vector<sf::Vector2f> Bfs::BFS(Node* from, Node* to)
 	open_list.push_back(from);
 
 	//colors grey
-	from->SetColor(Color::Grey);
+	from->set_color(Color::Grey);
 
 	//sets null
 	from->set_father(nullptr);
@@ -98,15 +103,15 @@ bool Bfs::check_reached(Node* curr, Node * to)
 void Bfs::handle_curr(Node * curr, std::vector< Node*> & open_list)
 {
 	//from grey to black
-	curr->SetColor();
-	std::vector<Node* > neigbors = curr->GetNeighborList();
+	curr->set_color();
+	std::vector<Node* > neigbors = curr->get_neighbor_list();
 
 	for (int i = 0; i < neigbors.size(); ++i)
 	{
 		//if we dont want them we delete
-		if (neigbors[i]->GetColor() == Color::White)
+		if (neigbors[i]->get_color() == Color::White)
 		{
-			neigbors[i]->SetColor();
+			neigbors[i]->set_color();
 			neigbors[i]->set_father(curr);
 			open_list.push_back(neigbors[i]);
 		}
@@ -127,10 +132,10 @@ std::vector<sf::Vector2f> Bfs::get_path(Node * last)
 	}
 
 	
-	while (last->GetFather() != nullptr)
+	while (last->get_father() != nullptr)
 	{
 		waypoints.insert(waypoints.begin(), last->get_location());
-		last = last->GetFather();
+		last = last->get_father();
 	}
 
 	return waypoints;

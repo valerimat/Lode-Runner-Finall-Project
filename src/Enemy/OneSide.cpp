@@ -8,7 +8,9 @@
 #include <random>
 
 //=============================================================================
-std::vector<sf::Vector2f> OneSide::calc_path(Graph& graph, sf::Vector2f our_location, sf::Vector2f wanted_location)
+std::vector<sf::Vector2f> OneSide::calc_path(Graph& graph,
+											 sf::Vector2f our_location,
+	                                         sf::Vector2f wanted_location)
 {
 	auto random = std::random_device();
 
@@ -20,14 +22,11 @@ std::vector<sf::Vector2f> OneSide::calc_path(Graph& graph, sf::Vector2f our_loca
 		return waypoints;
 	}
 
-	//first_we_pus_closest_node
-	//waypoints.push_back(node->get_location());
-	
 	sf::Vector2f next_location;
-
 
 	int random_number = random();
 	
+	//setting either all left all right
 	if (random_number % 2 == 0)
 	{
 		next_location = get_most_left(node);
@@ -55,16 +54,16 @@ sf::Vector2f OneSide::get_most_left(Node* node)
 	while (1)
 	{
 
-		next = temp->GetLeft();
+		next = temp->get_left();
 
 		//if the next node is fall node we dont want it
 		if (next == nullptr)
 			break;
 
-		if (next->GetRight() == nullptr)
+		if (next->get_right() == nullptr)
 			break;
 
-		temp = temp->GetLeft();
+		temp = temp->get_left();
 		
 		if (temp == nullptr)
 			break;
@@ -81,14 +80,14 @@ sf::Vector2f OneSide::get_most_right(Node* node)
 	Node* next;
 	while (1)
 	{
-		next = temp->GetRight();
+		next = temp->get_right();
 		if (next == nullptr)
 			break;
 		//if the next node is fall node we dont want it
-		if (next->GetLeft() == nullptr)
+		if (next->get_left() == nullptr)
 			break;
 
-		temp = temp->GetRight();
+		temp = temp->get_right();
 
 		if (temp == nullptr)
 			break;

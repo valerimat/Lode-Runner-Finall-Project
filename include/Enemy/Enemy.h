@@ -63,7 +63,7 @@ private:
 	bool m_falling = false;
 
 	sf::Vector2f get_center();
-	NextStep DirectionToWaypoint();
+	NextStep direction_to_waypoint();
 	
 
 	void set_next_waypoints();

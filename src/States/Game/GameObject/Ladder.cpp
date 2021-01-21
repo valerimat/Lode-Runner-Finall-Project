@@ -12,7 +12,6 @@ void Ladder::handle_collision(DynamicObject& object)
 void Ladder::handle_collision(Player& object)
 {
 	object.handle_collision(*this);
-
 }
 //=============================================================================
 
@@ -20,6 +19,5 @@ void Ladder::handle_collision(Player& object)
 void Ladder::handle_collision(Enemy& object)
 {
 	object.handle_collision(*this);
-
 }
 //=============================================================================

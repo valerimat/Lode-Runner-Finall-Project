@@ -23,7 +23,9 @@ void DynamicObject::set_sprite(sf::Texture* texture)
 	sf::IntRect rect_sprite(0, 0, 50, 50);
 	m_sprite.setTextureRect(rect_sprite);
 	m_sprite.setScale(1, 1);
-	m_sprite.setScale(sf::Vector2f(MacroSettings::get_settings().get_scale_width(), MacroSettings::get_settings().get_scale_height()));
+	m_sprite.setScale(
+		sf::Vector2f(MacroSettings::get_settings().get_scale_width(),
+			         MacroSettings::get_settings().get_scale_height()));
 
 }
 //=============================================================================
@@ -62,7 +64,6 @@ void DynamicObject::Draw(sf::RenderWindow &main_window)
 void DynamicObject::update_location(NextStep step,float dt)
 {
 	sf::Vector2f loc = m_sprite.getPosition();
-	auto mill_seconds = Clock::get_clock().get_passed_mill_seconds();
 
 	Animation(step, this->get_name());
 
@@ -259,18 +260,6 @@ void DynamicObject::Animation(NextStep step, char name)
 		break;
 
 	case NextStep::DOWN:
-		/*
-		if (mill_seconds < 0.5)
-		{
-			sf::IntRect rect_sprite(150, 150, 50, 50);
-			m_sprite.setTextureRect(rect_sprite);
-		}
-		else
-		{
-			sf::IntRect rect_sprite(100, 150, 50, 50);
-			m_sprite.setTextureRect(rect_sprite);
-		}
-		*/
 		break;
 
 	default:
@@ -318,7 +307,9 @@ void DynamicObject::collide_with_rigid_body(RigidBodyObject & object)
 	sf::FloatRect inter;
 	if (get_sprite().getGlobalBounds().intersects(object.get_sprite().getGlobalBounds(), inter))
 	{
-		if (inter.height >= m_size_of_tile /10.f && inter.width >= m_size_of_tile /10.f)
+		if (inter.height >= m_size_of_tile /10.f 
+			&&
+			inter.width >= m_size_of_tile /10.f)
 		{
 			move_back(object);
 

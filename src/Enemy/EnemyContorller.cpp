@@ -24,14 +24,17 @@ void EnemyController::move(float dt)
 	sf::Vector2f before_g;
 	sf::Vector2f after_g;
 
+	//if we add enemies mid game
 	if (m_enemies.size() != m_map->get_enemies().size())
 	{
 		init_controller();
 	}
 
+	// we run on all enemies
 	for(int i =0;i < m_enemies.size(); ++i)
 	{
 
+		//check if we reached waypoint
 		if (m_enemies[i]->check_reached())
 		{
 			
@@ -43,15 +46,17 @@ void EnemyController::move(float dt)
 		if (!m_enemies[i]->is_in_hole())
 		move_enemy(dt, *m_enemies[i]);
 
+		//before appliying graiviti
 		before_g = m_enemies[i]->get_location();
 
 		//sow we wont move
 		if (!m_enemies[i]->is_in_hole())
 		apply_gravity(dt, *m_enemies[i]);
 		
+		//after appliying gravity
 		after_g = m_enemies[i]->get_location();
 
-		//check if gravity works
+		//check if gravity works which will mean we are falling to block left righ movement
 		if (enemy_falling(before_g, after_g))
 			m_enemies[i]->set_m_falling(true);
 		else
@@ -59,6 +64,7 @@ void EnemyController::move(float dt)
 
 		set_curr_location();
 
+		//for unstucking
 		check_stuck();
 	}
 }
@@ -104,7 +110,6 @@ void EnemyController::check_stuck()
 	{
 		if (prev_loc[i] == curr_loc[i])
 		{
-			//m_enemies[i]->DontMove();
 			m_enemies[i]->up_stuck();
 
 			if (m_enemies[i]->stuck())
@@ -125,8 +130,6 @@ void EnemyController::check_stuck()
 void EnemyController::move_enemy(float dt, Enemy & enemy)
 {
 	set_previous_location();
-
-	
 
 	if (!enemy.get_m_falling())
 	{

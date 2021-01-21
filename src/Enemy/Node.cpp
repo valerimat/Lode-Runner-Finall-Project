@@ -16,10 +16,8 @@ void Node::set_father(Node* father)
 }
 //=============================================================================
 
-//do we really need weight???
-//void set_weight(int weight);
 //=============================================================================
-void Node::SetColor()
+void Node::set_color()
 {
 	switch (m_color)
 	{
@@ -39,14 +37,14 @@ void Node::SetColor()
 //=============================================================================
 
 //=============================================================================
-void Node::ResetColor()
+void Node::reset_color()
 {
 	m_color = Color::White;
 }
 //=============================================================================
 
 //=============================================================================
-void Node::SetLeft(Node* node)
+void Node::set_left_neighbor(Node* node)
 {
 	if (node != nullptr)
 		neig_arr.push_back(node);
@@ -56,7 +54,7 @@ void Node::SetLeft(Node* node)
 //=============================================================================
 
 //=============================================================================
-void Node::SetRight(Node* node)
+void Node::set_right_neighbor(Node* node)
 {
 	right_n = node;
 	if (node != nullptr)
@@ -65,7 +63,7 @@ void Node::SetRight(Node* node)
 //=============================================================================
 
 //=============================================================================
-void Node::SetTop(Node* node)
+void Node::set_top_neigbor(Node* node)
 {
 	top_n = node;
 	if (node != nullptr)
@@ -74,7 +72,7 @@ void Node::SetTop(Node* node)
 //=============================================================================
 
 //=============================================================================
-void Node::SetBot(Node* node)
+void Node::set_bot_neighbor(Node* node)
 {
 	bottom_n = node;
 	if (node != nullptr)
@@ -83,8 +81,9 @@ void Node::SetBot(Node* node)
 //=============================================================================
 
 //=============================================================================
-Node* Node::GetRandomNeighbor(int random)
+Node* Node::get_random_neighbor(int random)
 {
+
 	random = random % neig_arr.size();
 
 	return neig_arr[random];
@@ -92,28 +91,28 @@ Node* Node::GetRandomNeighbor(int random)
 //=============================================================================
 
 //=============================================================================
-Node* Node::GetLeft()
+Node* Node::get_left()
 {
 	return left_n;
 }
 //=============================================================================
 
 //=============================================================================
-Node* Node::GetRight()
+Node* Node::get_right()
 {
 	return right_n;
 }
 //=============================================================================
 
 //=============================================================================
-Node* Node::GetTop()
+Node* Node::get_top()
 {
 	return top_n ;
 }
 //=============================================================================
 
 //=============================================================================
-Node* Node::GetBot()
+Node* Node::get_bot()
 {
 	return bottom_n ;
 }
@@ -121,7 +120,7 @@ Node* Node::GetBot()
 
 //getters:
 //=============================================================================
-Color Node::GetColor()
+Color Node::get_color()
 {
 	return m_color;
 }
@@ -129,7 +128,7 @@ Color Node::GetColor()
 
 //gets father
 //=============================================================================
-Node* Node::GetFather()
+Node* Node::get_father()
 {
 	return m_father;
 }
@@ -144,15 +143,15 @@ sf::Vector2f Node::get_location()
 //=============================================================================
 
 //=============================================================================
-void Node::Reset()
+void Node::reset()
 {
-	SetColor(Color::White);
+	set_color(Color::White);
 	set_father(nullptr);
 }
 //=============================================================================
 
 //=============================================================================
-void Node::PrintNode()
+void Node::print_node()
 {
 	std::cout << "(" << m_location.x << "," << m_location.y << ") ";
 
@@ -171,14 +170,14 @@ void Node::PrintNode()
 //=============================================================================
 
 //=============================================================================
-std::vector<Node*> Node::GetNeighborList()
+std::vector<Node*> Node::get_neighbor_list()
 {
 	return neig_arr;
 }
 //=============================================================================
 
 //=============================================================================
-void Node::SetColor(Color color)
+void Node::set_color(Color color)
 {
 	m_color = color;
 }

@@ -26,15 +26,21 @@ Graph::Graph(std::vector<std::string> m_map,int width, int height)
 		curr_row--;
 	}
 
+	//cleans graph for max productivity
 	Clenup(matrix);
+	//transports to matrix
 	create_node_matrix(matrix);
+	//transports to neighbor lists
 	link_neighbors_to_list(matrix);
 }
 //=============================================================================
 
 //function that runs on rows and fills up matrix
 //=============================================================================
-void Graph::add_row(std::vector<std::vector<int>> & matrix, std::vector<std::string> m_map, int row,int width)
+void Graph::add_row(std::vector<std::vector<int>> & matrix,
+	                std::vector<std::string> m_map,
+	                int row,
+					int width)
 {
 	for (int i = 0; i < width; i++)
 	{
@@ -60,10 +66,14 @@ void Graph::add_row(std::vector<std::vector<int>> & matrix, std::vector<std::str
 //=============================================================================
 bool Graph::found_ground(std::vector<std::string> m_map, int i, int row)
 {
-	if (m_map[row][i] != GROUND && m_map[row + 1][i] == GROUND)
-		return true;
-	else if (m_map[row][i] != GROUND && m_map[row + 1][i] == LADDER && m_map[row][i] != LADDER)
-		return true;
+	//for safety
+	if (row + 1 < m_map[0].size())
+	{
+		if (m_map[row][i] != GROUND && m_map[row + 1][i] == GROUND)
+			return true;
+		else if (m_map[row][i] != GROUND && m_map[row + 1][i] == LADDER && m_map[row][i] != LADDER)
+			return true;
+	}
 
 	return false;
 }
@@ -120,7 +130,6 @@ bool Graph::found_air(std::vector<std::string> m_map, int i, int row)
 //=============================================================================
 
 //then we clen it with :
-//THIS FUNC ALITTLE BIT MESSY MIGHT WANNA FIX
 //=============================================================================
 void Graph::Clenup(std::vector<std::vector<int>>& matrix)
 {
@@ -133,16 +142,18 @@ void Graph::Clenup(std::vector<std::vector<int>>& matrix)
 		{
 			if (matrix[row][col] == GROUND_INT) //if we found a platform / ground
 			{
-				if (matrix[row + 1][col] == AIR_INT)//and therer is air bellow
-					++row;
-				else
-					continue;
+				if(row + 1 < matrix.size())
+				{ 
+					if (matrix[row + 1][col] == AIR_INT)//and therer is air bellow
+						++row;
+					else
+						continue;
 
-				//if we didnt continue
-				while (matrix[row][col] == AIR_INT)
-				{
+					//if we didnt continue
+					while (matrix[row][col] == AIR_INT)
+					{
 
-					//for safety:
+						//for safety:
 					if (row > matrix.size())
 						break;
 
@@ -163,6 +174,7 @@ void Graph::Clenup(std::vector<std::vector<int>>& matrix)
 
 					matrix[row][col] = GROUND_INT; // we mark it as ground;
 					++row;
+					}
 				}
 			}
 		}
@@ -182,10 +194,12 @@ void Graph::create_node_matrix(std::vector<std::vector<int>> matrix)
 		{
 			if (matrix[i][j] != GROUND_INT)
 			{
-				Node* new_node = new Node(sf::Vector2f(j * MacroSettings::get_settings().get_size_of_tile()
-					                                 + 0.5 * MacroSettings::get_settings().get_size_of_tile(),
-					                                     i * MacroSettings::get_settings().get_size_of_tile()
-													+ 0.5 * MacroSettings::get_settings().get_size_of_tile() + 50));
+				//getting center of node
+				Node* new_node =
+				new Node(sf::Vector2f(j * MacroSettings::get_settings().get_size_of_tile()	
+					                  + 0.5 * MacroSettings::get_settings().get_size_of_tile(),
+					                  i * MacroSettings::get_settings().get_size_of_tile()
+									  + 0.5 * MacroSettings::get_settings().get_size_of_tile() + 50));
 				node_matrix[i][j] = new_node;
 			}
 			else
@@ -230,10 +244,10 @@ void Graph::link_neighbors_to_list(std::vector<std::vector<int>> matrix)
 //=============================================================================
 void Graph::set_neighbors(int i, int j, std::vector<std::vector<int>> matrix, Node* node)
 {
-	node->SetTop(above_neighbor(i, j, matrix));
-	node->SetBot(bellow_neighbor(i, j, matrix));
-	node->SetLeft(left_neighbor(i, j, matrix));
-	node->SetRight(right_neighbor(i, j, matrix));
+	node->set_top_neigbor(above_neighbor(i, j, matrix));
+	node->set_bot_neighbor(bellow_neighbor(i, j, matrix));
+	node->set_left_neighbor(left_neighbor(i, j, matrix));
+	node->set_right_neighbor(right_neighbor(i, j, matrix));
 }
 //=============================================================================
 
@@ -329,10 +343,11 @@ Node* Graph::get_node(int x, int y)
 void Graph::Clean()
 {
 	for (int i = 0; i < neighbor_list.size(); ++i)
-		neighbor_list[i]->Reset();
+		neighbor_list[i]->reset();
 }
 //=============================================================================
 
+//=============================================================================
 sf::Vector2f Graph::get_free_location()
 {
 	int height = node_matrix.size();
@@ -351,16 +366,15 @@ sf::Vector2f Graph::get_free_location()
 		j = rand() % width;
 	}
 	
-	
-
 	return node_matrix[i][j]->get_location_x_y();
 }
+//=============================================================================
 
-
+//=============================================================================
 bool Graph::only_bottom_neighboor (Node * node)
 {
-	if (node->GetNeighborList().size() == 1)
-		if (node->GetBot() != nullptr)
+	if (node->get_neighbor_list().size() == 1)
+		if (node->get_bot() != nullptr)
 		{
 			return true;
 		}
@@ -368,92 +382,5 @@ bool Graph::only_bottom_neighboor (Node * node)
 	return false;
 	
 }
-//=======================================================================================================
-//_____________________For Dubug DELETE IN PRODUCTION:
-void Graph::Draw(sf::RenderWindow& window)
-{
-	for (int i = 0; i < neighbor_list.size(); i++)
-	{
-		if (neighbor_list[i] == nullptr)
-			continue;
-		sf::RectangleShape rect;
-		rect.setPosition(neighbor_list[i]->get_location());
-		rect.setSize(sf::Vector2f(10, 10));
-		window.draw(rect);
-		
-		if (neighbor_list[i]->GetTop() != nullptr)
-		{
-			sf::RectangleShape rect;
-			rect.setPosition(neighbor_list[i]->get_location());
-			sf::Vector2f size = neighbor_list[i]->GetTop()->get_location() - neighbor_list[i]->get_location();
-
-			if (size.x == 0)
-				size.x = 5;
-			if (size.y == 0)
-				size.y = 5;
-
-			
-			rect.setFillColor(sf::Color::Yellow);
-		
-
-			rect.setSize(sf::Vector2f(size));
-			window.draw(rect);
-		}
-		
-		if (neighbor_list[i]->GetBot() != nullptr)
-		{
-			sf::RectangleShape rect;
-			rect.setPosition(neighbor_list[i]->get_location());
-			sf::Vector2f size = neighbor_list[i]->GetBot()->get_location() - neighbor_list[i]->get_location();
-
-			if (size.x == 0)
-				size.x = 5;
-			if (size.y == 0)
-				size.y = 5;
-			rect.setFillColor(sf::Color::Black);
-			
-			size.x -= 10;
-
-
-			rect.setSize(sf::Vector2f(size));
-			window.draw(rect);
-		}
-
-		if (neighbor_list[i]->GetRight() != nullptr)
-		{
-			sf::RectangleShape rect;
-			rect.setPosition(neighbor_list[i]->get_location());
-			sf::Vector2f size = neighbor_list[i]->GetRight()->get_location() - neighbor_list[i]->get_location();
-
-			if (size.x == 0)
-				size.x = 5;
-			if (size.y == 0)
-				size.y = 5;
-
-			size.y -= 10;
-			rect.setFillColor(sf::Color::Red);
-	
-
-			rect.setSize(sf::Vector2f(size));
-			window.draw(rect);
-		}
-
-		if (neighbor_list[i]->GetLeft() != nullptr)
-		{
-			sf::RectangleShape rect;
-			rect.setPosition(neighbor_list[i]->get_location());
-			sf::Vector2f size = neighbor_list[i]->GetLeft()->get_location() - neighbor_list[i]->get_location();
-
-			if (size.x == 0)
-				size.x = 5;
-			if (size.y == 0)
-				size.y = 5;
-	
-			rect.setFillColor(sf::Color::Green);
-
-			rect.setSize(sf::Vector2f(size));
-			window.draw(rect);
-		}
-	}
-}
 //=============================================================================
+
