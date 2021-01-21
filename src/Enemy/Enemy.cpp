@@ -30,7 +30,7 @@ void Enemy::on_create()
 
 	auto smartness = rand() % 3;
 
-	SetSmartness(smartness);
+	set_smartness(smartness);
 
 
 	switch (m_iq)
@@ -62,8 +62,8 @@ sf::Vector2f Enemy::get_center()
 	sf::Vector2f our_loc = get_location();
 
 	sf::Vector2f center_offset(
-		MacroSettings::get_settings().get_scale_width()*50 / 2,
-		MacroSettings::get_settings().get_scale_width()*50 / 2);
+		m_size_of_tile / 2.f,
+		m_size_of_tile / 2.f);
 
 	our_loc += center_offset;
 
@@ -76,7 +76,7 @@ sf::Vector2f Enemy::get_center()
 void Enemy::set_waypoints()
 {
 	//if there are no waypoints
- 	if (NoWaypoints())
+ 	if (no_waypoints())
 	{
 		reset_path();
 		set_next_waypoints();
@@ -174,9 +174,9 @@ bool Enemy::check_reached()
 	sf::Vector2 location = get_center();
 
 	//if we reached the waypoint in 2 pixels diffrence
-	if (abs(location.x - next_waypoint.x) < 3
+	if (abs(location.x - next_waypoint.x) < m_size_of_tile/ 10.f
 		&&
-		abs(location.y - next_waypoint.y) < 4.5)
+		abs(location.y - next_waypoint.y) < m_size_of_tile / 10.f)
 	{
 		return true;
 	}
@@ -281,7 +281,3 @@ void Enemy::handle_collision(RigidBodyObject& object)
 	CollideWithRigidBody(object);
 }
 //-----------------------------------------------------------------------------
-bool Enemy::is_in_hole()
-{
-	return m_in_hole;
-}

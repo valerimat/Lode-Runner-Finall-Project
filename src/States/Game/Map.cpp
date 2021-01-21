@@ -324,7 +324,7 @@ void Map::make_hole(sf::Vector2f location)
 			{
 
 				m_holes.push_back(dynamic_cast<RigidBodyObject*>(m_static[i].get()));
-				holes_time.push_back(Clock::GetClock().GetPassedSecondsFloat());
+				holes_time.push_back(Clock::get_clock().get_passed_seconds_float());
 			}
 		}
 	}
@@ -406,12 +406,12 @@ void Map::check_dynamic_inside(RigidBodyObject& rigidBodyObject)
 		if (m_dynamic[i]->
 			get_sprite().getGlobalBounds().intersects(rigidBodyObject.get_sprite().getGlobalBounds()))
 		{
-			if (m_dynamic[i]->IsInHole())
+			if (m_dynamic[i]->is_in_hole())
 			{
 				m_dynamic[i]->SetLocation(
 					rigidBodyObject.get_location()
 					+ 
-					sf::Vector2f(0,- MacroSettings::GetSettings().GetSizeOfTile())
+					sf::Vector2f(0,- MacroSettings::get_settings().get_size_of_tile())
 					);
 
 				m_dynamic[i]->SetInHole(false);

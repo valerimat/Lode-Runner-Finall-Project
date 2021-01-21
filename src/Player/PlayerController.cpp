@@ -10,7 +10,7 @@ void PlayerController::init_controller()
 //-----------------------------------------------------------------------------
 
 
-void PlayerController::move_player( float dt)
+void PlayerController::move( float dt)
 {
 	sf::Keyboard::Key key;
 

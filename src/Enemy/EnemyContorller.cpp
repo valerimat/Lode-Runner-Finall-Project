@@ -17,7 +17,7 @@ void EnemyController::init_controller()
 }
 //-----------------------------------------------------------------------------
 
-void EnemyController::move_enemies(float dt)
+void EnemyController::move(float dt)
 {	
 	sf::Vector2f before_g;
 	sf::Vector2f after_g;
@@ -96,7 +96,7 @@ void EnemyController::check_stuck()
 		if (prev_loc[i] == curr_loc[i])
 		{
 			//m_enemies[i]->DontMove();
-			m_enemies[i]->UpStuck();
+			m_enemies[i]->up_stuck();
 
 			if (m_enemies[i]->stuck())
 			{

@@ -39,7 +39,7 @@ enum class NextStep
 };
 const int BASE_LIVES = 3;
 const int OFFSET = 50 * 0.8;
-const float STEP = 1.2f;
+const float size_of_step = 1.2f;
 
 const char PLAYER = char('@');
 const char COIN = char('*');

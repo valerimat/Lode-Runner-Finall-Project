@@ -54,7 +54,7 @@ void InGameMenu::load_background()
 	float scale_height = float(HEIGHT) / 900.f,
 		scale_width = float(WIDTH) / 1200.f;
 
-	background.setTexture(*m_textures[6]);
+	background.setTexture(*m_textures[5]);
 	background.scale(scale_width, scale_height);
 }
 //=============================================================================
@@ -71,10 +71,7 @@ void InGameMenu::load_buttons()
 	Button reset_level(m_textures[2], sf::Vector2f(300, 500), States::ResetLevel);
 	m_buttons.push_back(reset_level);
 
-	Button settings(m_textures[3], sf::Vector2f(300, 600), States::Settings);
-	m_buttons.push_back(settings);
-
-	Button exit(m_textures[4], sf::Vector2f(300, 700), States::Exit);
+	Button exit(m_textures[3], sf::Vector2f(300, 600), States::Exit);
 	m_buttons.push_back(exit);
 }
 //=============================================================================
@@ -82,7 +79,7 @@ void InGameMenu::load_buttons()
 //=============================================================================
 void InGameMenu::load_arrow()
 {
-	m_arrow = Selection(m_textures[5], sf::Vector2f(250, 300));
+	m_arrow = Selection(m_textures[4], sf::Vector2f(250, 300));
 }
 //=============================================================================
 
@@ -99,10 +96,6 @@ void InGameMenu::load_textures()
 
 	texture = new sf::Texture;
 	texture->loadFromFile("reset_button.png");
-	m_textures.push_back(texture);
-
-	texture = new sf::Texture;
-	texture->loadFromFile("setting_button.png");
 	m_textures.push_back(texture);
 
 	texture = new sf::Texture;
