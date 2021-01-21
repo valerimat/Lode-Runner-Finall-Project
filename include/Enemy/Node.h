@@ -5,35 +5,38 @@
 class Node
 {
 public:
+
+	// c-tor
 	Node(sf::Vector2f location);
-	void set_father(Node* father);
-	//do we really need weight???
+
+	// setters
 	//void set_weight(int weight);
-	void set_color();
-	void set_color(Color color);
 
-	void reset_color();
-	void set_left_neighbor(Node* node);
-	void set_right_neighbor(Node* node);
-	void set_top_neigbor(Node* node);
-	void set_bot_neighbor(Node* node);
+	void set_father(Node* father);
+	void SetColor();
+	void SetColor(Color color);
+	void ResetColor();
+	void SetLeft(Node* node);
+	void SetRight(Node* node);
+	void SetTop(Node* node);
+	void SetBot(Node* node);
 
-	Node* get_left();
-	Node* get_right();
-	Node* get_top();
-	Node* get_bot();
-
-	Node* get_random_neighbor(int radom);
-	std::vector<Node*> get_neighbor_list();
-	void reset();
-	//getters:
-	Color get_color();
-	//get father:
-	Node* get_father();
-	//get location:
+	// getters
+	Node* GetLeft();
+	Node* GetRight();
+	Node* GetTop();
+	Node* GetBot();
+	Node* GetRandomNeighbor(int radom);
+	std::vector<Node*> GetNeighborList();
+	Color GetColor();
+	Node* GetFather();
 	sf::Vector2f get_location();
-	void print_node();
+
 	sf::Vector2f get_location_x_y();
+
+	// class functions
+	void Reset();
+	void PrintNode();
 
 private:
 	//setting default values for security

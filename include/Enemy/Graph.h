@@ -8,18 +8,19 @@ class Graph
 {
 public:
 
-	//C-tor
+	// c-tor
 	Graph(std::vector<std::string> map,int width, int height);
 	
-	//For algorithms:
+	// for algorithms
 	Node* get_closest_node(sf::Vector2f& location);
 	void Clean();
 
 	sf::Vector2f get_free_location();
+
 	
 private:
 
-	//Functions used in the graph creation
+	// functions used in the graph creation
 	void set_matricies_sizes(int height, int width);
 	void create_node_matrix(std::vector<std::vector<int>> matrix);
 	void link_neighbors_to_list(std::vector<std::vector<int>> matrix);

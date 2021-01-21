@@ -13,23 +13,23 @@ class Algo;
 class Enemy : public DynamicObject
 {
 public:
-	//C-tors:
+	// c-tors
 	using DynamicObject::DynamicObject;
 	Enemy(char name, sf::Vector2f locaiton, sf::Texture* texture);
 
 
 	void on_create()override;
 	void set_map(Map* map);
-	//Setters:
+	// setters
 	virtual void set_smartness(int i);
 	void set_waypoints();
 	void reset_path();
 
-	//Getters:
+	// getters:
 
 	IQ get_IQ();
   
-	//collisions:
+	// collisions
 	void handle_collision(Pole& object) override;
 	void handle_collision(Ladder& object) override;
 	void handle_collision(Coin& object) override ;
@@ -42,18 +42,18 @@ public:
 	void handle_collision(DynamicObject& object) override;
 
 
-	//For unstucking:
+	// for unstucking
 	void up_stuck();
 	void reset_stuck();
 	bool stuck();
 
-	//helpers:
+	// helpers
 	void move(float dt);
 	bool no_waypoints();
 	bool check_reached();
 	virtual void reset_after_hole() override;
 
-	//for falling 
+	// for falling 
 	bool get_m_falling();
 	void set_m_falling(bool state);
 
@@ -69,10 +69,10 @@ private:
 	void set_next_waypoints();
 	int stuck_counter = 0;
 
-	//to request information
+	// to request information
 	Map* m_map;
 
-	//for Algorithm
+	// for algorithm
 	IQ m_iq;
 	Algo * algo;
 
