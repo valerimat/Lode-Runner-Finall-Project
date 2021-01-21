@@ -2,7 +2,7 @@
 #include "MacroSettings.h"
 #include "Clock.h"
 
-
+//=============================================================================
 void GameController::Run()
 {
 	using clock = std::chrono::high_resolution_clock;
@@ -46,9 +46,9 @@ void GameController::Run()
 		OnUpdate(last, screen);
 	}
 }
-//-----------------------------------------------------------------------------
+//=============================================================================
 
-
+//=============================================================================
 void GameController::OnUpdate(std::chrono::steady_clock::time_point & last,State *& screen )
 {
 	using clock = std::chrono::high_resolution_clock;
@@ -78,4 +78,5 @@ void GameController::OnUpdate(std::chrono::steady_clock::time_point & last,State
 		screen = screen->get_next_state();
 	}
 }
+//=============================================================================
 
