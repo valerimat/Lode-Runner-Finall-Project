@@ -13,30 +13,30 @@ public:
 	//void set_weight(int weight);
 
 	void set_father(Node* father);
-	void SetColor();
-	void SetColor(Color color);
-	void ResetColor();
-	void SetLeft(Node* node);
-	void SetRight(Node* node);
-	void SetTop(Node* node);
-	void SetBot(Node* node);
+	void set_color();
+	void set_color(Color color);
+	void reset_color();
+	void set_left_neighbor(Node* node);
+	void set_right_neighbor(Node* node);
+	void set_bot_neighbor(Node* node);
+	void set_top_neigbor(Node* node);
 
 	// getters
-	Node* GetLeft();
-	Node* GetRight();
-	Node* GetTop();
-	Node* GetBot();
-	Node* GetRandomNeighbor(int radom);
-	std::vector<Node*> GetNeighborList();
-	Color GetColor();
-	Node* GetFather();
+	Node* get_left();
+	Node* get_right();
+	Node* get_top();
+	Node* get_bot();
+	Node* get_random_neighbor(int radom);
+	std::vector<Node*> get_neighbor_list();
+	Color get_color();
+	Node* get_father();
 	sf::Vector2f get_location();
 
 	sf::Vector2f get_location_x_y();
 
 	// class functions
-	void Reset();
-	void PrintNode();
+	void reset();
+	void print_node();
 
 private:
 	//setting default values for security
