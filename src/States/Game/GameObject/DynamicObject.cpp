@@ -145,17 +145,10 @@ void DynamicObject::handle_collision(Pole& object)
 void DynamicObject::move_back(RigidBodyObject &object)
 {
 	sf::Vector2f loc = m_sprite.getPosition();
-	if (object.get_hole() == false)
-	{
-		loc += last_move;	
-	}
-	else
-	{
-		loc += last_move;
-		sf::FloatRect rect;
-		m_sprite.getGlobalBounds().intersects(object.get_sprite().getGlobalBounds(), rect);
-		loc += sf::Vector2f(0, -rect.height);
-	}
+
+	loc += last_move;	
+	
+
 	m_sprite.setPosition(loc);
 }
 //-----------------------------------------------------------------------------
@@ -172,7 +165,7 @@ void DynamicObject::move_back(Enemy& object)
 
 void DynamicObject::on_pole(sf::Vector2f location)
 {
-	if (abs (get_location().y -location.y) < m_size_of_tile/0.8f)
+	if (abs (get_location().y -location.y) < m_size_of_tile*0.5f)
 		m_gravity = false;
 }
 //-----------------------------------------------------------------------------
@@ -294,7 +287,7 @@ void DynamicObject::GoInsideHole(sf::Vector2f  location)
 	sf::Vector2f(0, -m_size_of_tile * 0.9f));
 }
 
-void DynamicObject::CollideWithRigidBody(RigidBodyObject & object)
+void DynamicObject::collide_with_rigid_body(RigidBodyObject & object)
 {
 	sf::FloatRect inter;
 	if (get_sprite().getGlobalBounds().intersects(object.get_sprite().getGlobalBounds(), inter))
@@ -308,7 +301,6 @@ void DynamicObject::CollideWithRigidBody(RigidBodyObject & object)
 				m_in_hole = true;
 				GoInsideHole(object.get_sprite().getPosition());
 			}
-
 			else
 			{
 				m_in_hole = false;
@@ -317,10 +309,16 @@ void DynamicObject::CollideWithRigidBody(RigidBodyObject & object)
 	}
 }
 
-void DynamicObject::CollideWithLadder(Ladder & object)
+void DynamicObject::collide_with_ladder(Ladder & object)
 {
 	sf::FloatRect inter;
 	if (get_sprite().getGlobalBounds().intersects(object.get_sprite().getGlobalBounds(), inter))
 		if (inter.width >= m_size_of_tile/8.f)
 			m_gravity = false;
+}
+
+
+void DynamicObject::reset_after_hole()
+{
+
 }

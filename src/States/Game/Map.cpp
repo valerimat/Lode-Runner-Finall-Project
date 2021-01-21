@@ -125,7 +125,7 @@ void Map::Draw(sf::RenderWindow &main_window)
 	{
 		m_dynamic[i]->Draw(main_window);
 	}
-
+	m_graph->Draw(main_window);
 }
 //=============================================================================
 
@@ -423,6 +423,7 @@ void Map::check_dynamic_inside(RigidBodyObject& rigidBodyObject)
 		{
 			if (m_dynamic[i]->is_in_hole())
 			{
+				m_dynamic[i]->reset_after_hole();
 				m_dynamic[i]->SetLocation(
 					rigidBodyObject.get_location()
 					+ 

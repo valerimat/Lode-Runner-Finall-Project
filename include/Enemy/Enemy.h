@@ -51,9 +51,11 @@ public:
 	void move(float dt);
 	bool no_waypoints();
 	bool check_reached();
+	virtual void reset_after_hole() override;
 
 	//NEEDDDDDDDDDDD TO FIXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 	bool m_falling = false;
+
 	
 private:
 

@@ -82,13 +82,13 @@ void Player::handle_collision(Enemy& object)
 			//so we walk on him
 			if (object.is_in_hole())
 			{
-				if (inter.height >= 4 && inter.width >= 4)
+				if (inter.height >= m_size_of_tile / 10.f && inter.width >= m_size_of_tile / 10.f)
 				move_back(object);
 			}
 			else
 			{
 
-				if (inter.width >= 8 && inter.height >= 8)
+				if (inter.height >= m_size_of_tile / 5.f && inter.width >= m_size_of_tile / 5.f)
 				{
 					m_map->reset_positions();
 					m_lives.dec_lives();
@@ -123,6 +123,7 @@ void Player::handle_collision(Present& object)
 void Player::handle_collision(Pole& object)
 {
 	on_pole(object.get_location());
+
 	if (!m_standing)
 		Music::get_music().rope_sound();
 }
@@ -131,7 +132,7 @@ void Player::handle_collision(Pole& object)
 void Player::handle_collision(Ladder& object)
 {
 
-	CollideWithLadder(object);
+	collide_with_ladder(object);
 
 	if (!m_standing)
 		Music::get_music().ladder_sound();
@@ -141,7 +142,7 @@ void Player::handle_collision(Ladder& object)
 
 void Player::handle_collision(RigidBodyObject& object)
 {
-	CollideWithRigidBody(object);
+	collide_with_rigid_body(object);
 
 	if(!m_standing)
 		Music::get_music().running_sound();

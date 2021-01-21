@@ -176,7 +176,7 @@ bool Enemy::check_reached()
 	//if we reached the waypoint in 2 pixels diffrence
 	if (abs(location.x - next_waypoint.x) < m_size_of_tile/ 10.f
 		&&
-		abs(location.y - next_waypoint.y) < m_size_of_tile / 10.f)
+		abs(location.y - next_waypoint.y) < m_size_of_tile/ 10.f)
 	{
 		return true;
 	}
@@ -234,7 +234,20 @@ bool Enemy::no_waypoints()
 
 //Collision:
 //Ignored::
-void Enemy::handle_collision(Enemy& object) {};
+void Enemy::handle_collision(Enemy& object) 
+{
+	sf::FloatRect inter;
+	if (get_sprite().getGlobalBounds().intersects(object.get_sprite().getGlobalBounds(), inter))
+	{
+		//so we walk on him
+		if (object.is_in_hole())
+		{
+			if (inter.height >= m_size_of_tile / 10.f && inter.width >= m_size_of_tile / 10.f)
+				move_back(object);
+
+		}
+	}
+};
 //-----------------------------------------------------------------------------
 void Enemy::handle_collision(Coin& object) {};
 //-----------------------------------------------------------------------------
@@ -272,12 +285,17 @@ void Enemy::handle_collision(Pole& object)
 
 void Enemy::handle_collision(Ladder& object) 
 {
-	CollideWithLadder(object);
+	collide_with_ladder(object);
 }
 //-----------------------------------------------------------------------------
 
 void Enemy::handle_collision(RigidBodyObject& object)
 {
-	CollideWithRigidBody(object);
+	collide_with_rigid_body(object);
 }
 //-----------------------------------------------------------------------------
+void Enemy::reset_after_hole()
+{
+	reset_path();
+	m_in_hole = false;
+}
