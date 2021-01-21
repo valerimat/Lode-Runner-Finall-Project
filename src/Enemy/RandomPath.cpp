@@ -7,6 +7,7 @@
 #include "Node.h"
 #include <random>
 
+//=============================================================================
 std::vector<sf::Vector2f> RandomPath::calc_path(Graph& graph, sf::Vector2f our_location, sf::Vector2f wanted_location)
 {
 	std::vector<sf::Vector2f> waypoints;
@@ -27,8 +28,9 @@ std::vector<sf::Vector2f> RandomPath::calc_path(Graph& graph, sf::Vector2f our_l
 	return waypoints;
 
 }
-//-----------------------------------------------------------------------------
+//=============================================================================
 
+//=============================================================================
 void RandomPath::find_random_path(Node* node, std::vector<sf::Vector2f>& waypoints)
 {
 	auto random = std::random_device();
@@ -43,4 +45,4 @@ void RandomPath::find_random_path(Node* node, std::vector<sf::Vector2f>& waypoin
 		next = next->GetRandomNeighbor(rand());
 	}
 }
-//-----------------------------------------------------------------------------
+//=============================================================================

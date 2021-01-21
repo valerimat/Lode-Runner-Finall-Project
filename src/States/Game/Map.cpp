@@ -402,7 +402,7 @@ void Map::reset_positions()
 }
 //=============================================================================
 
-
+//=============================================================================
 void Map::load_background()
 {
 	float scale_height = float(HEIGHT) / 900.f,
@@ -412,8 +412,9 @@ void Map::load_background()
 	m_background.setPosition(sf::Vector2f(0, 50));
 	m_background.scale(scale_width, scale_height);
 }
+//=============================================================================
 
-
+//=============================================================================
 void Map::check_dynamic_inside(RigidBodyObject& rigidBodyObject)
 {
 	for (int i = 0; i < m_dynamic.size(); ++i)
@@ -441,3 +442,5 @@ void Map::add_enemy()
 	m_dynamic.push_back(
 		std::make_unique<Enemy>(ENEMY, m_graph->get_free_location() , m_textures[ENEMY_TEXTURE].get()));
 }
+//=============================================================================
+

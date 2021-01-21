@@ -60,7 +60,9 @@ void Death::load_background()
 	background.setTexture(*m_textures[4]);
 	background.scale(scale_width, scale_height);
 }
+//=============================================================================
 
+//=============================================================================
 void Death::load_buttons()
 {
 	Button play(m_textures[0], sf::Vector2f(300, 450), States::Play);
@@ -72,12 +74,16 @@ void Death::load_buttons()
 	Button settings(m_textures[2], sf::Vector2f(300, 650), States::Exit);
 	m_buttons.push_back(settings);
 }
+//=============================================================================
 
+//=============================================================================
 void Death::load_arrow()
 {
 	m_arrow = Selection(m_textures[3], sf::Vector2f(250, 450));
 }
+//=============================================================================
 
+//=============================================================================
 void Death::load_textures()
 {
 
@@ -104,6 +110,5 @@ void Death::load_textures()
 	texture = new sf::Texture;
 	texture->loadFromFile("busted.png");
 	m_textures.push_back(texture);
-
-	
 }
+//=============================================================================

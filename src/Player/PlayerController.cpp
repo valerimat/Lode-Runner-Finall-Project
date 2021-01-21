@@ -1,15 +1,15 @@
 #include "PlayerController.h"
 #include "Map.h"
 
-
+//=============================================================================
 void PlayerController::init_controller()
 {
 	m_player = (m_map->get_player());
 	m_player->set_map(m_map);
 }
-//-----------------------------------------------------------------------------
+//=============================================================================
 
-
+//=============================================================================
 void PlayerController::move( float dt)
 {
 	sf::Keyboard::Key key;
@@ -53,8 +53,9 @@ void PlayerController::move( float dt)
 			m_player->delete_right();
 	}
 }
-//-----------------------------------------------------------------------------
+//=============================================================================
 
+//=============================================================================
 void PlayerController::check_key_press(sf::Keyboard::Key& pressed)
 {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
@@ -70,4 +71,4 @@ void PlayerController::check_key_press(sf::Keyboard::Key& pressed)
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::X))
 		pressed = sf::Keyboard::X;
 }
-
+//=============================================================================
