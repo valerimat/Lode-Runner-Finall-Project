@@ -238,6 +238,17 @@ int *Map::get_timer()
 }
 //=============================================================================
 
+/*
+std::vector<std::unique_ptr<DynamicObject>> Map::get_dynamic()
+{
+	return m_dynamic;
+}
+
+std::vector<std::unique_ptr<sf::Texture>> Map::get_textures()
+{
+	return m_textures;
+}
+*/
 
 // deletes the coin
 //=============================================================================
@@ -259,10 +270,15 @@ void Map::delete_present(Present& present)
 {
 	auto i = 0;
 
+	present.get_bonus()->Surprise(this);
+
 	while (present.get_location() != m_static[i]->get_location())
 	{
 		i++;
 	}
+
+	m_static.erase(m_static.begin() + i);
+
 	switch (present.get_type())
 	{
 	case 0:
@@ -286,7 +302,6 @@ void Map::delete_present(Present& present)
 		//m_music->BadPresentSound();
 		break;
 	}
-	m_static.erase(m_static.begin() + i);
 }
 //=============================================================================
 
@@ -418,5 +433,4 @@ void Map::check_dynamic_inside(RigidBodyObject& rigidBodyObject)
 			}
 		}
 	}
-	
 }
