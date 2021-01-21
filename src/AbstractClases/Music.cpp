@@ -12,7 +12,7 @@ Music::~Music()
 {
 	for (int i = 0; i < m_buffers.size(); i++)
 	{
-		delete &m_buffers[i];
+		delete (m_buffers[i]);
 	}
 }
 
@@ -25,37 +25,37 @@ void Music::load_buffers()
 	auto buffer_ptr = new sf::SoundBuffer;
 	buffer_ptr->loadFromFile("eating laffa.OGG");
 
-	m_buffers.push_back(*buffer_ptr);
+	m_buffers.push_back(buffer_ptr);
 
 	buffer_ptr = new sf::SoundBuffer;
 	buffer_ptr->loadFromFile("running.OGG");
 
-	m_buffers.push_back(*buffer_ptr);
+	m_buffers.push_back(buffer_ptr);
 
 	buffer_ptr = new sf::SoundBuffer;
 	buffer_ptr->loadFromFile("drinking.OGG");
 
-	m_buffers.push_back(*buffer_ptr);
+	m_buffers.push_back(buffer_ptr);
 
 	buffer_ptr = new sf::SoundBuffer;
 	buffer_ptr->loadFromFile("ladder.OGG");
 
-	m_buffers.push_back(*buffer_ptr);
+	m_buffers.push_back(buffer_ptr);
 
 	buffer_ptr = new sf::SoundBuffer;
 	buffer_ptr->loadFromFile("rope.OGG");
 
-	m_buffers.push_back(*buffer_ptr);
+	m_buffers.push_back(buffer_ptr);
 
 	buffer_ptr = new sf::SoundBuffer;
 	buffer_ptr->loadFromFile("hurt.OGG");
 
-	m_buffers.push_back(*buffer_ptr);
+	m_buffers.push_back(buffer_ptr);
 
 	buffer_ptr = new sf::SoundBuffer;
 	buffer_ptr->loadFromFile("busted.OGG");
 
-	m_buffers.push_back(*buffer_ptr);
+	m_buffers.push_back(buffer_ptr);
 
 	/*
 	// running sounds
@@ -112,7 +112,7 @@ void Music::load_buffers()
 //=============================================================================
 void Music::eating_sound()
 {
-	m_sound->setBuffer(m_buffers[0]);
+	m_sound->setBuffer(*m_buffers[0]);
 	m_sound->setVolume(MacroSettings::get_settings().get_volume()/ 5);
 	m_sound->play();
 }
@@ -125,7 +125,7 @@ void Music::running_sound()
 
 	if (status == sf::Sound::Status::Stopped)
 	{
-		m_sound->setBuffer(m_buffers[1]);
+		m_sound->setBuffer(*m_buffers[1]);
 		m_sound->setVolume(MacroSettings::get_settings().get_volume()/ 10);
 		m_sound->play();
 	}
@@ -135,7 +135,7 @@ void Music::running_sound()
 //=============================================================================
 void Music::drinking_sound()
 {
-	m_sound->setBuffer(m_buffers[2]);
+	m_sound->setBuffer(*m_buffers[2]);
 	m_sound->setVolume(MacroSettings::get_settings().get_volume());
 	m_sound->play();
 }
@@ -147,7 +147,7 @@ void Music::ladder_sound()
 	sf::Sound::Status status = m_sound->getStatus();
 	if (status == sf::Sound::Status::Stopped)
 	{
-		m_sound->setBuffer(m_buffers[3]);
+		m_sound->setBuffer(*m_buffers[3]);
 		m_sound->setVolume(MacroSettings::get_settings().get_volume());
 		m_sound->play();
 	}
@@ -160,7 +160,7 @@ void Music::rope_sound()
 	sf::Sound::Status status = m_sound->getStatus();
 	if (status == sf::Sound::Status::Stopped)
 	{
-		m_sound->setBuffer(m_buffers[4]);
+		m_sound->setBuffer(*m_buffers[4]);
 		m_sound->setVolume(MacroSettings::get_settings().get_volume());
 		m_sound->play();
 	}
@@ -170,7 +170,7 @@ void Music::rope_sound()
 //=============================================================================
 void Music::hurt_sound()
 {
-	m_sound->setBuffer(m_buffers[5]);
+	m_sound->setBuffer(*m_buffers[5]);
 	m_sound->setVolume(MacroSettings::get_settings().get_volume());
 	m_sound->play();
 }
@@ -179,7 +179,7 @@ void Music::hurt_sound()
 //=============================================================================
 void Music::busted_sound()
 {
-	m_sound->setBuffer(m_buffers[6]);
+	m_sound->setBuffer(*m_buffers[6]);
 	m_sound->setVolume(MacroSettings::get_settings().get_volume());
 	m_sound->play();
 }
