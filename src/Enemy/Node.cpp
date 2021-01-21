@@ -1,5 +1,6 @@
 #include "Node.h"
 #include <iostream>
+#include "MacroSettings.h"
 
 // c-tor
 //=============================================================================
@@ -181,4 +182,21 @@ void Node::SetColor(Color color)
 {
 	m_color = color;
 }
+//-----------------------------------------------------------------------------
+
+sf::Vector2f Node::get_location_x_y()
+{
+	auto size_of_tile = MacroSettings::get_settings().get_size_of_tile();
+
+	float x = get_location().x - 0.5f * size_of_tile;
+	float y = get_location().y - 0.5f * size_of_tile - 50.f;
+
+	x /= size_of_tile;
+	y /= size_of_tile;
+
+	return sf::Vector2f(x, y);
+
+}
+
 //=============================================================================
+

@@ -57,6 +57,7 @@ public:
 	void delete_coin(Coin & coin);
 	void delete_present(Present & present);
 	void reset_positions();
+	void add_enemy();
 private:
 
 	void load_background();

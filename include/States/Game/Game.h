@@ -15,6 +15,7 @@ public:
 	// c-tors
 	Game();
 	void init_controllers();
+	~Game();
 
 	//base functions:
 	void load() override;
