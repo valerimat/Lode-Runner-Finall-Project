@@ -53,11 +53,14 @@ public:
 	bool check_reached();
 	virtual void reset_after_hole() override;
 
-	//NEEDDDDDDDDDDD TO FIXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-	bool m_falling = false;
+	//for falling 
+	bool get_m_falling();
+	void set_m_falling(bool state);
+
 
 	
 private:
+	bool m_falling = false;
 
 	sf::Vector2f get_center();
 	NextStep DirectionToWaypoint();
