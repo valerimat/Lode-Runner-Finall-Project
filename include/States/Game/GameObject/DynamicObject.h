@@ -59,12 +59,14 @@ public:
 
 	//for Holes:
 	bool is_in_hole();
+	virtual void reset_after_hole();
 
 protected:
 
 	//hellping collision:
-	void CollideWithRigidBody(RigidBodyObject& object);
-	void CollideWithLadder(Ladder& ladder);
+	void collide_with_rigid_body(RigidBodyObject& object);
+	void collide_with_ladder(Ladder& ladder);
+	
 
 	//on create function
 	void GoInsideHole(sf::Vector2f  location);

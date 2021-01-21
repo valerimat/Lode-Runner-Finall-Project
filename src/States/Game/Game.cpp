@@ -20,7 +20,6 @@ void Game::load()
 	MacroSettings::get_settings().set_map_height(m_maps.get_curr_height(level));
 	MacroSettings::get_settings().set_map_width(m_maps.get_curr_width(level));
 
-	Map temp(m_maps.get_map(level), m_maps.get_curr_height(level), m_maps.get_curr_width(level), m_maps.get_curr_time(level));
 	m_curr_map = new Map(m_maps.get_map(level), m_maps.get_curr_height(level), m_maps.get_curr_width(level), m_maps.get_curr_time(level));
 
 	Hud hud(m_curr_map->get_player()->get_lives(),level, m_curr_map->get_timer());
@@ -48,6 +47,7 @@ Map * Game::get_curr_map()
 void Game::init_controllers()
 {
 	//can move it to one array
+	m_controllers.clear();
 	m_controllers.push_back(std::make_unique< EnemyController>(get_curr_map()));
 	m_controllers.push_back(std::make_unique< PlayerController>(get_curr_map()));
 	
