@@ -47,7 +47,7 @@ private:
 //Score &m_score = Score::GetScore();
 	MapData m_maps;
 	Map * m_curr_map;
-	Hud  m_hud;
+	Hud * m_hud;
 
 	std::vector<std::unique_ptr<MovementController>> m_controllers;
 

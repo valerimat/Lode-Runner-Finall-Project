@@ -24,7 +24,6 @@ Enemy::Enemy(char name, sf::Vector2f locaiton, sf::Texture* texture) :
 //=============================================================================
 void Enemy::on_create()
 {
-	//
 	m_base_location = get_location();
 
 	//random number
@@ -34,7 +33,7 @@ void Enemy::on_create()
 
 	set_smartness(smartness);
 
-
+	//for each random number we set some smartnes
 	switch (m_iq)
 	{
 	case IQ::Smart:
@@ -107,7 +106,9 @@ void Enemy::set_next_waypoints()
 void Enemy::reset_path()
 {
 	waypoints.clear();
-	waypoints = algo->calc_path(m_map->get_graph(), get_location(), m_map->get_player()->get_location());
+	waypoints = algo->calc_path(m_map->get_graph(),
+		                        get_location(),
+		                        m_map->get_player()->get_location());
 }
 //=============================================================================
 
@@ -131,7 +132,7 @@ void Enemy::set_smartness(int i)
 void Enemy::move(float dt)
 {
 
-	NextStep step = DirectionToWaypoint();
+	NextStep step = direction_to_waypoint();
 	
 	switch (step)
 	{
@@ -201,13 +202,15 @@ bool Enemy::check_reached()
 
 //Calculates which direction to move to reach waypoint
 //=============================================================================
-NextStep Enemy::DirectionToWaypoint()
+NextStep Enemy::direction_to_waypoint()
 
 {
 	sf::Vector2f location = get_center();
 
 	//for safety
-	if(abs(next_waypoint.x - get_location().x) <1 && abs(next_waypoint.y - get_location().y) <1)
+	if(abs(next_waypoint.x - get_location().x) <1
+	   &&
+	   abs(next_waypoint.y - get_location().y) <1)
 		return NextStep::NONE;
 
 	if (abs(location.x - next_waypoint.x) > 1)
@@ -250,23 +253,6 @@ bool Enemy::no_waypoints()
 //Collision:
 //Ignored::
 //=============================================================================
-void Enemy::handle_collision(Enemy& object) 
-{
-	sf::FloatRect inter;
-	if (get_sprite().getGlobalBounds().intersects(object.get_sprite().getGlobalBounds(), inter))
-	{
-		//so we walk on him
-		if (object.is_in_hole())
-		{
-			if (inter.height >= m_size_of_tile / 10.f && inter.width >= m_size_of_tile / 10.f)
-				move_back(object);
-
-		}
-	}
-};
-//=============================================================================
-
-//=============================================================================
 void Enemy::handle_collision(Coin& object) {};
 //=============================================================================
 
@@ -275,6 +261,25 @@ void Enemy::handle_collision(Present& object) {};
 //=============================================================================
 
 //Not ignored:
+//=============================================================================
+void Enemy::handle_collision(Enemy& object)
+{
+	sf::FloatRect inter;
+	if (get_sprite().getGlobalBounds().intersects(object.get_sprite().getGlobalBounds(), inter))
+	{
+		//so we walk on him
+		if (object.is_in_hole())
+		{
+			//so we wont colide on pixel perfect position
+			if (inter.height >= m_size_of_tile / 10.f
+				&& 
+				inter.width >= m_size_of_tile / 10.f)
+				move_back(object);
+
+		}
+	}
+};
+//=============================================================================
 //=============================================================================
 void Enemy::handle_collision(Object & object)
 {
@@ -332,15 +337,15 @@ void Enemy::reset_after_hole()
 	m_in_hole = false;
 }
 
-//-----------------------------------------------------------------------------
+//=============================================================================
 bool Enemy::get_m_falling()
 {
 	return m_falling;
 }
-//-----------------------------------------------------------------------------
+//=============================================================================
 void Enemy::set_m_falling(bool state)
 {
 	m_falling = state;
 }
-//-----------------------------------------------------------------------------
+//=============================================================================
 

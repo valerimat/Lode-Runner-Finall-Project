@@ -1,5 +1,5 @@
 #include "MapData.h"
-
+#include "Macros.h"
 // c-tor
 //=============================================================================
 MapData::MapData()
@@ -68,11 +68,11 @@ void MapData::load_maps()
 
 			for (int j = 0; j < m_vector_of_strings[i].size(); j++)
 			{
-				if (m_vector_of_strings[i][j] == '@' ||
-					m_vector_of_strings[i][j] == '%' ||
-					m_vector_of_strings[i][j] == '*')
+				if (m_vector_of_strings[i][j] == PLAYER ||
+					m_vector_of_strings[i][j] == ENEMY ||
+					m_vector_of_strings[i][j] == COIN)
 
-					m_clean_vector_of_strings[i][j] = ' ';
+					m_clean_vector_of_strings[i][j] = NONE;
 			}
 		}
 

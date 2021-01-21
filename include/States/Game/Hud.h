@@ -17,13 +17,24 @@ public:
 	void up_level();
 
 private:
+	void load();
+	void load_stable();
+	void load_level_digits();
+	void load_score_digits();
+	void load_time_digits();
+	void load_lives_digits();
 
 	void draw_score(sf::RenderWindow& window);
 	void draw_lives(sf::RenderWindow& window);
 	void draw_level(sf::RenderWindow& window);
 	void draw_time(sf::RenderWindow& window);
 
-	std::vector<std::shared_ptr <sf::Texture>> m_textures;
+	std::vector<std::unique_ptr <sf::Texture>> m_textures;
+	std::vector < std::unique_ptr<sf::Sprite>> m_stable;
+	std::vector < std::unique_ptr<sf::Sprite>> lives_digits;
+	std::vector < std::unique_ptr<sf::Sprite>> score_digits;
+	std::vector < std::unique_ptr<sf::Sprite>> time_digits;
+	std::vector < std::unique_ptr<sf::Sprite>> level_digits;
 
 	int m_number_of_level;
 

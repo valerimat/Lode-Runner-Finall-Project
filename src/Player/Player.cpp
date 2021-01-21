@@ -89,13 +89,17 @@ void Player::handle_collision(Enemy& object)
 			//so we walk on him
 			if (object.is_in_hole())
 			{
-				if (inter.height >= m_size_of_tile / 10.f && inter.width >= m_size_of_tile / 10.f)
+				if (inter.height >= m_size_of_tile / 10.f
+					&&
+					inter.width >= m_size_of_tile / 10.f)
 				move_back(object);
 			}
 			else
 			{
 
-				if (inter.height >= m_size_of_tile / 5.f && inter.width >= m_size_of_tile / 5.f)
+				if (inter.height >= m_size_of_tile / 7.f 
+					&&
+					inter.width >= m_size_of_tile / 7.f)
 				{
 					m_map->reset_positions();
 					m_lives.dec_lives();
