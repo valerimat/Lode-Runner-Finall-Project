@@ -38,5 +38,5 @@ private:
 
 	sf::Sound* m_sound = new sf::Sound;
 	//std::vector<std::shared_ptr<sf::SoundBuffer>> m_buffers;
-	std::vector<sf::SoundBuffer> m_buffers;
+	std::vector<sf::SoundBuffer *> m_buffers;
 };
