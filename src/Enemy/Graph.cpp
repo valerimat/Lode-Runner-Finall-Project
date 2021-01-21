@@ -318,6 +318,41 @@ void Graph::Clean()
 }
 //-----------------------------------------------------------------------------
 
+sf::Vector2f Graph::get_free_location()
+{
+	int height = node_matrix.size();
+	int width = node_matrix[0].size();
+
+	int i = rand() % height;
+	int j = rand() % width;
+
+	while (1)
+	{
+		if (node_matrix[i][j] != nullptr)
+			if(!only_bottom_neighboor(node_matrix[i][j]))
+			break;
+		
+		i = rand() % height;
+		j = rand() % width;
+	}
+	
+	
+
+	return node_matrix[i][j]->get_location_x_y();
+}
+
+
+bool Graph::only_bottom_neighboor (Node * node)
+{
+	if (node->GetNeighborList().size() == 1)
+		if (node->GetBot() != nullptr)
+		{
+			return true;
+		}
+
+	return false;
+	
+}
 //=======================================================================================================
 //=======================================================================================================
 //_____________________For Dubug DELETE IN PRODUCTION:

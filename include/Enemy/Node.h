@@ -33,6 +33,7 @@ public:
 	//get location:
 	sf::Vector2f get_location();
 	void PrintNode();
+	sf::Vector2f get_location_x_y();
 
 private:
 	//setting default values for security

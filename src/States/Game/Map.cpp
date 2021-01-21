@@ -435,3 +435,9 @@ void Map::check_dynamic_inside(RigidBodyObject& rigidBodyObject)
 		}
 	}
 }
+
+void Map::add_enemy()
+{
+	m_dynamic.push_back(
+		std::make_unique<Enemy>(ENEMY, m_graph->get_free_location() , m_textures[ENEMY_TEXTURE].get()));
+}

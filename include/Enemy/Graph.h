@@ -15,6 +15,7 @@ public:
 	Node* get_closest_node(sf::Vector2f& location);
 	void Clean();
 
+	sf::Vector2f get_free_location();
 	//For debug:
 	void Draw(sf::RenderWindow& window);
 	
@@ -42,6 +43,9 @@ private:
 	bool found_enemy(std::vector<std::string> m_map, int i, int row);
 	bool found_air(std::vector<std::string> m_map, int i, int row);
 	
+
+	bool only_bottom_neighboor(Node * node);
+
 	//Members
 	std::vector<Node*> neighbor_list;
 	std::vector<std::vector<Node*>> node_matrix;
