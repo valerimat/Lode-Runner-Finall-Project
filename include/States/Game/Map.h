@@ -30,10 +30,12 @@ public:
 	// map functions
 	void load_textures();
 	void Draw(sf::RenderWindow& main_window);
-
+	
 	// getters
 	Player* get_player();
 	std::vector<Enemy*> get_enemies();
+	std::vector<std::unique_ptr<DynamicObject>> get_dynamic();
+	std::vector<std::unique_ptr<sf::Texture>> get_textures();
 	int get_height();
 	int get_width();
 	Graph & get_graph();

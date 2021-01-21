@@ -8,4 +8,9 @@
                                      "RigidBodyObject.cpp"
                                      "Ladder.cpp"
                                      "Pole.cpp"
+                                     "Bonus.cpp"
+                                     "TimeBonus.cpp"
+                                     "LivesBonus.cpp"
+                                     "ScoreBonus.cpp"
+                                     "EnemyBonus.cpp"
                                   )
