@@ -9,7 +9,11 @@
 class Music
 {
 public:
+	// get singleton
 	static Music& get_music() { static Music s_music; return s_music; };
+
+	// d-tor
+	~Music();
 
 	// loads all the buffers
 	void load_buffers();
@@ -25,6 +29,7 @@ public:
 	void stop_sound();
 
 private:
+	// c-tor
 	Music();
 
 	// avoids copy 
@@ -32,5 +37,6 @@ private:
 	void operator=(Music const&) = delete;
 
 	sf::Sound* m_sound = new sf::Sound;
-	std::vector<std::shared_ptr<sf::SoundBuffer>> m_buffers;
+	//std::vector<std::shared_ptr<sf::SoundBuffer>> m_buffers;
+	std::vector<sf::SoundBuffer> m_buffers;
 };
