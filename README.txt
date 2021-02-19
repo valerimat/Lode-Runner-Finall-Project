@@ -8,8 +8,8 @@
 ╚══════╝░╚════╝░╚═════╝░  ╚═╝░░╚═╝░╚═════╝░╚═╝░░╚══╝╚═╝░░╚══╝╚══════╝╚═╝░░╚═╝
                                                             
 
-name: Valeri Materman 321133324
-name: David Yudin 321893257
+name: Valeri Materman 
+name: David Yudin 
 ===============================================================================
 Run from police, dig holes, eat shawrmans and drink light alcoholic beverages!!!!!!
 ===============================================================================
